@@ -9,12 +9,14 @@ public class PlayerController : MonoBehaviour
     public Camera Camera;
     CustomRigidBody body;
     RaycastHit hitInfo;
+    Vector3 screenMid;
 
     void Start()
     {
         if (Camera == null)
             Camera = Camera.main;
         body = GetComponent<CustomRigidBody>();
+        screenMid = new Vector2(Screen.width / 2f, Screen.height / 2f);
     }
 
     // Update is called once per frame
@@ -39,7 +41,12 @@ public class PlayerController : MonoBehaviour
 
     void SetDirection()
     {
-        if (Physics.Raycast(Camera.ScreenPointToRay(Input.mousePosition), out hitInfo, 100))
-            transform.LookAt(new Vector3(hitInfo.point.x, transform.position.y, hitInfo.point.z));
+        Vector3 dir = (Input.mousePosition - screenMid).normalized;
+        dir.z = dir.y;
+        dir.y = 0;
+        transform.forward = dir;
+
+        //if (Physics.Raycast(Camera.ScreenPointToRay(Input.mousePosition), out hitInfo, 100))
+        //  transform.LookAt(new Vector3(hitInfo.point.x, transform.position.y, hitInfo.point.z));
     }
 }

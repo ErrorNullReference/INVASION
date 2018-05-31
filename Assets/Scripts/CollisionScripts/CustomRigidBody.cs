@@ -6,12 +6,14 @@ using UnityEngine;
 public class CustomRigidBody : MonoBehaviour
 {
     public bool UseGravity;
+    public int MaxRepositionAttempts = 5;
     public LayerMask CustomMask;
     Collider[] results;
     Vector3[] contactPoints;
     Collider collider;
     Vector3 newDir, midPoint;
     float dist1, dist2;
+    int attempts;
 
     void Start()
     {
@@ -43,7 +45,10 @@ public class CustomRigidBody : MonoBehaviour
         Vector3 position = transform.position + direction * speed * time;
 
         if (advanced)
-            transform.position = TryMove(position, direction, GetRightExtent(direction));
+        {
+            attempts = 0;
+            transform.position = TryMove(position, direction, GetRightExtent(direction), time);
+        }
         else
             transform.position = TryMove(position, GetRightExtent(direction));
     }
@@ -55,33 +60,32 @@ public class CustomRigidBody : MonoBehaviour
         return position;
     }
 
-    Vector3 TryMove(Vector3 position, Vector3 direction, float radius)
+    Vector3 TryMove(Vector3 position, Vector3 direction, float radius, float time)
     {
         int num = Physics.OverlapSphereNonAlloc(position, radius, results, CustomMask.value);
         if (num >= 1)
         {
+            attempts++;
+            if (attempts >= MaxRepositionAttempts)
+                return position;
+
             newDir = Vector3.zero;
             midPoint = Vector3.zero;
 
             for (int i = 0; i < num; i++)
             {
-                contactPoints[i] = results[i].ClosestPointOnBounds(position);
-                direction = Vector3.zero;
-                if (position != contactPoints[i])
-                {
-                    dist1 = (transform.position - position).sqrMagnitude;
-                    dist2 = (transform.position - contactPoints[i]).sqrMagnitude;
-                    direction = dist1 < dist2 ? (position - contactPoints[i]).normalized : (contactPoints[i] - position).normalized;
-                }
-                else
-                    direction = (transform.position - contactPoints[i]).normalized;
+                contactPoints[i] = results[i].ClosestPoint(position);
+                dist1 = (transform.position - position).sqrMagnitude;
+                dist2 = (transform.position - contactPoints[i]).sqrMagnitude;
+                Vector3 d = dist1 < dist2 ? (position - contactPoints[i]).normalized : (contactPoints[i] - position).normalized;
 
-                newDir += direction;
-                midPoint += contactPoints[i];
+                newDir += d;
+                midPoint += contactPoints[i] + d * radius;
             }
+            newDir = (direction + newDir.normalized).normalized;
             midPoint /= (float)num;
 
-            return TryMove(newDir != Vector3.zero ? midPoint + newDir.normalized * (radius + 0.1f) : transform.position, newDir, radius);
+            return TryMove(newDir != Vector3.zero ? midPoint + newDir * time : transform.position, newDir, radius, time);
         }
         return position;
     }
