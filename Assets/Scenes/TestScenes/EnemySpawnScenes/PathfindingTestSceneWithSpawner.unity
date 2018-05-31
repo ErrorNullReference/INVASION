@@ -536,7 +536,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AvatarTemplate: {fileID: 114589947947188420, guid: 3b2dd5df0ed52634390c68a1cdd41303,
     type: 2}
-  ControllableAvatarTemplate: {fileID: 114333213895387384, guid: fa794fac4dc12504990bf8c82975fd6c,
+  ControllableAvatarTemplate: {fileID: 114950257217352354, guid: fa794fac4dc12504990bf8c82975fd6c,
     type: 2}
   SpawnPosition: {x: 148.5, y: 1, z: 118.4}
   Materials:
