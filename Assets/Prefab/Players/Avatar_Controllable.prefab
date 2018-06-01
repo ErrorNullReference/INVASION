@@ -1553,10 +1553,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d1cb89f792d894c961e58756283e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UseInputs: 1
   speedZ: speedZ
   speedX: speedX
-  RunTreshold: 6
-  UseInputs: 1
+  shoot: shoot
+  death: death
+  RunTreshold: 0
+  movementTreshold: 0
 --- !u!114 &114658148540548900
 MonoBehaviour:
   m_ObjectHideFlags: 1

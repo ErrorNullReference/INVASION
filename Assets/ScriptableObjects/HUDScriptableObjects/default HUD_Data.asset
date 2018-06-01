@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Player 3 HUD data
   m_EditorClassIdentifier: 
   SerializeMe: 0
-  ClientID: 0
+  ClientID: 1
   Health: 100
   MaxHealth: 100
   LevelXP: 0

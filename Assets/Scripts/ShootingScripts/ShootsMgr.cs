@@ -88,14 +88,14 @@ public class ShootsMgr : MonoBehaviour
     void ReceiveShoot(byte[] data, uint lenght, CSteamID sender)
     {
         if (sender != Client.MyID)
-            PlayersMgr.Players[sender].ShootSystem.Shoot(false);
+            PlayersMgr.Players[sender].Shoot(false);
     }
 
     void ReceiveShootServer(byte[] data, uint lenght, CSteamID sender)
     {
         Client.SendPacketToInGameUsers(data, PacketType.Shoot, sender, EP2PSend.k_EP2PSendReliable, false);
         if (sender != Client.MyID)
-            PlayersMgr.Players[sender].ShootSystem.Shoot(false);
+            PlayersMgr.Players[sender].Shoot(false);
     }
 
     public static void AddRay(RayPlus ray)
