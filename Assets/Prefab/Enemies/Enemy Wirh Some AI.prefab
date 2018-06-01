@@ -663,13 +663,14 @@ GameObject:
   - component: {fileID: 95390180429967584}
   - component: {fileID: 195235630517524290}
   - component: {fileID: 114737848953771168}
+  - component: {fileID: 114168846606785914}
   - component: {fileID: 114179725094308218}
   - component: {fileID: 114462976907085450}
   - component: {fileID: 114729019832894138}
   - component: {fileID: 114992990484700226}
   - component: {fileID: 114151545493592974}
-  - component: {fileID: 136067789119106868}
   - component: {fileID: 114174039656087010}
+  - component: {fileID: 136067789119106868}
   m_Layer: 10
   m_Name: Enemy Wirh Some AI
   m_TagString: Untagged
@@ -2780,6 +2781,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   networkId: 0
+--- !u!114 &114168846606785914
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1420026848938252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99b0211fac30c8041b9fd2c628619380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GunRange: 10
+  OnAbleToShot:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114174039656087010
 MonoBehaviour:
   m_ObjectHideFlags: 1
