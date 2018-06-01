@@ -41,7 +41,7 @@ public class PlayersMgr : MonoBehaviour
 
             a.UserInfo = Client.Users[i];
             a.transform.position = SpawnPosition;
-            a.gameObject.GetComponent<Renderer>().material = Materials[Client.Users[i].AvatarID];
+            //a.gameObject.GetComponent<Renderer>().material = Materials[Client.Users[i].AvatarID];
             avatars.Add(Client.Users[i].SteamID, a);
         }
 

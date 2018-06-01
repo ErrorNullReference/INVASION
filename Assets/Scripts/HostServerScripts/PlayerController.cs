@@ -41,12 +41,14 @@ public class PlayerController : MonoBehaviour
 
     void SetDirection()
     {
-        Vector3 dir = (Input.mousePosition - screenMid).normalized;
-        dir.z = dir.y;
-        dir.y = 0;
-        transform.forward = dir;
-
-        //if (Physics.Raycast(Camera.ScreenPointToRay(Input.mousePosition), out hitInfo, 100))
-        //  transform.LookAt(new Vector3(hitInfo.point.x, transform.position.y, hitInfo.point.z));
+        if (Physics.Raycast(Camera.ScreenPointToRay(Input.mousePosition), out hitInfo, 100))
+            transform.LookAt(new Vector3(hitInfo.point.x, transform.position.y, hitInfo.point.z));
+        else
+        {
+            Vector3 dir = (Input.mousePosition - screenMid).normalized;
+            dir.z = dir.y;
+            dir.y = 0;
+            transform.forward = dir;
+        }
     }
 }
