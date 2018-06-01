@@ -844,14 +844,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1655965656559508}
-  m_LocalRotation: {x: 0.3845115, y: 0.42449105, z: 0.55723804, w: 0.60120225}
+  m_LocalRotation: {x: 0.38653496, y: 0.42667648, z: 0.55583656, w: 0.59965295}
   m_LocalPosition: {x: 0.283, y: 0.013, z: 0.144}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4454689321706160}
   m_Father: {fileID: 4977274655482752}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.61600006, y: 70.3, z: 85.22301}
 --- !u!4 &4258538787351172
 Transform:
   m_ObjectHideFlags: 1
@@ -1422,10 +1422,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d1cb89f792d894c961e58756283e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UseInputs: 0
   speedZ: speedZ
   speedX: speedX
-  RunTreshold: 6
-  UseInputs: 0
+  shoot: shoot
+  death: death
+  RunTreshold: 0.13
+  movementTreshold: 0.01
 --- !u!114 &114130298613650360
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1476,8 +1479,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootingType: 0
-  gun: {fileID: 0}
-  muzzle: {fileID: 0}
+  gun: {fileID: 114329797879480352}
+  muzzle: {fileID: 114886338899470942}
 --- !u!114 &114329797879480352
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1619,9 +1622,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 1.667742
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!137 &137556240876160336
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1764,7 +1767,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1564569815
+  randomSeed: 1651699645
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5218,7 +5221,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.1}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224190884487378448
