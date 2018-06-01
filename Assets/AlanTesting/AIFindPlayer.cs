@@ -1,20 +1,24 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class AIFindPlayer : AIBehaviour
 {
     public string playerNameFound;
-
     public string toType;
 
-    public AIBehaviour OnPlayerFoundNext;
-    public AISwitchEvent OnPlayerFound;
+    public UnityEvent OnPlayerFound;
+    public UnityEvent OnPlayerFoundInRange;
 
     public override void AIUpdate()
     {
         Debug.Log("looking for player");
         if (Input.GetKeyDown(KeyCode.N))
         {
-            
+            OnPlayerFound.Invoke();
+        }
+        else if (Input.GetKeyDown(KeyCode.M))
+        {
+            OnPlayerFoundInRange.Invoke();
         }
     }
 

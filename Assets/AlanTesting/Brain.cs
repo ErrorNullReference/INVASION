@@ -6,16 +6,16 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [Serializable]
-public class AISwitchEvent : UnityEvent<PassingAIBehaviour> { }
+public class AISwitchEvent : UnityEvent<AIBehaviour> { }
 
 public class Brain : MonoBehaviour
 {
-    private List<AIBehaviour> activeBehaviours;
+    private AIBehaviour activeState;
+    private AIBehaviour precedentState;
     private Dictionary<System.Type, AIBehaviour> behaviours;
-
+    
     private void Awake()
     {
-        activeBehaviours = new List<AIBehaviour>();
         behaviours = new Dictionary<System.Type, AIBehaviour>();
     }
 
@@ -27,42 +27,25 @@ public class Brain : MonoBehaviour
             if (!behaviours.ContainsKey(componentsToAdd[i].GetType()))
             {
                 behaviours.Add(componentsToAdd[i].GetType(), componentsToAdd[i]);
-                if(componentsToAdd[i].ActivateOnInitialize)
-                    activeBehaviours.Add(componentsToAdd[i]);
+
+                if (componentsToAdd[i].ActivateOnInitialize && activeState == null)
+                    activeState = componentsToAdd[i];
             }
         }
 
-        for (int i = 0; i < activeBehaviours.Count; i++)
-        {
-            activeBehaviours[i].Init(this);
-        }
+        if (activeState != null)
+            activeState.Init(this);
     }
 	
 	private void Update ()
     {
-        for (int i = 0; i < activeBehaviours.Count; i++)
-        {
-            activeBehaviours[i].AIUpdate();
-        }
+        activeState.AIUpdate();
 	}
 
-    public void SwitchState(PassingAIBehaviour passingAIBehaviour)
+    public void SwitchState(AIBehaviour next)
     {
-        passingAIBehaviour.previous.OnStateExit();
-        AIBehaviour nextBehaviour;
-        if (behaviours.ContainsKey(passingAIBehaviour.next.GetType()))
-        {
-            nextBehaviour = behaviours[passingAIBehaviour.next.GetType()];
-            if (!activeBehaviours.Contains(nextBehaviour))
-            {
-                nextBehaviour.OnStateEnter(passingAIBehaviour.previous);
-                activeBehaviours.Add(nextBehaviour);
-            }
-        }
-    }
-
-    public void DeactivateState(PassingAIBehaviour passingAIBehaviour)
-    {
-        activeBehaviours.Remove(passingAIBehaviour.previous);
+        precedentState = this.activeState;
+        activeState = next;
+        activeState.OnStateEnter(precedentState);
     }
 }

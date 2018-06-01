@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 internal class AIGoToDestination : AIBehaviour
 {
     public string toType;
 
+    public UnityEvent OnDestinationReached;
+
     public override void AIUpdate()
     {
         Debug.Log("going to destination");
+        if (Input.GetKeyDown(KeyCode.N))
+            OnDestinationReached.Invoke();
     }
 
     public override void OnStateEnter(AIBehaviour previous)
