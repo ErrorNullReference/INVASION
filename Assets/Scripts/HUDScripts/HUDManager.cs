@@ -28,18 +28,18 @@ public class HUDManager : MonoBehaviour
     }
     ;
 
-    private Enemy enemy;
+    private LivingBeing livingBeing;
     public DisplayDataType dataType;
     public HeadsUpDisplay InputAssetHUD;
     public bool OneTimeUpdate;  //Set to true to disable component.
 
     void Awake()
     {
-        if (OneTimeUpdate = true)
+        if (OneTimeUpdate= true)
         {
             OneTimeUpdate = !OneTimeUpdate;
         }
-        enemy=GetComponentInParent<Enemy>();
+        livingBeing=gameObject.GetComponentInParent<LivingBeing>();
 
     }
 
@@ -75,15 +75,15 @@ public class HUDManager : MonoBehaviour
 
             case DisplayDataType.Health:
                 if (GOSlider != null)       //HUD 2D text subcase
-                    GOSlider.value = enemy.Life / InputAssetHUD.MaxHealth;
+                    GOSlider.value = livingBeing.Life / InputAssetHUD.MaxHealth;
                 else if (GOImg != null)
                 {   // sprite subcase
-                    GOImg.color = InputAssetHUD.PlayerHealthBarGradient.Evaluate(enemy.Life / InputAssetHUD.MaxHealth);
-                    GOImg.fillAmount = (enemy.Life / InputAssetHUD.MaxHealth);
+                    GOImg.color = InputAssetHUD.PlayerHealthBarGradient.Evaluate(livingBeing.Life / InputAssetHUD.MaxHealth);
+                    GOImg.fillAmount = (livingBeing.Life / InputAssetHUD.MaxHealth);
                 }
                 else
                 {   //Quad subcase 
-                    gameObject.GetComponent<MeshRenderer>().material.color = InputAssetHUD.PlayerHealthBarGradient.Evaluate(enemy.Life / InputAssetHUD.MaxHealth);
+                    gameObject.GetComponent<MeshRenderer>().material.color = InputAssetHUD.PlayerHealthBarGradient.Evaluate(livingBeing.Life / InputAssetHUD.MaxHealth);
                 }
 
                 break;

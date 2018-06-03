@@ -1,40 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Enemy : MonoBehaviour
-{
-    public HeadsUpDisplay Stats;
+public class Enemy : LivingBeing
+{    
     public bool Destroy;
     public bool Recycling;
-    public float randomSpawnTimer;
+    public float randomSpawnTimer;   
+    private float HUDTimer;
+    [SerializeField]
+    private float HUDTimerShow;
     [SerializeField]
     private int networkId;
+    HUDManager hudManager;
+    Image healthImage;
+
 
     public int NetworkId
     {
         get
         {
             return networkId;
-        }
-        
+        }        
     }
 
     private void Start()
     {
-        GetComponentInChildren<HUDManager>().InputAssetHUD = Stats;
-    }
-    //network id of object, needed to get object from list and update its transform
-    public float Life;
-    public Vector3 position;
-//variable to save position for pathfinding. it does not affect gameobject position!
-
+        hudManager = GetComponentInChildren<HUDManager>();
+        healthImage = hudManager.GetComponent<Image>();
+        healthImage.enabled = false;
+        hudManager.InputAssetHUD = Stats;
+    }  
+    
     private void OnEnable()
     {
         networkId = GetComponent<GameNetworkObject>().NetworkId;
-        //Debug.Log("Spawn: " + networkId);
         randomSpawnTimer = Random.Range(0f, 5.0f);
-        Stats.MaxHealth = 5;
         Life = Stats.MaxHealth;
         Destroy = false;
         Recycling = false;
@@ -52,19 +54,31 @@ public class Enemy : MonoBehaviour
         Life = Stats.MaxHealth;
     }
 
-    //this will be managed by the host to send enemies datas to players
     public void DestroyAndRecycle()
     {
         Destroy = true;
         Recycling = true;
     }
 
-    //TO DELETE
     public void DecreaseLife()
     {
+        healthImage.enabled = true;
+        HUDTimer = HUDTimerShow;
         Life--;
     }
 
-   
+    private void Update()
+    {
+        if(HUDTimer>0)
+        {
+            HUDTimer -= Time.deltaTime;
+            if(HUDTimer<=0)
+            {
+                healthImage.enabled = false;
+            }
+        }
+    }
+
+
 
 }
