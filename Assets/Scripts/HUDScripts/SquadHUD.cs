@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class SquadHUD : MonoBehaviour
 {
-    //pressing "Z" or other set buttons, show the HUD with the status of the team mates.
-
-    public KeyCode ShowSquadHUDKey;
+	public KeyCode ShowSquadHUDKey;  //pressing "Z" or other set buttons, show the HUD with the status of the team mates.
     private bool SHUDShowing;
    // public int ClientID;
 
@@ -28,7 +26,7 @@ public class SquadHUD : MonoBehaviour
 	 * if( user list = null)
 	 *  is null , no instantiation
 	 * else
-	 *  instantiate hud piece
+	 *  instantiate hud piece per player
 	 * 
 	 * */
     void Awake()
@@ -37,8 +35,10 @@ public class SquadHUD : MonoBehaviour
         HUDInfos = new HeadsUpDisplay[4];
         for (int i = 0; i < 4; i++)
         {
-            HUDInfos[i] = DefHUDInfo;
-			HUDInfos[i].name= "Player "+ i+ " HUD data";
+			HUDInfos[i] = ScriptableObject.CreateInstance<HeadsUpDisplay>();
+			// hardcoding default values
+			HeadsUpDisplay.LoadFromHUDData(DefHUDInfo,HUDInfos[i]);
+			HUDInfos[i].name=string.Format( "Player {0} HUD data",i);
         }
 
 		StartCoroutine (InitClientHUD());

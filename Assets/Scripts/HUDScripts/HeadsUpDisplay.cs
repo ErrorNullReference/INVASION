@@ -60,5 +60,8 @@ public class HeadsUpDisplay : ScriptableObject {
 		}
 	}
 
+	public static void LoadFromHUDData(HeadsUpDisplay PrimitiveData,HeadsUpDisplay newHUDData){
+		JsonUtility.FromJsonOverwrite (JsonUtility.ToJson (PrimitiveData), newHUDData);
+	}
 
 }
