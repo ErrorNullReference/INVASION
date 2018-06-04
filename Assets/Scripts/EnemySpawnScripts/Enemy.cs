@@ -16,7 +16,6 @@ public class Enemy : LivingBeing
     HUDManager hudManager;
     Image healthImage;
 
-
     public int NetworkId
     {
         get
