@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ac7ca6cb5d72744ca4cf43ae73006f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataType: 6
+  dataType: 1
   InputAssetHUD: {fileID: 0}
   OneTimeUpdate: 0
 --- !u!114 &114402073683487104
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ac7ca6cb5d72744ca4cf43ae73006f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataType: 11
+  dataType: 3
   InputAssetHUD: {fileID: 0}
   OneTimeUpdate: 1
 --- !u!114 &114482602230964016
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ac7ca6cb5d72744ca4cf43ae73006f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataType: 12
+  dataType: 4
   InputAssetHUD: {fileID: 0}
   OneTimeUpdate: 1
 --- !u!114 &114674831832504996

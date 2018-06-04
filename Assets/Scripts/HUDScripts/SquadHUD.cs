@@ -75,7 +75,7 @@ public class SquadHUD : MonoBehaviour
 					foreach (HUDManager TwoDItem in newHUD.GetComponentsInChildren<HUDManager>()) {
 						TwoDItem.InputAssetHUD = HUDInfos [i];
 						TwoDItem.InputAssetHUD.ClientID = i;
-						Debug.Log("Generated HUD piece for Player "+Server.Users[TwoDItem.InputAssetHUD.ClientID].SteamUsername+", client number: "+TwoDItem.InputAssetHUD.ClientID);
+		//				Debug.Log("Generated HUD piece for Player "+Server.Users[TwoDItem.InputAssetHUD.ClientID].SteamUsername+", client number: "+TwoDItem.InputAssetHUD.ClientID);
 					}
 				}
 
