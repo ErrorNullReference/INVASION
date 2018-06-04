@@ -44,8 +44,8 @@ public class SphericalVision : MonoBehaviour
             if (cols[i].gameObject.GetComponentInParent<Player>() == null)
                 continue;
 
-            Vector3 direction = (cols[i].transform.position - (this.transform.position + new Vector3(0, 0, 0)));
-            Ray ray = new Ray(this.transform.position, direction.normalized);
+            Vector3 direction = (cols[i].transform.position - (this.transform.position));
+            Ray ray = new Ray(this.transform.position+new Vector3(0,0.5f,0), direction.normalized);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 100, int.MaxValue, QueryTriggerInteraction.Ignore))
             {
