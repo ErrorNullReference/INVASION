@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3da4655830f72c441be1a076198986db, type: 3}
-  m_Name: Player 3 HUD data
+  m_Name: default HUD_Data
   m_EditorClassIdentifier: 
   SerializeMe: 0
-  ClientID: 0
+  ClientID: 1
   Health: 100
   MaxHealth: 100
   AmmoHeld: 100

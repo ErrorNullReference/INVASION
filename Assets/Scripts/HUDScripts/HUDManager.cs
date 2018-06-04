@@ -149,7 +149,7 @@ public class HUDManager : MonoBehaviour
 
 
             default:
-                Debug.LogError("Unhandled Exception: DisplayDataType '" + dataType + "' not managed in " + gameObject.name);
+                //Debug.LogError("Unhandled Exception: DisplayDataType '" + dataType + "' not managed in " + gameObject.name);
                 break;
         }
 

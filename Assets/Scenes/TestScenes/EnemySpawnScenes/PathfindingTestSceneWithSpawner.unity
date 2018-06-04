@@ -333,7 +333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowSquadHUDKey: 0
   DefHUDInfo: {fileID: 11400000, guid: be9848c4e7b1d2042824da034e872374, type: 2}
-  HUDPrefab: {fileID: 223504747332750884, guid: 56d7bc0a09e766840931d3d6cbd9e1ae,
+  HUDPrefabCanvas: {fileID: 223504747332750884, guid: 56d7bc0a09e766840931d3d6cbd9e1ae,
     type: 2}
 --- !u!1 &715918686
 GameObject:
