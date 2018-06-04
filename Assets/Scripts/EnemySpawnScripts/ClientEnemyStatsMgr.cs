@@ -13,6 +13,6 @@ public class ClientEnemyStatsMgr : MonoBehaviour {
     public void SetHealthStat(byte[] data,uint length,CSteamID sender)
     {
         int id = data[0];
-        ClientTransformManager.IdEnemies[id].gameObject.GetComponent<Enemy>().Life--;
+        ClientTransformManager.IdEnemies[id].gameObject.GetComponent<Enemy>().DecreaseLife();
     }
 }
