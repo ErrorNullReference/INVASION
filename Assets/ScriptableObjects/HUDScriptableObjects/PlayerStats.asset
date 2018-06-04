@@ -9,31 +9,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3da4655830f72c441be1a076198986db, type: 3}
-  m_Name: default HUD_Data
+  m_Name: PlayerStats
   m_EditorClassIdentifier: 
   SerializeMe: 0
   ClientID: 0
-  Health: 100
-  MaxHealth: 100
+  Health: 0
+  MaxHealth: 10
   LevelXP: 0
-  GunName: rifle
-  AmmoHeld: 100
-  MaxAmmo: 999
+  GunName: 
+  AmmoHeld: 0
+  MaxAmmo: 0
   AmmoMag: 0
   PlayerHealthBarGradient:
     serializedVersion: 2
-    key0: {r: 0.5661765, g: 0, b: 0, a: 1}
-    key1: {r: 1, g: 0.1633881, b: 0, a: 1}
-    key2: {r: 1, g: 0.9829681, b: 0, a: 0}
-    key3: {r: 0, g: 1, b: 0.13103437, a: 0}
+    key0: {r: 1, g: 0, b: 0, a: 1}
+    key1: {r: 1, g: 1, b: 0.13624568, a: 1}
+    key2: {r: 0.13662414, g: 0.62981, b: 0.97794116, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 6554
-    ctime2: 32768
-    ctime3: 65535
+    ctime1: 31418
+    ctime2: 65535
+    ctime3: 0
     ctime4: 0
     ctime5: 0
     ctime6: 0
@@ -47,23 +47,23 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 4
+    m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   PlayerAmmoBarGradient:
     serializedVersion: 2
-    key0: {r: 0, g: 0, b: 0, a: 1}
+    key0: {r: 1, g: 1, b: 1, a: 1}
     key1: {r: 1, g: 1, b: 1, a: 1}
-    key2: {r: 1, g: 1, b: 1, a: 0}
-    key3: {r: 1, g: 1, b: 1, a: 0}
-    key4: {r: 1, g: 1, b: 1, a: 0}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
     ctime1: 65535
-    ctime2: 65535
-    ctime3: 65535
-    ctime4: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
     ctime5: 0
     ctime6: 0
     ctime7: 0
