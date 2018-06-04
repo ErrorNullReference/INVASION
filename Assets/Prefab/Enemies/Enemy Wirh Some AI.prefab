@@ -2773,6 +2773,9 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEventPassingGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  Mask:
+    serializedVersion: 2
+    m_Bits: 256
   workAsClient: 0
   fov: 90
   maxViewDistance: 60
