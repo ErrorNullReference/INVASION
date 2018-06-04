@@ -15,7 +15,10 @@ public class SquadHUD : MonoBehaviour
     private HeadsUpDisplay DefHUDInfo;
     private HeadsUpDisplay[] HUDInfos;
     [SerializeField]
-    private Canvas HUDPrefab;
+	/// <summary>
+	/// The HUD prefab canvas: found in hudprefrabs/canvas HUD player (1). must be placed in the scene.
+	/// </summary>
+    private Canvas HUDPrefabCanvas;
 
     //public Mask mask;
 
@@ -30,6 +33,7 @@ public class SquadHUD : MonoBehaviour
 	 * */
     void Awake()
     {
+		
         HUDInfos = new HeadsUpDisplay[4];
         for (int i = 0; i < 4; i++)
         {
@@ -56,16 +60,22 @@ public class SquadHUD : MonoBehaviour
                     }
                 }*/
 
+		// HUD UPDATE 
+		foreach (var player in Server.Users) {
+			
+		}
+
     }
 	IEnumerator InitClientHUD(){
 		while (true) {
 			if (Server.Users != null) {
 
 				for (int i = 0; i < Server.Users.Count; i++) {
-					var newHUD = Instantiate (HUDPrefab, this.transform);
+					var newHUD = Instantiate (HUDPrefabCanvas, this.transform);	//create HUD part and set parent to main 2dHUD canvas
 					foreach (HUDManager TwoDItem in newHUD.GetComponentsInChildren<HUDManager>()) {
 						TwoDItem.InputAssetHUD = HUDInfos [i];
 						TwoDItem.InputAssetHUD.ClientID = i;
+						Debug.Log("Generated HUD piece for Player "+Server.Users[TwoDItem.InputAssetHUD.ClientID].SteamUsername+", client number: "+TwoDItem.InputAssetHUD.ClientID);
 					}
 				}
 

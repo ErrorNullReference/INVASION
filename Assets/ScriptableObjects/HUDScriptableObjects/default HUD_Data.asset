@@ -15,8 +15,6 @@ MonoBehaviour:
   ClientID: 0
   Health: 100
   MaxHealth: 100
-  LevelXP: 0
-  GunName: rifle
   AmmoHeld: 100
   MaxAmmo: 999
   AmmoMag: 0

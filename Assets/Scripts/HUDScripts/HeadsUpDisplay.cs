@@ -19,11 +19,11 @@ public class HeadsUpDisplay : ScriptableObject {
 	/// <summary>
 	/// The experience levels  points of the client (i.e lvl 1 = 1.00 , lvl 3 and half = 3.5,  lvl 4 with 76.5 % xp = 4.765)
 	/// </summary>
-	public float LevelXP;
+	//public float LevelXP;
 	/// <summary>
 	/// The name of the gun.
 	/// </summary>
-	public string GunName;
+	//public string GunName;
 	/// <summary>
 	/// The ammo held.
 	/// </summary>
@@ -43,7 +43,7 @@ public class HeadsUpDisplay : ScriptableObject {
     public Gradient PlayerAmmoBarGradient;
 
     [SerializeField]
-    private string filename = "Client Game Info";//name of the ScriptableObj that saves client info (energy,ammo,etc)
+    private string filename = "Client Game Info";//name of the ScriptableObj that saves client info (energy,ammo,etc). Initialized to avoid bugs on serialization.
 
     private void OnEnable ()	//serialization
 	{

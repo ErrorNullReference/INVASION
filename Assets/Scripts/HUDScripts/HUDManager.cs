@@ -13,16 +13,16 @@ public class HUDManager : MonoBehaviour
     public enum DisplayDataType
     {
         Health,
-        Shield,
-        Armor,
-        LevelXP_amount,
-        LevelXP_lvlNum,
-        GunName,
+      //  Shield,
+    //    Armor,
+    //    LevelXP_amount,
+     //   LevelXP_lvlNum,
+     //   GunName,
         AmmoHeld,
         AmmoMag,
-        LevelName,
-        MissionName,
-        ObjectiveDescription,
+     //   LevelName,
+     //   MissionName,
+     //   ObjectiveDescription,
         PlayerImg,
         PlayerName
     }
@@ -88,7 +88,7 @@ public class HUDManager : MonoBehaviour
 
                 break;
 
-            case DisplayDataType.LevelXP_amount:
+       /*     case DisplayDataType.LevelXP_amount:
                 GOSlider.value = InputAssetHUD.LevelXP % 1; //what's the max level? 100?
                 break;
 
@@ -99,7 +99,7 @@ public class HUDManager : MonoBehaviour
             case DisplayDataType.GunName:
                 GOText.text = InputAssetHUD.GunName;
                 break;
-
+			*/
             case DisplayDataType.AmmoHeld:
                 if (GOText != null)
                     GOText.text = InputAssetHUD.AmmoHeld.ToString();

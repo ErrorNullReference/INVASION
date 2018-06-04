@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
   SerializeMe: 0
-  ClientID: 0
-  Health: 0
+  ClientID: 1
+  Health: 10
   MaxHealth: 10
-  LevelXP: 0
-  GunName: 
   AmmoHeld: 0
   MaxAmmo: 0
   AmmoMag: 0
