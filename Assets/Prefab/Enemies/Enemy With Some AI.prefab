@@ -671,7 +671,7 @@ GameObject:
   - component: {fileID: 136067789119106868}
   - component: {fileID: 114174039656087010}
   m_Layer: 10
-  m_Name: Enemy Wirh Some AI
+  m_Name: Enemy With Some AI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
