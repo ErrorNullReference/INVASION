@@ -11,8 +11,6 @@ public class UnityEventPassingGameObject : UnityEvent<GameObject> { }
 [RequireComponent(typeof(NavMeshAgent))]
 public class MovementManager : MonoBehaviour
 {
-
-
     [SerializeField]
     private float tolerance;
     [SerializeField]

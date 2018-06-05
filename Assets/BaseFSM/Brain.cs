@@ -33,8 +33,6 @@ public class Brain : MonoBehaviour
             currentState.Init(this);
             currentState.OnStateEnter();
         }
-
-
     }
 
     private void Update()

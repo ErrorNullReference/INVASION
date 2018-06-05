@@ -2,9 +2,10 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(Brain))]
 public abstract class AIBehaviour : MonoBehaviour
 {
-    private Brain owner;
+    protected Brain owner;
 
     private bool initialized;
 
