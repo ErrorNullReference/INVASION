@@ -6,10 +6,13 @@ public class ConeVision : MonoBehaviour
 {
     public UnityEventPassingGameObject OnPlayerSight;
 
+    public LayerMask Mask;
+    List<Player> possibleTargets;
     [SerializeField]
     private bool workAsClient;
 
-    [SerializeField] [Range(1f, 360f)]
+    [SerializeField]
+    [Range(1f, 360f)]
     private float fov;
 
     [SerializeField]
@@ -25,6 +28,7 @@ public class ConeVision : MonoBehaviour
     {
         if (!workAsClient && !Client.IsHost)
             this.enabled = false;
+        possibleTargets = new List<Player>();
     }
 
     private void OnEnable()
@@ -58,7 +62,7 @@ public class ConeVision : MonoBehaviour
         if (connectedPlayers == null)
             return;
 
-        List<Player> possibleTargets = new List<Player>();
+        possibleTargets.Clear();
         for (int i = 0; i < connectedPlayers.Length; i++)
         {
             float distanceToPlayer = Vector3.Distance(this.transform.position, connectedPlayers[i].gameObject.transform.position);
@@ -71,7 +75,10 @@ public class ConeVision : MonoBehaviour
                 continue;
 
             RaycastHit hit;
-            if (Physics.Raycast(this.transform.position, directionToPlayer, out hit, maxViewDistance))
+
+            Vector3 raycastPositionStart = transform.position + new Vector3(0f, 0.5f, 0f);
+            Debug.DrawRay(raycastPositionStart, directionToPlayer, Color.magenta);
+            if (Physics.Raycast(raycastPositionStart, directionToPlayer, out hit, maxViewDistance, Mask))
             {
                 if (hit.collider.gameObject.GetComponentInParent<Player>() != null)
                 {
