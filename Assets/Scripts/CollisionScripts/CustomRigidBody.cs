@@ -50,14 +50,14 @@ public class CustomRigidBody : MonoBehaviour
             transform.position = TryMove(position, direction, time) + (transform.position - collider.bounds.center);
         }
         else
-            transform.position = TryMove(position) + (transform.position - collider.bounds.center);
+            transform.position = TryMove(position);
     }
 
     Vector3 TryMove(Vector3 position)
     {
         if (Physics.OverlapSphereNonAlloc(position, GetRightExtent(position), results, CustomMask.value) >= 1)
             return transform.position;
-        return position;
+        return position + (transform.position - collider.bounds.center);
     }
 
     Vector3 TryMove(Vector3 position, Vector3 direction, float time)
@@ -102,5 +102,9 @@ public class CustomRigidBody : MonoBehaviour
             return collider.bounds.extents.y + collider.bounds.center.y;
         else
             return collider.bounds.extents.z + collider.bounds.center.z;*/
+    }
+
+    void OnTriggerEnter(Collider c)
+    {
     }
 }
