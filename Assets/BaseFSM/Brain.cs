@@ -10,6 +10,9 @@ public class AISwitchEvent : UnityEvent<AIBehaviour> { }
 
 public class Brain : MonoBehaviour
 {
+    [SerializeField]
+    private bool disableIfClient;
+
     public AIBehaviour CurrentState { get { return currentState; } }
     public AIBehaviour PreviousState
     {
@@ -28,6 +31,12 @@ public class Brain : MonoBehaviour
 
     private void Start()
     {
+        if(disableIfClient && !Client.IsHost)
+        {
+            this.enabled = false;
+            return;
+        }
+
         if (currentState != null)
         {
             currentState.Init(this);
