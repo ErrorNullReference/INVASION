@@ -472,12 +472,12 @@
             <param name="isSelfMuted">true if local slient has been muted by the sender</param>
             <param name="senderID">message sender id</param>
         </member>
-        <member name="M:VOCASY.Common.Workflow.IsHandlerMuted(System.UInt64,System.Boolean)">
+        <member name="M:VOCASY.Common.Workflow.IsHandlerMuted(VOCASY.VoiceHandler,System.Boolean)">
             <summary>
             Informs the workflow whenever an handler has been muted
             </summary>
-            <param name="handlerNetId">handler obj net id</param>
-            <param name="isMuted">is the handler muted</param>
+            <param name="handler">handler obj to check</param>
+            <param name="sendMsgOnlyIfDiffDetected">true if you wich to send a network message only when the mute status has changed</param>
         </member>
         <member name="M:VOCASY.Common.Workflow.Initialize">
             <summary>
@@ -498,6 +498,32 @@
             <summary>
             Saves current clients mute statuses if available
             </summary>
+        </member>
+        <member name="M:VOCASY.Common.Workflow.GetMuteStatus(System.UInt64)">
+            <summary>
+            Get the current mute status for the given id
+            </summary>
+            <param name="id">handler net id</param>
+            <returns>current mute status</returns>
+        </member>
+        <member name="M:VOCASY.Common.Workflow.GetCurrentTrackedActiveIds(System.UInt64[])">
+            <summary>
+            Fills the given array with the currently tracked active handler ids (Counts only those to which an audio packet would be sent)
+            </summary>
+            <param name="output">active tracked handler ids</param>
+        </member>
+        <member name="M:VOCASY.Common.Workflow.GetCurrentTrackedIds(System.UInt64[])">
+            <summary>
+            Fills the given array with the currently tracked handler ids.
+            </summary>
+            <param name="output">tracked handler ids</param>
+        </member>
+        <member name="M:VOCASY.Common.Workflow.GetTrackedHandlerById(System.UInt64)">
+            <summary>
+            Gets the tracked handler given its id
+            </summary>
+            <param name="id">handler id</param>
+            <returns>tracked handler</returns>
         </member>
         <member name="T:VOCASY.Common.VoidManipulator">
             <summary>
@@ -1053,12 +1079,12 @@
             <param name="isSelfMuted">true if local slient has been muted by the sender</param>
             <param name="senderID">message sender id</param>
         </member>
-        <member name="M:VOCASY.VoiceDataWorkflow.IsHandlerMuted(System.UInt64,System.Boolean)">
+        <member name="M:VOCASY.VoiceDataWorkflow.IsHandlerMuted(VOCASY.VoiceHandler,System.Boolean)">
             <summary>
             Informs the workflow whenever an handler has been muted
             </summary>
-            <param name="handlerNetId">handler obj net id</param>
-            <param name="isMuted">is the handler muted</param>
+            <param name="handler">handler obj</param>
+            <param name="sendMsgOnlyIfDiffDetected">true if you wich to send a network message only when the mute status has changed</param>
         </member>
         <member name="M:VOCASY.VoiceDataWorkflow.Initialize">
             <summary>

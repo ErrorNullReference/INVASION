@@ -8,10 +8,13 @@ public class SteamTransport : Transport
 {
     private void OnEnable()
     {
-        SendMsgTo = SendMsg;
-        SendToAllAction = SendAll;
-        Client.AddCommand(PacketType.VoiceChatData, ReceivePacketAudioCommand);
-        Client.AddCommand(PacketType.VoiceChatMutedMessage, ReceivePacketMuteMsgCommand);
+        if (Application.isPlaying)
+        {
+            SendMsgTo = SendMsg;
+            SendToAllAction = SendAll;
+            Client.AddCommand(PacketType.VoiceChatData, ReceivePacketAudioCommand);
+            Client.AddCommand(PacketType.VoiceChatMutedMessage, ReceivePacketMuteMsgCommand);
+        }
     }
     private void SendAll(byte[] data, int startIndex, int length, List<ulong> receiversIds)
     {
