@@ -12,9 +12,9 @@ public class PlayerAnimatorController : MonoBehaviour
     [SerializeField]
     float RunTreshold, movementTreshold;
     int speedZHash, speedXHash, shootHash, deathHash;
-    Animator animator;
     Vector3 dir, oldPos, cameraDir, playerDirection;
     Camera camera;
+    Animator animator;
 
     void Start()
     {
@@ -47,16 +47,12 @@ public class PlayerAnimatorController : MonoBehaviour
     void ExtrapolateDirectionWithInputs()
     {
         float x = Input.GetAxis("Horizontal");
-        float z = -Input.GetAxis("Vertical");
+        float z = Input.GetAxis("Vertical");
 
         if (x != 0 || z != 0)
         {
-            cameraDir = camera.transform.forward * x + camera.transform.right * z;
-            cameraDir.y = 0;
-            cameraDir = cameraDir.normalized;
-
-            float ang = Mathf.Deg2Rad * Vector3.SignedAngle(cameraDir, transform.forward, Vector3.up);
-            dir = new Vector3(Mathf.Cos(ang), 0, Mathf.Sin(ang));
+            float angle = -Mathf.Deg2Rad * Vector3.SignedAngle(new Vector3(x, 0, z).normalized, transform.forward, Vector3.up);
+            dir = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
 
             if (Input.GetButton("Sprint"))
                 dir *= 2;
@@ -68,21 +64,15 @@ public class PlayerAnimatorController : MonoBehaviour
         playerDirection = transform.position - oldPos;
         oldPos = transform.position;
 
-        float magnitude = playerDirection.magnitude;
+        float magnitude = playerDirection.magnitude / Time.deltaTime;
         if (magnitude >= movementTreshold)
         {
-            playerDirection = playerDirection.normalized;
-            cameraDir = camera.transform.forward * playerDirection.x + camera.transform.right * -playerDirection.z;
-            cameraDir.y = 0;
-            cameraDir = cameraDir.normalized;
-
-            float ang = Mathf.Deg2Rad * Vector3.SignedAngle(cameraDir, transform.forward, Vector3.up);
-            dir = new Vector3(Mathf.Cos(ang), 0, Mathf.Sin(ang));
+            float angle = -Mathf.Deg2Rad * Vector3.SignedAngle(playerDirection.normalized, transform.forward, Vector3.up);
+            dir = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
 
             if (magnitude >= RunTreshold)
                 dir *= 2;
         }
-        Debug.Log(magnitude);
     }
 
     public void Shoot()
