@@ -45,7 +45,14 @@ public class AIShootTillOnSight : AIBehaviour
             OnTargetLossOfSight.Invoke();
             return false;
         }
-        return true;
+
+        if(hit.collider.gameObject == targetToShot)
+            return true;
+        else
+        {
+            OnTargetLossOfSight.Invoke();
+            return false;
+        }
     }
 
     public override void OnStateEnter()

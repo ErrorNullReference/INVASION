@@ -78,8 +78,11 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
         Vector3 raycastPositionStart = transform.position + new Vector3(0f, 0.5f, 0f);
         if (Physics.Raycast(raycastPositionStart, directionToPlayer, out hit, maxViewDistance, layerToLookInto))
         {
-            Debug.Log("TARGET ON SIGHT!");
-            OnTargetOnSight.Invoke();
+            if(hit.collider.gameObject == target)
+            {
+                Debug.Log("TARGET ON SIGHT!");
+                OnTargetOnSight.Invoke();
+            }
         }
     }
 

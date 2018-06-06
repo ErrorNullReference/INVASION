@@ -2736,6 +2736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a7447d22807ae4da8c033c094c7767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableIfClient: 1
   currentState: {fileID: 114454403185978774}
 --- !u!114 &114130182057454510
 MonoBehaviour:
@@ -2750,7 +2751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layerToLookInto:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
   maxViewDistance: 20
   OnTargetLossOfSight:
     m_PersistentCalls:
@@ -2822,7 +2823,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layerToLookInto:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
   maxViewDistance: 10
   fov: 110
   cooldownBeforeRecalculation: 1
