@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Steamworks;
+using VOCASY.Common;
 
 public class VoiceChatSpawner : MonoBehaviour
 {
     
-    public GameObject SpeakerPrefab;
+    public Handler SpeakerPrefab;
     private Lobby lobby;
     private List<GameObject> speakers;
     private List<GameObject> speakersToRemove;
@@ -23,19 +24,23 @@ public class VoiceChatSpawner : MonoBehaviour
 
     private void CreateSpeakers()
     {
-        GameObject recorder = Instantiate(SpeakerPrefab);
-        TestNetworkIdentity recorderIdentity = recorder.GetComponent<TestNetworkIdentity>();
-        recorderIdentity.NetworkId = (ulong)Client.MyID;
-        recorderIdentity.IsLocalPlayer = true;
+        GameObject recorder = Instantiate(SpeakerPrefab.gameObject);
+        Handler recorderIdentity = recorder.GetComponent<Handler>();
+        recorderIdentity.Identity = new NetworkIdentity();
+        recorderIdentity.Identity.NetworkId = (ulong)Client.MyID;
+        recorderIdentity.Identity.IsLocalPlayer = true;
+        recorderIdentity.Identity.IsInitialized = true;
         speakers.Add(recorder);
         foreach (var user in Client.Users)
         {
             if (user.SteamID != Client.MyID)
             {
-                GameObject speaker = Instantiate(SpeakerPrefab);
-                TestNetworkIdentity speakerIdentity = speaker.GetComponent<TestNetworkIdentity>();
-                speakerIdentity.NetworkId = (ulong)user.SteamID;
-                speakerIdentity.IsLocalPlayer = false;
+                GameObject speaker = Instantiate(SpeakerPrefab.gameObject);
+                Handler speakerIdentity = speaker.GetComponent<Handler>();
+                speakerIdentity.Identity = new NetworkIdentity();
+                speakerIdentity.Identity.NetworkId = (ulong)user.SteamID;
+                speakerIdentity.Identity.IsLocalPlayer = false;
+                speakerIdentity.Identity.IsInitialized = true;
                 speakers.Add(speaker);
             }
         }
@@ -48,7 +53,7 @@ public class VoiceChatSpawner : MonoBehaviour
             speakersToRemove.Clear();
             for (int i = 0; i < speakers.Count; i++)
             {
-                ulong Id = speakers[i].GetComponent<TestNetworkIdentity>().NetworkId;
+                ulong Id = speakers[i].GetComponent<Handler>().NetID;
                 if (Id == cb.m_ulSteamIDUserChanged)
                 {
                     speakersToRemove.Add(speakers[i]);
@@ -68,10 +73,12 @@ public class VoiceChatSpawner : MonoBehaviour
     {
         if ((EChatMemberStateChange)cb.m_rgfChatMemberStateChange == EChatMemberStateChange.k_EChatMemberStateChangeEntered)
         {
-            GameObject speaker = Instantiate(SpeakerPrefab);
-            TestNetworkIdentity speakerIdentity = speaker.GetComponent<TestNetworkIdentity>();
-            speakerIdentity.NetworkId = (ulong)cb.m_ulSteamIDUserChanged;
-            speakerIdentity.IsLocalPlayer = false;
+            GameObject speaker = Instantiate(SpeakerPrefab.gameObject);
+            Handler speakerIdentity = speaker.GetComponent<Handler>();
+            speakerIdentity.Identity = new NetworkIdentity();
+            speakerIdentity.Identity.NetworkId = (ulong)cb.m_ulSteamIDUserChanged;
+            speakerIdentity.Identity.IsLocalPlayer = false;
+            speakerIdentity.Identity.IsInitialized = true;
             speakers.Add(speaker);
         }
     }
