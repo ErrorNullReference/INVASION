@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Settings: {fileID: 11400000, guid: 93bb569dfc74fc14eb38f81021095baa, type: 2}
   Manipulator: {fileID: 11400000, guid: f90bd8f94d9bb6c479bdae30332c39d5, type: 2}
-  Transport: {fileID: 11400000, guid: b780c3b6f035acc42870ace301fc8e87, type: 2}
+  Transport: {fileID: 11400000, guid: 8009cbeb3be74ba46be8492445ed806f, type: 2}
   UseStoredIdsStatuses: 1
   statusesFileName: MuteStatuses.txt
   folderName: Communication

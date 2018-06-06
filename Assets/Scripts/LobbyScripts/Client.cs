@@ -14,6 +14,7 @@ public enum PacketType
     Chat,
     Serverchat,
     VoiceChatData,
+    VoiceChatMutedMessage,
     EnemyDeath,
     EnemySpawn,
     RequestAvatarSelection,
