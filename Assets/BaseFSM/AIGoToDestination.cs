@@ -51,7 +51,6 @@ public class AIGoToDestination : AIBehaviour
         targetDestination = aIVision.CurrentTarget.transform.position;
         agent.SetDestination(targetDestination);
         return;
-
     }
 
     public override void OnStateExit()

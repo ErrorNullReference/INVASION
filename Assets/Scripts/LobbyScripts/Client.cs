@@ -24,7 +24,8 @@ public enum PacketType
     Shoot,
     ShootServer,
     ShootHit,
-    ShootHitServer
+    ShootHitServer,
+    ShootCall
 }
 
 public enum PacketOffset

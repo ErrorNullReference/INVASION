@@ -3,14 +3,8 @@ using UnityEngine.Events;
 
 public abstract class AIVision : AIBehaviour
 {
-    [SerializeField]
-    protected LayerMask layerToLookInto;
-
     protected GameObject currentTarget;
     public GameObject CurrentTarget { get { return currentTarget; } private set { } }
-
-    [SerializeField]
-    protected float maxViewDistance;
 
     public UnityEvent OnSpottedTarget;
 
@@ -31,6 +25,12 @@ public abstract class AIVision : AIBehaviour
 
 public class AISphericalVision : AIVision
 {
+    [SerializeField]
+    protected LayerMask layerToLookInto;
+
+    [SerializeField]
+    protected float maxViewDistance;
+
     public void Awake()
     {
         if (!Client.IsHost)

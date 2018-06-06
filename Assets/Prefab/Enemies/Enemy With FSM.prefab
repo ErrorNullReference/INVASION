@@ -1156,11 +1156,14 @@ GameObject:
   - component: {fileID: 195604760211641640}
   - component: {fileID: 114330559708169358}
   - component: {fileID: 114987240227332286}
+  - component: {fileID: 114928955234436994}
+  - component: {fileID: 114318863650488276}
   - component: {fileID: 114226324737965404}
   - component: {fileID: 136103633231692826}
   - component: {fileID: 114057339501243828}
-  - component: {fileID: 114015562273556612}
-  - component: {fileID: 114082049675769678}
+  - component: {fileID: 114454403185978774}
+  - component: {fileID: 114437912616470450}
+  - component: {fileID: 114130182057454510}
   m_Layer: 10
   m_Name: Enemy With FSM
   m_TagString: Untagged
@@ -2722,33 +2725,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114015562273556612
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1764905658333020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afe08d8f8e54e2f4e9b6fe4d70ace2a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnDestinationReached:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114057339501243828}
-        m_MethodName: SwitchState
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 114082049675769678}
-          m_ObjectArgumentAssemblyTypeName: AIBehaviour, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114057339501243828
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2760,8 +2736,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a7447d22807ae4da8c033c094c7767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: {fileID: 114082049675769678}
---- !u!114 &114082049675769678
+  currentState: {fileID: 114454403185978774}
+--- !u!114 &114130182057454510
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2769,21 +2745,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1764905658333020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1049b89329a272447a3839e85a96168b, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a8689ee12bc6a14bb2c23b45cf91d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   layerToLookInto:
     serializedVersion: 2
     m_Bits: 256
-  maxViewDistance: 3
-  OnSpottedTarget:
+  maxViewDistance: 20
+  OnTargetLossOfSight:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114057339501243828}
         m_MethodName: SwitchState
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 114015562273556612}
+          m_ObjectArgument: {fileID: 114454403185978774}
           m_ObjectArgumentAssemblyTypeName: AIBehaviour, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -2792,6 +2768,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  shootSync: {fileID: 0}
 --- !u!114 &114226324737965404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2801,6 +2778,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee0adf2f7a646e94aa6344d50901c680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114318863650488276
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1764905658333020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b225413a905c7e49988edb772eb10e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114330559708169358
@@ -2821,6 +2809,66 @@ MonoBehaviour:
   randomSpawnTimer: 0
   HUDTimerShow: 2
   networkId: 0
+--- !u!114 &114437912616470450
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1764905658333020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10415b9bf28bf8d4b845000099399b37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layerToLookInto:
+    serializedVersion: 2
+    m_Bits: 256
+  maxViewDistance: 10
+  fov: 110
+  cooldownBeforeRecalculation: 1
+  OnTargetOnSight:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114057339501243828}
+        m_MethodName: SwitchState
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 114130182057454510}
+          m_ObjectArgumentAssemblyTypeName: AIBehaviour, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &114454403185978774
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1764905658333020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 267ffd916d38cc74d8e7a9915ccbb746, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnSpottedTarget:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114057339501243828}
+        m_MethodName: SwitchState
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 114437912616470450}
+          m_ObjectArgumentAssemblyTypeName: AIBehaviour, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114578491837655658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2899,6 +2947,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 0
   m_FillOrigin: 0
+--- !u!114 &114928955234436994
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1764905658333020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762947a643328fb4ca64ae39da093c95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114987240227332286
 MonoBehaviour:
   m_ObjectHideFlags: 1
