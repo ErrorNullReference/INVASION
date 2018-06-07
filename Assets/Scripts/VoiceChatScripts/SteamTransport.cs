@@ -6,8 +6,11 @@ using GENUtility;
 [CreateAssetMenu(menuName = "VOCASY/DataTransports/Steam", fileName = "Steam Transport")]
 public class SteamTransport : Transport
 {
-    private void OnEnable()
+    public const int MaxAudioPacketSize = 1200;
+    public override int MaxDataLength { get { return MaxAudioPacketSize - Transport.FirstPacketByteAvailable - Client.HeaderLength; } }
+    protected override void OnEnable()
     {
+        toSend = new BytePacket(MaxAudioPacketSize - Client.HeaderLength);
         if (Application.isPlaying)
         {
             SendMsgTo = SendMsg;

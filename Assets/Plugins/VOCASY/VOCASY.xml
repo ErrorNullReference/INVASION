@@ -366,6 +366,11 @@
             Voice chat workflow
             </summary>
         </member>
+        <member name="F:VOCASY.Common.Transport.toSend">
+            <summary>
+            Packet used to send data
+            </summary>
+        </member>
         <member name="M:VOCASY.Common.Transport.ProcessNetworkIsMutedMessage(System.Boolean,System.UInt64)">
             <summary>
             Processes the ismuted message received
@@ -407,6 +412,11 @@
             </summary>
             <param name="receiverID">Receiver to which the packet should be sent</param>
             <param name="isReceiverMutedByLocal">True if receiver is muted and can avoid sending voice chat packets to the local client</param>
+        </member>
+        <member name="M:VOCASY.Common.Transport.OnEnable">
+            <summary>
+            Send Packet initialization
+            </summary>
         </member>
         <member name="T:VOCASY.Common.Workflow">
             <summary>
