@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Steamworks;
 using System;
-
+using GENUtility;
 public enum PacketType
 {
     Test,
@@ -14,6 +14,7 @@ public enum PacketType
     Chat,
     Serverchat,
     VoiceChatData,
+    VoiceChatMutedMessage,
     EnemyDeath,
     EnemySpawn,
     RequestAvatarSelection,
@@ -79,7 +80,7 @@ public class Client : MonoBehaviour
     [SerializeField]
     private Lobby lobby;
 
-    GamePacket Packet;
+    BytePacket Packet;
 
     static Client instance;
 
@@ -113,7 +114,7 @@ public class Client : MonoBehaviour
 
         MyID = SteamUser.GetSteamID();
 
-        Packet = GamePacket.CreatePacket(4096);
+        Packet = new BytePacket(4096);
 
         Commands = new Command[Enum.GetNames(typeof(PacketType)).Length];
         AddCommands(PacketType.LeaveLobby, LeaveLobbyCommand);
@@ -301,7 +302,7 @@ public class Client : MonoBehaviour
 
     void Receive(uint lenght)
     {
-        GamePacket receiver = GamePacket.CreatePacket((int)lenght);
+        BytePacket receiver = new BytePacket((int)lenght);
         //prepare packet to receive data by setting seek and lenght to 0
         receiver.ResetSeekLength();
 
@@ -315,16 +316,14 @@ public class Client : MonoBehaviour
         CSteamID packetSender = (CSteamID)receiver.ReadULong();
 
         byte[] data = new byte[receiver.CurrentLength - (int)PacketOffset.Payload];
-        Utils.Write(receiver.Data, (int)PacketOffset.Payload, data, 0, data.Length);
+        ByteManipulator.Write(receiver.Data, (int)PacketOffset.Payload, data, 0, data.Length);
 
         InvokeCommand(command, data, (uint)data.Length, packetSender);
-
-        receiver.DisposePacket();
     }
 
     void Send(byte[] data, PacketType command, CSteamID sender, CSteamID receiver, EP2PSend sendType)
     {
-        GamePacket toSend = GamePacket.CreatePacket(data.Length + HeaderLength);
+        BytePacket toSend = new BytePacket(data.Length + HeaderLength);
         //prepare packet to send data by setting seek and lenght to 0
         toSend.ResetSeekLength();
 
@@ -336,8 +335,6 @@ public class Client : MonoBehaviour
             SteamNetworking.SendP2PPacket(receiver, toSend.Data, (uint)toSend.CurrentLength, sendType);
         else
             InvokeCommand((int)command, data, (uint)data.Length, sender);
-
-        toSend.DisposePacket();
     }
 
     void SendAllLobby(byte[] data, PacketType command, CSteamID sender, EP2PSend sendType, bool sendToSender = true)

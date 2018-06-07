@@ -1,20 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Steamworks;
-
+using VOCASY.Common;
+using SOPRO;
+using VOCASY;
 public class VoiceChatSpawner : MonoBehaviour
 {
-    
-    public GameObject SpeakerPrefab;
+
+    public SOPool SpeakerPool;
+    public Workflow Workflow;
     private Lobby lobby;
-    private List<GameObject> speakers;
-    private List<GameObject> speakersToRemove;
 
     private void OnEnable()
     {
-        speakersToRemove = new List<GameObject>();
-        speakers = new List<GameObject>();
         lobby = Client.Lobby;
         SteamCallbackReceiver.ChatUpdateEvent += RemoveSpeaker;
         SteamCallbackReceiver.ChatUpdateEvent += AddSpeaker;
@@ -23,20 +20,23 @@ public class VoiceChatSpawner : MonoBehaviour
 
     private void CreateSpeakers()
     {
-        GameObject recorder = Instantiate(SpeakerPrefab);
-        TestNetworkIdentity recorderIdentity = recorder.GetComponent<TestNetworkIdentity>();
-        recorderIdentity.NetworkId = (ulong)Client.MyID;
-        recorderIdentity.IsLocalPlayer = true;
-        speakers.Add(recorder);
+        GameObject recorder = SpeakerPool.Get();
+        Handler recorderIdentity = recorder.GetComponent<Handler>();
+        recorderIdentity.Identity = new NetworkIdentity();
+        recorderIdentity.Identity.NetworkId = (ulong)Client.MyID;
+        recorderIdentity.Identity.IsLocalPlayer = true;
+        recorderIdentity.Identity.IsInitialized = true;
+
         foreach (var user in Client.Users)
         {
             if (user.SteamID != Client.MyID)
             {
-                GameObject speaker = Instantiate(SpeakerPrefab);
-                TestNetworkIdentity speakerIdentity = speaker.GetComponent<TestNetworkIdentity>();
-                speakerIdentity.NetworkId = (ulong)user.SteamID;
-                speakerIdentity.IsLocalPlayer = false;
-                speakers.Add(speaker);
+                GameObject speaker = SpeakerPool.Get();
+                Handler speakerIdentity = speaker.GetComponent<Handler>();
+                speakerIdentity.Identity = new NetworkIdentity();
+                speakerIdentity.Identity.NetworkId = (ulong)user.SteamID;
+                speakerIdentity.Identity.IsLocalPlayer = false;
+                speakerIdentity.Identity.IsInitialized = true;
             }
         }
     }
@@ -45,21 +45,21 @@ public class VoiceChatSpawner : MonoBehaviour
     {
         if ((EChatMemberStateChange)cb.m_rgfChatMemberStateChange == EChatMemberStateChange.k_EChatMemberStateChangeLeft || (EChatMemberStateChange)cb.m_rgfChatMemberStateChange == EChatMemberStateChange.k_EChatMemberStateChangeDisconnected)
         {
-            speakersToRemove.Clear();
-            for (int i = 0; i < speakers.Count; i++)
-            {
-                ulong Id = speakers[i].GetComponent<TestNetworkIdentity>().NetworkId;
-                if (Id == cb.m_ulSteamIDUserChanged)
-                {
-                    speakersToRemove.Add(speakers[i]);
-                    break;
-                }
-            }
+            //workflow will not find handler if the handler didn't have time to initialize itself (requires a single handler update cycle if Identity is initialized)
+            //In this case if an handler is created and then it is requested to be removed within a single frame the handler most likely didn't have the time to initialize and no handler will be returned.
+            VoiceHandler handler = Workflow.GetTrackedHandlerById(cb.m_ulSteamIDUserChanged);
 
-            foreach (GameObject s in speakersToRemove)
+            if (!handler)
             {
-                speakers.Remove(s);
-                Destroy(s);
+                SpeakerPool.Recycle(handler.gameObject);
+
+                //Now that handler is disabled reset its initialization status
+                Handler h = handler as Handler;
+                if(h != null)
+                {
+                    h.Reset();
+                    h.Identity.IsInitialized = false;
+                }
             }
         }
     }
@@ -68,11 +68,12 @@ public class VoiceChatSpawner : MonoBehaviour
     {
         if ((EChatMemberStateChange)cb.m_rgfChatMemberStateChange == EChatMemberStateChange.k_EChatMemberStateChangeEntered)
         {
-            GameObject speaker = Instantiate(SpeakerPrefab);
-            TestNetworkIdentity speakerIdentity = speaker.GetComponent<TestNetworkIdentity>();
-            speakerIdentity.NetworkId = (ulong)cb.m_ulSteamIDUserChanged;
-            speakerIdentity.IsLocalPlayer = false;
-            speakers.Add(speaker);
+            GameObject speaker = SpeakerPool.Get();
+            Handler speakerIdentity = speaker.GetComponent<Handler>();
+            speakerIdentity.Identity = new NetworkIdentity();
+            speakerIdentity.Identity.NetworkId = (ulong)cb.m_ulSteamIDUserChanged;
+            speakerIdentity.Identity.IsLocalPlayer = false;
+            speakerIdentity.Identity.IsInitialized = true;
         }
     }
 
