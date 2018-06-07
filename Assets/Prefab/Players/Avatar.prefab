@@ -1427,8 +1427,8 @@ MonoBehaviour:
   speedX: speedX
   shoot: shoot
   death: death
-  RunTreshold: 0.13
-  movementTreshold: 0.01
+  RunTreshold: 6
+  movementTreshold: 1
 --- !u!114 &114130298613650360
 MonoBehaviour:
   m_ObjectHideFlags: 1
