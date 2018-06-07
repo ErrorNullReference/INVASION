@@ -8,6 +8,7 @@ public class SteamTransport : Transport
 {
     public const int MaxAudioPacketSize = 1200;
     public override int MaxDataLength { get { return MaxAudioPacketSize - Transport.FirstPacketByteAvailable - Client.HeaderLength; } }
+    private readonly byte[] boolean = new byte[sizeof(bool)];
     protected override void OnEnable()
     {
         toSend = new BytePacket(MaxAudioPacketSize - Client.HeaderLength);
@@ -29,7 +30,6 @@ public class SteamTransport : Transport
     }
     private void SendMsg(ulong targetID, bool isTargetMutedByLocal)
     {
-        byte[] boolean = new byte[sizeof(bool)];
         ByteManipulator.Write(boolean, 0, isTargetMutedByLocal);
         Client.SendPacket(boolean, PacketType.VoiceChatMutedMessage, Client.MyID, (CSteamID)targetID, EP2PSend.k_EP2PSendReliable);
     }
