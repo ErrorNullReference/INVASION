@@ -48,7 +48,15 @@ public class VoiceChatSpawner : MonoBehaviour
         {
             VoiceHandler handler = Workflow.GetTrackedHandlerById(cb.m_ulSteamIDUserChanged);
             if (!handler)
+            {
                 SpeakerPool.Recycle(handler.gameObject);
+                Handler h = handler as Handler;
+                if(h != null)
+                {
+                    h.Reset();
+                    h.Identity.IsInitialized = false;
+                }
+            }
         }
     }
 

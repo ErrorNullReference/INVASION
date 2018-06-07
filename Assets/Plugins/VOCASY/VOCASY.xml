@@ -107,6 +107,11 @@
             <param name="audioDataCount">audio data amount to process</param>
             <param name="info">data info</param>
         </member>
+        <member name="M:VOCASY.Common.Handler.Reset">
+            <summary>
+            Resets initialized status
+            </summary>
+        </member>
         <member name="T:VOCASY.Common.MuteStatus">
             <summary>
             Used to describe mute status
