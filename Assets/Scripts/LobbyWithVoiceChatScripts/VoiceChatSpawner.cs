@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Steamworks;
 using VOCASY.Common;
 using SOPRO;
@@ -46,10 +45,15 @@ public class VoiceChatSpawner : MonoBehaviour
     {
         if ((EChatMemberStateChange)cb.m_rgfChatMemberStateChange == EChatMemberStateChange.k_EChatMemberStateChangeLeft || (EChatMemberStateChange)cb.m_rgfChatMemberStateChange == EChatMemberStateChange.k_EChatMemberStateChangeDisconnected)
         {
+            //workflow will not find handler if the handler didn't have time to initialize itself (requires a single handler update cycle if Identity is initialized)
+            //In this case if an handler is created and then it is requested to be removed within a single frame the handler most likely didn't have the time to initialize and no handler will be returned.
             VoiceHandler handler = Workflow.GetTrackedHandlerById(cb.m_ulSteamIDUserChanged);
+
             if (!handler)
             {
                 SpeakerPool.Recycle(handler.gameObject);
+
+                //Now that handler is disabled reset its initialization status
                 Handler h = handler as Handler;
                 if(h != null)
                 {

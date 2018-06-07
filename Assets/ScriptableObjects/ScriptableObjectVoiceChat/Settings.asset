@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -742427673, guid: ebc68fc57ea047f49ba2c15d0e88238b, type: 3}
-  m_Name: New Settings
+  m_Name: Settings
   m_EditorClassIdentifier: 
   PushToTalkKey: 99
   folderName: Communication

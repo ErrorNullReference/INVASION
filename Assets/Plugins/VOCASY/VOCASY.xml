@@ -109,7 +109,7 @@
         </member>
         <member name="M:VOCASY.Common.Handler.Reset">
             <summary>
-            Resets initialized status
+            Resets initialized status. Do not Reset an handler if it has not been disabled yet, otherwise it will remain in an incorrect state and lead to possible errors.
             </summary>
         </member>
         <member name="T:VOCASY.Common.MuteStatus">
