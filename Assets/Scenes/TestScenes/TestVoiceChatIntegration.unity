@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -222,6 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Text: {fileID: 475014273}
+  InputField: {fileID: 0}
 --- !u!1 &91612213
 GameObject:
   m_ObjectHideFlags: 0
@@ -1299,9 +1300,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   avatarID: 3
   Button: {fileID: 613895010}
-  Image: {fileID: 351950860}
-  OwnerID:
-    m_SteamID: 0
+  AddButton: {fileID: 0}
+  avatarImage: {fileID: 0}
+  DefaultTexture: {fileID: 0}
 --- !u!1 &635796857
 GameObject:
   m_ObjectHideFlags: 0
@@ -1848,9 +1849,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   avatarID: 0
   Button: {fileID: 1038828665}
-  Image: {fileID: 1852456226}
-  OwnerID:
-    m_SteamID: 0
+  AddButton: {fileID: 0}
+  avatarImage: {fileID: 0}
+  DefaultTexture: {fileID: 0}
 --- !u!1 &1055558333
 GameObject:
   m_ObjectHideFlags: 0
@@ -3072,7 +3073,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1560592372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3081,9 +3082,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1560592371}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddc8cbe2cef018d498c3008d7d2dd4f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 1161d60b989188e4382f88ceff02b266, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpeakerPool: {fileID: 11400000, guid: f1ce79fe2331d7c468469422a48c538f, type: 2}
+  Workflow: {fileID: 11400000, guid: 80f9be8afeed3584c83167bd90e90a3c, type: 2}
 --- !u!4 &1560592373
 Transform:
   m_ObjectHideFlags: 0
@@ -3356,9 +3359,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   avatarID: 1
   Button: {fileID: 1584260651}
-  Image: {fileID: 2040034403}
-  OwnerID:
-    m_SteamID: 0
+  AddButton: {fileID: 0}
+  avatarImage: {fileID: 0}
+  DefaultTexture: {fileID: 0}
 --- !u!1 &1616868754
 GameObject:
   m_ObjectHideFlags: 0
@@ -3651,9 +3654,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   avatarID: 2
   Button: {fileID: 1741352885}
-  Image: {fileID: 1055558335}
-  OwnerID:
-    m_SteamID: 0
+  AddButton: {fileID: 0}
+  avatarImage: {fileID: 0}
+  DefaultTexture: {fileID: 0}
 --- !u!1 &1852456224
 GameObject:
   m_ObjectHideFlags: 0
