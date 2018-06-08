@@ -6,7 +6,6 @@ using Steamworks;
 
 public class ClientTransformManager : MonoBehaviour
 {
-
     //public static List<GameNetworkObject> enemiesInScene;
     public static ClientTransformManager Instance;
     public static Dictionary<int, GameNetworkObject> IdEnemies;
