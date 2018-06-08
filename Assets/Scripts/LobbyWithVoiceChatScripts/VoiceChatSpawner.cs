@@ -27,7 +27,7 @@ public class VoiceChatSpawner : MonoBehaviour
         recorderIdentity.Identity.IsLocalPlayer = true;
         recorderIdentity.Identity.IsInitialized = true;
 
-        foreach (var user in Client.Users)
+        foreach (User user in Client.Users)
         {
             if (user.SteamID != Client.MyID)
             {
