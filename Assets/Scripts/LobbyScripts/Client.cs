@@ -4,6 +4,7 @@ using UnityEngine;
 using Steamworks;
 using System;
 using GENUtility;
+
 public enum PacketType
 {
     Test,
@@ -41,9 +42,14 @@ public class Client : MonoBehaviour
 
     public static Lobby Lobby;
 
-    public delegate void LobbyInitialized();
+    public delegate void ClientStatus();
 
-    public static event LobbyInitialized OnLobbyInitializationEvent;
+    public delegate void UserStatus(CSteamID ID);
+
+    public static event ClientStatus OnLobbyInitializationEvent;
+    public static event ClientStatus OnLobbyLeaveEvent;
+    public static event UserStatus OnUserEnter;
+    public static event UserStatus OnUserLeave;
 
     /// <summary>
     /// Return true if you are the lobby owner.
@@ -147,9 +153,9 @@ public class Client : MonoBehaviour
 
     void P2PStatus(P2PSessionConnectFail_t cb)
     {
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         Debug.Log(cb.m_eP2PSessionError);
-#endif
+        #endif
     }
 
     void AddCommands(PacketType commandType, Command command)
@@ -205,11 +211,6 @@ public class Client : MonoBehaviour
         }
         SendPacketToLobby(new byte[] { }, PacketType.Test, EP2PSend.k_EP2PSendReliable, false);
 
-#if UNITY_EDITOR
-        Debug.Log("Num members in the lobby: " + num);
-        Debug.Log("My steam ID: " + MyID.ToString());
-#endif
-
         if (OnLobbyInitializationEvent != null)
             OnLobbyInitializationEvent.Invoke();
     }
@@ -238,6 +239,8 @@ public class Client : MonoBehaviour
     {
         CSteamID lobbyID = lobby.LobbyID;
         lobby.Reset();
+        if (OnLobbyLeaveEvent != null)
+            OnLobbyLeaveEvent.Invoke();
     }
 
     void LeaveLobbyCommand(byte[] data, uint dataLenght, CSteamID sender)
@@ -279,7 +282,11 @@ public class Client : MonoBehaviour
         if ((EChatMemberStateChange)cb.m_rgfChatMemberStateChange == EChatMemberStateChange.k_EChatMemberStateChangeEntered)
         {
             if (lobby.GetUserFromID((CSteamID)cb.m_ulSteamIDUserChanged) == null)
+            {
                 Users.Add(new User((CSteamID)cb.m_ulSteamIDUserChanged));
+                if (OnUserEnter != null)
+                    OnUserEnter.Invoke((CSteamID)cb.m_ulSteamIDUserChanged);
+            }
         }
         else if ((EChatMemberStateChange)cb.m_rgfChatMemberStateChange == EChatMemberStateChange.k_EChatMemberStateChangeLeft || (EChatMemberStateChange)cb.m_rgfChatMemberStateChange == EChatMemberStateChange.k_EChatMemberStateChangeDisconnected)
         {
@@ -288,6 +295,8 @@ public class Client : MonoBehaviour
                 if (Users[i].SteamID == (CSteamID)cb.m_ulSteamIDUserChanged)
                 {
                     Users.Remove(Users[i]);
+                    if (OnUserLeave != null)
+                        OnUserLeave.Invoke((CSteamID)cb.m_ulSteamIDUserChanged);
                     return;
                 }
             }
