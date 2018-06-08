@@ -1,27 +1,60 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
-internal class AIGoToDestination : AIBehaviour
+[RequireComponent(typeof(NavMeshAgent))]
+public class AIGoToDestination : AIBehaviour
 {
-    public string toType;
+    //[SerializeField]
+    //private float cooldownBetweenRecalculations;
+    //private float currentCooldownLeft;
+
+    private Vector3 targetDestination;
+
+    private NavMeshAgent agent;
+
+    //private WaitForSeconds waitForSecond;
 
     public UnityEvent OnDestinationReached;
 
-    public override void AIUpdate()
+    public void Awake()
     {
-        Debug.Log("going to destination");
-        if (Input.GetKeyDown(KeyCode.N))
-            OnDestinationReached.Invoke();
+        //waitForSecond = new WaitForSeconds(0.1f);
+        agent = this.GetComponent<NavMeshAgent>();
     }
 
-    public override void OnStateEnter( )
+    public void OnEnable()
     {
-        string toTypeOnEnter = "ON STATE ENTER : AI go to destination ";
-        Debug.Log(toTypeOnEnter);
+        //currentCooldownLeft = 0;
+    }
+
+    public override void AIUpdate()
+    {
+        float distanceToDestination = (this.transform.position - targetDestination).magnitude;
+        if(distanceToDestination <= agent.stoppingDistance)
+        {
+            OnDestinationReached.Invoke();
+        }
+    }
+
+    public override void OnStateEnter()
+    {
+        AIVision aIVision = owner.PreviousState as AIVision;
+        if (aIVision == null)
+        {
+            OnDestinationReached.Invoke();
+            return;
+        }
+
+        agent.isStopped = false;
+        targetDestination = aIVision.CurrentTarget.transform.position;
+        agent.SetDestination(targetDestination);
+        return;
     }
 
     public override void OnStateExit()
     {
-        Debug.Log("ON STATE EXIT : AI go to destination ");
+        agent.isStopped = true;
     }
 }

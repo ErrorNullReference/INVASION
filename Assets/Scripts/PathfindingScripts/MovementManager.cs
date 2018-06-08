@@ -11,8 +11,6 @@ public class UnityEventPassingGameObject : UnityEvent<GameObject> { }
 [RequireComponent(typeof(NavMeshAgent))]
 public class MovementManager : MonoBehaviour
 {
-
-
     [SerializeField]
     private float tolerance;
     [SerializeField]
@@ -148,7 +146,7 @@ public class MovementManager : MonoBehaviour
         //transform.position = Vector3.Lerp(oldDestination, nextDestination, frac);
     }
 
-    public void ReceiveTransform(Vector3 pos, Quaternion rot)
+    public void ReceiveTransform(Vector3 pos, Quaternion rot) //USED BY MOVEMENTMANAGER
     {
         Debug.Log("Enemy: " + this.GetComponent<GameNetworkObject>().NetworkId + "Position is: " + pos);
 

@@ -32,6 +32,9 @@ public class HUDManager : MonoBehaviour
     public DisplayDataType dataType;
     public HeadsUpDisplay InputAssetHUD;
     public bool OneTimeUpdate;  //Set to true to disable component.
+    Slider GOSlider;
+    Text GOText;
+    Image GOImg;
 
     void Awake()
     {
@@ -40,7 +43,9 @@ public class HUDManager : MonoBehaviour
             OneTimeUpdate = !OneTimeUpdate;
         }
         livingBeing=gameObject.GetComponentInParent<LivingBeing>();
-
+        GOSlider = this.GetComponent<Slider>();
+        GOText = this.GetComponent<Text>();
+        GOImg = this.GetComponent<Image>();
     }
 
 
@@ -55,7 +60,7 @@ public class HUDManager : MonoBehaviour
     {
         if (InputAssetHUD == null)
         {       //in case of missing HUD input, this throws an error and disables the component(to avoid warning spam)
-            Debug.LogWarning(gameObject.name + "is missing a HUD Input asset !");
+           // Debug.LogWarning(gameObject.name + "is missing a HUD Input asset !");
             this.gameObject.GetComponent<HUDManager>().enabled = false;
             return;
         }
@@ -63,12 +68,7 @@ public class HUDManager : MonoBehaviour
         {
             this.gameObject.GetComponent<HUDManager>().enabled = false;     //disables the component on second update
             return;
-        }
-
-        Slider GOSlider = this.GetComponent<Slider>();
-        Text GOText = this.GetComponent<Text>();
-        Image GOImg = this.GetComponent<Image>();
-
+        }       
 
         switch (dataType)
         {

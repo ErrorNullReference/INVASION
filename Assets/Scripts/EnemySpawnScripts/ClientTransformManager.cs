@@ -6,7 +6,6 @@ using Steamworks;
 
 public class ClientTransformManager : MonoBehaviour
 {
-
     //public static List<GameNetworkObject> enemiesInScene;
     public static ClientTransformManager Instance;
     public static Dictionary<int, GameNetworkObject> IdEnemies;
@@ -76,7 +75,7 @@ public class ClientTransformManager : MonoBehaviour
         //    }
         //}
         if (IdEnemies.ContainsKey(id))
-            IdEnemies[id].GetComponent<MovementManager>().ReceiveTransform(position, rotation);
+            IdEnemies[id].GetComponent<EnemyTransformSync>().ReceiveTransform(position, rotation);
     }
 
     private void OnDestroy()
