@@ -32,7 +32,7 @@ public class AIShootTillOnSight : AIBehaviour
 
     private void Shot()
     {
-        Debug.Log("BANG BANG");
+        //Debug.Log("BANG BANG");
         if (shootSync != null)
             shootSync.SendShotCall();
     }

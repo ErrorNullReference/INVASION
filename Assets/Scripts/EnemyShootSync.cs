@@ -11,6 +11,6 @@ public class EnemyShootSync : MonoBehaviour
 
     public void ReceiveShotCall() //USED BY SHOTMANAGER?
     {
-        Debug.Log("Enemy: " + this.GetComponent<GameNetworkObject>().NetworkId + "just Shot");
+       // Debug.Log("Enemy: " + this.GetComponent<GameNetworkObject>().NetworkId + "just Shot");
     }
 }

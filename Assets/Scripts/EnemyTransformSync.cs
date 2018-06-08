@@ -77,7 +77,7 @@ public class EnemyTransformSync : MonoBehaviour
     }
     public void ReceiveTransform(Vector3 pos, Quaternion rot) //USED BY MOVEMENTMANAGER
     {
-        Debug.Log("Enemy: " + this.GetComponent<GameNetworkObject>().NetworkId + "Position is: " + pos);
+       // Debug.Log("Enemy: " + this.GetComponent<GameNetworkObject>().NetworkId + "Position is: " + pos);
 
         startPos = transform.position;
         startRot = transform.rotation;

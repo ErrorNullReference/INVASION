@@ -75,7 +75,7 @@ public class ClientTransformManager : MonoBehaviour
         //    }
         //}
         if (IdEnemies.ContainsKey(id))
-            IdEnemies[id].GetComponent<MovementManager>().ReceiveTransform(position, rotation);
+            IdEnemies[id].GetComponent<EnemyTransformSync>().ReceiveTransform(position, rotation);
     }
 
     private void OnDestroy()
