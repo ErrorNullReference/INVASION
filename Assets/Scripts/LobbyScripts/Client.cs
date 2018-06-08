@@ -297,6 +297,8 @@ public class Client : MonoBehaviour
 
     void InvokeCommand(int command, byte[] data, uint dataLength, CSteamID sender)
     {
+        if (command >= Commands.Length)
+            return;
         if (Commands[command] != null)
             Commands[command].Invoke(data, dataLength, sender);
     }
