@@ -10,6 +10,10 @@ using GENUtility;
 public class MovementManager : MonoBehaviour
 {
     [SerializeField]
+    private ConeVision coneV;
+    [SerializeField]
+    private SphericalVision sphereV;
+    [SerializeField]
     private float tolerance;
     [SerializeField]
     private float cooldownBetweenRecalculations;
@@ -23,8 +27,6 @@ public class MovementManager : MonoBehaviour
     private delegate void NetworkState();
 
     private NetworkState networkState;
-    public BaseSOEvVoid OnPathReached;
-    public BaseSOEvVoid OnPathStarted;
     private WaitForSeconds waitForSecond = new WaitForSeconds(0.1f);
 
     private Prediction prediction;
@@ -89,16 +91,18 @@ public class MovementManager : MonoBehaviour
             currentCooldownLeft = cooldownBetweenRecalculations;
             agent.SetDestination(nextDestination);
             oldDestination = nextDestination;
-            OnPathStarted.Raise();
+            sphereV.StopLooking();
+            coneV.StopLooking();
         }
 
         //Check if agent reached the destination, if yes calls the OnPathReached Event and then this won't be called again unless a new destination is set.
         if (!this.agent.isStopped && this.agent.hasPath && (this.transform.position - this.agent.destination).magnitude < tolerance)
         {
             this.agent.isStopped = true;
-            OnPathReached.Raise();
+            sphereV.StartLooking();
+            coneV.StartLooking();
         }
-        Vector3 direction = this.agent.velocity.normalized;        
+        Vector3 direction = this.agent.velocity.normalized;
         animController.Animation(direction.x, direction.z);
         //SendTransform();
     }
@@ -142,7 +146,7 @@ public class MovementManager : MonoBehaviour
             frac = 1;
         transform.position = Vector3.Lerp(startPos, endPos, frac);
         transform.rotation = Quaternion.Slerp(startRot, endRot, frac);
-          
+
         //transform.position = Vector3.Lerp(oldDestination, nextDestination, frac);
     }
 

@@ -6,7 +6,6 @@ public class ConeVision : MonoBehaviour
 {
     public BaseSOEvGameObject OnPlayerSight;
 
-    public LayerMaskHolder Mask;
     List<Player> possibleTargets;
     [SerializeField]
     private bool workAsClient;
