@@ -93,10 +93,11 @@ public class ShootSystem : MonoBehaviour
 
     void SendHitToHost(int id)
     {
-        byte[] data = new byte[]{ (byte)id };
+        byte[] data = ArrayPool<byte>.Get((byte)id);
 
         Client.SendPacketToHost(data, PacketType.ShootHitServer, Steamworks.EP2PSend.k_EP2PSendReliable);
 
+        ArrayPool<byte>.Recycle(data);
         //Debug.Log("hit");
     }
 

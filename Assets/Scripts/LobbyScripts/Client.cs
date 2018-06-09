@@ -136,8 +136,10 @@ public class Client : MonoBehaviour
     {
         while (true)
         {
-            Client.SendPacketToHost(new byte[] { }, PacketType.LatencyServer, EP2PSend.k_EP2PSendReliable);
+            byte[] d = ArrayPool<byte>.Get(0);
+            Client.SendPacketToHost(d, PacketType.LatencyServer, EP2PSend.k_EP2PSendReliable);
             latencyTimer = Time.time;
+            ArrayPool<byte>.Recycle(d);
             yield return waitForSeconds;
         }
     }
@@ -210,7 +212,9 @@ public class Client : MonoBehaviour
             CSteamID userID = SteamMatchmaking.GetLobbyMemberByIndex(lobby.LobbyID, i);
             lobby.Users.Add(new User(userID));
         }
+
         SendPacketToLobby(new byte[] { }, PacketType.Test, EP2PSend.k_EP2PSendReliable, false);
+
 
         if (OnLobbyInitializationEvent != null)
             OnLobbyInitializationEvent.Invoke();
@@ -314,45 +318,38 @@ public class Client : MonoBehaviour
 
     void Receive(uint lenght)
     {
-        BytePacket receiver = new BytePacket(ArrayPool<byte>.Get((int)lenght));
-        //prepare packet to receive data by setting seek and lenght to 0
-        receiver.ResetSeekLength();
+        byte[] receiver = ArrayPool<byte>.Get((int)lenght);
 
         uint dataLenght;
         CSteamID sender;
-        SteamNetworking.ReadP2PPacket(receiver.Data, lenght, out dataLenght, out sender);
+        SteamNetworking.ReadP2PPacket(receiver, lenght, out dataLenght, out sender);
 
-        int command = receiver.ReadByte();
-        CSteamID packetSender = (CSteamID)receiver.ReadULong();
+        int command = receiver[0];
+        CSteamID packetSender = (CSteamID)ByteManipulator.ReadUInt64(receiver, 1);
 
-        //byte[] data = new byte[receiver.CurrentLength - (int)PacketOffset.Payload];
-        //ByteManipulator.Write(receiver.Data, (int)PacketOffset.Payload, data, 0, data.Length);
+        int finalLength = (int)lenght - HeaderLength;
 
-        receiver.CurrentLength = (int)lenght - receiver.CurrentSeek;
+        ByteManipulator.Write<byte>(receiver, HeaderLength, receiver, 0, finalLength);
 
-        receiver.WriteByteData(receiver.Data, 0, receiver.CurrentSeek, receiver.CurrentLength);
+        InvokeCommand(command, receiver, (uint)finalLength, packetSender);
 
-        InvokeCommand(command, receiver.Data, (uint)receiver.CurrentLength, packetSender);
-
-        ArrayPool<byte>.Recycle(receiver.Data);
+        ArrayPool<byte>.Recycle(receiver);
     }
 
     void Send(byte[] data, PacketType command, CSteamID sender, CSteamID receiver, EP2PSend sendType)
     {
-        BytePacket toSend = new BytePacket((ArrayPool<byte>.Get(data.Length + HeaderLength)));
-        //prepare packet to send data by setting seek and lenght to 0
-        toSend.ResetSeekLength();
+        byte[] toSend = ArrayPool<byte>.Get(data.Length + HeaderLength);
 
-        toSend.Write((byte)command);
-        toSend.Write((ulong)sender);
-        toSend.WriteByteData(data, 0, data.Length);
+        ByteManipulator.Write(toSend, 0, (byte)command);
+        ByteManipulator.Write(toSend, sizeof(byte), (ulong)sender);
+        ByteManipulator.Write<byte>(data, 0, toSend, HeaderLength, data.Length);
 
         if (MyID != receiver)
-            SteamNetworking.SendP2PPacket(receiver, toSend.Data, (uint)toSend.CurrentLength, sendType);
+            SteamNetworking.SendP2PPacket(receiver, toSend, (uint)toSend.Length, sendType);
         else
             InvokeCommand((int)command, data, (uint)data.Length, sender);
 
-        ArrayPool<byte>.Recycle(toSend.Data);
+        ArrayPool<byte>.Recycle(toSend);
     }
 
     void SendAllLobby(byte[] data, PacketType command, CSteamID sender, EP2PSend sendType, bool sendToSender = true)

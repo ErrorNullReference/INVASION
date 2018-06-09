@@ -42,6 +42,9 @@ public class AvatarsMgr : MonoBehaviour
         for (int j = 0; j < Avatars.Length; j++)
             Avatars[j].Reset();
 
+        if (Client.Users == null)
+            return;
+
         for (int i = 0; i < Client.Users.Count; i++)
         {
             string data = SteamMatchmaking.GetLobbyMemberData(Client.Lobby.LobbyID, Client.Users[i].SteamID, "AvatarID");
