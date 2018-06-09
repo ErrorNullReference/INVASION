@@ -44,7 +44,7 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
     public override void OnStateEnter()
     {
         AIVision aIVision = owner.PreviousState as AIVision;
-        if (aIVision == null)
+        if (aIVision == null || !aIVision.CurrentTarget)
         {
             OnTargetOnSight.Raise();
             return;
