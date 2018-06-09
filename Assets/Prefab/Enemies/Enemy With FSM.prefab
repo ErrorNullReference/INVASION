@@ -2856,6 +2856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnSpottedTarget: {fileID: 11400000, guid: 586572156e6bfd1409ddacbed2fc4cdf, type: 2}
+  possibleTargets: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
 --- !u!114 &114533326008830544
 MonoBehaviour:
   m_ObjectHideFlags: 1

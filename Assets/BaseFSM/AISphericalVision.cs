@@ -30,6 +30,9 @@ public class AISphericalVision : AIVision
     [SerializeField]
     protected float maxViewDistance;
 
+    [SerializeField]
+    protected SOListPlayerContainer players;
+
     public void Awake()
     {
         if (!Client.IsHost)
@@ -60,7 +63,17 @@ public class AISphericalVision : AIVision
 
     private void LookForATarget()
     {
-        Collider[] cols = Physics.OverlapSphere(this.gameObject.transform.position, maxViewDistance, layerToLookInto);
-        currentTarget = cols.Length == 0 ? null : cols[UnityEngine.Random.Range(0, cols.Length)].gameObject;
+        int length = players.Elements.Count;
+        currentTarget = null;
+        Vector3 pos = transform.position;
+        for (int i = 0; i < length; i++)
+        {
+            Player p = players[i];
+            if (Vector3.Distance(pos, p.transform.position) < maxViewDistance)
+            {
+                currentTarget = p.gameObject;
+                break;
+            }
+        }
     }
 }

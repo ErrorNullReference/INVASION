@@ -13,15 +13,13 @@ public class SteamTransport : Transport
     protected override void OnEnable()
     {
         toSend = new BytePacket(MaxAudioPacketSize - Client.HeaderLength);
-        Client.OnLobbyInitializationEvent += Init;
     }
-    private void Init()
+    public void Init()
     {
         SendMsgTo = SendMsg;
         SendToAllAction = SendAll;
         Client.AddCommand(PacketType.VoiceChatData, ReceivePacketAudioCommand);
         Client.AddCommand(PacketType.VoiceChatMutedMessage, ReceivePacketMuteMsgCommand);
-        Client.OnLobbyInitializationEvent -= Init;
     }
     private void SendAll(byte[] data, int startIndex, int length, List<ulong> receiversIds)
     {

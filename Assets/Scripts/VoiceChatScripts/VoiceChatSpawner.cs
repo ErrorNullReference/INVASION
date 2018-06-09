@@ -17,14 +17,7 @@ public class VoiceChatSpawner : ScriptableObject
     {
 
     }
-    private void OnEnable()
-    {
-        Client.OnUserEnter += AddSpeaker;
-        Client.OnUserLeave += RemoveSpeaker;
-        Client.OnLobbyInitializationEvent += CreateSpeakers;
-        Client.OnLobbyLeaveEvent += RemoveLocalSpeaker;
-    }
-    private void RemoveLocalSpeaker()
+    public void RemoveLocalSpeaker()
     {
         VoiceHandler handler = Workflow.GetTrackedHandlerById(Client.MyID.m_SteamID);
 
@@ -42,7 +35,7 @@ public class VoiceChatSpawner : ScriptableObject
 
         }
     }
-    private void CreateSpeakers()
+    public void CreateSpeakers()
     {
         GameObject recorder = SpeakerPool.Get();
         Handler recorderIdentity = recorder.GetComponent<Handler>();
@@ -66,7 +59,7 @@ public class VoiceChatSpawner : ScriptableObject
             }
         }
     }
-    private void RemoveSpeaker(CSteamID exited)
+    public void RemoveSpeaker(CSteamID exited)
     {
         VoiceHandler handler = Workflow.GetTrackedHandlerById(exited.m_SteamID);
 
@@ -84,7 +77,7 @@ public class VoiceChatSpawner : ScriptableObject
 
         }
     }
-    private void AddSpeaker(CSteamID entered)
+    public void AddSpeaker(CSteamID entered)
     {
         GameObject speaker = SpeakerPool.Get();
         Handler speakerIdentity = speaker.GetComponent<Handler>();
@@ -93,12 +86,5 @@ public class VoiceChatSpawner : ScriptableObject
         speakerIdentity.Identity.IsLocalPlayer = false;
         speakerIdentity.Identity.IsInitialized = true;
         speakerIdentity.ForceInitializzation();
-    }
-    private void OnDisable()
-    {
-        Client.OnUserEnter -= AddSpeaker;
-        Client.OnUserLeave -= RemoveSpeaker;
-        Client.OnLobbyInitializationEvent -= CreateSpeakers;
-        Client.OnLobbyLeaveEvent -= RemoveLocalSpeaker;
     }
 }

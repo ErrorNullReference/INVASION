@@ -4,7 +4,7 @@ using UnityEngine;
 using Steamworks;
 using System;
 using GENUtility;
-
+using SOPRO;
 public enum PacketType
 {
     Test,
@@ -43,14 +43,20 @@ public class Client : MonoBehaviour
 
     public static Lobby Lobby;
 
-    public delegate void ClientStatus();
+    //public delegate void ClientStatus();
 
-    public delegate void UserStatus(CSteamID ID);
+    //public delegate void UserStatus(CSteamID ID);
 
-    public static event ClientStatus OnLobbyInitializationEvent;
-    public static event ClientStatus OnLobbyLeaveEvent;
-    public static event UserStatus OnUserEnter;
-    public static event UserStatus OnUserLeave;
+    public SOEvVoid OnLobbyInitializationEvent;
+    public SOEvVoid OnLobbyLeaveEvent;
+    public SOEvVoid OnClientInitialized;
+    public SOEvCSteamID OnUserEnter;
+    public SOEvCSteamID OnUserLeave;
+
+    //public static event ClientStatus OnLobbyInitializationEvent;
+    //public static event ClientStatus OnLobbyLeaveEvent;
+    //public static event UserStatus OnUserEnter;
+    //public static event UserStatus OnUserLeave;
 
     /// <summary>
     /// Return true if you are the lobby owner.
@@ -130,6 +136,9 @@ public class Client : MonoBehaviour
         StartCoroutine(LatencyTest());
 
         waitForSeconds = new WaitForSeconds(0.1f);
+
+        if (OnClientInitialized)
+            OnClientInitialized.Raise();
     }
 
     IEnumerator LatencyTest()
@@ -216,8 +225,8 @@ public class Client : MonoBehaviour
         SendPacketToLobby(new byte[] { }, PacketType.Test, EP2PSend.k_EP2PSendReliable, false);
 
 
-        if (OnLobbyInitializationEvent != null)
-            OnLobbyInitializationEvent.Invoke();
+        if (OnLobbyInitializationEvent)
+            OnLobbyInitializationEvent.Raise();
     }
 
     void EnterLobby(LobbyEnter_t cb)
@@ -244,8 +253,8 @@ public class Client : MonoBehaviour
     {
         CSteamID lobbyID = lobby.LobbyID;
         lobby.Reset();
-        if (OnLobbyLeaveEvent != null)
-            OnLobbyLeaveEvent.Invoke();
+        if (OnLobbyLeaveEvent)
+            OnLobbyLeaveEvent.Raise();
     }
 
     void LeaveLobbyCommand(byte[] data, uint dataLenght, CSteamID sender)
@@ -289,8 +298,8 @@ public class Client : MonoBehaviour
             if (lobby.GetUserFromID((CSteamID)cb.m_ulSteamIDUserChanged) == null)
             {
                 Users.Add(new User((CSteamID)cb.m_ulSteamIDUserChanged));
-                if (OnUserEnter != null)
-                    OnUserEnter.Invoke((CSteamID)cb.m_ulSteamIDUserChanged);
+                if (OnUserEnter)
+                    OnUserEnter.Raise((CSteamID)cb.m_ulSteamIDUserChanged);
             }
         }
         else if ((EChatMemberStateChange)cb.m_rgfChatMemberStateChange == EChatMemberStateChange.k_EChatMemberStateChangeLeft || (EChatMemberStateChange)cb.m_rgfChatMemberStateChange == EChatMemberStateChange.k_EChatMemberStateChangeDisconnected)
@@ -300,8 +309,8 @@ public class Client : MonoBehaviour
                 if (Users[i].SteamID == (CSteamID)cb.m_ulSteamIDUserChanged)
                 {
                     Users.Remove(Users[i]);
-                    if (OnUserLeave != null)
-                        OnUserLeave.Invoke((CSteamID)cb.m_ulSteamIDUserChanged);
+                    if (OnUserLeave)
+                        OnUserLeave.Raise((CSteamID)cb.m_ulSteamIDUserChanged);
                     return;
                 }
             }

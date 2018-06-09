@@ -1,15 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using SOPRO;
 public class Player : LivingBeing
 {
-
+    [SerializeField]
+    private SOListPlayerContainer players;
     private void Start()
     {
         GetComponentInChildren<HUDManager>().InputAssetHUD = Stats;
         Life = Stats.MaxHealth;
     }
-    
+    private void OnEnable()
+    {
+        players.Elements.Add(this);
+    }
+    private void OnDisable()
+    {
+        players.Elements.Remove(this);
+    }
     //CHANGED, FOR NOW ONLY ONE CAMERA WILL BE USED.
 
     //public Camera[] cameras;
