@@ -79,7 +79,13 @@ public class AvatarsMgr : MonoBehaviour
                     return;
             }
         }
-        Client.SendPacket(new byte[]{ (byte)avatarIndex }, PacketType.AnswerAvatarSelection, Client.MyID, sender, EP2PSend.k_EP2PSendReliable);
+
+        byte[] d = ArrayPool<byte>.Get(1);
+        d[0] = (byte)avatarIndex;
+
+        Client.SendPacket(d, PacketType.AnswerAvatarSelection, Client.MyID, sender, EP2PSend.k_EP2PSendReliable);
+
+        ArrayPool<byte>.Recycle(d);
     }
 
     void SetAvatar(byte[] data, uint dataLenght, CSteamID sender)

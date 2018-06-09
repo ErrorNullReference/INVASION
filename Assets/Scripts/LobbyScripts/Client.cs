@@ -76,7 +76,7 @@ public class Client : MonoBehaviour
         }
     }
 
-    public delegate void Command(byte[] data,uint dataLength,CSteamID sender);
+    public delegate void Command(byte[] data, uint dataLength, CSteamID sender);
 
     public static Command[] Commands;
 
@@ -136,7 +136,7 @@ public class Client : MonoBehaviour
     {
         while (true)
         {
-            Client.SendPacketToHost(new byte[]{ }, PacketType.LatencyServer, EP2PSend.k_EP2PSendReliable);
+            Client.SendPacketToHost(new byte[] { }, PacketType.LatencyServer, EP2PSend.k_EP2PSendReliable);
             latencyTimer = Time.time;
             yield return waitForSeconds;
         }
@@ -154,9 +154,9 @@ public class Client : MonoBehaviour
 
     void P2PStatus(P2PSessionConnectFail_t cb)
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         Debug.Log(cb.m_eP2PSessionError);
-        #endif
+#endif
     }
 
     void AddCommands(PacketType commandType, Command command)
@@ -314,7 +314,7 @@ public class Client : MonoBehaviour
 
     void Receive(uint lenght)
     {
-        BytePacket receiver = new BytePacket((int)lenght);
+        BytePacket receiver = new BytePacket(ArrayPool<byte>.Get((int)lenght));
         //prepare packet to receive data by setting seek and lenght to 0
         receiver.ResetSeekLength();
 
@@ -322,20 +322,24 @@ public class Client : MonoBehaviour
         CSteamID sender;
         SteamNetworking.ReadP2PPacket(receiver.Data, lenght, out dataLenght, out sender);
 
-        receiver.CurrentLength = (int)dataLenght;
-
         int command = receiver.ReadByte();
         CSteamID packetSender = (CSteamID)receiver.ReadULong();
 
-        byte[] data = new byte[receiver.CurrentLength - (int)PacketOffset.Payload];
-        ByteManipulator.Write(receiver.Data, (int)PacketOffset.Payload, data, 0, data.Length);
+        //byte[] data = new byte[receiver.CurrentLength - (int)PacketOffset.Payload];
+        //ByteManipulator.Write(receiver.Data, (int)PacketOffset.Payload, data, 0, data.Length);
 
-        InvokeCommand(command, data, (uint)data.Length, packetSender);
+        receiver.CurrentLength = (int)lenght - receiver.CurrentSeek;
+
+        receiver.WriteByteData(receiver.Data, 0, receiver.CurrentSeek, receiver.CurrentLength);
+
+        InvokeCommand(command, receiver.Data, (uint)receiver.CurrentLength, packetSender);
+
+        ArrayPool<byte>.Recycle(receiver.Data);
     }
 
     void Send(byte[] data, PacketType command, CSteamID sender, CSteamID receiver, EP2PSend sendType)
     {
-        BytePacket toSend = new BytePacket(data.Length + HeaderLength);
+        BytePacket toSend = new BytePacket((ArrayPool<byte>.Get(data.Length + HeaderLength)));
         //prepare packet to send data by setting seek and lenght to 0
         toSend.ResetSeekLength();
 
@@ -347,6 +351,8 @@ public class Client : MonoBehaviour
             SteamNetworking.SendP2PPacket(receiver, toSend.Data, (uint)toSend.CurrentLength, sendType);
         else
             InvokeCommand((int)command, data, (uint)data.Length, sender);
+
+        ArrayPool<byte>.Recycle(toSend.Data);
     }
 
     void SendAllLobby(byte[] data, PacketType command, CSteamID sender, EP2PSend sendType, bool sendToSender = true)
@@ -503,9 +509,12 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
+        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
+
         Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
         Client.SendPacketToHost(packet, PacketType.ServerTransform, sendType);
+
+        ArrayPool<byte>.Recycle(packet);
     }
 
     /// <summary>
@@ -520,9 +529,12 @@ public class Client : MonoBehaviour
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
+        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
+
         Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
         Client.SendPacketToHost(packet, PacketType.ServerTransform, sendType);
+
+        ArrayPool<byte>.Recycle(packet);
     }
 
     /// <summary>
@@ -532,9 +544,12 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
+        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
+
         Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
         Client.SendPacketToHost(packet, command, sendType);
+
+        ArrayPool<byte>.Recycle(packet);
     }
 
     /// <summary>
@@ -549,9 +564,12 @@ public class Client : MonoBehaviour
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
+        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
+
         Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
         Client.SendPacketToHost(packet, command, sendType);
+
+        ArrayPool<byte>.Recycle(packet);
     }
 
     /// <summary>
@@ -561,9 +579,12 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
+        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
+
         Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
         Client.SendPacketToLobby(packet, PacketType.ServerTransform, sendType, sendToSender);
+
+        ArrayPool<byte>.Recycle(packet);
     }
 
     /// <summary>
@@ -578,9 +599,12 @@ public class Client : MonoBehaviour
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
+        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
+
         Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
         Client.SendPacketToLobby(packet, PacketType.ServerTransform, sendType, sendToSender);
+
+        ArrayPool<byte>.Recycle(packet);
     }
 
     /// <summary>
@@ -590,9 +614,12 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
+        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
+
         Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
         Client.SendPacketToLobby(packet, command, sendType, sendToSender);
+
+        ArrayPool<byte>.Recycle(packet);
     }
 
     /// <summary>
@@ -607,9 +634,12 @@ public class Client : MonoBehaviour
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
+        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
+
         Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
         Client.SendPacketToLobby(packet, command, sendType, sendToSender);
+
+        ArrayPool<byte>.Recycle(packet);
     }
 
     /// <summary>
@@ -619,9 +649,12 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
+        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
+
         Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
         Client.SendPacketToInGameUsers(packet, PacketType.ServerTransform, sendType, sendToSender);
+
+        ArrayPool<byte>.Recycle(packet);
     }
 
     /// <summary>
@@ -636,9 +669,12 @@ public class Client : MonoBehaviour
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
+        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
+
         Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
         Client.SendPacketToInGameUsers(packet, PacketType.ServerTransform, sendType, sendToSender);
+
+        ArrayPool<byte>.Recycle(packet);
     }
 
     /// <summary>
@@ -648,9 +684,12 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
+        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
+
         Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
         Client.SendPacketToInGameUsers(packet, command, sendType, sendToSender);
+
+        ArrayPool<byte>.Recycle(packet);
     }
 
     /// <summary>
@@ -665,9 +704,12 @@ public class Client : MonoBehaviour
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
+        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
+
         Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
         Client.SendPacketToInGameUsers(packet, command, sendType, sendToSender);
+
+        ArrayPool<byte>.Recycle(packet);
     }
 
     void OnGUI()
