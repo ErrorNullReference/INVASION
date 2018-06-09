@@ -9,7 +9,7 @@ public class AIAggroPlayers : AIVision
     public override void AIUpdate()
     {
         this.currentTarget = possibleTargets[Random.Range(0, possibleTargets.Length)].gameObject;
-        OnSpottedTarget.Invoke();
+        OnSpottedTarget.Raise();
     }
 
     public override void OnStateEnter()

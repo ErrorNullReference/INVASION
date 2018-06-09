@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Steamworks;
-
+using GENUtility;
 public class HostEnemySpawner : MonoBehaviour
 {
     public static HostEnemySpawner Instance;
@@ -16,6 +16,7 @@ public class HostEnemySpawner : MonoBehaviour
     private Dictionary<int, Enemy> IdEnemies;
     WaitForEndOfFrame waitForFrame;
     bool coroutineStart;
+    private readonly BytePacket idAndPos = new BytePacket(13); //TODO: Maybe even static?
 
     // Use this for initialization
     void Start()
@@ -73,33 +74,17 @@ public class HostEnemySpawner : MonoBehaviour
         {
             position = spawnPoints[randomIndex].position;
         }
-        byte[] positionData = GetBytePosition(position);
-        byte[] data = MergeIdAndPosition(positionData, Id);
-        Client.SendPacketToInGameUsers(data, PacketType.EnemySpawn, Client.MyID, Steamworks.EP2PSend.k_EP2PSendReliable);
+
+        idAndPos.CurrentLength = 0;
+        idAndPos.CurrentSeek = 0;
+
+        idAndPos.Write((byte)Id);
+        idAndPos.Write(position.x);
+        idAndPos.Write(position.y);
+        idAndPos.Write(position.z);
+
+        Client.SendPacketToInGameUsers(idAndPos.Data, PacketType.EnemySpawn, Client.MyID, Steamworks.EP2PSend.k_EP2PSendReliable);
         //Debug.Log("sent: " + Id);
-    }
-
-    //Creates the byte[] given the position
-    private byte[] GetBytePosition(Vector3 position)
-    {
-        byte[] positionX = BitConverter.GetBytes(position.x);
-        byte[] positionY = BitConverter.GetBytes(position.y);
-        byte[] positionZ = BitConverter.GetBytes(position.z);
-        byte[] positionData = new byte[positionX.Length + positionY.Length + positionZ.Length];
-        Array.Copy(positionX, 0, positionData, 0, positionX.Length);
-        Array.Copy(positionY, 0, positionData, positionX.Length, positionY.Length);
-        Array.Copy(positionZ, 0, positionData, positionX.Length + positionY.Length, positionZ.Length);
-        return positionData;
-    }
-
-    //creates a byte[] with Id and position
-    private byte[] MergeIdAndPosition(byte[] positionData, int Id)
-    {
-        byte[] id = new byte[] { (byte)Id };
-        byte[] data = new byte[positionData.Length + id.Length];
-        Array.Copy(id, 0, data, 0, id.Length);
-        Array.Copy(positionData, 0, data, id.Length, positionData.Length);
-        return data;
     }
 
     //this won't be in this cass, is just for testing

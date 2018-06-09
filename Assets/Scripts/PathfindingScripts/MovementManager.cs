@@ -4,10 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using System.Collections;
-
-[Serializable]
-public class UnityEventPassingGameObject : UnityEvent<GameObject> { }
-
+using SOPRO;
+using GENUtility;
 [RequireComponent(typeof(NavMeshAgent))]
 public class MovementManager : MonoBehaviour
 {
@@ -25,14 +23,18 @@ public class MovementManager : MonoBehaviour
     private delegate void NetworkState();
 
     private NetworkState networkState;
-    public UnityEvent OnPathReached;
-    public UnityEvent OnPathStarted;
+    public SOEvVoid OnPathReached;
+    public SOEvVoid OnPathStarted;
     private WaitForSeconds waitForSecond = new WaitForSeconds(0.1f);
 
     private Prediction prediction;
     private float time, interpolationTime, frac;
     private Vector3 startPos, endPos, speed;
     private Quaternion startRot, endRot;
+
+    private GameNetworkObject gnObject;
+
+    private readonly BytePacket payload = new BytePacket((sizeof(float) * 7) + 1);
 
     private void Awake()
     {
@@ -64,6 +66,8 @@ public class MovementManager : MonoBehaviour
 
     private void Start()
     {
+        gnObject = GetComponent<GameNetworkObject>();
+
         if (Client.IsHost)
             networkState = HostState;
         else
@@ -85,14 +89,14 @@ public class MovementManager : MonoBehaviour
             currentCooldownLeft = cooldownBetweenRecalculations;
             agent.SetDestination(nextDestination);
             oldDestination = nextDestination;
-            OnPathStarted.Invoke();
+            OnPathStarted.Raise();
         }
 
         //Check if agent reached the destination, if yes calls the OnPathReached Event and then this won't be called again unless a new destination is set.
         if (!this.agent.isStopped && this.agent.hasPath && (this.transform.position - this.agent.destination).magnitude < tolerance)
         {
             this.agent.isStopped = true;
-            OnPathReached.Invoke();
+            OnPathReached.Raise();
         }
         Vector3 direction = this.agent.velocity.normalized;        
         animController.Animation(direction.x, direction.z);
@@ -103,28 +107,24 @@ public class MovementManager : MonoBehaviour
     {
         while (true)
         {
-            byte[] payload = new byte[(sizeof(float) * 7) + 1];
-            int index = 0;
+            payload.CurrentSeek = 0;
+            payload.CurrentLength = 0;
 
-            byte[] id = new byte[] { (byte)this.GetComponent<GameNetworkObject>().NetworkId };
+            payload.Write((byte)gnObject.NetworkId);
 
-            Array.Copy(id, 0, payload, index, 1);
-            index++;
-            Array.Copy(BitConverter.GetBytes(this.transform.position.x), 0, payload, index, sizeof(float));
-            index += sizeof(float);
-            Array.Copy(BitConverter.GetBytes(this.transform.position.y), 0, payload, index, sizeof(float));
-            index += sizeof(float);
-            Array.Copy(BitConverter.GetBytes(this.transform.position.z), 0, payload, index, sizeof(float));
-            index += sizeof(float);
-            Array.Copy(BitConverter.GetBytes(this.transform.rotation.x), 0, payload, index, sizeof(float));
-            index += sizeof(float);
-            Array.Copy(BitConverter.GetBytes(this.transform.rotation.y), 0, payload, index, sizeof(float));
-            index += sizeof(float);
-            Array.Copy(BitConverter.GetBytes(this.transform.rotation.z), 0, payload, index, sizeof(float));
-            index += sizeof(float);
-            Array.Copy(BitConverter.GetBytes(this.transform.rotation.w), 0, payload, index, sizeof(float));
+            Vector3 pos = transform.position;
+            Quaternion rot = transform.rotation;
 
-            Client.SendPacketToInGameUsers(payload, PacketType.EnemyTransform, Client.MyID, Steamworks.EP2PSend.k_EP2PSendUnreliable, false);
+            payload.Write(pos.x);
+            payload.Write(pos.y);
+            payload.Write(pos.z);
+
+            payload.Write(rot.x);
+            payload.Write(rot.y);
+            payload.Write(rot.z);
+            payload.Write(rot.w);
+
+            Client.SendPacketToInGameUsers(payload.Data, PacketType.EnemyTransform, Client.MyID, Steamworks.EP2PSend.k_EP2PSendUnreliable, false);
             yield return waitForSecond;
         }
     }
@@ -148,7 +148,7 @@ public class MovementManager : MonoBehaviour
 
     public void ReceiveTransform(Vector3 pos, Quaternion rot) //USED BY MOVEMENTMANAGER
     {
-        Debug.Log("Enemy: " + this.GetComponent<GameNetworkObject>().NetworkId + "Position is: " + pos);
+        Debug.Log("Enemy: " + gnObject.NetworkId + "Position is: " + pos);
 
         //oldDestination = nextDestination;
         //oldQuatenion = nextQuaternion;

@@ -2,11 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using SOPRO;
 public class simplePlayerControllerAnimator : MonoBehaviour
 {
 	public Animator animator;
-	public string paramNameTranslate, paramNameRotate;
+	public AnimatorPropertyHolder paramNameTranslate, paramNameRotate;
 	public bool sendTranslateParam;
 	public bool rotateRoot;
 	private float slowModifierKey;
@@ -30,7 +30,7 @@ public class simplePlayerControllerAnimator : MonoBehaviour
             slowModifierVal = 0.5f;*/
 
 		if (sendTranslateParam && z != 0)
-			animator.SetFloat(paramNameTranslate, z * slowModifierVal);
+			animator.SetFloat((int)paramNameTranslate, z * slowModifierVal);
 		//Debug.Log("Horizontal " + x);
 	}
 

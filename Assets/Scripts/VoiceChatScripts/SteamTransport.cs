@@ -6,19 +6,22 @@ using GENUtility;
 [CreateAssetMenu(menuName = "VOCASY/DataTransports/Steam", fileName = "Steam Transport")]
 public class SteamTransport : Transport
 {
+    //TODO: gestire il cambio di scena (mantenere/ricreare voice chat entities)
     public const int MaxAudioPacketSize = 1200;
     public override int MaxDataLength { get { return MaxAudioPacketSize - Transport.FirstPacketByteAvailable - Client.HeaderLength; } }
     private readonly byte[] boolean = new byte[sizeof(bool)];
     protected override void OnEnable()
     {
         toSend = new BytePacket(MaxAudioPacketSize - Client.HeaderLength);
-        if (Application.isPlaying)
-        {
-            SendMsgTo = SendMsg;
-            SendToAllAction = SendAll;
-            Client.AddCommand(PacketType.VoiceChatData, ReceivePacketAudioCommand);
-            Client.AddCommand(PacketType.VoiceChatMutedMessage, ReceivePacketMuteMsgCommand);
-        }
+        Client.OnLobbyInitializationEvent += Init;
+    }
+    private void Init()
+    {
+        SendMsgTo = SendMsg;
+        SendToAllAction = SendAll;
+        Client.AddCommand(PacketType.VoiceChatData, ReceivePacketAudioCommand);
+        Client.AddCommand(PacketType.VoiceChatMutedMessage, ReceivePacketMuteMsgCommand);
+        Client.OnLobbyInitializationEvent -= Init;
     }
     private void SendAll(byte[] data, int startIndex, int length, List<ulong> receiversIds)
     {

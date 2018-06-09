@@ -659,9 +659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Weapon: {fileID: 11400000, guid: c43314a2de333ea4da6821d50fff34a4, type: 2}
   Pivot: {fileID: 4756939531345260}
-  layer:
-    serializedVersion: 2
-    m_Bits: 256
+  layer: {fileID: 11400000, guid: 8c2c15eb5d226ca4bac505332c1810e1, type: 2}
 --- !u!114 &114537891568604332
 MonoBehaviour:
   m_ObjectHideFlags: 1

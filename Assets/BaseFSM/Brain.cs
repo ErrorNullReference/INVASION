@@ -5,9 +5,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
-[Serializable]
-public class AISwitchEvent : UnityEvent<AIBehaviour> { }
-
 public class Brain : MonoBehaviour
 {
     [SerializeField]

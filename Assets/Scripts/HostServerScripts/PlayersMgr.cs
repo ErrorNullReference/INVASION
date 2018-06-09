@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Steamworks;
 using System;
-
+using GENUtility;
 public class PlayersMgr : MonoBehaviour
 {
     public SimpleAvatar AvatarTemplate, ControllableAvatarTemplate;
@@ -59,19 +59,19 @@ public class PlayersMgr : MonoBehaviour
         if (avatars.ContainsKey(sender))
         {
             int offset = 0;
-            float posX = BitConverter.ToSingle(data, offset);
+            float posX = ByteManipulator.ReadSingle(data, offset);
             offset += sizeof(float);
-            float posY = BitConverter.ToSingle(data, offset);
+            float posY = ByteManipulator.ReadSingle(data, offset);
             offset += sizeof(float);
-            float posZ = BitConverter.ToSingle(data, offset);
+            float posZ = ByteManipulator.ReadSingle(data, offset);
             offset += sizeof(float);
-            float rotX = BitConverter.ToSingle(data, offset);
+            float rotX = ByteManipulator.ReadSingle(data, offset);
             offset += sizeof(float);
-            float rotY = BitConverter.ToSingle(data, offset);
+            float rotY = ByteManipulator.ReadSingle(data, offset);
             offset += sizeof(float);
-            float rotZ = BitConverter.ToSingle(data, offset);
+            float rotZ = ByteManipulator.ReadSingle(data, offset);
             offset += sizeof(float);
-            float rotW = BitConverter.ToSingle(data, offset);
+            float rotW = ByteManipulator.ReadSingle(data, offset);
 
             Vector3 pos = new Vector3(posX, posY, posZ);
             Quaternion rot = new Quaternion(rotX, rotY, rotZ, rotW);

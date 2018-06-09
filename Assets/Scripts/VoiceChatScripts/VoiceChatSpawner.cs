@@ -3,16 +3,22 @@ using Steamworks;
 using VOCASY.Common;
 using SOPRO;
 using VOCASY;
-public class VoiceChatSpawner : MonoBehaviour
+[CreateAssetMenu(menuName = "VOCASY/Steam/EntitiesSpawner")]
+public class VoiceChatSpawner : ScriptableObject
 {
-
     public SOPool SpeakerPool;
     public Workflow Workflow;
-    private Lobby lobby;
 
+    public void DisableAndStoreSpeakers()
+    {
+
+    }
+    public void RestoreAndEnableSpeakers()
+    {
+
+    }
     private void OnEnable()
     {
-        lobby = Client.Lobby;
         Client.OnUserEnter += AddSpeaker;
         Client.OnUserLeave += RemoveSpeaker;
         Client.OnLobbyInitializationEvent += CreateSpeakers;
@@ -60,7 +66,6 @@ public class VoiceChatSpawner : MonoBehaviour
             }
         }
     }
-
     private void RemoveSpeaker(CSteamID exited)
     {
         VoiceHandler handler = Workflow.GetTrackedHandlerById(exited.m_SteamID);
@@ -79,7 +84,6 @@ public class VoiceChatSpawner : MonoBehaviour
 
         }
     }
-
     private void AddSpeaker(CSteamID entered)
     {
         GameObject speaker = SpeakerPool.Get();
@@ -90,7 +94,6 @@ public class VoiceChatSpawner : MonoBehaviour
         speakerIdentity.Identity.IsInitialized = true;
         speakerIdentity.ForceInitializzation();
     }
-
     private void OnDisable()
     {
         Client.OnUserEnter -= AddSpeaker;

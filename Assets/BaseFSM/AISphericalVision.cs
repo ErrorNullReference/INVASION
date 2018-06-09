@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
-
+using SOPRO;
 public abstract class AIVision : AIBehaviour
 {
     protected GameObject currentTarget;
     public GameObject CurrentTarget { get { return currentTarget; } private set { } }
 
-    public UnityEvent OnSpottedTarget;
+    public SOEvVoid OnSpottedTarget;
 
     public override void AIUpdate()
     {
@@ -26,7 +25,7 @@ public abstract class AIVision : AIBehaviour
 public class AISphericalVision : AIVision
 {
     [SerializeField]
-    protected LayerMask layerToLookInto;
+    protected LayerMaskHolder layerToLookInto;
 
     [SerializeField]
     protected float maxViewDistance;
@@ -47,7 +46,7 @@ public class AISphericalVision : AIVision
         LookForATarget();
 
         if (currentTarget != null)
-            OnSpottedTarget.Invoke();
+            OnSpottedTarget.Raise();
     }
 
     public override void OnStateEnter()

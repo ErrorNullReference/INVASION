@@ -2748,11 +2748,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GunRange: 10
-  OnAbleToShot:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  OnAbleToShot: {fileID: 11400000, guid: 9cf9bc622a60cba46a26873b2eb131ae, type: 2}
 --- !u!114 &114174039656087010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2764,6 +2760,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee0adf2f7a646e94aa6344d50901c680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnimSpeed: {fileID: 11400000, guid: 714aa688231fe1e4fb18c60a53cb876d, type: 2}
+  LeftSpeed: {fileID: 11400000, guid: 0e0956761016a014a88f387b5375eac1, type: 2}
+  speed: {fileID: 11400000, guid: 72814ab5f7a2a5245b73db8b74449aea, type: 2}
 --- !u!114 &114179725094308218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2775,25 +2774,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a02e655f7748c27418bb1b874eaa4f98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnPlayerSight:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114729019832894138}
-        m_MethodName: SetDestination
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEventPassingGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  Mask:
-    serializedVersion: 2
-    m_Bits: 256
+  OnPlayerSight: {fileID: 11400000, guid: 5996f1d4cdca3b143b5a51dc3472bc4c, type: 2}
+  Mask: {fileID: 11400000, guid: 5ab00fb41531e634694def18c509b702, type: 2}
   workAsClient: 0
   fov: 90
   maxViewDistance: 60
@@ -2824,22 +2806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a544f6db5ee284c48b82afc896a85922, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnPlayerSight:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114729019832894138}
-        m_MethodName: SetDestination
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEventPassingGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+  OnPlayerSight: {fileID: 11400000, guid: 5996f1d4cdca3b143b5a51dc3472bc4c, type: 2}
   workAsClient: 0
   maxViewDistance: 30
 --- !u!114 &114522658278978558
@@ -2903,60 +2870,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tolerance: 0.5
   cooldownBetweenRecalculations: 1
-  OnPathReached:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114179725094308218}
-        m_MethodName: StartLooking
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 114462976907085450}
-        m_MethodName: StartLooking
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnPathStarted:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114179725094308218}
-        m_MethodName: StopLooking
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 114462976907085450}
-        m_MethodName: StopLooking
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  OnPathReached: {fileID: 11400000, guid: 424228f76e0c8354ebcdb484b97a583d, type: 2}
+  OnPathStarted: {fileID: 11400000, guid: ab1a41d081cca2c4fba443ec83b34646, type: 2}
 --- !u!114 &114737848953771168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2968,6 +2883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c7aa2d5232d01c4582be74b0f36fd23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chase: {fileID: 11400000, guid: a705dd43aaa17cf4989e32c37ffbeb21, type: 2}
   Chase: 0
 --- !u!114 &114817436972958576
 MonoBehaviour:

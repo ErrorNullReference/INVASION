@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using SOPRO;
 public enum ShootingType
 {
     Single,
@@ -27,13 +27,12 @@ public class ShootSystem : MonoBehaviour
     public Gun gun;
     public Muzzle muzzle;
     private RaycastHit raycastHit;
-    private LayerMask mask;
+    private LayerMaskHolder mask;
 
     private void Awake()
     {
         recoilTime = 0;
         raycastHit = new RaycastHit();
-        mask = LayerMask.NameToLayer("Player");
     }
 
     void CallShoot()

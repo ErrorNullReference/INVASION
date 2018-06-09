@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Steamworks;
-
+using GENUtility;
 public class ClientTransformManager : MonoBehaviour
 {
     //public static List<GameNetworkObject> enemiesInScene;
@@ -48,22 +48,22 @@ public class ClientTransformManager : MonoBehaviour
 
         int id = data[index++];
 
-        float x = BitConverter.ToSingle(data, index);
+        float x = ByteManipulator.ReadSingle(data, index);
         index += sizeof(float);
-        float y = BitConverter.ToSingle(data, index);
+        float y = ByteManipulator.ReadSingle(data, index);
         index += sizeof(float);
-        float z = BitConverter.ToSingle(data, index);
+        float z = ByteManipulator.ReadSingle(data, index);
         index += sizeof(float);
 
         Vector3 position = new Vector3(x, y, z);
 
-        x = BitConverter.ToSingle(data, index);
+        x = ByteManipulator.ReadSingle(data, index);
         index += sizeof(float);
-        y = BitConverter.ToSingle(data, index);
+        y = ByteManipulator.ReadSingle(data, index);
         index += sizeof(float);
-        z = BitConverter.ToSingle(data, index);
+        z = ByteManipulator.ReadSingle(data, index);
         index += sizeof(float);
-        float w = BitConverter.ToSingle(data, index);
+        float w = ByteManipulator.ReadSingle(data, index);
 
         Quaternion rotation = new Quaternion(x, y, z, w);
 

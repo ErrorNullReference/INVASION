@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+using SOPRO;
 public class ConeVision : MonoBehaviour
 {
-    public UnityEventPassingGameObject OnPlayerSight;
+    public SOEvGameObject OnPlayerSight;
 
-    public LayerMask Mask;
+    public LayerMaskHolder Mask;
     List<Player> possibleTargets;
     [SerializeField]
     private bool workAsClient;
@@ -54,7 +54,7 @@ public class ConeVision : MonoBehaviour
             CheckPlayerInVision();
 
         if (target != null)
-            OnPlayerSight.Invoke(target);
+            OnPlayerSight.Raise(target);
     }
 
     private void CheckPlayerInVision()

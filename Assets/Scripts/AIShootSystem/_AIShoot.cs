@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using SOPRO;
 public class _AIShoot : MonoBehaviour
 {
     public _WeaponScriptable Weapon;
     public Transform Pivot;
-    public LayerMask layer;
+    public LayerMaskHolder layer;
 
     private float tempActionTime;
     void Awake()

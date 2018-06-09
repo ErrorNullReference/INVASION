@@ -2749,27 +2749,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8689ee12bc6a14bb2c23b45cf91d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerToLookInto:
-    serializedVersion: 2
-    m_Bits: 257
+  layerToLookInto: {fileID: 11400000, guid: 5ab00fb41531e634694def18c509b702, type: 2}
   maxViewDistance: 20
-  OnTargetLossOfSight:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114057339501243828}
-        m_MethodName: SwitchState
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 114454403185978774}
-          m_ObjectArgumentAssemblyTypeName: AIBehaviour, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  shootSync: {fileID: 0}
+  OnTargetLossOfSight: {fileID: 11400000, guid: dda69691c0c2702459ba37c82f392f2b,
+    type: 2}
+  shootSync: {fileID: 114318863650488276}
 --- !u!114 &114226324737965404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2781,6 +2765,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee0adf2f7a646e94aa6344d50901c680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnimSpeed: {fileID: 11400000, guid: 714aa688231fe1e4fb18c60a53cb876d, type: 2}
+  LeftSpeed: {fileID: 11400000, guid: 0e0956761016a014a88f387b5375eac1, type: 2}
+  speed: {fileID: 11400000, guid: 72814ab5f7a2a5245b73db8b74449aea, type: 2}
 --- !u!114 &114318863650488276
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2821,28 +2808,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10415b9bf28bf8d4b845000099399b37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerToLookInto:
-    serializedVersion: 2
-    m_Bits: 257
+  layerToLookInto: {fileID: 11400000, guid: 5ab00fb41531e634694def18c509b702, type: 2}
   maxViewDistance: 10
   fov: 110
   cooldownBeforeRecalculation: 1
-  OnTargetOnSight:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114057339501243828}
-        m_MethodName: SwitchState
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 114130182057454510}
-          m_ObjectArgumentAssemblyTypeName: AIBehaviour, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  OnTargetOnSight: {fileID: 11400000, guid: 4c54c0db3a472d142b9e8aae8167ecea, type: 2}
 --- !u!114 &114454403185978774
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2854,22 +2824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 267ffd916d38cc74d8e7a9915ccbb746, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnSpottedTarget:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114057339501243828}
-        m_MethodName: SwitchState
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 114437912616470450}
-          m_ObjectArgumentAssemblyTypeName: AIBehaviour, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  OnSpottedTarget: {fileID: 11400000, guid: 586572156e6bfd1409ddacbed2fc4cdf, type: 2}
 --- !u!114 &114578491837655658
 MonoBehaviour:
   m_ObjectHideFlags: 1

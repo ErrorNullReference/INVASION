@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
-
+using SOPRO;
 public class SphericalVision : MonoBehaviour
 {
-    public UnityEventPassingGameObject OnPlayerSight;
+    public SOEvGameObject OnPlayerSight;
 
     [SerializeField]
     private bool workAsClient;
@@ -33,7 +33,7 @@ public class SphericalVision : MonoBehaviour
             CheckPlayerInVision();
 
         if (target != null)
-            OnPlayerSight.Invoke(target);
+            OnPlayerSight.Raise(target);
     }
 
     private void CheckPlayerInVision()

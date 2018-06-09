@@ -3,12 +3,12 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
-
+using SOPRO;
 [RequireComponent(typeof(NavMeshAgent))]
 public class AIGoToTargetUntilOnSight : AIBehaviour
 {
     [SerializeField]
-    private LayerMask layerToLookInto;
+    private LayerMaskHolder layerToLookInto;
     [SerializeField]
     private float maxViewDistance;
     [SerializeField][Range(1, 360)]
@@ -22,7 +22,7 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
     private NavMeshAgent agent;
     private AnimationControllerScript animController;
 
-    public UnityEvent OnTargetOnSight;
+    public SOEvVoid OnTargetOnSight;
 
     public void Awake()
     {
@@ -46,7 +46,7 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
         AIVision aIVision = owner.PreviousState as AIVision;
         if (aIVision == null)
         {
-            OnTargetOnSight.Invoke();
+            OnTargetOnSight.Raise();
             return;
         }
 
@@ -81,7 +81,7 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
             if(hit.collider.gameObject == target)
             {
                 Debug.Log("TARGET ON SIGHT!");
-                OnTargetOnSight.Invoke();
+                OnTargetOnSight.Raise();
             }
         }
     }

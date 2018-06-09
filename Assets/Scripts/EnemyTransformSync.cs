@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using GENUtility;
 public class EnemyTransformSync : MonoBehaviour
 {
     private float time, interpolationTime, frac;
@@ -11,6 +11,9 @@ public class EnemyTransformSync : MonoBehaviour
     private Vector3 startPos, endPos, speed;
     private Quaternion startRot, endRot;
     private AnimationControllerScript animController;
+    private readonly BytePacket payload = new BytePacket((sizeof(float) * 7) + 1); //maybe even static? It would be ideal if there woul dnot be problems with it
+    private GameNetworkObject gnObject;
+    private Transform myTransform;
 
     private void Awake()
     {
@@ -19,6 +22,11 @@ public class EnemyTransformSync : MonoBehaviour
     }
     private void OnEnable()
     {
+        if (!myTransform)
+        {
+            gnObject = GetComponent<GameNetworkObject>();
+            myTransform = transform;
+        }
         if (Client.IsHost)
             StartCoroutine(SendTransform());
 
@@ -35,33 +43,29 @@ public class EnemyTransformSync : MonoBehaviour
     {
         while (true)
         {
-            byte[] payload = new byte[(sizeof(float) * 7) + 1];
-            int index = 0;
+            payload.CurrentLength = 0;
+            payload.CurrentSeek = 0;
 
-            byte[] id = new byte[] { (byte)this.GetComponent<GameNetworkObject>().NetworkId };
+            payload.Write((byte)gnObject.NetworkId); //does this need to be byte? Seems strange, shouldn't it be int/uint?
 
-            Array.Copy(id, 0, payload, index, 1);
-            index++;
-            Array.Copy(BitConverter.GetBytes(this.transform.position.x), 0, payload, index, sizeof(float));
-            index += sizeof(float);
-            Array.Copy(BitConverter.GetBytes(this.transform.position.y), 0, payload, index, sizeof(float));
-            index += sizeof(float);
-            Array.Copy(BitConverter.GetBytes(this.transform.position.z), 0, payload, index, sizeof(float));
-            index += sizeof(float);
-            Array.Copy(BitConverter.GetBytes(this.transform.rotation.x), 0, payload, index, sizeof(float));
-            index += sizeof(float);
-            Array.Copy(BitConverter.GetBytes(this.transform.rotation.y), 0, payload, index, sizeof(float));
-            index += sizeof(float);
-            Array.Copy(BitConverter.GetBytes(this.transform.rotation.z), 0, payload, index, sizeof(float));
-            index += sizeof(float);
-            Array.Copy(BitConverter.GetBytes(this.transform.rotation.w), 0, payload, index, sizeof(float));
+            Vector3 pos = myTransform.position;
+            Quaternion rot = myTransform.rotation;
 
-            Client.SendPacketToInGameUsers(payload, PacketType.EnemyTransform, Client.MyID, Steamworks.EP2PSend.k_EP2PSendUnreliable, false);
+            payload.Write(pos.x);
+            payload.Write(pos.y);
+            payload.Write(pos.z);
+
+            payload.Write(rot.x);
+            payload.Write(rot.y);
+            payload.Write(rot.z);
+            payload.Write(rot.w);
+
+            Client.SendPacketToInGameUsers(payload.Data, PacketType.EnemyTransform, Client.MyID, Steamworks.EP2PSend.k_EP2PSendUnreliable, false);
             yield return waitForSecond;
         }
     }
 
-	void Update () 
+    void Update()
     {
         if (!Client.IsHost)
         {
@@ -69,18 +73,18 @@ public class EnemyTransformSync : MonoBehaviour
             frac = time / interpolationTime;
             if (frac > 1)
                 frac = 1;
-            transform.position = Vector3.Lerp(startPos, endPos, frac);
-            transform.rotation = Quaternion.Slerp(startRot, endRot, frac);
+            myTransform.position = Vector3.Lerp(startPos, endPos, frac);
+            myTransform.rotation = Quaternion.Slerp(startRot, endRot, frac);
             return;
         }
-        
+
     }
     public void ReceiveTransform(Vector3 pos, Quaternion rot) //USED BY MOVEMENTMANAGER
     {
-       // Debug.Log("Enemy: " + this.GetComponent<GameNetworkObject>().NetworkId + "Position is: " + pos);
+        // Debug.Log("Enemy: " + this.GetComponent<GameNetworkObject>().NetworkId + "Position is: " + pos);
 
-        startPos = transform.position;
-        startRot = transform.rotation;
+        startPos = myTransform.position;
+        startRot = myTransform.rotation;
         interpolationTime = prediction.Predict(pos, rot, out endPos, out endRot, out speed);
         Vector3 normalizedSpeed = speed.normalized;
         animController.Animation(normalizedSpeed.x, normalizedSpeed.z);

@@ -5,7 +5,7 @@ using System.Text;
 using System;
 using Steamworks;
 using UnityEngine.AI;
-
+using GENUtility;
 public class EnemySpawner : MonoBehaviour
 {
 
@@ -53,9 +53,9 @@ public class EnemySpawner : MonoBehaviour
     {       
         int Id = data[0];
         //Debug.Log("received: " + Id);
-        float positionX = BitConverter.ToSingle(data, 1);
-        float positionY = BitConverter.ToSingle(data, 5);
-        float positionZ = BitConverter.ToSingle(data, 9);
+        float positionX = ByteManipulator.ReadSingle(data, 1);
+        float positionY = ByteManipulator.ReadSingle(data, 5);
+        float positionZ = ByteManipulator.ReadSingle(data, 9);
         Vector3 position = new Vector3(positionX, positionY, positionZ);
         GameObject enemy = enemies.Get((cb) =>
             {

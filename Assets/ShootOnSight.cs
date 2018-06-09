@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+using SOPRO;
 public class ShootOnSight : MonoBehaviour
 {
     public float GunRange;
 
-    public UnityEvent OnAbleToShot;
+    public SOEvVoid OnAbleToShot;
 
-    private int mask;
+    private LayerMaskHolder mask;
 
-    private void Start()
-    {
-        mask = LayerMask.GetMask("Default", "Player");
-    }
+    //private void Start()
+    //{
+    //    mask = LayerMask.GetMask("Default", "Player");
+    //}
 
     void Update ()
     {
@@ -23,7 +23,7 @@ public class ShootOnSight : MonoBehaviour
         {
             if (hit.collider.gameObject.GetComponent<Player>())
             {
-                OnAbleToShot.Invoke();
+                OnAbleToShot.Raise();
                 Debug.Log(hit.collider.gameObject.name);
             }
         }

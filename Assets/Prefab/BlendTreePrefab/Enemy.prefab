@@ -2585,7 +2585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 95952458706832296}
-  paramName: isSprinting
+  paramName: {fileID: 0}
   setBoolOnlyWhenPressed: 1
   setBoolPressOneTime: 0
   newBoolVal: 1
@@ -2602,6 +2602,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee0adf2f7a646e94aa6344d50901c680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnimSpeed: {fileID: 11400000, guid: 714aa688231fe1e4fb18c60a53cb876d, type: 2}
+  LeftSpeed: {fileID: 11400000, guid: 0e0956761016a014a88f387b5375eac1, type: 2}
+  speed: {fileID: 11400000, guid: 72814ab5f7a2a5245b73db8b74449aea, type: 2}
 --- !u!114 &114906930773339620
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2614,7 +2617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 95952458706832296}
-  paramName: isShooting
+  paramName: {fileID: 0}
   setBoolOnlyWhenPressed: 1
   setBoolPressOneTime: 0
   newBoolVal: 1
@@ -2632,7 +2635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 95952458706832296}
-  paramName: isThrowingGranade
+  paramName: {fileID: 0}
   setBoolOnlyWhenPressed: 0
   setBoolPressOneTime: 1
   newBoolVal: 1
@@ -2650,8 +2653,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 95952458706832296}
-  paramNameTranslate: speed
-  paramNameRotate: steer
+  paramNameTranslate: {fileID: 0}
+  paramNameRotate: {fileID: 0}
   sendTranslateParam: 1
   rotateRoot: 1
   bulletPrefab: {fileID: 0}

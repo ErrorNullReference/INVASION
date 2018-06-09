@@ -2,18 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-
+using SOPRO;
 public class AIShootTillOnSight : AIBehaviour
 {
     [SerializeField]
-    private LayerMask layerToLookInto;
+    private LayerMaskHolder layerToLookInto;
     [SerializeField]
     private float maxViewDistance;
 
     private GameObject targetToShot;
 
-    public UnityEvent OnTargetLossOfSight;
+    public SOEvVoid OnTargetLossOfSight;
 
     public EnemyShootSync shootSync;
 
@@ -42,7 +41,7 @@ public class AIShootTillOnSight : AIBehaviour
         RaycastHit hit;
         if (!Physics.Raycast(this.transform.position + new Vector3(0, 0.5f, 0), this.transform.forward, out hit, maxViewDistance, layerToLookInto))
         {
-            OnTargetLossOfSight.Invoke();
+            OnTargetLossOfSight.Raise();
             return false;
         }
 
@@ -50,7 +49,7 @@ public class AIShootTillOnSight : AIBehaviour
             return true;
         else
         {
-            OnTargetLossOfSight.Invoke();
+            OnTargetLossOfSight.Raise();
             return false;
         }
     }
@@ -60,7 +59,7 @@ public class AIShootTillOnSight : AIBehaviour
         AIGoToTargetUntilOnSight previousState = owner.PreviousState as AIGoToTargetUntilOnSight;
         if (previousState == null)
         {
-            OnTargetLossOfSight.Invoke();
+            OnTargetLossOfSight.Raise();
             return;
         }
 
