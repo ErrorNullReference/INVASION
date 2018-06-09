@@ -969,47 +969,47 @@
             Default folder path
             </summary>
         </member>
-        <member name="T:SOPRO.Editor.SOPROListenerGenMode">
+        <member name="T:SOPRO.Editor.ListenerGenMode">
             <summary>
             Describes how a listener will register/unregister to SOEvents
             </summary>
         </member>
-        <member name="F:SOPRO.Editor.SOPROListenerGenMode.Default">
+        <member name="F:SOPRO.Editor.ListenerGenMode.Default">
             <summary>
             Listener will not automatically register/unregister
             </summary>
         </member>
-        <member name="F:SOPRO.Editor.SOPROListenerGenMode.AwakeDestroy">
+        <member name="F:SOPRO.Editor.ListenerGenMode.AwakeDestroy">
             <summary>
             Listener will register/unregister on Awake/OnDestroy
             </summary>
         </member>
-        <member name="F:SOPRO.Editor.SOPROListenerGenMode.OnEnableOnDisable">
+        <member name="F:SOPRO.Editor.ListenerGenMode.OnEnableOnDisable">
             <summary>
             Listener will register/unregister on OnEnable/OnDisable
             </summary>
         </member>
-        <member name="T:SOPROGeneratorType">
+        <member name="T:GeneratorType">
             <summary>
             List of generator types available
             </summary>
         </member>
-        <member name="F:SOPROGeneratorType.None">
+        <member name="F:GeneratorType.None">
             <summary>
             No generator
             </summary>
         </member>
-        <member name="F:SOPROGeneratorType.Containers">
+        <member name="F:GeneratorType.Containers">
             <summary>
             Basic containers generator
             </summary>
         </member>
-        <member name="F:SOPROGeneratorType.Events">
+        <member name="F:GeneratorType.Events">
             <summary>
             Events generator
             </summary>
         </member>
-        <member name="F:SOPROGeneratorType.Variables">
+        <member name="F:GeneratorType.Variables">
             <summary>
             Variables generator
             </summary>
