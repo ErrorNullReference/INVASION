@@ -671,7 +671,6 @@ GameObject:
   - component: {fileID: 114151545493592974}
   - component: {fileID: 114174039656087010}
   - component: {fileID: 136067789119106868}
-  - component: {fileID: 114904510856771418}
   - component: {fileID: 114241121465242468}
   - component: {fileID: 114458588766610092}
   m_Layer: 10
@@ -2752,6 +2751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GunRange: 10
   OnAbleToShot: {fileID: 11400000, guid: 9cf9bc622a60cba46a26873b2eb131ae, type: 2}
+  players: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
 --- !u!114 &114174039656087010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2782,6 +2782,7 @@ MonoBehaviour:
   workAsClient: 0
   fov: 90
   maxViewDistance: 60
+  players: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
 --- !u!114 &114241121465242468
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2887,9 +2888,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a544f6db5ee284c48b82afc896a85922, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnPlayerSight: {fileID: 11400000, guid: 5996f1d4cdca3b143b5a51dc3472bc4c, type: 2}
   workAsClient: 0
   maxViewDistance: 30
+  manager: {fileID: 114729019832894138}
+  players: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
 --- !u!114 &114522658278978558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2980,34 +2982,6 @@ MonoBehaviour:
   dataType: 0
   InputAssetHUD: {fileID: 11400000, guid: 44aec9aa07be18c40995d4f898a07706, type: 2}
   OneTimeUpdate: 0
---- !u!114 &114904510856771418
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1420026848938252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd10a113bd6c15d46bde879be1164fa3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 5996f1d4cdca3b143b5a51dc3472bc4c, type: 2}
-  Actions:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114729019832894138}
-        m_MethodName: SetDestination
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: SOPRO.UnEvGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
 --- !u!114 &114992990484700226
 MonoBehaviour:
   m_ObjectHideFlags: 1

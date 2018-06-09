@@ -5,8 +5,6 @@ public abstract class AIVision : AIBehaviour
     protected GameObject currentTarget;
     public GameObject CurrentTarget { get { return currentTarget; } private set { } }
 
-    public SOEvVoid OnSpottedTarget;
-
     public override void AIUpdate()
     {
         throw new System.NotImplementedException();
@@ -33,6 +31,9 @@ public class AISphericalVision : AIVision
     [SerializeField]
     protected SOListPlayerContainer players;
 
+    [SerializeField]
+    protected AIBehaviour next;
+
     public void Awake()
     {
         if (!Client.IsHost)
@@ -49,7 +50,7 @@ public class AISphericalVision : AIVision
         LookForATarget();
 
         if (currentTarget != null)
-            OnSpottedTarget.Raise();
+            owner.SwitchState(next);
     }
 
     public override void OnStateEnter()

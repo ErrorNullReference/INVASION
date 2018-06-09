@@ -3,11 +3,13 @@ using System.Collections;
 using SOPRO;
 public class Player : LivingBeing
 {
+    public Collider PlayerCollider;
     [SerializeField]
     private SOListPlayerContainer players;
     private void Start()
     {
         GetComponentInChildren<HUDManager>().InputAssetHUD = Stats;
+        PlayerCollider = GetComponentInChildren<Collider>();
         Life = Stats.MaxHealth;
     }
     private void OnEnable()

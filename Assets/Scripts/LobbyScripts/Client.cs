@@ -47,11 +47,11 @@ public class Client : MonoBehaviour
 
     //public delegate void UserStatus(CSteamID ID);
 
-    public SOEvVoid OnLobbyInitializationEvent;
-    public SOEvVoid OnLobbyLeaveEvent;
-    public SOEvVoid OnClientInitialized;
-    public SOEvCSteamID OnUserEnter;
-    public SOEvCSteamID OnUserLeave;
+    public BaseSOEvVoid OnLobbyInitializationEvent;
+    public BaseSOEvVoid OnLobbyLeaveEvent;
+    public BaseSOEvVoid OnClientInitialized;
+    public BaseSOEvCSteamID OnUserEnter;
+    public BaseSOEvCSteamID OnUserLeave;
 
     //public static event ClientStatus OnLobbyInitializationEvent;
     //public static event ClientStatus OnLobbyLeaveEvent;
@@ -165,9 +165,9 @@ public class Client : MonoBehaviour
 
     void P2PStatus(P2PSessionConnectFail_t cb)
     {
-#if UNITY_EDITOR
-        Debug.Log(cb.m_eP2PSessionError);
-#endif
+//#if UNITY_EDITOR
+//        Debug.Log(cb.m_eP2PSessionError);
+//#endif
     }
 
     void AddCommands(PacketType commandType, Command command)

@@ -29,11 +29,11 @@ namespace SOPRO
         {
             Event.RemoveListener(this);
         }
-				protected virtual void OnEnable()
+				protected virtual void Awake()
         {
             Event.AddListener(this);
         }
-		protected virtual void OnDisable()
+		protected virtual void OnDestroy()
         {
             Event.RemoveListener(this);
         }

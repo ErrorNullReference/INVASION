@@ -22,7 +22,8 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
     private NavMeshAgent agent;
     private AnimationControllerScript animController;
 
-    public SOEvVoid OnTargetOnSight;
+    [SerializeField]
+    private AIBehaviour next;
 
     public void Awake()
     {
@@ -46,7 +47,7 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
         AIVision aIVision = owner.PreviousState as AIVision;
         if (aIVision == null || !aIVision.CurrentTarget)
         {
-            OnTargetOnSight.Raise();
+            owner.SwitchState(next);
             return;
         }
 
@@ -80,8 +81,8 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
         {
             if(hit.collider.gameObject == target)
             {
-                Debug.Log("TARGET ON SIGHT!");
-                OnTargetOnSight.Raise();
+                //Debug.Log("TARGET ON SIGHT!");
+                owner.SwitchState(next);
             }
         }
     }

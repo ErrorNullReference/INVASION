@@ -15,7 +15,7 @@ public class AIGoToDestination : AIBehaviour
 
     //private WaitForSeconds waitForSecond;
 
-    public SOEvVoid OnDestinationReached;
+    public BaseSOEvVoid OnDestinationReached;
 
     public void Awake()
     {

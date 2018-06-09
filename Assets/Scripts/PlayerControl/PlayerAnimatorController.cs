@@ -68,7 +68,7 @@ public class PlayerAnimatorController : MonoBehaviour
             if (magnitude >= RunTreshold)
                 dir *= 2;
 
-            Debug.Log(magnitude);
+            //Debug.Log(magnitude);
         }
     }
 

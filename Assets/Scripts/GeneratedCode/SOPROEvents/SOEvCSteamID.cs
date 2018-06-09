@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Steamworks;
+using SOPRO;
 namespace SOPRO 
 {
     /// <summary>
@@ -9,7 +10,7 @@ namespace SOPRO
     /// </summary>
     [CreateAssetMenu(fileName = "Event", menuName = "SOPRO/Events/CSteamID")]
     [Serializable]
-    public class SOEvCSteamID : ScriptableObject
+    public class SOEvCSteamID : BaseSOEvCSteamID
     {
 #if UNITY_EDITOR
         /// <summary>
@@ -21,7 +22,10 @@ namespace SOPRO
 #endif
 
 				#if UNITY_EDITOR
-		 				public CSteamID DEBUG_CSteamID_0 = default(CSteamID);
+		 				/// <summary>
+				/// Debug field for inspector view, available only in UNITY_EDITOR
+				/// </summary>
+				public CSteamID DEBUG_CSteamID_0 = default(CSteamID);
 				#endif
 		        [SerializeField]
         private readonly List<SOEvCSteamIDListener> listeners = new List<SOEvCSteamIDListener>();
@@ -29,7 +33,7 @@ namespace SOPRO
         /// <summary>
         /// Invokes all listeners of this event
         /// </summary>
-        public void Raise(CSteamID Value0)
+        public override void Raise(CSteamID Value0)
         {
             for (int i = listeners.Count - 1; i >= 0; i--)
                 listeners[i].OnEventRaised(Value0);

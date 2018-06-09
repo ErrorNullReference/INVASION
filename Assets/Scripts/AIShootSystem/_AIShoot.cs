@@ -40,7 +40,7 @@ public class _AIShoot : MonoBehaviour
         {
             Weapon.ActionTime = tempActionTime;
         }
-        Debug.Log(Weapon.ActionTime);
+        //Debug.Log(Weapon.ActionTime);
     }
 
     void OnDisable()

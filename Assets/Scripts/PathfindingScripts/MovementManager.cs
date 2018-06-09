@@ -23,8 +23,8 @@ public class MovementManager : MonoBehaviour
     private delegate void NetworkState();
 
     private NetworkState networkState;
-    public SOEvVoid OnPathReached;
-    public SOEvVoid OnPathStarted;
+    public BaseSOEvVoid OnPathReached;
+    public BaseSOEvVoid OnPathStarted;
     private WaitForSeconds waitForSecond = new WaitForSeconds(0.1f);
 
     private Prediction prediction;
@@ -148,7 +148,7 @@ public class MovementManager : MonoBehaviour
 
     public void ReceiveTransform(Vector3 pos, Quaternion rot) //USED BY MOVEMENTMANAGER
     {
-        Debug.Log("Enemy: " + gnObject.NetworkId + "Position is: " + pos);
+        //Debug.Log("Enemy: " + gnObject.NetworkId + "Position is: " + pos);
 
         //oldDestination = nextDestination;
         //oldQuatenion = nextQuaternion;

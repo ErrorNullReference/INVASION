@@ -12,9 +12,10 @@ public class AIShootTillOnSight : AIBehaviour
 
     private GameObject targetToShot;
 
-    public SOEvVoid OnTargetLossOfSight;
-
     public EnemyShootSync shootSync;
+
+    [SerializeField]
+    private AIBehaviour next;
 
     private void Awake()
     {
@@ -41,7 +42,7 @@ public class AIShootTillOnSight : AIBehaviour
         RaycastHit hit;
         if (!Physics.Raycast(this.transform.position + new Vector3(0, 0.5f, 0), this.transform.forward, out hit, maxViewDistance, layerToLookInto))
         {
-            OnTargetLossOfSight.Raise();
+            owner.SwitchState(next);
             return false;
         }
 
@@ -49,7 +50,7 @@ public class AIShootTillOnSight : AIBehaviour
             return true;
         else
         {
-            OnTargetLossOfSight.Raise();
+            owner.SwitchState(next);
             return false;
         }
     }
@@ -59,7 +60,7 @@ public class AIShootTillOnSight : AIBehaviour
         AIGoToTargetUntilOnSight previousState = owner.PreviousState as AIGoToTargetUntilOnSight;
         if (previousState == null)
         {
-            OnTargetLossOfSight.Raise();
+            owner.SwitchState(next);
             return;
         }
 
