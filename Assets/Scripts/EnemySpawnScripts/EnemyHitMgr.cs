@@ -23,7 +23,7 @@ public class EnemyHitMgr : MonoBehaviour
         //Debug.Log("hit received");
         e.DecreaseLife();
         if (CheckLife(e))
-            Client.SendPacketToInGameUsers(data, PacketType.ShootHit, EP2PSend.k_EP2PSendReliable, false);
+            Client.SendPacketToInGameUsers(data, 0, (int)length, PacketType.ShootHit, EP2PSend.k_EP2PSendReliable, false);
         //send to all but this client a packet with hit command only if e life is not 0 
         //else send enemy death;
     }

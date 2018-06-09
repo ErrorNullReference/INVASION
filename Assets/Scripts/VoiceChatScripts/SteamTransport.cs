@@ -7,12 +7,12 @@ using GENUtility;
 public class SteamTransport : Transport
 {
     //TODO: gestire il cambio di scena (mantenere/ricreare voice chat entities)
-    public const int MaxAudioPacketSize = 1200;
+    public const int MaxAudioPacketSize = 1199;
     public override int MaxDataLength { get { return MaxAudioPacketSize - Transport.FirstPacketByteAvailable - Client.HeaderLength; } }
     private readonly byte[] boolean = new byte[sizeof(bool)];
     protected override void OnEnable()
     {
-        toSend = new BytePacket(MaxAudioPacketSize - Client.HeaderLength);
+        this.toSend = new BytePacket(MaxAudioPacketSize - Client.HeaderLength);
     }
     public void Init()
     {
@@ -26,13 +26,13 @@ public class SteamTransport : Transport
         int lengthList = receiversIds.Count;
         for (int i = 0; i < lengthList; i++)
         {
-            Client.SendPacket(data, PacketType.VoiceChatData, Client.MyID, (CSteamID)receiversIds[i], EP2PSend.k_EP2PSendUnreliableNoDelay);
+            Client.SendPacket(data, startIndex, length, PacketType.VoiceChatData, Client.MyID, (CSteamID)receiversIds[i], EP2PSend.k_EP2PSendUnreliableNoDelay);
         }
     }
     private void SendMsg(ulong targetID, bool isTargetMutedByLocal)
     {
         ByteManipulator.Write(boolean, 0, isTargetMutedByLocal);
-        Client.SendPacket(boolean, PacketType.VoiceChatMutedMessage, Client.MyID, (CSteamID)targetID, EP2PSend.k_EP2PSendReliable);
+        Client.SendPacket(boolean, 0, sizeof(bool), PacketType.VoiceChatMutedMessage, Client.MyID, (CSteamID)targetID, EP2PSend.k_EP2PSendReliable);
     }
     private void ReceivePacketAudioCommand(byte[] data, uint dataLength, CSteamID sender)
     {

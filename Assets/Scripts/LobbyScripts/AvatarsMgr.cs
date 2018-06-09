@@ -86,7 +86,7 @@ public class AvatarsMgr : MonoBehaviour
         byte[] d = ArrayPool<byte>.Get(1);
         d[0] = (byte)avatarIndex;
 
-        Client.SendPacket(d, PacketType.AnswerAvatarSelection, Client.MyID, sender, EP2PSend.k_EP2PSendReliable);
+        Client.SendPacket(d, 0, 1, PacketType.AnswerAvatarSelection, Client.MyID, sender, EP2PSend.k_EP2PSendReliable);
 
         ArrayPool<byte>.Recycle(d);
     }

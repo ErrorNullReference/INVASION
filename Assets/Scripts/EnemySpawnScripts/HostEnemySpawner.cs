@@ -17,7 +17,7 @@ public class HostEnemySpawner : MonoBehaviour
     WaitForEndOfFrame waitForFrame;
     bool coroutineStart;
     private readonly BytePacket idAndPos = new BytePacket(13); //TODO: Maybe even static?
-
+    private static readonly byte[] emptyArray = new byte[0];
     // Use this for initialization
     void Start()
     {
@@ -35,7 +35,7 @@ public class HostEnemySpawner : MonoBehaviour
         waitForFrame = new WaitForEndOfFrame();
         enemiesCount = 0;
         enemyId = 0;
-        firstWaveCount = UnityEngine.Random.Range(1, 20);    
+        firstWaveCount = UnityEngine.Random.Range(1, 20);
 
         SteamCallbackReceiver.ChatUpdateEvent += InitCoroutine;
         SteamCallbackReceiver.LobbyDataUpdateEvent += InitCoroutine;
@@ -83,7 +83,7 @@ public class HostEnemySpawner : MonoBehaviour
         idAndPos.Write(position.y);
         idAndPos.Write(position.z);
 
-        Client.SendPacketToInGameUsers(idAndPos.Data, PacketType.EnemySpawn, Client.MyID, Steamworks.EP2PSend.k_EP2PSendReliable);
+        Client.SendPacketToInGameUsers(idAndPos.Data, 0, idAndPos.CurrentLength, PacketType.EnemySpawn, Client.MyID, Steamworks.EP2PSend.k_EP2PSendReliable);
         //Debug.Log("sent: " + Id);
     }
 
@@ -98,8 +98,8 @@ public class HostEnemySpawner : MonoBehaviour
 
         Server.Init();
         Client.LeaveCurrentLobby();
-        Client.SendPacketToInGameUsers(new byte[]{ }, PacketType.LeaveLobby, EP2PSend.k_EP2PSendReliable);
-        StartCoroutine(SpawnEnemiesAtStart());  
+        Client.SendPacketToInGameUsers(emptyArray,0, 0, PacketType.LeaveLobby, EP2PSend.k_EP2PSendReliable);
+        StartCoroutine(SpawnEnemiesAtStart());
         coroutineStart = true;
     }
 
@@ -110,8 +110,8 @@ public class HostEnemySpawner : MonoBehaviour
 
         Server.Init();
         Client.LeaveCurrentLobby();
-        Client.SendPacketToInGameUsers(new byte[]{ }, PacketType.LeaveLobby, EP2PSend.k_EP2PSendReliable);
-        StartCoroutine(SpawnEnemiesAtStart());  
+        Client.SendPacketToInGameUsers(emptyArray,0, 0, PacketType.LeaveLobby, EP2PSend.k_EP2PSendReliable);
+        StartCoroutine(SpawnEnemiesAtStart());
         coroutineStart = true;
     }
 

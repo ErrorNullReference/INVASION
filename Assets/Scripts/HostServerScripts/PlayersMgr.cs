@@ -30,7 +30,7 @@ public class PlayersMgr : MonoBehaviour
         }
 
         avatars = new Dictionary<CSteamID, SimpleAvatar>();
-       
+
         for (int i = 0; i < Client.Users.Count; i++)
         {
             SimpleAvatar a;
@@ -51,7 +51,7 @@ public class PlayersMgr : MonoBehaviour
 
     void ManageServerTransform(byte[] data, uint dataLength, CSteamID sender)
     {
-        Client.SendPacketToInGameUsers(data, PacketType.Transform, sender, EP2PSend.k_EP2PSendUnreliable);
+        Client.SendPacketToInGameUsers(data, 0, (int)dataLength, PacketType.Transform, sender, EP2PSend.k_EP2PSendUnreliable);
     }
 
     void ManageTransform(byte[] data, uint dataLength, CSteamID sender)

@@ -60,7 +60,7 @@ public class EnemyTransformSync : MonoBehaviour
             payload.Write(rot.z);
             payload.Write(rot.w);
 
-            Client.SendPacketToInGameUsers(payload.Data, PacketType.EnemyTransform, Client.MyID, Steamworks.EP2PSend.k_EP2PSendUnreliable, false);
+            Client.SendPacketToInGameUsers(payload.Data, 0, 29, PacketType.EnemyTransform, Client.MyID, Steamworks.EP2PSend.k_EP2PSendUnreliable, false);
             yield return waitForSecond;
         }
     }
