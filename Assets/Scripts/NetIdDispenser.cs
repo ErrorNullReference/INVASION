@@ -3,7 +3,7 @@
 public class NetIdDispenser : ScriptableObject
 {
     [SerializeField]
-    protected int nextDispensedId = 0;
+    protected int nextDispensedId = int.MinValue;
     public virtual int GetNewNetId()
     {
         int res = nextDispensedId;
