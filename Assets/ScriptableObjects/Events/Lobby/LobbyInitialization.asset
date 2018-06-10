@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aed58cfad809a1a43b3e3b93d3f36c50, type: 3}
   m_Name: LobbyInitialization
   m_EditorClassIdentifier: 
-  DEBUG_DeveloperDescription: 
+  DEBUG_DeveloperDescription: Event raised when entering lobby

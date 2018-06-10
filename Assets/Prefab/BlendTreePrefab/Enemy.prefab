@@ -2585,7 +2585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 95952458706832296}
-  paramName: {fileID: 0}
+  paramName: {fileID: 11400000, guid: 81120f5e097cf4b40974cdae3e399e04, type: 2}
   setBoolOnlyWhenPressed: 1
   setBoolPressOneTime: 0
   newBoolVal: 1
@@ -2617,7 +2617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 95952458706832296}
-  paramName: {fileID: 0}
+  paramName: {fileID: 11400000, guid: a2948972c4953a44b877999855435728, type: 2}
   setBoolOnlyWhenPressed: 1
   setBoolPressOneTime: 0
   newBoolVal: 1
@@ -2635,7 +2635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 95952458706832296}
-  paramName: {fileID: 0}
+  paramName: {fileID: 11400000, guid: b60aaeab7b525684f97b0039048c2953, type: 2}
   setBoolOnlyWhenPressed: 0
   setBoolPressOneTime: 1
   newBoolVal: 1
@@ -2652,13 +2652,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed74f8675f249452e9ff7cef53a9a7db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Main: {fileID: 0}
   animator: {fileID: 95952458706832296}
-  paramNameTranslate: {fileID: 0}
-  paramNameRotate: {fileID: 0}
+  paramNameTranslate: {fileID: 11400000, guid: 72814ab5f7a2a5245b73db8b74449aea, type: 2}
+  paramNameRotate: {fileID: 11400000, guid: 1ef3c57eb19026641ad193b8745983e0, type: 2}
   sendTranslateParam: 1
   rotateRoot: 1
-  bulletPrefab: {fileID: 0}
-  bulletSpawn: {fileID: 0}
+  bulletPool: {fileID: 11400000, guid: b7ed093dc475bc04bb229f5f69117446, type: 2}
+  bulletSpawn: {fileID: 4507408988396716}
   triggerKey: 0
 --- !u!137 &137186208371319550
 SkinnedMeshRenderer:

@@ -11,7 +11,7 @@ public class EnemyTransformSync : MonoBehaviour
     private Vector3 startPos, endPos, speed;
     private Quaternion startRot, endRot;
     private AnimationControllerScript animController;
-    private static readonly BytePacket payload = new BytePacket((sizeof(float) * 7) + sizeof(int)); //maybe even static? It would be ideal if there woul dnot be problems with it
+    private static readonly BytePacket payload = new BytePacket((sizeof(float) * 7) + sizeof(int));
     private GameNetworkObject gnObject;
     private Transform myTransform;
 

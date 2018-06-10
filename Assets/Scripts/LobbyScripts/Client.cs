@@ -491,21 +491,27 @@ public class Client : MonoBehaviour
     /// <summary>
     /// Writes the rotation on packet data.
     /// </summary>
-    /// <param name="rotation">Rotation.</param>
+    /// <param name="transform">Tranform to write</param>
     /// <param name="resetPacketSeek">If set to <c>true</c> reset packet seek.</param>
     public void WriteTransformOnPacketData(Transform transform, bool resetPacketSeek)
     {
         if (resetPacketSeek)
+        {
+            Packet.CurrentLength = 0;
             Packet.CurrentSeek = 0;
+        }
 
-        Packet.Write(transform.position.x);
-        Packet.Write(transform.position.y);
-        Packet.Write(transform.position.z);
+        Vector3 pos = transform.position;
+        Quaternion rot = transform.rotation;
 
-        Packet.Write(transform.rotation.x);
-        Packet.Write(transform.rotation.y);
-        Packet.Write(transform.rotation.z);
-        Packet.Write(transform.rotation.w);
+        Packet.Write(pos.x);
+        Packet.Write(pos.y);
+        Packet.Write(pos.z);
+
+        Packet.Write(rot.x);
+        Packet.Write(rot.y);
+        Packet.Write(rot.z);
+        Packet.Write(rot.w);
     }
 
     /// <summary>
@@ -515,12 +521,7 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
-
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToHost(packet, 0, packet.Length, PacketType.ServerTransform, sendType);
-
-        ArrayPool<byte>.Recycle(packet);
+        Client.SendPacketToHost(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.ServerTransform, sendType);
     }
 
     /// <summary>
@@ -530,17 +531,13 @@ public class Client : MonoBehaviour
     public static void SendTransformToHost(byte[] data, Transform transform, EP2PSend sendType)
     {
         instance.Packet.CurrentSeek = 0;
+        instance.Packet.CurrentLength = 0;
 
         instance.Packet.WriteByteData(data, 0, data.Length);
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
-
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToHost(packet, 0, packet.Length, PacketType.ServerTransform, sendType);
-
-        ArrayPool<byte>.Recycle(packet);
+        Client.SendPacketToHost(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.ServerTransform, sendType);
     }
 
     /// <summary>
@@ -550,12 +547,7 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
-
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToHost(packet, 0, packet.Length, command, sendType);
-
-        ArrayPool<byte>.Recycle(packet);
+        Client.SendPacketToHost(instance.Packet.Data, 0, instance.Packet.CurrentLength, command, sendType);
     }
 
     /// <summary>
@@ -565,17 +557,13 @@ public class Client : MonoBehaviour
     public static void SendTransformToHost(byte[] data, Transform transform, PacketType command, EP2PSend sendType)
     {
         instance.Packet.CurrentSeek = 0;
+        instance.Packet.CurrentLength = 0;
 
         instance.Packet.WriteByteData(data, 0, data.Length);
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
-
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToHost(packet, 0, packet.Length, command, sendType);
-
-        ArrayPool<byte>.Recycle(packet);
+        Client.SendPacketToHost(instance.Packet.Data, 0, instance.Packet.CurrentLength, command, sendType);
     }
 
     /// <summary>
@@ -585,12 +573,7 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
-
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToLobby(packet, 0, packet.Length, PacketType.ServerTransform, sendType, sendToSender);
-
-        ArrayPool<byte>.Recycle(packet);
+        Client.SendPacketToLobby(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.ServerTransform, sendType, sendToSender);
     }
 
     /// <summary>
@@ -600,17 +583,13 @@ public class Client : MonoBehaviour
     public static void SendTransformToLobby(byte[] data, Transform transform, EP2PSend sendType, bool sendToSender = true)
     {
         instance.Packet.CurrentSeek = 0;
+        instance.Packet.CurrentLength = 0;
 
         instance.Packet.WriteByteData(data, 0, data.Length);
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
-
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToLobby(packet, 0, packet.Length, PacketType.ServerTransform, sendType, sendToSender);
-
-        ArrayPool<byte>.Recycle(packet);
+        Client.SendPacketToLobby(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.ServerTransform, sendType, sendToSender);
     }
 
     /// <summary>
@@ -620,12 +599,7 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
-
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToLobby(packet, 0, packet.Length, command, sendType, sendToSender);
-
-        ArrayPool<byte>.Recycle(packet);
+        Client.SendPacketToLobby(instance.Packet.Data, 0, instance.Packet.CurrentLength, command, sendType, sendToSender);
     }
 
     /// <summary>
@@ -635,17 +609,13 @@ public class Client : MonoBehaviour
     public static void SendTransformToLobby(byte[] data, Transform transform, PacketType command, EP2PSend sendType, bool sendToSender = true)
     {
         instance.Packet.CurrentSeek = 0;
+        instance.Packet.CurrentLength = 0;
 
         instance.Packet.WriteByteData(data, 0, data.Length);
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
-
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToLobby(packet, 0, packet.Length, command, sendType, sendToSender);
-
-        ArrayPool<byte>.Recycle(packet);
+        Client.SendPacketToLobby(instance.Packet.Data, 0, instance.Packet.CurrentLength, command, sendType, sendToSender);
     }
 
     /// <summary>
@@ -655,12 +625,7 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
-
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToInGameUsers(packet, 0, packet.Length, PacketType.ServerTransform, sendType, sendToSender);
-
-        ArrayPool<byte>.Recycle(packet);
+        Client.SendPacketToInGameUsers(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.ServerTransform, sendType, sendToSender);
     }
 
     /// <summary>
@@ -670,17 +635,13 @@ public class Client : MonoBehaviour
     public static void SendTransformToInGameUsers(byte[] data, Transform transform, EP2PSend sendType, bool sendToSender = true)
     {
         instance.Packet.CurrentSeek = 0;
+        instance.Packet.CurrentLength = 0;
 
         instance.Packet.WriteByteData(data, 0, data.Length);
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
-
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToInGameUsers(packet, 0, packet.Length, PacketType.ServerTransform, sendType, sendToSender);
-
-        ArrayPool<byte>.Recycle(packet);
+        Client.SendPacketToInGameUsers(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.ServerTransform, sendType, sendToSender);
     }
 
     /// <summary>
@@ -690,12 +651,7 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
-
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToInGameUsers(packet, 0, packet.Length, command, sendType, sendToSender);
-
-        ArrayPool<byte>.Recycle(packet);
+        Client.SendPacketToInGameUsers(instance.Packet.Data, 0, instance.Packet.CurrentLength, command, sendType, sendToSender);
     }
 
     /// <summary>
@@ -705,17 +661,13 @@ public class Client : MonoBehaviour
     public static void SendTransformToInGameUsers(byte[] data, Transform transform, PacketType command, EP2PSend sendType, bool sendToSender = true)
     {
         instance.Packet.CurrentSeek = 0;
+        instance.Packet.CurrentLength = 0;
 
         instance.Packet.WriteByteData(data, 0, data.Length);
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        byte[] packet = ArrayPool<byte>.Get(instance.Packet.CurrentSeek);
-
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToInGameUsers(packet, 0, packet.Length, command, sendType, sendToSender);
-
-        ArrayPool<byte>.Recycle(packet);
+        Client.SendPacketToInGameUsers(instance.Packet.Data, 0, instance.Packet.CurrentLength, command, sendType, sendToSender);
     }
 
     void OnGUI()

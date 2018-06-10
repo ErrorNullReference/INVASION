@@ -8,9 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bd26c6b7ea471d48a93c7ebaa9493a3, type: 3}
-  m_Name: UserEntered
+  m_Script: {fileID: 1294407359, guid: 7d6b284e18a06314ea7b65d1fe4236f6, type: 3}
+  m_Name: IsThrowingGranade
   m_EditorClassIdentifier: 
-  DEBUG_DeveloperDescription: Event raised when an user entered
-  DEBUG_CSteamID_0:
-    m_SteamID: 0
+  PropertyName: 'isThrowingGranade '
+  PropertyHash: 576894206

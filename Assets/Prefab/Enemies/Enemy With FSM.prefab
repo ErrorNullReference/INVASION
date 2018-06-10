@@ -2797,7 +2797,7 @@ MonoBehaviour:
   randomSpawnTimer: 0
   Pool: {fileID: 0}
   HUDTimerShow: 2
-  networkId: {fileID: 0}
+  networkId: {fileID: 114987240227332286}
 --- !u!114 &114437912616470450
 MonoBehaviour:
   m_ObjectHideFlags: 1

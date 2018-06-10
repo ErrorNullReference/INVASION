@@ -13,7 +13,6 @@ public class Enemy : LivingBeing
     private float HUDTimer;
     [SerializeField]
     private float HUDTimerShow;
-    [SerializeField]
     private GameNetworkObject networkId;
     HUDManager hudManager;
     Image healthImage;

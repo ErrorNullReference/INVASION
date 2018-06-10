@@ -2735,7 +2735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7012d827424c321428681592efbc37ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkObjects: {fileID: 0}
+  networkObjects: {fileID: 11400000, guid: 209e760079e7a28429153a90e96df903, type: 2}
 --- !u!114 &114168846606785914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2919,7 +2919,7 @@ MonoBehaviour:
   randomSpawnTimer: 0
   Pool: {fileID: 0}
   HUDTimerShow: 2
-  networkId: {fileID: 0}
+  networkId: {fileID: 114151545493592974}
 --- !u!136 &136067789119106868
 CapsuleCollider:
   m_ObjectHideFlags: 1

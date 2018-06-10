@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bd26c6b7ea471d48a93c7ebaa9493a3, type: 3}
   m_Name: UserLeft
   m_EditorClassIdentifier: 
-  DEBUG_DeveloperDescription: 
+  DEBUG_DeveloperDescription: Event raised when an user left
   DEBUG_CSteamID_0:
     m_SteamID: 0
