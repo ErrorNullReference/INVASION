@@ -36,7 +36,7 @@ public class MovementManager : MonoBehaviour
 
     private GameNetworkObject gnObject;
 
-    private readonly BytePacket payload = new BytePacket((sizeof(float) * 7) + 1);
+    private static readonly BytePacket payload = new BytePacket((sizeof(float) * 7) + sizeof(int));
 
     private void Awake()
     {
@@ -114,7 +114,7 @@ public class MovementManager : MonoBehaviour
             payload.CurrentSeek = 0;
             payload.CurrentLength = 0;
 
-            payload.Write((byte)gnObject.NetworkId);
+            payload.Write(gnObject.NetworkId);
 
             Vector3 pos = transform.position;
             Quaternion rot = transform.rotation;

@@ -85,6 +85,33 @@
             </summary>
             <param name="layer">layer to convert</param>
         </member>
+        <member name="T:SOPRO.NavMeshAreaHolder">
+            <summary>
+            Class that holds an animator property name and calculates its hash value at load time
+            </summary>
+        </member>
+        <member name="F:SOPRO.NavMeshAreaHolder.AreaName">
+            <summary>
+            Area Name
+            </summary>
+        </member>
+        <member name="F:SOPRO.NavMeshAreaHolder.AreaId">
+            <summary>
+            Calculated area id at load time
+            </summary>
+        </member>
+        <member name="M:SOPRO.NavMeshAreaHolder.op_Implicit(SOPRO.NavMeshAreaHolder)~System.Int32">
+            <summary>
+            Converts to calculated area id value
+            </summary>
+            <param name="area">area to convert</param>
+        </member>
+        <member name="M:SOPRO.NavMeshAreaHolder.op_Implicit(SOPRO.NavMeshAreaHolder)~System.String">
+            <summary>
+            Converts to area name value
+            </summary>
+            <param name="area">area to convert</param>
+        </member>
         <member name="T:SOPRO.ShaderPropertyHolder">
             <summary>
             Class that holds a shader property name and calculates its id value at load time

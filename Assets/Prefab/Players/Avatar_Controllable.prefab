@@ -1527,11 +1527,11 @@ MonoBehaviour:
   WalkSpeed:
     UseConstant: 1
     Variable: {fileID: 0}
-    constantValue: 5
+    constantValue: 15
   RunSpeed:
     UseConstant: 1
     Variable: {fileID: 0}
-    constantValue: 10
+    constantValue: 25
 --- !u!114 &114402471443833716
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1620,6 +1620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   life: 0
   Stats: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
+  PlayerCollider: {fileID: 136651011897755702}
   players: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
 --- !u!114 &114749351794276356
 MonoBehaviour:

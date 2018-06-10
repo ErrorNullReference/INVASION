@@ -9,6 +9,7 @@ public class HostEnemySpawner : MonoBehaviour
     public static HostEnemySpawner Instance;
     int enemyId;
     public const int MAX_NUM_ENEMIES = 200;
+    public NetIdDispenser IdDispenser;
     public Transform[] spawnPoints;
     public Transform firstWavePosition;
     int firstWaveCount;
@@ -16,7 +17,7 @@ public class HostEnemySpawner : MonoBehaviour
     private Dictionary<int, Enemy> IdEnemies;
     WaitForEndOfFrame waitForFrame;
     bool coroutineStart;
-    private readonly BytePacket idAndPos = new BytePacket(13); //TODO: Maybe even static?
+    private static readonly BytePacket idAndPos = new BytePacket(16);
     private static readonly byte[] emptyArray = new byte[0];
     // Use this for initialization
     void Start()
@@ -40,7 +41,7 @@ public class HostEnemySpawner : MonoBehaviour
         SteamCallbackReceiver.ChatUpdateEvent += InitCoroutine;
         SteamCallbackReceiver.LobbyDataUpdateEvent += InitCoroutine;
 
-        InitCoroutine(new LobbyDataUpdate_t());
+        //InitCoroutine(new LobbyDataUpdate_t());
     }
 
     void OnEnable()
@@ -52,22 +53,16 @@ public class HostEnemySpawner : MonoBehaviour
     {
         for (int i = 0; i < firstWaveCount; i++)
         {
-            InstantiateEnemy(-1, firstWavePosition.position.x, firstWavePosition.position.y, firstWavePosition.position.z);
+            InstantiateEnemy(firstWavePosition.position.x, firstWavePosition.position.y, firstWavePosition.position.z);
             yield return waitForFrame;
         }
     }
 
     //sends to clients the command to instantiate an enemy in a given position, or it takes a random position from an array of randomic given positions if none is specified
-    public void InstantiateEnemy(int EnemyId, float x = 0, float y = 0, float z = 0)
+    public void InstantiateEnemy(float x = 0, float y = 0, float z = 0)
     {
-        int Id = 0;
-        if (EnemyId == -1)
-        {
-            Id = enemyId;
-            enemyId++;
-        }
-        else
-            Id = EnemyId;
+        int Id = IdDispenser.GetNewNetId();
+
         int randomIndex = UnityEngine.Random.Range(0, spawnPoints.Length);
         Vector3 position = new Vector3(x, y, z);
         if (position == Vector3.zero)
@@ -78,12 +73,12 @@ public class HostEnemySpawner : MonoBehaviour
         idAndPos.CurrentLength = 0;
         idAndPos.CurrentSeek = 0;
 
-        idAndPos.Write((byte)Id);
+        idAndPos.Write(Id);
         idAndPos.Write(position.x);
         idAndPos.Write(position.y);
         idAndPos.Write(position.z);
 
-        Client.SendPacketToInGameUsers(idAndPos.Data, 0, idAndPos.CurrentLength, PacketType.EnemySpawn, Client.MyID, Steamworks.EP2PSend.k_EP2PSendReliable);
+        Client.SendPacketToInGameUsers(idAndPos.Data, 0, idAndPos.MaxCapacity, PacketType.EnemySpawn, Client.MyID, Steamworks.EP2PSend.k_EP2PSendReliable);
         //Debug.Log("sent: " + Id);
     }
 

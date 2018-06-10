@@ -2,24 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Steamworks;
+using SOPRO;
+using GENUtility;
 
-public class EnemyHitMgr : MonoBehaviour
+[CreateAssetMenu(menuName = "EnemyHitMgr")]
+public class EnemyHitMgr : ScriptableObject
 {
-    private void Awake()
+    [SerializeField]
+    private SODictionaryTransformContainer netEntities;
+    public void Init()
     {
-        if (!Client.IsHost)
-        {
-            this.enabled = false;
+        if (Client.IsHost)
             return;
-        }
         Client.AddCommand(PacketType.ShootHitServer, OnEnemyHit);
     }
 
     private void OnEnemyHit(byte[] data, uint length, CSteamID sender)
     {
-        int id = data[0];
+        int id = ByteManipulator.ReadInt32(data, 0);
 
-        Enemy e = ClientTransformManager.IdEnemies[id].gameObject.GetComponent<Enemy>();
+        Enemy e = netEntities[id].GetComponent<Enemy>();
         //Debug.Log("hit received");
         e.DecreaseLife();
         if (CheckLife(e))

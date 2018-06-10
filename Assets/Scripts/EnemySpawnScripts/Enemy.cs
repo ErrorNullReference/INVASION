@@ -2,26 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using SOPRO;
 public class Enemy : LivingBeing
-{    
+{
     public bool Destroy;
     public bool Recycling;
-    public float randomSpawnTimer;   
+    public float randomSpawnTimer;
+    [HideInInspector]
+    public SOPool Pool;
     private float HUDTimer;
     [SerializeField]
     private float HUDTimerShow;
     [SerializeField]
-    private int networkId;
+    private GameNetworkObject networkId;
     HUDManager hudManager;
     Image healthImage;
 
-    public int NetworkId
+    public GameNetworkObject NetworkId
     {
         get
         {
             return networkId;
-        }        
+        }
     }
 
     private void Start()
@@ -30,22 +32,27 @@ public class Enemy : LivingBeing
         healthImage = hudManager.GetComponent<Image>();
         healthImage.enabled = false;
         hudManager.InputAssetHUD = Stats;
-    }  
-    
+    }
+
     private void OnEnable()
     {
-        networkId = GetComponent<GameNetworkObject>().NetworkId;
+        if (!networkId)
+            networkId = GetComponent<GameNetworkObject>();
+
         randomSpawnTimer = Random.Range(0f, 5.0f);
         Life = Stats.MaxHealth;
         Destroy = false;
         Recycling = false;
     }
-
+    private void OnDisable()
+    {
+        networkId.ResetNetworkId();
+    }
     private void Awake()
-    {       
+    {
         randomSpawnTimer = Random.Range(0f, 5.0f);
         Destroy = false;
-        Recycling = false;        
+        Recycling = false;
     }
 
     public void Reset()
@@ -68,10 +75,10 @@ public class Enemy : LivingBeing
 
     private void Update()
     {
-        if(HUDTimer>0)
+        if (HUDTimer > 0)
         {
             HUDTimer -= Time.deltaTime;
-            if(HUDTimer<=0)
+            if (HUDTimer <= 0)
             {
                 healthImage.enabled = false;
             }

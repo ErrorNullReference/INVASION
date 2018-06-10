@@ -3,6 +3,7 @@ using System.Collections;
 using SOPRO;
 public class Player : LivingBeing
 {
+    [HideInInspector]
     public Collider PlayerCollider;
     [SerializeField]
     private SOListPlayerContainer players;

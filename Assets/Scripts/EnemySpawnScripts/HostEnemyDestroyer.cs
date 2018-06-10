@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using GENUtility;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -56,10 +57,10 @@ public class HostEnemyDestroyer : MonoBehaviour
         {
             if (enemy.Destroy)
             {
-                byte[] d = ArrayPool<byte>.Get(1);
-                d[0] = (byte)enemy.NetworkId;
+                byte[] d = ArrayPool<byte>.Get(sizeof(int));
+                ByteManipulator.Write(d, 0, enemy.NetworkId.NetworkId);
 
-                Client.SendPacketToInGameUsers(d, 0, 1, PacketType.EnemyDeath, Steamworks.EP2PSend.k_EP2PSendReliable);
+                Client.SendPacketToInGameUsers(d, 0, d.Length, PacketType.EnemyDeath, Steamworks.EP2PSend.k_EP2PSendReliable);
 
                 ArrayPool<byte>.Recycle(d);
                 enemy.Destroy = false;
@@ -67,7 +68,7 @@ public class HostEnemyDestroyer : MonoBehaviour
             enemy.randomSpawnTimer -= Time.deltaTime;
             if (enemy.randomSpawnTimer <= 0)
             {
-                HostEnemySpawner.Instance.InstantiateEnemy(enemy.NetworkId);
+                HostEnemySpawner.Instance.InstantiateEnemy();
                 enemy.randomSpawnTimer = UnityEngine.Random.Range(0f, 5.0f);
                 enemy.Recycling = false;
                 EnemyToRecycleToRemove.Add(enemy);

@@ -11,7 +11,7 @@ public class EnemyTransformSync : MonoBehaviour
     private Vector3 startPos, endPos, speed;
     private Quaternion startRot, endRot;
     private AnimationControllerScript animController;
-    private readonly BytePacket payload = new BytePacket((sizeof(float) * 7) + 1); //maybe even static? It would be ideal if there woul dnot be problems with it
+    private static readonly BytePacket payload = new BytePacket((sizeof(float) * 7) + sizeof(int)); //maybe even static? It would be ideal if there woul dnot be problems with it
     private GameNetworkObject gnObject;
     private Transform myTransform;
 
@@ -46,7 +46,7 @@ public class EnemyTransformSync : MonoBehaviour
             payload.CurrentLength = 0;
             payload.CurrentSeek = 0;
 
-            payload.Write((byte)gnObject.NetworkId); //does this need to be byte? Seems strange, shouldn't it be int/uint?
+            payload.Write(gnObject.NetworkId); //does this need to be byte? Seems strange, shouldn't it be int/uint?
 
             Vector3 pos = myTransform.position;
             Quaternion rot = myTransform.rotation;
@@ -60,7 +60,7 @@ public class EnemyTransformSync : MonoBehaviour
             payload.Write(rot.z);
             payload.Write(rot.w);
 
-            Client.SendPacketToInGameUsers(payload.Data, 0, 29, PacketType.EnemyTransform, Client.MyID, Steamworks.EP2PSend.k_EP2PSendUnreliable, false);
+            Client.SendPacketToInGameUsers(payload.Data, 0, payload.MaxCapacity, PacketType.EnemyTransform, Client.MyID, Steamworks.EP2PSend.k_EP2PSendUnreliable, false);
             yield return waitForSecond;
         }
     }

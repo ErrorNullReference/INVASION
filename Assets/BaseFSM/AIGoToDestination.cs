@@ -17,18 +17,19 @@ public class AIGoToDestination : AIBehaviour
 
     public BaseSOEvVoid OnDestinationReached;
 
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         //waitForSecond = new WaitForSeconds(0.1f);
         agent = this.GetComponent<NavMeshAgent>();
     }
 
-    public void OnEnable()
+    protected void OnEnable()
     {
         //currentCooldownLeft = 0;
     }
 
-    public override void AIUpdate()
+    private void Update()
     {
         float distanceToDestination = (this.transform.position - targetDestination).magnitude;
         if(distanceToDestination <= agent.stoppingDistance)

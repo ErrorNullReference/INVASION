@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using SOPRO;
+using GENUtility;
+
 public enum ShootingType
 {
     Single,
@@ -94,11 +96,10 @@ public class ShootSystem : MonoBehaviour
 
     void SendHitToHost(int id)
     {
-        byte[] data = ArrayPool<byte>.Get(1);
+        byte[] data = ArrayPool<byte>.Get(sizeof(int));
+        ByteManipulator.Write(data, 0, id);
 
-        data[0] = (byte)id;
-
-        Client.SendPacketToHost(data, 0, 1, PacketType.ShootHitServer, Steamworks.EP2PSend.k_EP2PSendReliable);
+        Client.SendPacketToHost(data, 0, data.Length, PacketType.ShootHitServer, Steamworks.EP2PSend.k_EP2PSendReliable);
 
         ArrayPool<byte>.Recycle(data);
         //Debug.Log("hit");

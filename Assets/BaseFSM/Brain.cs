@@ -1,26 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.Events;
-
+﻿using UnityEngine;
 public class Brain : MonoBehaviour
 {
     [SerializeField]
     private bool disableIfClient;
 
     public AIBehaviour CurrentState { get { return currentState; } }
-    public AIBehaviour PreviousState
-    {
-        get
-        {
-            if (previousState != null)
-                return previousState;
-            else
-                return currentState;
-        }
-    }
+    public AIBehaviour PreviousState { get { return previousState; } }
 
     [SerializeField]
     private AIBehaviour currentState;
@@ -28,7 +13,7 @@ public class Brain : MonoBehaviour
 
     private void Start()
     {
-        if(disableIfClient && !Client.IsHost)
+        if (disableIfClient && !Client.IsHost)
         {
             this.enabled = false;
             return;
@@ -36,25 +21,24 @@ public class Brain : MonoBehaviour
 
         if (currentState != null)
         {
-            currentState.Init(this);
+            currentState.enabled = true;
             currentState.OnStateEnter();
         }
     }
 
-    private void Update()
-    {
-        if (currentState != null)
-            currentState.AIUpdate();
-    }
-
     public void SwitchState(AIBehaviour next)
     {
-        currentState.OnStateExit();
-
         previousState = this.currentState;
+
+        if (previousState)
+        {
+            previousState.OnStateExit();
+            previousState.enabled = false;
+        }
+
         currentState = next;
-        if (!currentState.Initialized)
-            currentState.Init(this);
+
+        currentState.enabled = true;
 
         currentState.OnStateEnter();
     }

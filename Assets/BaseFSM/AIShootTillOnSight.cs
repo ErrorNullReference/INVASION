@@ -10,21 +10,22 @@ public class AIShootTillOnSight : AIBehaviour
     [SerializeField]
     private float maxViewDistance;
 
-    private GameObject targetToShot;
+    private Transform targetToShot;
 
     public EnemyShootSync shootSync;
 
     [SerializeField]
     private AIBehaviour next;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         shootSync = this.GetComponent<EnemyShootSync>();
     }
 
-    public override void AIUpdate()
+    private void Update()
     {
-        this.transform.LookAt(targetToShot.transform.position);
+        this.transform.LookAt(targetToShot.position);
 
         if(CheckIfStillOnSight())
             Shot();
@@ -46,7 +47,7 @@ public class AIShootTillOnSight : AIBehaviour
             return false;
         }
 
-        if(hit.collider.gameObject == targetToShot)
+        if(hit.collider.transform == targetToShot)
             return true;
         else
         {

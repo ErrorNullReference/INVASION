@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GENUtility;
+using UnityEngine;
 
 [RequireComponent(typeof(GameNetworkObject))]
 public class EnemyShootSync : MonoBehaviour
@@ -10,11 +11,11 @@ public class EnemyShootSync : MonoBehaviour
     }
     public void SendShotCall()
     {
-        byte[] d = ArrayPool<byte>.Get(1);
+        byte[] d = ArrayPool<byte>.Get(sizeof(int));
 
-        d[0] = (byte)gnOnject.NetworkId;
+        ByteManipulator.Write(d, 0, gnOnject.NetworkId);
 
-        Client.SendPacketToInGameUsers(d, 0, 1, PacketType.ShootCall, Client.MyID, Steamworks.EP2PSend.k_EP2PSendUnreliable, false);
+        Client.SendPacketToInGameUsers(d, 0, d.Length, PacketType.ShootCall, Client.MyID, Steamworks.EP2PSend.k_EP2PSendUnreliable, false);
 
         ArrayPool<byte>.Recycle(d);
     }

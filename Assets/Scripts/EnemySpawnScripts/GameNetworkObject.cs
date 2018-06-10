@@ -1,29 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class GameNetworkObject : MonoBehaviour {
-
+﻿using UnityEngine;
+using SOPRO;
+public class GameNetworkObject : MonoBehaviour
+{
+    public int NetworkId { get { return this.netId; } }
     [SerializeField]
-    private int networkId;
-    public int NetworkId
+    private SODictionaryTransformContainer networkObjects;
+    private int netId;
+    public void SetNetworkId(int netId)
     {
-        get
-        {
-            return networkId;
-        }
-        set
-        {
-            networkId = value;
-        }
+        this.netId = netId;
+        networkObjects.Elements.Add(this.netId, this.transform);
     }
-	// Use this for initialization
-	//void Start () {
-		
-	//}
-	
-	// Update is called once per frame
-	//void Update () {
-		
-	//}
+    public void ResetNetworkId()
+    {
+        networkObjects.Elements.Remove(this.netId);
+        this.netId = -1;
+    }
 }

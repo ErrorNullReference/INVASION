@@ -1,43 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 using Steamworks;
 using GENUtility;
-public class ClientTransformManager : MonoBehaviour
+using SOPRO;
+[CreateAssetMenu(menuName = "ClientTransformManager")]
+public class ClientTransformManager : ScriptableObject
 {
-    //public static List<GameNetworkObject> enemiesInScene;
-    public static ClientTransformManager Instance;
-    public static Dictionary<int, GameNetworkObject> IdEnemies;
+    [SerializeField]
+    private SODictionaryTransformContainer netEntities;
 
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-        else Instance = this;
-        //enemiesInScene = new List<GameNetworkObject>();
-        IdEnemies = new Dictionary<int, GameNetworkObject>();
-        EnemySpawner.OnEnemyAddEvent += AddEnemyInScene;
-        EnemySpawner.OnEnemyRemoveEvent += RemoveEnemyFromScene;
-        RegisterTransformCommand();
-
-    }
-
-    public void AddEnemyInScene(GameNetworkObject toAdd)
-    {
-        //enemiesInScene.Add(toAdd);
-        IdEnemies.Add(toAdd.NetworkId, toAdd);
-    }
-
-    public void RemoveEnemyFromScene(GameNetworkObject toRemove)
-    {
-        IdEnemies.Remove(toRemove.NetworkId);
-    }
-
-    private void RegisterTransformCommand()
+    public void RegisterTransformCommand()
     {
         Client.AddCommand(PacketType.EnemyTransform, EnemyTransformReceive);
     }
@@ -46,7 +17,8 @@ public class ClientTransformManager : MonoBehaviour
     {
         int index = 0;
 
-        int id = data[index++];
+        int id = ByteManipulator.ReadInt32(data, index);
+        index += sizeof(int);
 
         float x = ByteManipulator.ReadSingle(data, index);
         index += sizeof(float);
@@ -67,20 +39,7 @@ public class ClientTransformManager : MonoBehaviour
 
         Quaternion rotation = new Quaternion(x, y, z, w);
 
-        //for (int i = 0; i < enemiesInScene.Count; i++)
-        //{
-        //    if (id == enemiesInScene[i].NetworkId && enemiesInScene[i].gameObject.activeInHierarchy)
-        //    {
-        //        enemiesInScene[i].gameObject.GetComponent<MovementManager>().ReceiveTransform(position, rotation);
-        //    }
-        //}
-        if (IdEnemies.ContainsKey(id))
-            IdEnemies[id].GetComponent<EnemyTransformSync>().ReceiveTransform(position, rotation);
-    }
-
-    private void OnDestroy()
-    {
-        EnemySpawner.OnEnemyAddEvent -= AddEnemyInScene;
-        EnemySpawner.OnEnemyRemoveEvent -= RemoveEnemyFromScene;
+        if (netEntities.Elements.ContainsKey(id))
+            netEntities[id].GetComponent<EnemyTransformSync>().ReceiveTransform(position, rotation);
     }
 }

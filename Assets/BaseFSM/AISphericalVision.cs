@@ -2,29 +2,12 @@
 using SOPRO;
 public abstract class AIVision : AIBehaviour
 {
-    protected GameObject currentTarget;
-    public GameObject CurrentTarget { get { return currentTarget; } private set { } }
-
-    public override void AIUpdate()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void OnStateEnter()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void OnStateExit()
-    {
-    }
+    protected Transform currentTarget;
+    public Transform CurrentTarget { get { return currentTarget; } }
 }
 
 public class AISphericalVision : AIVision
 {
-    [SerializeField]
-    protected LayerMaskHolder layerToLookInto;
-
     [SerializeField]
     protected float maxViewDistance;
 
@@ -34,16 +17,7 @@ public class AISphericalVision : AIVision
     [SerializeField]
     protected AIBehaviour next;
 
-    public void Awake()
-    {
-        if (!Client.IsHost)
-        {
-            this.enabled = false;
-            return;
-        }
-    }
-
-    public override void AIUpdate()
+    private void Update()
     {
         currentTarget = null;
 
@@ -55,6 +29,11 @@ public class AISphericalVision : AIVision
 
     public override void OnStateEnter()
     {
+        if (!Client.IsHost)
+        {
+            owner.SwitchState(next);
+            return;
+        }
         currentTarget = null;
     }
 
@@ -72,7 +51,7 @@ public class AISphericalVision : AIVision
             Player p = players[i];
             if (Vector3.Distance(pos, p.transform.position) < maxViewDistance)
             {
-                currentTarget = p.gameObject;
+                currentTarget = p.transform;
                 break;
             }
         }

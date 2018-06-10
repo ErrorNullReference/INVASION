@@ -9,9 +9,9 @@ public class ChatLobby : MonoBehaviour
 {
     public Text Text;
     public InputField InputField;
-    private readonly byte[] chatData = new byte[4096];//TODO: maybe even static?
-    private readonly byte[] inputData = new byte[1024];//TODO: maybe even static?
-    private readonly Encoding encoder = Encoding.UTF8;
+    private static readonly byte[] chatData = new byte[4096];
+    private static readonly byte[] inputData = new byte[1024];
+    private static readonly Encoding encoder = Encoding.UTF8;
 
     // Use this for initialization
     void Start()

@@ -7,7 +7,7 @@ using GENUtility;
 public class SteamTransport : Transport
 {
     //TODO: gestire il cambio di scena (mantenere/ricreare voice chat entities)
-    public const int MaxAudioPacketSize = 1199;
+    public const int MaxAudioPacketSize = 1200;
     public override int MaxDataLength { get { return MaxAudioPacketSize - Transport.FirstPacketByteAvailable - Client.HeaderLength; } }
     private readonly byte[] boolean = new byte[sizeof(bool)];
     protected override void OnEnable()

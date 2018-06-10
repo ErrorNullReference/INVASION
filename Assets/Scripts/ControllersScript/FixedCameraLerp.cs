@@ -1,45 +1,52 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using SOPRO;
 public class FixedCameraLerp : MonoBehaviour
 {
 
-    public List<Transform> players;
+    public SOListPlayerContainer players;
     public Vector3 cameraOffset;
+    public Camera Main;
     private Vector3 center;
     private Vector3 velocity;
     public float Smoothness;
     public float minZoom;
     public float maxZoom;
     public float zoomVelocity;
-    
+
 
 
     private void LateUpdate()
     {
-        if (players.Count == 0)
+        if (players.Elements.Count == 0)
             return;
 
-            center = GetCenter();
-            Vector3 newCameraPos = center + cameraOffset;
-            this.transform.position = Vector3.SmoothDamp(transform.position, newCameraPos, ref velocity, Smoothness);
+        center = GetCenter();
+        Vector3 newCameraPos = center + cameraOffset;
+        this.transform.position = Vector3.SmoothDamp(transform.position, newCameraPos, ref velocity, Smoothness);
 
-       
-            AutoZoom();
-        
+
+        AutoZoom();
+
     }
 
     private Vector3 GetCenter()
     {
-        if (players.Count == 1)
-            return players[0].position;
+        int length = players.Elements.Count;
+        if (length == 0)
+            return new Vector3();
 
-        Bounds bounds = new Bounds(players[0].position, Vector3.zero);
+        Vector3 firstPos = players[0].transform.position;
 
-        for (int i = 0; i < players.Count; i++)
+        if (length == 1)
+            return firstPos;
+
+        Bounds bounds = new Bounds(firstPos, Vector3.zero);
+
+        for (int i = 0; i < length; i++)
         {
-            bounds.Encapsulate(players[i].position);
+            bounds.Encapsulate(players[i].transform.position);
         }
 
         return bounds.center;
@@ -47,11 +54,11 @@ public class FixedCameraLerp : MonoBehaviour
 
     private float GetMaxDistance()
     {
-        Bounds bounds = new Bounds(players[0].position, Vector3.zero);
-
-        for (int i = 0; i < players.Count; i++)
+        Bounds bounds = new Bounds(players[0].transform.position, Vector3.zero);
+        int length = players.Elements.Count;
+        for (int i = 0; i < length; i++)
         {
-            bounds.Encapsulate(players[i].position);
+            bounds.Encapsulate(players[i].transform.position);
         }
 
         return bounds.size.x;
@@ -59,8 +66,8 @@ public class FixedCameraLerp : MonoBehaviour
 
     private void AutoZoom()
     {
-            float autoZoom = Mathf.Lerp(maxZoom, minZoom, GetMaxDistance());
-            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, autoZoom, zoomVelocity * Time.deltaTime);
+        float autoZoom = Mathf.Lerp(maxZoom, minZoom, GetMaxDistance());
+        Main.fieldOfView = Mathf.Lerp(Main.fieldOfView, autoZoom, zoomVelocity * Time.deltaTime);
 
     }
 
