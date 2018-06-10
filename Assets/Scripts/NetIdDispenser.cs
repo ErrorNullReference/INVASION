@@ -7,7 +7,7 @@ public class NetIdDispenser : ScriptableObject
     public virtual int GetNewNetId()
     {
         int res = nextDispensedId;
-        nextDispensedId = nextDispensedId == int.MaxValue ? 0 : nextDispensedId + 1;
+        nextDispensedId = nextDispensedId == int.MaxValue ? int.MinValue : nextDispensedId + 1;
         return res;
     }
 }
