@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VOCASY.Editor</name>
+    </assembly>
+    <members>
+        <member name="T:VOCASY.Editor.SettingsDrawer">
+            <summary>
+            Class that modifies VoiceChatSettings inspector view
+            </summary>
+        </member>
+        <member name="M:VOCASY.Editor.SettingsDrawer.OnInspectorGUI">
+            <summary>
+            Method that modifies VoiceChatSettings inspector view
+            </summary>
+        </member>
+        <member name="T:VOCASY.Editor.WorkflowsDrawer">
+            <summary>
+            Class that modifies Workflow inspector view
+            </summary>
+        </member>
+        <member name="M:VOCASY.Editor.WorkflowsDrawer.OnInspectorGUI">
+            <summary>
+            Method that modifies Workflow inspector view
+            </summary>
+        </member>
+    </members>
+</doc>

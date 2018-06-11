@@ -1,0 +1,1159 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VOCASY</name>
+    </assembly>
+    <members>
+        <member name="T:VOCASY.AudioDataTypeFlag">
+            <summary>
+            Flag that determines several types of data format
+            </summary>
+        </member>
+        <member name="F:VOCASY.AudioDataTypeFlag.None">
+            <summary>
+            No flag set
+            </summary>
+        </member>
+        <member name="F:VOCASY.AudioDataTypeFlag.Int16">
+            <summary>
+            Uses data stored in Int16 format
+            </summary>
+        </member>
+        <member name="F:VOCASY.AudioDataTypeFlag.Single">
+            <summary>
+            Uses data stored in single precision point format
+            </summary>
+        </member>
+        <member name="F:VOCASY.AudioDataTypeFlag.Both">
+            <summary>
+            Uses both Int16 and Single formats
+            </summary>
+        </member>
+        <member name="T:VOCASY.Common.Handler">
+            <summary>
+            Class that handles voice input/output
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Handler.SelfFlag">
+            <summary>
+            Default flag
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Handler.Receiver">
+            <summary>
+            Output source
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Handler.Recorder">
+            <summary>
+            Input source
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Handler.Identity">
+            <summary>
+            The INetworkIdentity associated with this object
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.Handler.IsRecorder">
+            <summary>
+            True if this handler is recording input
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.Handler.NetID">
+            <summary>
+            Network ID associated with this hanlder
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.Handler.IsInitialized">
+            <summary>
+            True if VoiceHandler has initialized correctly
+            </summary>
+        </member>
+        <member name="M:VOCASY.Common.Handler.GetMicData(System.Single[],System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets recorded data and stores it in format Single
+            </summary>
+            <param name="buffer">buffer to fill with audio data recorded</param>
+            <param name="bufferOffset">buffer start index</param>
+            <param name="micDataCount">amount of data to store</param>
+            <param name="effectiveMicDataCount">effective amount of data stored</param>
+            <returns>data info</returns>
+        </member>
+        <member name="M:VOCASY.Common.Handler.GetMicDataInt16(System.Byte[],System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets recorded data and stores it in format Int16
+            </summary>
+            <param name="buffer">buffer to fill with audio data recorded</param>
+            <param name="bufferOffset">buffer start index</param>
+            <param name="micDataCount">amount of data to store</param>
+            <param name="effectiveMicDataCount">effective amount of data stored</param>
+            <returns>data info</returns>
+        </member>
+        <member name="M:VOCASY.Common.Handler.ReceiveAudioData(System.Single[],System.Int32,System.Int32,VOCASY.VoicePacketInfo)">
+            <summary>
+            Processes audio data in format Single and plays it
+            </summary>
+            <param name="audioData">audio data to process</param>
+            <param name="audioDataOffset">audio data start index</param>
+            <param name="audioDataCount">audio data amount to process</param>
+            <param name="info">data info</param>
+        </member>
+        <member name="M:VOCASY.Common.Handler.ReceiveAudioDataInt16(System.Byte[],System.Int32,System.Int32,VOCASY.VoicePacketInfo)">
+            <summary>
+            Processes audio data in format Int16 and plays it
+            </summary>
+            <param name="audioData">audio data to process</param>
+            <param name="audioDataOffset">audio data start index</param>
+            <param name="audioDataCount">audio data amount to process</param>
+            <param name="info">data info</param>
+        </member>
+        <member name="M:VOCASY.Common.Handler.Reset">
+            <summary>
+            Resets initialized status. Do not Reset an handler if it has not been disabled yet, otherwise it will remain in an incorrect state and lead to possible errors.
+            </summary>
+        </member>
+        <member name="M:VOCASY.Common.Handler.ForceInitializzation">
+            <summary>
+            Requests the handler to do its initialization. Initialization is performed only if it is not initialized yet and Identity is correctly set
+            </summary>
+        </member>
+        <member name="T:VOCASY.Common.MuteStatus">
+            <summary>
+            Used to describe mute status
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.MuteStatus.None">
+            <summary>
+            No status
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.MuteStatus.LocalHasMutedRemote">
+            <summary>
+            Muted locally
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.MuteStatus.RemoteHasMutedLocal">
+            <summary>
+            Muted remotely
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.MuteStatus.Both">
+            <summary>
+            Muted both locally and remotely
+            </summary>
+        </member>
+        <member name="T:VOCASY.Common.Receiver">
+            <summary>
+            Class that manages voice audio output, compatible with all data formats and frequency/channels
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Receiver.OutputBaseFrequency">
+            <summary>
+            Output frequency
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Receiver.OutputBaseFrequencyInverse">
+            <summary>
+            Output inverse frequency
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Receiver.OutputBaseChannels">
+            <summary>
+            Output channels
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.Receiver.Volume">
+            <summary>
+            Volume specific for this output source
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.Receiver.AvailableTypes">
+            <summary>
+            Flag that determines which types of data format this class can process
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Receiver.Settings">
+            <summary>
+            Settings used
+            </summary>
+        </member>
+        <member name="M:VOCASY.Common.Receiver.ReceiveAudioData(System.Byte[],System.Int32,System.Int32,VOCASY.VoicePacketInfo)">
+            <summary>
+            Processes audio data in format Int16 and plays it
+            </summary>
+            <param name="audioData">audio data to process</param>
+            <param name="audioDataOffset">audio data start index</param>
+            <param name="audioDataCount">audio data amount to process</param>
+            <param name="info">data info</param>
+        </member>
+        <member name="M:VOCASY.Common.Receiver.ReceiveAudioData(System.Single[],System.Int32,System.Int32,VOCASY.VoicePacketInfo)">
+            <summary>
+            Processes audio data in format Single and plays it
+            </summary>
+            <param name="audioData">audio data to process</param>
+            <param name="audioDataOffset">audio data start index</param>
+            <param name="audioDataCount">audio data amount to process</param>
+            <param name="info">data info</param>
+        </member>
+        <member name="T:VOCASY.Common.SelfDataTransport">
+            <summary>
+            Class that fakes network state between self and another client. It should be used for tests and debug
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.SelfDataTransport.PSelfLength">
+            <summary>
+            Max final packet length
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.SelfDataTransport.MaxDataLength">
+            <summary>
+            Max data length that should be sent to this class
+            </summary>
+        </member>
+        <member name="T:VOCASY.Common.Recorder">
+            <summary>
+            Class that records mic data using Unity API
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.Recorder.AvailableTypes">
+            <summary>
+            Flag that determines which types of data format this class can process
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.Recorder.IsEnabled">
+            <summary>
+            Is this input disabled?
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.Recorder.MicDataAvailable">
+            <summary>
+            Amount of mic data recorded currently available
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Recorder.Settings">
+            <summary>
+            Voice chat settings
+            </summary>
+        </member>
+        <member name="M:VOCASY.Common.Recorder.GetMicData(System.Single[],System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets recorded data and stores it in format Single
+            </summary>
+            <param name="buffer">buffer to fill with audio data recorded</param>
+            <param name="bufferOffset">buffer start index</param>
+            <param name="dataCount">amount of data to store</param>
+            <param name="effectiveDataCount">effective amount of data stored</param>
+            <returns>data info</returns>
+        </member>
+        <member name="M:VOCASY.Common.Recorder.GetMicData(System.Byte[],System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets recorded data and stores it in format Int16
+            </summary>
+            <param name="buffer">buffer to fill with audio data recorded</param>
+            <param name="bufferOffset">buffer start index</param>
+            <param name="dataCount">amount of data to store</param>
+            <param name="effectiveDataCount">effective amount of data stored</param>
+            <returns>data info</returns>
+        </member>
+        <member name="M:VOCASY.Common.Recorder.StopRecording">
+            <summary>
+            Stops recording
+            </summary>
+        </member>
+        <member name="M:VOCASY.Common.Recorder.StartRecording">
+            <summary>
+            Starts recording
+            </summary>
+        </member>
+        <member name="T:VOCASY.Common.Settings">
+            <summary>
+            Class that manages and holds voice chat settings
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Settings.MinFreq">
+            <summary>
+            Minimum frequency possible
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Settings.MaxFreq">
+            <summary>
+            Maximum frequency possible
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Settings.MinChan">
+            <summary>
+            Minimum channels possible
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Settings.MaxChan">
+            <summary>
+            Maximum channels possible
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.Settings.MinFrequency">
+            <summary>
+            Minimum frequency possible
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.Settings.MaxFrequency">
+            <summary>
+            Maximum frequency possible
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.Settings.MinChannels">
+            <summary>
+            Minimum channels possible
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.Settings.MaxChannels">
+            <summary>
+            Maximum channels possible
+            </summary>
+        </member>
+        <member name="M:VOCASY.Common.Settings.RestoreToSavedSettings">
+            <summary>
+            Restore the settings to the saved file values. If file is not found it is created with current settings values
+            </summary>
+        </member>
+        <member name="M:VOCASY.Common.Settings.SaveCurrentSettings">
+            <summary>
+            Saves current settings to file. If it is not performed changes to the settings will not be recorded
+            </summary>
+        </member>
+        <member name="T:VOCASY.Common.Transport">
+            <summary>
+            Class that manages the transport side of the Voice Chat Workflow.
+            </summary>
+        </member>
+        <member name="T:VOCASY.Common.Transport.SendToAllTargets">
+            <summary>
+            Delegate used when data is requested to be sent to a list of targets
+            </summary>
+            <param name="data">data to send</param>
+            <param name="startIndex">data start index</param>
+            <param name="length">data length</param>
+            <param name="receiversIds">list of receivers ids to which the packet will be sent</param>
+        </member>
+        <member name="T:VOCASY.Common.Transport.SendMessageIsMutedToTarget">
+            <summary>
+            Delegate used to send a packet message to the target informing him whenever he has been muted/unmuted by the local client.
+            </summary>
+            <param name="targetID">Target to which the packet should be sent</param>
+            <param name="isTargetMutedByLocal">True if target is muted and can avoid sending voice chat packets to the local client</param>
+        </member>
+        <member name="F:VOCASY.Common.Transport.FirstPacketByteAvailable">
+            <summary>
+            Header size
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Transport.PLength">
+            <summary>
+            Max final packet length
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.Transport.MaxDataLength">
+            <summary>
+            Max data length that should be sent to this class
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Transport.SendToAllAction">
+            <summary>
+            Action invoked when data is requested to be sent to a list of targets
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Transport.SendMsgTo">
+            <summary>
+            Action invoked when an ismuted message is requested to be sent to a target
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Transport.Workflow">
+            <summary>
+            Voice chat workflow
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Transport.toSend">
+            <summary>
+            Packet used to send data
+            </summary>
+        </member>
+        <member name="M:VOCASY.Common.Transport.ProcessNetworkIsMutedMessage(System.Boolean,System.UInt64)">
+            <summary>
+            Processes the ismuted message received
+            </summary>
+            <param name="isSelfMuted">true if local slient has been muted by the sender</param>
+            <param name="senderID">message sender id</param>
+        </member>
+        <member name="M:VOCASY.Common.Transport.ProcessNetworkReceivedPacket(System.Byte[],System.Int32,System.Int32,System.UInt64)">
+            <summary>
+            Process the received packet data.
+            </summary>
+            <param name="receivedData">received raw data</param>
+            <param name="startIndex">received raw data start index</param>
+            <param name="length">received raw data length</param>
+            <param name="netId">sender net id</param>
+        </member>
+        <member name="M:VOCASY.Common.Transport.ProcessReceivedData(GENUtility.BytePacket,System.Byte[],System.Int32,System.Int32,System.UInt64)">
+            <summary>
+            Process packet data
+            </summary>
+            <param name="buffer">GamePacket of which data will be stored</param>
+            <param name="dataReceived">Raw data received from network</param>
+            <param name="startIndex">Raw data start index</param>
+            <param name="length">Raw data length</param>
+            <param name="netId">Sender net id</param>
+            <returns>data info</returns>
+        </member>
+        <member name="M:VOCASY.Common.Transport.SendToAll(GENUtility.BytePacket,VOCASY.VoicePacketInfo,System.Collections.Generic.List{System.UInt64})">
+            <summary>
+            Sends a packet to a list of clients
+            </summary>
+            <param name="data">GamePacket that stores the data to send</param>
+            <param name="info">data info</param>
+            <param name="receiversIds">list of receivers ids that will receive the audio packet</param>
+        </member>
+        <member name="M:VOCASY.Common.Transport.SendMessageIsMutedTo(System.UInt64,System.Boolean)">
+            <summary>
+            Sends a packet message to the target informing him whenever he has been muted/unmuted by the local client.
+            </summary>
+            <param name="receiverID">Receiver to which the packet should be sent</param>
+            <param name="isReceiverMutedByLocal">True if receiver is muted and can avoid sending voice chat packets to the local client</param>
+        </member>
+        <member name="M:VOCASY.Common.Transport.OnEnable">
+            <summary>
+            Send Packet initialization
+            </summary>
+        </member>
+        <member name="T:VOCASY.Common.Workflow">
+            <summary>
+            Class that manages the workflow of audio data from input to output
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.Workflow.FolderName">
+            <summary>
+            Folder used to store data
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.Workflow.FileName">
+            <summary>
+            File name used to store statuses
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.Workflow.SavedDataFilePath">
+            <summary>
+            Full path to file storing ids
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.Workflow.SavedDataFolderPath">
+            <summary>
+            Full path to folder holding saved files
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.Workflow.FormatToUse">
+            <summary>
+            Format to use. This is only a preference and will only be followed when more than 1 format is available for use in the current setup. It can only refer to a single format
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.Workflow.UseStoredIdsStatuses">
+            <summary>
+            True if you wish to use files to hold net ids and their last saved mute statuses.
+            </summary>
+        </member>
+        <member name="M:VOCASY.Common.Workflow.AddVoiceHandler(VOCASY.VoiceHandler)">
+            <summary>
+            Adds the handler. Handler should already be initialized before calling this method
+            </summary>
+            <param name="handler">handler to add</param>
+        </member>
+        <member name="M:VOCASY.Common.Workflow.RemoveVoiceHandler(VOCASY.VoiceHandler)">
+            <summary>
+            Removes the handler
+            </summary>
+            <param name="handler">handler to remove</param>
+        </member>
+        <member name="M:VOCASY.Common.Workflow.ProcessReceivedPacket(System.Byte[],System.Int32,System.Int32,System.UInt64)">
+            <summary>
+            Process the received packet data.
+            </summary>
+            <param name="receivedData">received raw data</param>
+            <param name="startIndex">received raw data start index</param>
+            <param name="length">received raw data length</param>
+            <param name="netId">sender net id</param>
+        </member>
+        <member name="M:VOCASY.Common.Workflow.ProcessMicData(VOCASY.VoiceHandler)">
+            <summary>
+            Processes mic data from the given handler
+            </summary>
+            <param name="handler">handler which has available mic data</param>
+        </member>
+        <member name="M:VOCASY.Common.Workflow.ProcessIsMutedMessage(System.Boolean,System.UInt64)">
+            <summary>
+            Processes the ismuted message received
+            </summary>
+            <param name="isSelfMuted">true if local slient has been muted by the sender</param>
+            <param name="senderID">message sender id</param>
+        </member>
+        <member name="M:VOCASY.Common.Workflow.IsHandlerMuted(VOCASY.VoiceHandler,System.Boolean)">
+            <summary>
+            Informs the workflow whenever an handler has been muted
+            </summary>
+            <param name="handler">handler obj to check</param>
+            <param name="sendMsgOnlyIfDiffDetected">true if you wich to send a network message only when the mute status has changed</param>
+        </member>
+        <member name="M:VOCASY.Common.Workflow.Initialize">
+            <summary>
+            Initializes workflow , done automatically when SO is loaded. If fields are either not setted when this method is called or changed afterwards the workflow will remain in an incorrect state untill it is re-initialized
+            </summary>
+        </member>
+        <member name="M:VOCASY.Common.Workflow.ClearSavedStatusesFiles">
+            <summary>
+            Deletes if they exists all files used to store ids and mute statuses
+            </summary>
+        </member>
+        <member name="M:VOCASY.Common.Workflow.LoadSavedMuteStatuses">
+            <summary>
+            Loads mute statuses from file if available
+            </summary>
+        </member>
+        <member name="M:VOCASY.Common.Workflow.SaveCurrentMuteStatuses">
+            <summary>
+            Saves current clients mute statuses if available
+            </summary>
+        </member>
+        <member name="M:VOCASY.Common.Workflow.GetMuteStatus(System.UInt64)">
+            <summary>
+            Get the current mute status for the given id
+            </summary>
+            <param name="id">handler net id</param>
+            <returns>current mute status</returns>
+        </member>
+        <member name="M:VOCASY.Common.Workflow.GetCurrentTrackedActiveIds(System.UInt64[])">
+            <summary>
+            Fills the given array with the currently tracked active handler ids (Counts only those to which an audio packet would be sent)
+            </summary>
+            <param name="output">active tracked handler ids</param>
+        </member>
+        <member name="M:VOCASY.Common.Workflow.GetCurrentTrackedIds(System.UInt64[])">
+            <summary>
+            Fills the given array with the currently tracked handler ids.
+            </summary>
+            <param name="output">tracked handler ids</param>
+        </member>
+        <member name="M:VOCASY.Common.Workflow.GetTrackedHandlerById(System.UInt64)">
+            <summary>
+            Gets the tracked handler given its id
+            </summary>
+            <param name="id">handler id</param>
+            <returns>tracked handler</returns>
+        </member>
+        <member name="T:VOCASY.Common.VoidManipulator">
+            <summary>
+            Class that converts audio data formats to game packet. Performs no other actions and no compression, it should be used only for tests and debug
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.VoidManipulator.ConverterByteSingle">
+            <summary>
+            Value used to convert byte data length to float data length
+            </summary>
+        </member>
+        <member name="P:VOCASY.Common.VoidManipulator.AvailableTypes">
+            <summary>
+            Audio data formats that this class can process
+            </summary>
+        </member>
+        <member name="M:VOCASY.Common.VoidManipulator.FromAudioDataToPacket(System.Single[],System.Int32,System.Int32,VOCASY.VoicePacketInfo@,GENUtility.BytePacket)">
+            <summary>
+            Processes audio data in format Single into a GamePacket
+            </summary>
+            <param name="audioData">audio data to process</param>
+            <param name="audioDataOffset">audio data startIndex</param>
+            <param name="audioDataCount">number of bytes to process</param>
+            <param name="info">data info</param>
+            <param name="output">gamepacket on which data will be written</param>
+        </member>
+        <member name="M:VOCASY.Common.VoidManipulator.FromAudioDataToPacketInt16(System.Byte[],System.Int32,System.Int32,VOCASY.VoicePacketInfo@,GENUtility.BytePacket)">
+            <summary>
+            Processes audio data in format Int16 into a GamePacket
+            </summary>
+            <param name="audioData">audio data to process</param>
+            <param name="audioDataOffset">audio data startIndex</param>
+            <param name="audioDataCount">number of bytes to process</param>
+            <param name="info">data info</param>
+            <param name="output">gamepacket on which data will be written</param>
+        </member>
+        <member name="M:VOCASY.Common.VoidManipulator.FromPacketToAudioData(GENUtility.BytePacket,VOCASY.VoicePacketInfo@,System.Single[],System.Int32)">
+            <summary>
+            Processes a Gamepacket into audio data in format Single
+            </summary>
+            <param name="packet">GamePacket to process</param>
+            <param name="info">data info</param>
+            <param name="out_audioData">output array on which data will be written</param>
+            <param name="out_audioDataOffset">output array start index</param>
+            <returns>total number of floats written</returns>
+        </member>
+        <member name="M:VOCASY.Common.VoidManipulator.FromPacketToAudioDataInt16(GENUtility.BytePacket,VOCASY.VoicePacketInfo@,System.Byte[],System.Int32)">
+            <summary>
+            Processes a Gamepacket into audio data in format Int16
+            </summary>
+            <param name="packet">GamePacket to process</param>
+            <param name="info">data info</param>
+            <param name="out_audioData">output array on which data will be written</param>
+            <param name="out_audioDataOffset">output array start index</param>
+            <returns>total number of bytes written</returns>
+        </member>
+        <member name="T:VOCASY.Common.NetworkIdentity">
+            <summary>
+            Class that represents an object which will be treated as unique on the nerwork
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.NetworkIdentity.NetworkId">
+            <summary>
+            Unique network id that identifies this specific object in the network. This value should not change
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.NetworkIdentity.IsLocalPlayer">
+            <summary>
+            True if this object is owned by the local player. This value should not change
+            </summary>
+        </member>
+        <member name="F:VOCASY.Common.NetworkIdentity.IsInitialized">
+            <summary>
+            True if INetworkIdentity has been set correctly
+            </summary>
+        </member>
+        <member name="T:VOCASY.VoiceDataManipulator">
+            <summary>
+            Class that converts audio data formats to game packet.
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceDataManipulator.AvailableTypes">
+            <summary>
+            Audio data formats that this class can process
+            </summary>
+        </member>
+        <member name="M:VOCASY.VoiceDataManipulator.FromAudioDataToPacket(System.Single[],System.Int32,System.Int32,VOCASY.VoicePacketInfo@,GENUtility.BytePacket)">
+            <summary>
+            Processes audio data in format Single into a GamePacket
+            </summary>
+            <param name="audioData">audio data to process</param>
+            <param name="audioDataOffset">audio data startIndex</param>
+            <param name="audioDataCount">number of bytes to process</param>
+            <param name="info">data info</param>
+            <param name="output">gamepacket on which data will be written</param>
+        </member>
+        <member name="M:VOCASY.VoiceDataManipulator.FromAudioDataToPacketInt16(System.Byte[],System.Int32,System.Int32,VOCASY.VoicePacketInfo@,GENUtility.BytePacket)">
+            <summary>
+            Processes audio data in format Int16 into a GamePacket
+            </summary>
+            <param name="audioData">audio data to process</param>
+            <param name="audioDataOffset">audio data startIndex</param>
+            <param name="audioDataCount">number of bytes to process</param>
+            <param name="info">data info</param>
+            <param name="output">gamepacket on which data will be written</param>
+        </member>
+        <member name="M:VOCASY.VoiceDataManipulator.FromPacketToAudioData(GENUtility.BytePacket,VOCASY.VoicePacketInfo@,System.Single[],System.Int32)">
+            <summary>
+            Processes a Gamepacket into audio data in format Single
+            </summary>
+            <param name="packet">GamePacket to process</param>
+            <param name="info">data info</param>
+            <param name="out_audioData">output array on which data will be written</param>
+            <param name="out_audioDataOffset">output array start index</param>
+            <returns>total number of floats written</returns>
+        </member>
+        <member name="M:VOCASY.VoiceDataManipulator.FromPacketToAudioDataInt16(GENUtility.BytePacket,VOCASY.VoicePacketInfo@,System.Byte[],System.Int32)">
+            <summary>
+            Processes a Gamepacket into audio data in format Int16
+            </summary>
+            <param name="packet">GamePacket to process</param>
+            <param name="info">data info</param>
+            <param name="out_audioData">output array on which data will be written</param>
+            <param name="out_audioDataOffset">output array start index</param>
+            <returns>total number of bytes written</returns>
+        </member>
+        <member name="T:VOCASY.VoiceDataTransport">
+            <summary>
+            Class that manages the voice packets received/sent
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceDataTransport.MaxDataLength">
+            <summary>
+            Max data length that should be sent to this class
+            </summary>
+        </member>
+        <member name="M:VOCASY.VoiceDataTransport.ProcessReceivedData(GENUtility.BytePacket,System.Byte[],System.Int32,System.Int32,System.UInt64)">
+            <summary>
+            Process packet data
+            </summary>
+            <param name="buffer">GamePacket of which data will be stored</param>
+            <param name="dataReceived">Raw data received from network</param>
+            <param name="startIndex">Raw data start index</param>
+            <param name="length">Raw data length</param>
+            <param name="netId">Sender net id</param>
+            <returns>data info</returns>
+        </member>
+        <member name="M:VOCASY.VoiceDataTransport.SendToAll(GENUtility.BytePacket,VOCASY.VoicePacketInfo,System.Collections.Generic.List{System.UInt64})">
+            <summary>
+            Sends a packet to a list of clients
+            </summary>
+            <param name="data">GamePacket that stores the data to send</param>
+            <param name="info">data info</param>
+            <param name="receiversIds">list of receivers ids</param>
+        </member>
+        <member name="M:VOCASY.VoiceDataTransport.SendMessageIsMutedTo(System.UInt64,System.Boolean)">
+            <summary>
+            Sends a packet message to the target informing him whenever he has been muted/unmuted by the local client
+            </summary>
+            <param name="receiverID">Receiver to which the packet should be sent</param>
+            <param name="isReceiverMutedByLocal">True if receiver is muted and can avoid sending voice chat packets to the local client</param>
+        </member>
+        <member name="T:VOCASY.VoiceChatSettings">
+            <summary>
+            Class that manages and holds voice chat settings
+            </summary>
+        </member>
+        <member name="T:VOCASY.VoiceChatSettings.OnSettingChanged">
+            <summary>
+            Delegate used on some settings changed
+            </summary>
+        </member>
+        <member name="T:VOCASY.VoiceChatSettings.OnFrequencyChanged">
+            <summary>
+            Delegate used on event AudioQualityChanged
+            </summary>
+            <param name="previousFrequency">previous frequency value</param>
+        </member>
+        <member name="T:VOCASY.VoiceChatSettings.OnMicDeviceChanged">
+            <summary>
+            Delegate used on event MicrophoneDeviceChanged
+            </summary>
+            <param name="previousDevice">previous device name</param>
+        </member>
+        <member name="P:VOCASY.VoiceChatSettings.MinFrequency">
+            <summary>
+            Minimum frequency possible
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceChatSettings.MaxFrequency">
+            <summary>
+            Maximum frequency possible
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceChatSettings.MinChannels">
+            <summary>
+            Minimum channels possible
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceChatSettings.MaxChannels">
+            <summary>
+            Maximum channels possible
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceChatSettings.FolderName">
+            <summary>
+            Name of the folder used to store files
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceChatSettings.SettingsFileName">
+            <summary>
+            Name of the file used to store settings
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceChatSettings.SavedCustomValuesPath">
+            <summary>
+            File complete path name that contains saved settings.
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceChatSettings.SavedCustomValuesDirectoryPath">
+            <summary>
+            Directory full path that contains files.
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceChatSettings.MuteSelf">
+            <summary>
+            Determines whenever self should be muted
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceChatSettings.PushToTalk">
+            <summary>
+            Determines if voice chat works in mode push to talk
+            </summary>
+        </member>
+        <member name="F:VOCASY.VoiceChatSettings.PushToTalkKey">
+            <summary>
+            Key used in push to talk mode
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceChatSettings.AudioQuality">
+            <summary>
+            Audio quality used. Does not effect audio received from network
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceChatSettings.MicrophoneDevice">
+            <summary>
+            Current microphone device to be used for recording
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceChatSettings.VoiceChatEnabled">
+            <summary>
+            Determines whenever voice chat shoul dbe enabled
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceChatSettings.VoiceChatVolume">
+            <summary>
+            Determines volume of voice chat data received from network
+            </summary>
+        </member>
+        <member name="E:VOCASY.VoiceChatSettings.PushToTalkChanged">
+            <summary>
+            Event called whenever push to talk mode has been changed
+            </summary>
+        </member>
+        <member name="E:VOCASY.VoiceChatSettings.MuteSelfChanged">
+            <summary>
+            Event called whenever MuteSelf state has been changed
+            </summary>
+        </member>
+        <member name="E:VOCASY.VoiceChatSettings.AudioQualityChanged">
+            <summary>
+            Event called whenever Audio Quality value has been changed , previous audio quality is passed as argument
+            </summary>
+        </member>
+        <member name="E:VOCASY.VoiceChatSettings.MicrophoneDeviceChanged">
+            <summary>
+            Event called whenever the current microphone device has been changed, previous mic device is passed as argument
+            </summary>
+        </member>
+        <member name="E:VOCASY.VoiceChatSettings.VoiceChatEnabledChanged">
+            <summary>
+            Event called whenever Voice Chat enbaled state has been changed
+            </summary>
+        </member>
+        <member name="M:VOCASY.VoiceChatSettings.RestoreToSavedSettings">
+            <summary>
+            Restore the settings to the saved file values. If file is not found it is created with current settings values
+            </summary>
+        </member>
+        <member name="M:VOCASY.VoiceChatSettings.SaveCurrentSettings">
+            <summary>
+            Saves current settings to file. If it is not performed changes to the settings will not be recorded
+            </summary>
+        </member>
+        <member name="M:VOCASY.VoiceChatSettings.IsPushToTalkOn">
+            <summary>
+            This method indicates whenever the PTT has been activated
+            </summary>
+            <returns>true if PTT is active</returns>
+        </member>
+        <member name="M:VOCASY.VoiceChatSettings.OnEnable">
+            <summary>
+            Initializes paths and gets values from file
+            </summary>
+        </member>
+        <member name="T:VOCASY.VoiceHandler">
+            <summary>
+            Class that handles voice input/output
+            </summary>
+        </member>
+        <member name="F:VOCASY.VoiceHandler.Workflow">
+            <summary>
+            Workflow used by this handler
+            </summary>
+        </member>
+        <member name="F:VOCASY.VoiceHandler.IsSelfOutputMuted">
+            <summary>
+            Mute condition specific for this output source
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceHandler.IsRecorder">
+            <summary>
+            True if this handler is recording input
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceHandler.NetID">
+            <summary>
+            Network ID associated with this hanlder
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceHandler.IsOutputMuted">
+            <summary>
+            Is output source muted?
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceHandler.SelfOutputVolume">
+            <summary>
+            Volume specific for this output source
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceHandler.OutputVolume">
+            <summary>
+            Effective volume of this output source
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceHandler.AvailableTypes">
+            <summary>
+            Flag that determines which types of data format this class can process
+            </summary>
+        </member>
+        <member name="M:VOCASY.VoiceHandler.GetMicData(System.Single[],System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets recorded data and stores it in format Single
+            </summary>
+            <param name="buffer">buffer to fill with audio data recorded</param>
+            <param name="bufferOffset">buffer start index</param>
+            <param name="micDataCount">amount of data to store</param>
+            <param name="effectiveMicDataCount">effective amount of data stored</param>
+            <returns>data info</returns>
+        </member>
+        <member name="M:VOCASY.VoiceHandler.GetMicDataInt16(System.Byte[],System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets recorded data and stores it in format Int16
+            </summary>
+            <param name="buffer">buffer to fill with audio data recorded</param>
+            <param name="bufferOffset">buffer start index</param>
+            <param name="micDataCount">amount of data to store</param>
+            <param name="effectiveMicDataCount">effective amount of data stored</param>
+            <returns>data info</returns>
+        </member>
+        <member name="M:VOCASY.VoiceHandler.ReceiveAudioData(System.Single[],System.Int32,System.Int32,VOCASY.VoicePacketInfo)">
+            <summary>
+            Processes audio data in format Single and plays it
+            </summary>
+            <param name="audioData">audio data to process</param>
+            <param name="audioDataOffset">audio data start index</param>
+            <param name="audioDataCount">audio data amount to process</param>
+            <param name="info">data info</param>
+        </member>
+        <member name="M:VOCASY.VoiceHandler.ReceiveAudioDataInt16(System.Byte[],System.Int32,System.Int32,VOCASY.VoicePacketInfo)">
+            <summary>
+            Processes audio data in format Int16 and plays it
+            </summary>
+            <param name="audioData">audio data to process</param>
+            <param name="audioDataOffset">audio data start index</param>
+            <param name="audioDataCount">audio data amount to process</param>
+            <param name="info">data info</param>
+        </member>
+        <member name="T:VOCASY.FrequencyType">
+            <summary>
+            Enum that holds most common frequencies used
+            </summary>
+        </member>
+        <member name="F:VOCASY.FrequencyType.LowerThanAverageQuality">
+            <summary>
+            Low end frequency quality
+            </summary>
+        </member>
+        <member name="F:VOCASY.FrequencyType.VoipQuality">
+            <summary>
+            Normal frequency quality
+            </summary>
+        </member>
+        <member name="F:VOCASY.FrequencyType.AboveAverageQuality">
+            <summary>
+            Above normal frequency quality
+            </summary>
+        </member>
+        <member name="F:VOCASY.FrequencyType.HighQuality">
+            <summary>
+            High frequency quality
+            </summary>
+        </member>
+        <member name="F:VOCASY.FrequencyType.BestQuality">
+            <summary>
+            Best frequency quality
+            </summary>
+        </member>
+        <member name="T:VOCASY.VoiceReceiver">
+            <summary>
+            A class that manages audio output
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceReceiver.Volume">
+            <summary>
+            Volume specific for this output source
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceReceiver.AvailableTypes">
+            <summary>
+            Flag that determines which types of data format this class can process
+            </summary>
+        </member>
+        <member name="M:VOCASY.VoiceReceiver.ReceiveAudioData(System.Single[],System.Int32,System.Int32,VOCASY.VoicePacketInfo)">
+            <summary>
+            Processes audio data in format Single and plays it
+            </summary>
+            <param name="audioData">audio data to process</param>
+            <param name="audioDataOffset">audio data start index</param>
+            <param name="audioDataCount">audio data amount to process</param>
+            <param name="info">data info</param>
+        </member>
+        <member name="M:VOCASY.VoiceReceiver.ReceiveAudioData(System.Byte[],System.Int32,System.Int32,VOCASY.VoicePacketInfo)">
+            <summary>
+            Processes audio data in format Int16 and plays it
+            </summary>
+            <param name="audioData">audio data to process</param>
+            <param name="audioDataOffset">audio data start index</param>
+            <param name="audioDataCount">audio data amount to process</param>
+            <param name="info">data info</param>
+        </member>
+        <member name="T:VOCASY.VoiceRecorder">
+            <summary>
+            A class that manages audio input
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceRecorder.AvailableTypes">
+            <summary>
+            Flag that determines which types of data format this class can process
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceRecorder.IsEnabled">
+            <summary>
+            Is this input recording?
+            </summary>
+        </member>
+        <member name="P:VOCASY.VoiceRecorder.MicDataAvailable">
+            <summary>
+            Amount of mic data recorded currently available
+            </summary>
+        </member>
+        <member name="M:VOCASY.VoiceRecorder.GetMicData(System.Single[],System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets recorded data and stores it in format Single
+            </summary>
+            <param name="buffer">buffer to fill with audio data recorded</param>
+            <param name="bufferOffset">buffer start index</param>
+            <param name="maxDataCount">max amount of data to store</param>
+            <param name="effectiveDataCount">effective amount of data stored</param>
+            <returns>data info</returns>
+        </member>
+        <member name="M:VOCASY.VoiceRecorder.GetMicData(System.Byte[],System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets recorded data and stores it in format Int16
+            </summary>
+            <param name="buffer">buffer to fill with audio data recorded</param>
+            <param name="bufferOffset">buffer start index</param>
+            <param name="maxDataCount">max amount of data to store</param>
+            <param name="effectiveDataCount">effective amount of data stored</param>
+            <returns>data info</returns>
+        </member>
+        <member name="M:VOCASY.VoiceRecorder.StartRecording">
+            <summary>
+            Starts recording
+            </summary>
+        </member>
+        <member name="M:VOCASY.VoiceRecorder.StopRecording">
+            <summary>
+            Stops recording
+            </summary>
+        </member>
+        <member name="T:VOCASY.VoiceDataWorkflow">
+            <summary>
+            Class that manages the workflow of audio data from input to output
+            </summary>
+        </member>
+        <member name="F:VOCASY.VoiceDataWorkflow.Settings">
+            <summary>
+            Voice chat settings
+            </summary>
+        </member>
+        <member name="F:VOCASY.VoiceDataWorkflow.Manipulator">
+            <summary>
+            Manipulator used
+            </summary>
+        </member>
+        <member name="F:VOCASY.VoiceDataWorkflow.Transport">
+            <summary>
+            Transport used
+            </summary>
+        </member>
+        <member name="M:VOCASY.VoiceDataWorkflow.AddVoiceHandler(VOCASY.VoiceHandler)">
+            <summary>
+            Adds the handler. Handler should already be initialized before calling this method
+            </summary>
+            <param name="handler">handler to add</param>
+        </member>
+        <member name="M:VOCASY.VoiceDataWorkflow.RemoveVoiceHandler(VOCASY.VoiceHandler)">
+            <summary>
+            Removes the handler
+            </summary>
+            <param name="handler">handler to remove</param>
+        </member>
+        <member name="M:VOCASY.VoiceDataWorkflow.ProcessReceivedPacket(System.Byte[],System.Int32,System.Int32,System.UInt64)">
+            <summary>
+            Process the received packet data.
+            </summary>
+            <param name="receivedData">received raw data</param>
+            <param name="startIndex">received raw data start index</param>
+            <param name="length">received raw data length</param>
+            <param name="netId">sender net id</param>
+        </member>
+        <member name="M:VOCASY.VoiceDataWorkflow.ProcessMicData(VOCASY.VoiceHandler)">
+            <summary>
+            Processes mic data from the given handler
+            </summary>
+            <param name="handler">handler which has available mic data</param>
+        </member>
+        <member name="M:VOCASY.VoiceDataWorkflow.ProcessIsMutedMessage(System.Boolean,System.UInt64)">
+            <summary>
+            Processes the ismuted message received
+            </summary>
+            <param name="isSelfMuted">true if local slient has been muted by the sender</param>
+            <param name="senderID">message sender id</param>
+        </member>
+        <member name="M:VOCASY.VoiceDataWorkflow.IsHandlerMuted(VOCASY.VoiceHandler,System.Boolean)">
+            <summary>
+            Informs the workflow whenever an handler has been muted
+            </summary>
+            <param name="handler">handler obj</param>
+            <param name="sendMsgOnlyIfDiffDetected">true if you wich to send a network message only when the mute status has changed</param>
+        </member>
+        <member name="M:VOCASY.VoiceDataWorkflow.Initialize">
+            <summary>
+            Initializes workflow , done automatically when SO is loaded. If fields are either not setted when this method is called or changed afterwards the workflow will remain in an incorrect state untill a new call to this method is made with setted fields
+            </summary>
+        </member>
+        <member name="M:VOCASY.VoiceDataWorkflow.OnEnable">
+            <summary>
+            Initialize workflow
+            </summary>
+        </member>
+        <member name="T:VOCASY.VoicePacketInfo">
+            <summary>
+            Data structure that stores various data to identify the status of an audio packet
+            </summary>
+        </member>
+        <member name="F:VOCASY.VoicePacketInfo.InvalidPacket">
+            <summary>
+            Invalid packet
+            </summary>
+        </member>
+        <member name="F:VOCASY.VoicePacketInfo.Frequency">
+            <summary>
+            Frequency at which data is stored
+            </summary>
+        </member>
+        <member name="F:VOCASY.VoicePacketInfo.Channels">
+            <summary>
+            Channels at which data is stored
+            </summary>
+        </member>
+        <member name="F:VOCASY.VoicePacketInfo.ValidPacketInfo">
+            <summary>
+            Is the packet valid ? false if there are problems
+            </summary>
+        </member>
+        <member name="F:VOCASY.VoicePacketInfo.Format">
+            <summary>
+            Format of the stored data
+            </summary>
+        </member>
+        <member name="M:VOCASY.VoicePacketInfo.#ctor(System.UInt16,System.Byte,VOCASY.AudioDataTypeFlag,System.Boolean)">
+            <summary>
+            Create a new struct instance
+            </summary>
+            <param name="frequency">audio frequency</param>
+            <param name="channels">audio channels</param>
+            <param name="format">audio format</param>
+            <param name="valid">is packet valid?</param>
+        </member>
+    </members>
+</doc>
