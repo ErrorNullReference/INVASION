@@ -15,5 +15,4 @@ MonoBehaviour:
   Damage: 2
   ActionTime: 1
   CoolDown: 0.5
-  AiProjectilePrefab: {fileID: 114537891568604332, guid: 2f1d4e0a30a50714aaefb37bf131c34a,
-    type: 2}
+  AiProjectilePool: {fileID: 11400000, guid: b7ed093dc475bc04bb229f5f69117446, type: 2}

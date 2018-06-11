@@ -5,69 +5,67 @@ using System.Text;
 using System;
 using Steamworks;
 using UnityEngine.AI;
-
-public class EnemySpawner : MonoBehaviour
+using GENUtility;
+using SOPRO;
+[CreateAssetMenu(menuName = "EnemySpawner")]
+public class EnemySpawner : ScriptableObject
 {
+    public SODictionaryTransformContainer netEntities;
+    public SOPool[] EnemyPools;
+    public GameObject PoolRoot;
 
-    public Pool<GameObject> enemies;
-    public GameObject[] prefab;
-    public GameObject poolRoot;
-    public static EnemySpawner Instance;
+    public BaseSOEvGameNetworkObject OnEnemyAddEvent;
+    public BaseSOEvGameNetworkObject OnEnemyRemoveEvent;
 
-    public delegate void OnEnemyOperation(GameNetworkObject gameNetworkObject);
+    private Transform poolRoot;
 
-    public static event OnEnemyOperation OnEnemyAddEvent;
-    public static event OnEnemyOperation OnEnemyRemoveEvent;
-
-    private void Awake()
+    public void Init()
     {
-        if (Instance != null)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-        Instance = this;
-
-        enemies = new Pool<GameObject>(prefab, EnemyCreation, poolRoot);
-
-        //activeEnemyList = new List<Enemy>();
-        enemies.AddToQueue(20, cb =>
-            {
-                cb.GetComponent<GameNetworkObject>().NetworkId = -1;
-                cb.SetActive(false);
-            });       
         Client.AddCommand(PacketType.EnemyDeath, OnEnemyDeath);
         Client.AddCommand(PacketType.EnemySpawn, InstantiateEnemy);
     }
 
-    public GameObject EnemyCreation(GameObject obj, GameObject parent)
-    {
-        GameObject o = Instantiate(obj, parent.transform);
-        //if (OnEnemyAddEvent != null)
-        //    OnEnemyAddEvent.Invoke(o.GetComponent<GameNetworkObject>());
-        return o;
-    }
-   
+    //public GameObject EnemyCreation(GameObject obj, GameObject parent) //TODO: is this needed ? no one calls it
+    //{
+    //    GameObject o = Instantiate(obj, parent.transform);
+    //    //if (OnEnemyAddEvent != null)
+    //    //    OnEnemyAddEvent.Invoke(o.GetComponent<GameNetworkObject>());
+    //    return o;
+    //}
+
     //InstantiateEnemy will be called when command EnemySpawn is received from host
     private void InstantiateEnemy(byte[] data, uint length, CSteamID senderId)
-    {       
-        int Id = data[0];
+    {
+        if (!poolRoot && PoolRoot)
+        {
+            poolRoot = GameObject.Instantiate(PoolRoot).transform;
+            poolRoot.name = "Enemies Root";
+        }
+
+        int Id = ByteManipulator.ReadInt32(data, 0);
         //Debug.Log("received: " + Id);
-        float positionX = BitConverter.ToSingle(data, 1);
-        float positionY = BitConverter.ToSingle(data, 5);
-        float positionZ = BitConverter.ToSingle(data, 9);
+        float positionX = ByteManipulator.ReadSingle(data, 4);
+        float positionY = ByteManipulator.ReadSingle(data, 8);
+        float positionZ = ByteManipulator.ReadSingle(data, 12);
         Vector3 position = new Vector3(positionX, positionY, positionZ);
-        GameObject enemy = enemies.Get((cb) =>
-            {
-                //function called on the instance of the object that will be returned with the pool.Get() method  
-                GameNetworkObject NObj = cb.GetComponent<GameNetworkObject>();
-                NObj.NetworkId = Id;
-                //cb.transform.position = position;
-                cb.GetComponent<NavMeshAgent>().Warp(position);
-                cb.SetActive(true);
-                cb.GetComponent<NavMeshAgent>().enabled = true;
-                OnEnemyAddEvent.Invoke(NObj);
-            });
+
+        SOPool pool = EnemyPools[UnityEngine.Random.Range(0, EnemyPools.Length)];
+
+        bool parented;
+        GameObject enemy = pool.DirectGet(poolRoot, out parented);
+
+        enemy.GetComponent<Enemy>().Pool = pool;
+        GameNetworkObject NObj = enemy.GetComponent<GameNetworkObject>();
+        NObj.SetNetworkId(Id);
+        //cb.transform.position = position;
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(position, out hit, 1f, NavMesh.AllAreas))
+            enemy.GetComponent<NavMeshAgent>().Warp(hit.position);
+        else
+            Debug.LogWarning("NavMesh point for enemy spawn not found , souce pos = " + position);
+
+        enemy.SetActive(true);
+        OnEnemyAddEvent.Raise(NObj);
         //if (!activeEnemyList.Contains(enemy.GetComponent<Enemy>()))
         //    enemiesToAdd.Add(enemy.GetComponent<Enemy>());        
     }
@@ -75,25 +73,14 @@ public class EnemySpawner : MonoBehaviour
     //OnEnemyDeath will be called when command EnemyDeath is received from host
     private void OnEnemyDeath(byte[] data, uint length, CSteamID senderId)
     {
-        int Id = data[0];
-        //for (int i = 0; i < activeEnemyList.Count; i++)
-        //{
-        //    if (activeEnemyList[i].NetworkId == Id)
-        //    {
-        GameObject obj = ClientTransformManager.IdEnemies[Id].gameObject;                
-        enemies.Recycle(obj, (cb) =>
-            {
-                //cb.GetComponent<GameNetworkObject>().NetworkId = -1;
-                //cb.transform.position = Vector3.zero;
-                //cb.GetComponent<NavMeshAgent>().Warp(Vector3.zero);
-                cb.GetComponent<Enemy>().Reset();
-                cb.GetComponent<NavMeshAgent>().enabled = false;
-                cb.SetActive(false);
-                OnEnemyRemoveEvent.Invoke(cb.GetComponent<GameNetworkObject>());
-            });               
-        //  }
-        // }
+        int Id = ByteManipulator.ReadInt32(data, 0);
+        Enemy obj = netEntities[Id].GetComponent<Enemy>();
+
+        if (!obj)
+            throw new NullReferenceException("NetId does not correspond to an enemy");
+
+        obj.Reset();
+        obj.Pool.Recycle(obj.gameObject);
+        OnEnemyRemoveEvent.Raise(obj.GetComponent<GameNetworkObject>());
     }
 }
-
-

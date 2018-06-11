@@ -1,8 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
-
+using SOPRO;
 [RequireComponent(typeof(NavMeshAgent))]
 public class AIGoToDestination : AIBehaviour
 {
@@ -16,25 +15,26 @@ public class AIGoToDestination : AIBehaviour
 
     //private WaitForSeconds waitForSecond;
 
-    public UnityEvent OnDestinationReached;
+    public BaseSOEvVoid OnDestinationReached;
 
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         //waitForSecond = new WaitForSeconds(0.1f);
         agent = this.GetComponent<NavMeshAgent>();
     }
 
-    public void OnEnable()
+    protected void OnEnable()
     {
         //currentCooldownLeft = 0;
     }
 
-    public override void AIUpdate()
+    private void Update()
     {
         float distanceToDestination = (this.transform.position - targetDestination).magnitude;
         if(distanceToDestination <= agent.stoppingDistance)
         {
-            OnDestinationReached.Invoke();
+            OnDestinationReached.Raise();
         }
     }
 
@@ -43,7 +43,7 @@ public class AIGoToDestination : AIBehaviour
         AIVision aIVision = owner.PreviousState as AIVision;
         if (aIVision == null)
         {
-            OnDestinationReached.Invoke();
+            OnDestinationReached.Raise();
             return;
         }
 

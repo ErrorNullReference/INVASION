@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using SOPRO;
 public class MouseShooter : MonoBehaviour
 {
-    public GameObject Prefab;
+    public SOPool Pool;
     public KeyCode ShootKey = KeyCode.Mouse0;
     public Camera Camera;
     void Update()
@@ -9,7 +10,7 @@ public class MouseShooter : MonoBehaviour
         if (Input.GetKeyDown(ShootKey))
         {
             Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
-            GameObject.Instantiate(Prefab, ray.origin, Quaternion.LookRotation(ray.direction, this.transform.up));
+            Pool.Get(null, ray.origin, Quaternion.LookRotation(ray.direction, this.transform.up));
         }
     }
 }

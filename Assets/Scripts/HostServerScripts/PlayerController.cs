@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using SOPRO;
 //[RequireComponent(typeof(CustomRigidBody))]
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    public float WalkSpeed, RunSpeed;
+    public ReferenceFloat WalkSpeed, RunSpeed;
     Rigidbody body;
     Camera camera;
     RaycastHit hitInfo;

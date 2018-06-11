@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
-
+using SOPRO;
 public class SphericalVision : MonoBehaviour
 {
-    public UnityEventPassingGameObject OnPlayerSight;
-
     [SerializeField]
     private bool workAsClient;
 
     [SerializeField]
     private float maxViewDistance;
+
+    [SerializeField]
+    private MovementManager manager;
+
+    [SerializeField]
+    private SOListPlayerContainer players;
 
     private GameObject target;
 
@@ -33,24 +37,23 @@ public class SphericalVision : MonoBehaviour
             CheckPlayerInVision();
 
         if (target != null)
-            OnPlayerSight.Invoke(target);
+            manager.SetDestination(target);
     }
 
     private void CheckPlayerInVision()
     {
-        Collider[] cols = Physics.OverlapSphere(this.gameObject.transform.position, maxViewDistance);
-        for (int i = 0; i < cols.Length; i++)
+        Vector3 pos = transform.position;
+        int length = players.Elements.Count;
+        for (int i = 0; i < length; i++)
         {
-            if (cols[i].gameObject.GetComponentInParent<Player>() == null)
-                continue;
-
-            Vector3 direction = (cols[i].transform.position - (this.transform.position));
-            Ray ray = new Ray(this.transform.position+new Vector3(0,0.5f,0), direction.normalized);
+            Player p = players[i];
+            Vector3 direction = (p.transform.position - pos);
+            Ray ray = new Ray(pos + new Vector3(0, 0.5f, 0), direction.normalized);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100, int.MaxValue, QueryTriggerInteraction.Ignore))
+            if (p.PlayerCollider.Raycast(ray, out hit, 100))
             {
-                if (hit.collider.GetComponentInParent<Player>() != null)
-                    target = hit.collider.gameObject;
+                target = p.gameObject;
+                break;
             }
         }
     }

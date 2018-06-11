@@ -4,14 +4,14 @@ using UnityEngine;
 using Steamworks;
 using System;
 using GENUtility;
-
-public enum PacketType
+using SOPRO;
+public enum PacketType : byte
 {
-    Test,
-    Transform,
-    ServerTransform,
-    EnemyTransform,
-    ServerEnemyTransform,
+    Test = 0,
+    PlayerData,
+    PlayerDataServer,
+    NetObjTransform,
+    NetObjTransformServer,
     Chat,
     Serverchat,
     VoiceChatData,
@@ -43,14 +43,20 @@ public class Client : MonoBehaviour
 
     public static Lobby Lobby;
 
-    public delegate void ClientStatus();
+    //public delegate void ClientStatus();
 
-    public delegate void UserStatus(CSteamID ID);
+    //public delegate void UserStatus(CSteamID ID);
 
-    public static event ClientStatus OnLobbyInitializationEvent;
-    public static event ClientStatus OnLobbyLeaveEvent;
-    public static event UserStatus OnUserEnter;
-    public static event UserStatus OnUserLeave;
+    public BaseSOEvVoid OnLobbyInitializationEvent;
+    public BaseSOEvVoid OnLobbyLeaveEvent;
+    public BaseSOEvVoid OnClientInitialized;
+    public BaseSOEvCSteamID OnUserEnter;
+    public BaseSOEvCSteamID OnUserLeave;
+
+    //public static event ClientStatus OnLobbyInitializationEvent;
+    //public static event ClientStatus OnLobbyLeaveEvent;
+    //public static event UserStatus OnUserEnter;
+    //public static event UserStatus OnUserLeave;
 
     /// <summary>
     /// Return true if you are the lobby owner.
@@ -60,6 +66,8 @@ public class Client : MonoBehaviour
     public static CSteamID MyID;
 
     public static CSteamID Host;
+
+    private static readonly byte[] emptyArray = new byte[0];
 
     /// <summary>
     /// Returns the users in the lobby while in lobby or the users in game while in game. Can return null.
@@ -76,7 +84,7 @@ public class Client : MonoBehaviour
         }
     }
 
-    public delegate void Command(byte[] data,uint dataLength,CSteamID sender);
+    public delegate void Command(byte[] data, uint dataLength, CSteamID sender);
 
     public static Command[] Commands;
 
@@ -130,13 +138,16 @@ public class Client : MonoBehaviour
         StartCoroutine(LatencyTest());
 
         waitForSeconds = new WaitForSeconds(0.1f);
+
+        if (OnClientInitialized)
+            OnClientInitialized.Raise();
     }
 
     IEnumerator LatencyTest()
     {
         while (true)
         {
-            Client.SendPacketToHost(new byte[]{ }, PacketType.LatencyServer, EP2PSend.k_EP2PSendReliable);
+            Client.SendPacketToHost(emptyArray, 0, 0, PacketType.LatencyServer, EP2PSend.k_EP2PSendReliable);
             latencyTimer = Time.time;
             yield return waitForSeconds;
         }
@@ -154,9 +165,9 @@ public class Client : MonoBehaviour
 
     void P2PStatus(P2PSessionConnectFail_t cb)
     {
-        #if UNITY_EDITOR
-        Debug.Log(cb.m_eP2PSessionError);
-        #endif
+        //#if UNITY_EDITOR
+        //        Debug.Log(cb.m_eP2PSessionError);
+        //#endif
     }
 
     void AddCommands(PacketType commandType, Command command)
@@ -210,10 +221,12 @@ public class Client : MonoBehaviour
             CSteamID userID = SteamMatchmaking.GetLobbyMemberByIndex(lobby.LobbyID, i);
             lobby.Users.Add(new User(userID));
         }
-        SendPacketToLobby(new byte[] { }, PacketType.Test, EP2PSend.k_EP2PSendReliable, false);
 
-        if (OnLobbyInitializationEvent != null)
-            OnLobbyInitializationEvent.Invoke();
+        SendPacketToLobby(emptyArray, 0, 0, PacketType.Test, EP2PSend.k_EP2PSendReliable, false);
+
+
+        if (OnLobbyInitializationEvent)
+            OnLobbyInitializationEvent.Raise();
     }
 
     void EnterLobby(LobbyEnter_t cb)
@@ -240,8 +253,8 @@ public class Client : MonoBehaviour
     {
         CSteamID lobbyID = lobby.LobbyID;
         lobby.Reset();
-        if (OnLobbyLeaveEvent != null)
-            OnLobbyLeaveEvent.Invoke();
+        if (OnLobbyLeaveEvent)
+            OnLobbyLeaveEvent.Raise();
     }
 
     void LeaveLobbyCommand(byte[] data, uint dataLenght, CSteamID sender)
@@ -285,8 +298,8 @@ public class Client : MonoBehaviour
             if (lobby.GetUserFromID((CSteamID)cb.m_ulSteamIDUserChanged) == null)
             {
                 Users.Add(new User((CSteamID)cb.m_ulSteamIDUserChanged));
-                if (OnUserEnter != null)
-                    OnUserEnter.Invoke((CSteamID)cb.m_ulSteamIDUserChanged);
+                if (OnUserEnter)
+                    OnUserEnter.Raise((CSteamID)cb.m_ulSteamIDUserChanged);
             }
         }
         else if ((EChatMemberStateChange)cb.m_rgfChatMemberStateChange == EChatMemberStateChange.k_EChatMemberStateChangeLeft || (EChatMemberStateChange)cb.m_rgfChatMemberStateChange == EChatMemberStateChange.k_EChatMemberStateChangeDisconnected)
@@ -296,8 +309,8 @@ public class Client : MonoBehaviour
                 if (Users[i].SteamID == (CSteamID)cb.m_ulSteamIDUserChanged)
                 {
                     Users.Remove(Users[i]);
-                    if (OnUserLeave != null)
-                        OnUserLeave.Invoke((CSteamID)cb.m_ulSteamIDUserChanged);
+                    if (OnUserLeave)
+                        OnUserLeave.Raise((CSteamID)cb.m_ulSteamIDUserChanged);
                     return;
                 }
             }
@@ -314,42 +327,41 @@ public class Client : MonoBehaviour
 
     void Receive(uint lenght)
     {
-        BytePacket receiver = new BytePacket((int)lenght);
-        //prepare packet to receive data by setting seek and lenght to 0
-        receiver.ResetSeekLength();
+        byte[] receiver = ArrayPool<byte>.Get((int)lenght);
 
         uint dataLenght;
         CSteamID sender;
-        SteamNetworking.ReadP2PPacket(receiver.Data, lenght, out dataLenght, out sender);
+        SteamNetworking.ReadP2PPacket(receiver, lenght, out dataLenght, out sender);
 
-        receiver.CurrentLength = (int)dataLenght;
+        int command = receiver[0];
+        CSteamID packetSender = (CSteamID)ByteManipulator.ReadUInt64(receiver, 1);
 
-        int command = receiver.ReadByte();
-        CSteamID packetSender = (CSteamID)receiver.ReadULong();
+        int finalLength = (int)lenght - HeaderLength;
 
-        byte[] data = new byte[receiver.CurrentLength - (int)PacketOffset.Payload];
-        ByteManipulator.Write(receiver.Data, (int)PacketOffset.Payload, data, 0, data.Length);
+        ByteManipulator.Write<byte>(receiver, HeaderLength, receiver, 0, finalLength);
 
-        InvokeCommand(command, data, (uint)data.Length, packetSender);
+        InvokeCommand(command, receiver, (uint)finalLength, packetSender);
+
+        ArrayPool<byte>.Recycle(receiver);
     }
 
-    void Send(byte[] data, PacketType command, CSteamID sender, CSteamID receiver, EP2PSend sendType)
+    void Send(byte[] data, int startIndex, int length, PacketType command, CSteamID sender, CSteamID receiver, EP2PSend sendType)
     {
-        BytePacket toSend = new BytePacket(data.Length + HeaderLength);
-        //prepare packet to send data by setting seek and lenght to 0
-        toSend.ResetSeekLength();
+        byte[] toSend = ArrayPool<byte>.Get(length + HeaderLength);
 
-        toSend.Write((byte)command);
-        toSend.Write((ulong)sender);
-        toSend.WriteByteData(data, 0, data.Length);
+        ByteManipulator.Write(toSend, 0, (byte)command);
+        ByteManipulator.Write(toSend, sizeof(byte), (ulong)sender);
+        ByteManipulator.Write<byte>(data, startIndex, toSend, HeaderLength, length);
 
         if (MyID != receiver)
-            SteamNetworking.SendP2PPacket(receiver, toSend.Data, (uint)toSend.CurrentLength, sendType);
+            SteamNetworking.SendP2PPacket(receiver, toSend, (uint)toSend.Length, sendType);
         else
-            InvokeCommand((int)command, data, (uint)data.Length, sender);
+            InvokeCommand((int)command, data, (uint)length, sender);
+
+        ArrayPool<byte>.Recycle(toSend);
     }
 
-    void SendAllLobby(byte[] data, PacketType command, CSteamID sender, EP2PSend sendType, bool sendToSender = true)
+    void SendAllLobby(byte[] data, int startIndex, int length, PacketType command, CSteamID sender, EP2PSend sendType, bool sendToSender = true)
     {
         if (Users == null)
             return;
@@ -358,11 +370,11 @@ public class Client : MonoBehaviour
         {
             if (!sendToSender && Users[i].SteamID == MyID)
                 continue;
-            Send(data, command, sender, Users[i].SteamID, sendType);
+            Send(data, startIndex, length, command, sender, Users[i].SteamID, sendType);
         }
     }
 
-    void SendAllInGameUsers(byte[] data, PacketType command, CSteamID sender, EP2PSend sendType, bool sendToSender = true)
+    void SendAllInGameUsers(byte[] data, int startIndex, int length, PacketType command, CSteamID sender, EP2PSend sendType, bool sendToSender = true)
     {
         if (Users == null)
             return;
@@ -371,16 +383,16 @@ public class Client : MonoBehaviour
         {
             if (!sendToSender && Users[i].SteamID == MyID)
                 continue;
-            Send(data, command, sender, Users[i].SteamID, sendType);
+            Send(data, startIndex, length, command, sender, Users[i].SteamID, sendType);
         }
     }
 
-    void SendToHost(byte[] data, PacketType command, CSteamID sender, EP2PSend sendType)
+    void SendToHost(byte[] data, int startIndex, int length, PacketType command, CSteamID sender, EP2PSend sendType)
     {
         if (lobby.Owner != (CSteamID)0)
-            Send(data, command, sender, lobby.Owner, sendType);
+            Send(data, startIndex, length, command, sender, lobby.Owner, sendType);
         else if (Server.Host != (CSteamID)0)
-            Send(data, command, sender, Server.Host, sendType);
+            Send(data, startIndex, length, command, sender, Server.Host, sendType);
     }
 
     /// <summary>
@@ -392,9 +404,9 @@ public class Client : MonoBehaviour
     /// <param name="sender">CSteamID of the user sending the data</param>
     /// <param name="receiver">CSteamID of the user that will receive the data</param>
     /// <param name="sendType">EP2PSend type of the packet</param>
-    public static void SendPacket(byte[] data, PacketType command, CSteamID sender, CSteamID receiver, EP2PSend sendType)
+    public static void SendPacket(byte[] data, int startIndex, int length, PacketType command, CSteamID sender, CSteamID receiver, EP2PSend sendType)
     {
-        instance.Send(data, command, sender, receiver, sendType);
+        instance.Send(data, startIndex, length, command, sender, receiver, sendType);
     }
 
     /// <summary>
@@ -406,9 +418,9 @@ public class Client : MonoBehaviour
     /// <param name="sender">CSteamID of the user sending the data</param>
     /// <param name="sendType">EP2PSend type of the packet</param>
     /// <param name="sendToSender">True if the sender have to receive the packet, false otherwise</param>
-    public static void SendPacketToLobby(byte[] data, PacketType command, CSteamID sender, EP2PSend sendType, bool sendToSender = true)
+    public static void SendPacketToLobby(byte[] data, int startIndex, int length, PacketType command, CSteamID sender, EP2PSend sendType, bool sendToSender = true)
     {
-        instance.SendAllLobby(data, command, sender, sendType, sendToSender);
+        instance.SendAllLobby(data, startIndex, length, command, sender, sendType, sendToSender);
     }
 
     /// <summary>
@@ -420,9 +432,9 @@ public class Client : MonoBehaviour
     /// <param name="sender">CSteamID of the user sending the data</param>
     /// <param name="sendType">EP2PSend type of the packet</param>
     /// <param name="sendToSender">True if the sender have to receive the packet, false otherwise</param>
-    public static void SendPacketToInGameUsers(byte[] data, PacketType command, CSteamID sender, EP2PSend sendType, bool sendToSender = true)
+    public static void SendPacketToInGameUsers(byte[] data, int startIndex, int length, PacketType command, CSteamID sender, EP2PSend sendType, bool sendToSender = true)
     {
-        instance.SendAllInGameUsers(data, command, sender, sendType, sendToSender);
+        instance.SendAllInGameUsers(data, startIndex, length, command, sender, sendType, sendToSender);
     }
 
     /// <summary>
@@ -433,9 +445,9 @@ public class Client : MonoBehaviour
     /// <param name="command">The command representing the data packet</param>
     /// <param name="sendType">EP2PSend type of the packet</param>
     /// <param name="sendToSender">True if the sender have to receive the packet, false otherwise</param>
-    public static void SendPacketToLobby(byte[] data, PacketType command, EP2PSend sendType, bool sendToSender = true)
+    public static void SendPacketToLobby(byte[] data, int startIndex, int length, PacketType command, EP2PSend sendType, bool sendToSender = true)
     {
-        instance.SendAllLobby(data, command, Client.MyID, sendType, sendToSender);
+        instance.SendAllLobby(data, startIndex, length, command, Client.MyID, sendType, sendToSender);
     }
 
     /// <summary>
@@ -446,9 +458,9 @@ public class Client : MonoBehaviour
     /// <param name="command">The command representing the data packet</param>
     /// <param name="sendType">EP2PSend type of the packet</param>
     /// <param name="sendToSender">True if the sender have to receive the packet, false otherwise</param>
-    public static void SendPacketToInGameUsers(byte[] data, PacketType command, EP2PSend sendType, bool sendToSender = true)
+    public static void SendPacketToInGameUsers(byte[] data, int startIndex, int length, PacketType command, EP2PSend sendType, bool sendToSender = true)
     {
-        instance.SendAllInGameUsers(data, command, Client.MyID, sendType, sendToSender);
+        instance.SendAllInGameUsers(data, startIndex, length, command, Client.MyID, sendType, sendToSender);
     }
 
     /// <summary>
@@ -459,9 +471,9 @@ public class Client : MonoBehaviour
     /// <param name="command">The command representing the data packet</param>
     /// <param name="sender">CSteamID of the user sending the data</param>
     /// <param name="sendType">EP2PSend type of the packet</param>
-    public static void SendPacketToHost(byte[] data, PacketType command, CSteamID sender, EP2PSend sendType)
+    public static void SendPacketToHost(byte[] data, int startIndex, int length, PacketType command, CSteamID sender, EP2PSend sendType)
     {
-        instance.SendToHost(data, command, sender, sendType);
+        instance.SendToHost(data, startIndex, length, command, sender, sendType);
     }
 
     /// <summary>
@@ -471,31 +483,37 @@ public class Client : MonoBehaviour
     /// <param name="data">Payload of the packet</param>
     /// <param name="command">The command representing the data packet</param>
     /// <param name="sendType">EP2PSend type of the packet</param>
-    public static void SendPacketToHost(byte[] data, PacketType command, EP2PSend sendType)
+    public static void SendPacketToHost(byte[] data, int startIndex, int length, PacketType command, EP2PSend sendType)
     {
-        instance.SendToHost(data, command, MyID, sendType);
+        instance.SendToHost(data, startIndex, length, command, MyID, sendType);
     }
 
     /// <summary>
     /// Writes the rotation on packet data.
     /// </summary>
-    /// <param name="rotation">Rotation.</param>
+    /// <param name="transform">Tranform to write</param>
     /// <param name="resetPacketSeek">If set to <c>true</c> reset packet seek.</param>
     public void WriteTransformOnPacketData(Transform transform, bool resetPacketSeek)
     {
         if (resetPacketSeek)
+        {
+            Packet.CurrentLength = 0;
             Packet.CurrentSeek = 0;
+        }
 
-        Packet.Write(transform.position.x);
-        Packet.Write(transform.position.y);
-        Packet.Write(transform.position.z);
+        Vector3 pos = transform.position;
+        Quaternion rot = transform.rotation;
 
-        Packet.Write(transform.rotation.x);
-        Packet.Write(transform.rotation.y);
-        Packet.Write(transform.rotation.z);
-        Packet.Write(transform.rotation.w);
+        Packet.Write(pos.x);
+        Packet.Write(pos.y);
+        Packet.Write(pos.z);
+
+        Packet.Write(rot.x);
+        Packet.Write(rot.y);
+        Packet.Write(rot.z);
+        Packet.Write(rot.w);
     }
-
+    //TODO: most of these sendtransform are redundant, expecially the playerDataServer packet.
     /// <summary>
     /// Send the transform given to the host.
     /// </summary>
@@ -503,9 +521,7 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToHost(packet, PacketType.ServerTransform, sendType);
+        Client.SendPacketToHost(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.PlayerDataServer, sendType);
     }
 
     /// <summary>
@@ -515,14 +531,13 @@ public class Client : MonoBehaviour
     public static void SendTransformToHost(byte[] data, Transform transform, EP2PSend sendType)
     {
         instance.Packet.CurrentSeek = 0;
+        instance.Packet.CurrentLength = 0;
 
         instance.Packet.WriteByteData(data, 0, data.Length);
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToHost(packet, PacketType.ServerTransform, sendType);
+        Client.SendPacketToHost(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.PlayerDataServer, sendType);
     }
 
     /// <summary>
@@ -532,9 +547,7 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToHost(packet, command, sendType);
+        Client.SendPacketToHost(instance.Packet.Data, 0, instance.Packet.CurrentLength, command, sendType);
     }
 
     /// <summary>
@@ -544,14 +557,13 @@ public class Client : MonoBehaviour
     public static void SendTransformToHost(byte[] data, Transform transform, PacketType command, EP2PSend sendType)
     {
         instance.Packet.CurrentSeek = 0;
+        instance.Packet.CurrentLength = 0;
 
         instance.Packet.WriteByteData(data, 0, data.Length);
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToHost(packet, command, sendType);
+        Client.SendPacketToHost(instance.Packet.Data, 0, instance.Packet.CurrentLength, command, sendType);
     }
 
     /// <summary>
@@ -561,9 +573,7 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToLobby(packet, PacketType.ServerTransform, sendType, sendToSender);
+        Client.SendPacketToLobby(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.PlayerDataServer, sendType, sendToSender);
     }
 
     /// <summary>
@@ -573,14 +583,13 @@ public class Client : MonoBehaviour
     public static void SendTransformToLobby(byte[] data, Transform transform, EP2PSend sendType, bool sendToSender = true)
     {
         instance.Packet.CurrentSeek = 0;
+        instance.Packet.CurrentLength = 0;
 
         instance.Packet.WriteByteData(data, 0, data.Length);
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToLobby(packet, PacketType.ServerTransform, sendType, sendToSender);
+        Client.SendPacketToLobby(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.PlayerDataServer, sendType, sendToSender);
     }
 
     /// <summary>
@@ -590,9 +599,7 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToLobby(packet, command, sendType, sendToSender);
+        Client.SendPacketToLobby(instance.Packet.Data, 0, instance.Packet.CurrentLength, command, sendType, sendToSender);
     }
 
     /// <summary>
@@ -602,14 +609,13 @@ public class Client : MonoBehaviour
     public static void SendTransformToLobby(byte[] data, Transform transform, PacketType command, EP2PSend sendType, bool sendToSender = true)
     {
         instance.Packet.CurrentSeek = 0;
+        instance.Packet.CurrentLength = 0;
 
         instance.Packet.WriteByteData(data, 0, data.Length);
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToLobby(packet, command, sendType, sendToSender);
+        Client.SendPacketToLobby(instance.Packet.Data, 0, instance.Packet.CurrentLength, command, sendType, sendToSender);
     }
 
     /// <summary>
@@ -619,9 +625,7 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToInGameUsers(packet, PacketType.ServerTransform, sendType, sendToSender);
+        Client.SendPacketToInGameUsers(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.PlayerDataServer, sendType, sendToSender);
     }
 
     /// <summary>
@@ -631,14 +635,13 @@ public class Client : MonoBehaviour
     public static void SendTransformToInGameUsers(byte[] data, Transform transform, EP2PSend sendType, bool sendToSender = true)
     {
         instance.Packet.CurrentSeek = 0;
+        instance.Packet.CurrentLength = 0;
 
         instance.Packet.WriteByteData(data, 0, data.Length);
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToInGameUsers(packet, PacketType.ServerTransform, sendType, sendToSender);
+        Client.SendPacketToInGameUsers(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.PlayerDataServer, sendType, sendToSender);
     }
 
     /// <summary>
@@ -648,9 +651,7 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToInGameUsers(packet, command, sendType, sendToSender);
+        Client.SendPacketToInGameUsers(instance.Packet.Data, 0, instance.Packet.CurrentLength, command, sendType, sendToSender);
     }
 
     /// <summary>
@@ -660,14 +661,13 @@ public class Client : MonoBehaviour
     public static void SendTransformToInGameUsers(byte[] data, Transform transform, PacketType command, EP2PSend sendType, bool sendToSender = true)
     {
         instance.Packet.CurrentSeek = 0;
+        instance.Packet.CurrentLength = 0;
 
         instance.Packet.WriteByteData(data, 0, data.Length);
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        byte[] packet = new byte[instance.Packet.CurrentSeek];
-        Array.Copy(instance.Packet.Data, 0, packet, 0, packet.Length);
-        Client.SendPacketToInGameUsers(packet, command, sendType, sendToSender);
+        Client.SendPacketToInGameUsers(instance.Packet.Data, 0, instance.Packet.CurrentLength, command, sendType, sendToSender);
     }
 
     void OnGUI()

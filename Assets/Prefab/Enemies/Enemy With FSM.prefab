@@ -2749,27 +2749,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8689ee12bc6a14bb2c23b45cf91d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerToLookInto:
-    serializedVersion: 2
-    m_Bits: 257
+  owner: {fileID: 114057339501243828}
+  layerToLookInto: {fileID: 11400000, guid: 5ab00fb41531e634694def18c509b702, type: 2}
   maxViewDistance: 20
-  OnTargetLossOfSight:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114057339501243828}
-        m_MethodName: SwitchState
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 114454403185978774}
-          m_ObjectArgumentAssemblyTypeName: AIBehaviour, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  shootSync: {fileID: 0}
+  shootSync: {fileID: 114318863650488276}
+  next: {fileID: 114454403185978774}
 --- !u!114 &114226324737965404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2781,6 +2765,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee0adf2f7a646e94aa6344d50901c680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnimSpeed: {fileID: 11400000, guid: 714aa688231fe1e4fb18c60a53cb876d, type: 2}
+  LeftSpeed: {fileID: 11400000, guid: 0e0956761016a014a88f387b5375eac1, type: 2}
+  speed: {fileID: 11400000, guid: 72814ab5f7a2a5245b73db8b74449aea, type: 2}
 --- !u!114 &114318863650488276
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2808,8 +2795,9 @@ MonoBehaviour:
   Destroy: 0
   Recycling: 0
   randomSpawnTimer: 0
+  Pool: {fileID: 0}
   HUDTimerShow: 2
-  networkId: 0
+  networkId: {fileID: 114987240227332286}
 --- !u!114 &114437912616470450
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2821,28 +2809,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10415b9bf28bf8d4b845000099399b37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerToLookInto:
-    serializedVersion: 2
-    m_Bits: 257
+  owner: {fileID: 114057339501243828}
+  layerToLookInto: {fileID: 11400000, guid: 5ab00fb41531e634694def18c509b702, type: 2}
   maxViewDistance: 10
   fov: 110
   cooldownBeforeRecalculation: 1
-  OnTargetOnSight:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114057339501243828}
-        m_MethodName: SwitchState
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 114130182057454510}
-          m_ObjectArgumentAssemblyTypeName: AIBehaviour, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  next: {fileID: 114130182057454510}
 --- !u!114 &114454403185978774
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2854,22 +2826,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 267ffd916d38cc74d8e7a9915ccbb746, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnSpottedTarget:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114057339501243828}
-        m_MethodName: SwitchState
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 114437912616470450}
-          m_ObjectArgumentAssemblyTypeName: AIBehaviour, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  owner: {fileID: 114057339501243828}
+  possibleTargets: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
+  next: {fileID: 114437912616470450}
 --- !u!114 &114578491837655658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2970,7 +2929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7012d827424c321428681592efbc37ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkId: 0
+  networkObjects: {fileID: 11400000, guid: 209e760079e7a28429153a90e96df903, type: 2}
 --- !u!136 &136103633231692826
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -3630,7 +3589,7 @@ NavMeshAgent:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1764905658333020}
-  m_Enabled: 0
+  m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
@@ -3643,7 +3602,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 5
   m_ObstacleAvoidanceType: 4
 --- !u!198 &198038131122989582
 ParticleSystem:

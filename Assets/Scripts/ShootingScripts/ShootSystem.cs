@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using SOPRO;
+using GENUtility;
 
 public enum ShootingType
 {
@@ -27,13 +29,13 @@ public class ShootSystem : MonoBehaviour
     public Gun gun;
     public Muzzle muzzle;
     private RaycastHit raycastHit;
-    private LayerMask mask;
+    private LayerMaskHolder mask;
+    private static readonly byte[] emptyArray = new byte[0];
 
     private void Awake()
     {
         recoilTime = 0;
         raycastHit = new RaycastHit();
-        mask = LayerMask.NameToLayer("Player");
     }
 
     void CallShoot()
@@ -89,15 +91,17 @@ public class ShootSystem : MonoBehaviour
 
     void SendShootToHost()
     {
-        Client.SendPacketToHost(new byte[]{ }, PacketType.ShootServer, Steamworks.EP2PSend.k_EP2PSendReliable);
+        Client.SendPacketToHost(emptyArray, 0, 0, PacketType.ShootServer, Steamworks.EP2PSend.k_EP2PSendReliable);
     }
 
     void SendHitToHost(int id)
     {
-        byte[] data = new byte[]{ (byte)id };
+        byte[] data = ArrayPool<byte>.Get(sizeof(int));
+        ByteManipulator.Write(data, 0, id);
 
-        Client.SendPacketToHost(data, PacketType.ShootHitServer, Steamworks.EP2PSend.k_EP2PSendReliable);
+        Client.SendPacketToHost(data, 0, data.Length, PacketType.ShootHitServer, Steamworks.EP2PSend.k_EP2PSendReliable);
 
+        ArrayPool<byte>.Recycle(data);
         //Debug.Log("hit");
     }
 
@@ -107,7 +111,7 @@ public class ShootSystem : MonoBehaviour
         recoilTime -= Time.deltaTime;
         switch (gun.values.GunSystem)
         {
-        //single shoot
+            //single shoot
             case 0:
                 if (Input.GetButtonDown("Fire1") && recoilTime <= 0)
                 {
@@ -115,7 +119,7 @@ public class ShootSystem : MonoBehaviour
                     recoilTime = gun.values.Rateo;
                 }
                 break;
-        //multi shoot
+            //multi shoot
             case 1:
                 if (Input.GetButton("Fire1") && recoilTime <= 0)
                 {
@@ -134,8 +138,8 @@ public class ShootSystem : MonoBehaviour
     /// if you want change gun
     /// use this for set time to 0
     /// </summary>
-//    public void SetTimeTo0()
-//    {
-//        recoilTime = 0;
-//    }
+    //    public void SetTimeTo0()
+    //    {
+    //        recoilTime = 0;
+    //    }
 }

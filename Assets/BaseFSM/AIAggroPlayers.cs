@@ -1,25 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using SOPRO;
 public class AIAggroPlayers : AIVision
 {
-    private Player[] possibleTargets;
+    [SerializeField]
+    private SOListPlayerContainer possibleTargets;
+    [SerializeField]
+    private AIBehaviour next;
 
-    public override void AIUpdate()
+    private void Update()
     {
-        this.currentTarget = possibleTargets[Random.Range(0, possibleTargets.Length)].gameObject;
-        OnSpottedTarget.Invoke();
+        this.currentTarget = possibleTargets.Elements.Count == 0 ? null : possibleTargets[Random.Range(0, possibleTargets.Elements.Count)].transform;
+        if (currentTarget)
+            owner.SwitchState(next);
     }
 
     public override void OnStateEnter()
     {
-        currentTarget = null;
-        possibleTargets = FindObjectsOfType<Player>();
     }
 
     public override void OnStateExit()
     {
-        possibleTargets = null;
     }
 }

@@ -2735,7 +2735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7012d827424c321428681592efbc37ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkId: 0
+  networkObjects: {fileID: 11400000, guid: 209e760079e7a28429153a90e96df903, type: 2}
 --- !u!114 &114168846606785914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2748,11 +2748,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GunRange: 10
-  OnAbleToShot:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  OnAbleToShot: {fileID: 11400000, guid: 9cf9bc622a60cba46a26873b2eb131ae, type: 2}
+  players: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
 --- !u!114 &114174039656087010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2764,6 +2761,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee0adf2f7a646e94aa6344d50901c680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnimSpeed: {fileID: 11400000, guid: 714aa688231fe1e4fb18c60a53cb876d, type: 2}
+  LeftSpeed: {fileID: 11400000, guid: 0e0956761016a014a88f387b5375eac1, type: 2}
+  speed: {fileID: 11400000, guid: 72814ab5f7a2a5245b73db8b74449aea, type: 2}
 --- !u!114 &114179725094308218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2775,28 +2775,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a02e655f7748c27418bb1b874eaa4f98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnPlayerSight:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114729019832894138}
-        m_MethodName: SetDestination
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEventPassingGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  Mask:
-    serializedVersion: 2
-    m_Bits: 256
+  OnPlayerSight: {fileID: 11400000, guid: 5996f1d4cdca3b143b5a51dc3472bc4c, type: 2}
   workAsClient: 0
   fov: 90
   maxViewDistance: 60
+  players: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
 --- !u!114 &114244991885170614
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2824,24 +2807,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a544f6db5ee284c48b82afc896a85922, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnPlayerSight:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114729019832894138}
-        m_MethodName: SetDestination
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEventPassingGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
   workAsClient: 0
   maxViewDistance: 30
+  manager: {fileID: 114729019832894138}
+  players: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
 --- !u!114 &114522658278978558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2901,62 +2870,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6e5137f278086e40948480c55efc64f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coneV: {fileID: 114179725094308218}
+  sphereV: {fileID: 114462976907085450}
   tolerance: 0.5
   cooldownBetweenRecalculations: 1
-  OnPathReached:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114179725094308218}
-        m_MethodName: StartLooking
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 114462976907085450}
-        m_MethodName: StartLooking
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnPathStarted:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114179725094308218}
-        m_MethodName: StopLooking
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 114462976907085450}
-        m_MethodName: StopLooking
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114737848953771168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2968,6 +2885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c7aa2d5232d01c4582be74b0f36fd23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chase: {fileID: 11400000, guid: a705dd43aaa17cf4989e32c37ffbeb21, type: 2}
   Chase: 0
 --- !u!114 &114817436972958576
 MonoBehaviour:
@@ -2999,8 +2917,9 @@ MonoBehaviour:
   Destroy: 0
   Recycling: 0
   randomSpawnTimer: 0
+  Pool: {fileID: 0}
   HUDTimerShow: 2
-  networkId: 0
+  networkId: {fileID: 114151545493592974}
 --- !u!136 &136067789119106868
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -3660,7 +3579,7 @@ NavMeshAgent:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1420026848938252}
-  m_Enabled: 0
+  m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
@@ -3673,7 +3592,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 5
   m_ObstacleAvoidanceType: 4
 --- !u!198 &198515626400912448
 ParticleSystem:
