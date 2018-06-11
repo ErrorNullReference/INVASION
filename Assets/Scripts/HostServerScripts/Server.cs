@@ -7,6 +7,7 @@ public class Server : MonoBehaviour
 {
     static Server Instance;
     public List<User> InGameUsers;
+    public User MyPlayer;
 
     public static List<User> Users { get { return Instance.InGameUsers; } }
 
@@ -25,6 +26,12 @@ public class Server : MonoBehaviour
     void InitServer()
     {
         InGameUsers = new List<User>(Client.Users);
+        for (int i = 0; i < InGameUsers.Count; i++)
+        {
+            if (InGameUsers[i].SteamID == Client.MyID)
+                MyPlayer = InGameUsers[i];
+        }
+
         Host = Client.Host;
         Client.AddCommand(PacketType.LatencyServer, LatencyResponse);
     }

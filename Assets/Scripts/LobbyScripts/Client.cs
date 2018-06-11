@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Steamworks;
 using System;
+using GENUtility;
 
 public enum PacketType
 {
@@ -14,6 +15,7 @@ public enum PacketType
     Chat,
     Serverchat,
     VoiceChatData,
+    VoiceChatMutedMessage,
     EnemyDeath,
     EnemySpawn,
     RequestAvatarSelection,
@@ -24,7 +26,8 @@ public enum PacketType
     Shoot,
     ShootServer,
     ShootHit,
-    ShootHitServer
+    ShootHitServer,
+    ShootCall
 }
 
 public enum PacketOffset
@@ -40,9 +43,14 @@ public class Client : MonoBehaviour
 
     public static Lobby Lobby;
 
-    public delegate void LobbyInitialized();
+    public delegate void ClientStatus();
 
-    public static event LobbyInitialized OnLobbyInitializationEvent;
+    public delegate void UserStatus(CSteamID ID);
+
+    public static event ClientStatus OnLobbyInitializationEvent;
+    public static event ClientStatus OnLobbyLeaveEvent;
+    public static event UserStatus OnUserEnter;
+    public static event UserStatus OnUserLeave;
 
     /// <summary>
     /// Return true if you are the lobby owner.
@@ -79,7 +87,7 @@ public class Client : MonoBehaviour
     [SerializeField]
     private Lobby lobby;
 
-    GamePacket Packet;
+    BytePacket Packet;
 
     static Client instance;
 
@@ -113,7 +121,7 @@ public class Client : MonoBehaviour
 
         MyID = SteamUser.GetSteamID();
 
-        Packet = GamePacket.CreatePacket(4096);
+        Packet = new BytePacket(4096);
 
         Commands = new Command[Enum.GetNames(typeof(PacketType)).Length];
         AddCommands(PacketType.LeaveLobby, LeaveLobbyCommand);
@@ -146,9 +154,9 @@ public class Client : MonoBehaviour
 
     void P2PStatus(P2PSessionConnectFail_t cb)
     {
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         Debug.Log(cb.m_eP2PSessionError);
-#endif
+        #endif
     }
 
     void AddCommands(PacketType commandType, Command command)
@@ -204,11 +212,6 @@ public class Client : MonoBehaviour
         }
         SendPacketToLobby(new byte[] { }, PacketType.Test, EP2PSend.k_EP2PSendReliable, false);
 
-#if UNITY_EDITOR
-        Debug.Log("Num members in the lobby: " + num);
-        Debug.Log("My steam ID: " + MyID.ToString());
-#endif
-
         if (OnLobbyInitializationEvent != null)
             OnLobbyInitializationEvent.Invoke();
     }
@@ -237,6 +240,8 @@ public class Client : MonoBehaviour
     {
         CSteamID lobbyID = lobby.LobbyID;
         lobby.Reset();
+        if (OnLobbyLeaveEvent != null)
+            OnLobbyLeaveEvent.Invoke();
     }
 
     void LeaveLobbyCommand(byte[] data, uint dataLenght, CSteamID sender)
@@ -278,7 +283,11 @@ public class Client : MonoBehaviour
         if ((EChatMemberStateChange)cb.m_rgfChatMemberStateChange == EChatMemberStateChange.k_EChatMemberStateChangeEntered)
         {
             if (lobby.GetUserFromID((CSteamID)cb.m_ulSteamIDUserChanged) == null)
+            {
                 Users.Add(new User((CSteamID)cb.m_ulSteamIDUserChanged));
+                if (OnUserEnter != null)
+                    OnUserEnter.Invoke((CSteamID)cb.m_ulSteamIDUserChanged);
+            }
         }
         else if ((EChatMemberStateChange)cb.m_rgfChatMemberStateChange == EChatMemberStateChange.k_EChatMemberStateChangeLeft || (EChatMemberStateChange)cb.m_rgfChatMemberStateChange == EChatMemberStateChange.k_EChatMemberStateChangeDisconnected)
         {
@@ -287,6 +296,8 @@ public class Client : MonoBehaviour
                 if (Users[i].SteamID == (CSteamID)cb.m_ulSteamIDUserChanged)
                 {
                     Users.Remove(Users[i]);
+                    if (OnUserLeave != null)
+                        OnUserLeave.Invoke((CSteamID)cb.m_ulSteamIDUserChanged);
                     return;
                 }
             }
@@ -295,13 +306,15 @@ public class Client : MonoBehaviour
 
     void InvokeCommand(int command, byte[] data, uint dataLength, CSteamID sender)
     {
+        if (command >= Commands.Length)
+            return;
         if (Commands[command] != null)
             Commands[command].Invoke(data, dataLength, sender);
     }
 
     void Receive(uint lenght)
     {
-        GamePacket receiver = GamePacket.CreatePacket((int)lenght);
+        BytePacket receiver = new BytePacket((int)lenght);
         //prepare packet to receive data by setting seek and lenght to 0
         receiver.ResetSeekLength();
 
@@ -315,16 +328,14 @@ public class Client : MonoBehaviour
         CSteamID packetSender = (CSteamID)receiver.ReadULong();
 
         byte[] data = new byte[receiver.CurrentLength - (int)PacketOffset.Payload];
-        Utils.Write(receiver.Data, (int)PacketOffset.Payload, data, 0, data.Length);
+        ByteManipulator.Write(receiver.Data, (int)PacketOffset.Payload, data, 0, data.Length);
 
         InvokeCommand(command, data, (uint)data.Length, packetSender);
-
-        receiver.DisposePacket();
     }
 
     void Send(byte[] data, PacketType command, CSteamID sender, CSteamID receiver, EP2PSend sendType)
     {
-        GamePacket toSend = GamePacket.CreatePacket(data.Length + HeaderLength);
+        BytePacket toSend = new BytePacket(data.Length + HeaderLength);
         //prepare packet to send data by setting seek and lenght to 0
         toSend.ResetSeekLength();
 
@@ -336,8 +347,6 @@ public class Client : MonoBehaviour
             SteamNetworking.SendP2PPacket(receiver, toSend.Data, (uint)toSend.CurrentLength, sendType);
         else
             InvokeCommand((int)command, data, (uint)data.Length, sender);
-
-        toSend.DisposePacket();
     }
 
     void SendAllLobby(byte[] data, PacketType command, CSteamID sender, EP2PSend sendType, bool sendToSender = true)

@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class SquadHUD : MonoBehaviour
 {
-    //pressing "Z" or other set buttons, show the HUD with the status of the team mates.
-
-    public KeyCode ShowSquadHUDKey;
+	public KeyCode ShowSquadHUDKey;  //pressing "Z" or other set buttons, show the HUD with the status of the team mates.
     private bool SHUDShowing;
    // public int ClientID;
 
@@ -15,7 +13,10 @@ public class SquadHUD : MonoBehaviour
     private HeadsUpDisplay DefHUDInfo;
     private HeadsUpDisplay[] HUDInfos;
     [SerializeField]
-    private Canvas HUDPrefab;
+	/// <summary>
+	/// The HUD prefab canvas: found in hudprefrabs/canvas HUD player (1). must be placed in the scene.
+	/// </summary>
+    private Canvas HUDPrefabCanvas;
 
     //public Mask mask;
 
@@ -25,16 +26,19 @@ public class SquadHUD : MonoBehaviour
 	 * if( user list = null)
 	 *  is null , no instantiation
 	 * else
-	 *  instantiate hud piece
+	 *  instantiate hud piece per player
 	 * 
 	 * */
     void Awake()
     {
+		
         HUDInfos = new HeadsUpDisplay[4];
         for (int i = 0; i < 4; i++)
         {
-            HUDInfos[i] = DefHUDInfo;
-			HUDInfos[i].name= "Player "+ i+ " HUD data";
+			HUDInfos[i] = ScriptableObject.CreateInstance<HeadsUpDisplay>();
+			// hardcoding default values
+			HeadsUpDisplay.LoadFromHUDData(DefHUDInfo,HUDInfos[i]);
+			HUDInfos[i].name=string.Format( "Player {0} HUD data",i);
         }
 
 		StartCoroutine (InitClientHUD());
@@ -56,16 +60,22 @@ public class SquadHUD : MonoBehaviour
                     }
                 }*/
 
+		// HUD UPDATE 
+		foreach (var player in Server.Users) {
+			
+		}
+
     }
 	IEnumerator InitClientHUD(){
 		while (true) {
 			if (Server.Users != null) {
 
 				for (int i = 0; i < Server.Users.Count; i++) {
-					var newHUD = Instantiate (HUDPrefab, this.transform);
+					var newHUD = Instantiate (HUDPrefabCanvas, this.transform);	//create HUD part and set parent to main 2dHUD canvas
 					foreach (HUDManager TwoDItem in newHUD.GetComponentsInChildren<HUDManager>()) {
 						TwoDItem.InputAssetHUD = HUDInfos [i];
 						TwoDItem.InputAssetHUD.ClientID = i;
+		//				Debug.Log("Generated HUD piece for Player "+Server.Users[TwoDItem.InputAssetHUD.ClientID].SteamUsername+", client number: "+TwoDItem.InputAssetHUD.ClientID);
 					}
 				}
 

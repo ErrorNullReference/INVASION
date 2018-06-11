@@ -42,27 +42,27 @@ public class CustomRigidBody : MonoBehaviour
     /// <param name="advanced">if false the transform will not move if a collision is detected. If true the transform will try to slide over the bounding box. Note that the advanced mode is less performant.</param>
     public void Move(Vector3 direction, float speed, float time, bool advanced)
     {
-        Vector3 position = transform.position + direction * speed * time;
+        Vector3 position = collider.bounds.center + direction * speed * time;
 
         if (advanced)
         {
             attempts = 0;
-            transform.position = TryMove(position, direction, GetRightExtent(direction), time);
+            transform.position = TryMove(position, direction, time) + (transform.position - collider.bounds.center);
         }
         else
-            transform.position = TryMove(position, GetRightExtent(direction));
+            transform.position = TryMove(position);
     }
 
-    Vector3 TryMove(Vector3 position, float radius)
+    Vector3 TryMove(Vector3 position)
     {
-        if (Physics.OverlapSphereNonAlloc(position, radius, results, CustomMask.value) >= 1)
+        if (Physics.OverlapSphereNonAlloc(position, GetRightExtent(position), results, CustomMask.value) >= 1)
             return transform.position;
-        return position;
+        return position + (transform.position - collider.bounds.center);
     }
 
-    Vector3 TryMove(Vector3 position, Vector3 direction, float radius, float time)
+    Vector3 TryMove(Vector3 position, Vector3 direction, float time)
     {
-        int num = Physics.OverlapSphereNonAlloc(position, radius, results, CustomMask.value);
+        int num = Physics.OverlapSphereNonAlloc(position, GetRightExtent(position), results, CustomMask.value);
         if (num >= 1)
         {
             attempts++;
@@ -75,28 +75,36 @@ public class CustomRigidBody : MonoBehaviour
             for (int i = 0; i < num; i++)
             {
                 contactPoints[i] = results[i].ClosestPoint(position);
-                dist1 = (transform.position - position).sqrMagnitude;
-                dist2 = (transform.position - contactPoints[i]).sqrMagnitude;
+                dist1 = (collider.bounds.center - position).sqrMagnitude;
+                dist2 = (collider.bounds.center - contactPoints[i]).sqrMagnitude;
                 Vector3 d = dist1 < dist2 ? (position - contactPoints[i]).normalized : (contactPoints[i] - position).normalized;
 
                 newDir += d;
-                midPoint += contactPoints[i] + d * radius;
+                midPoint += contactPoints[i] + d * GetRightExtent(contactPoints[i]);
             }
             newDir = (direction + newDir.normalized).normalized;
             midPoint /= (float)num;
 
-            return TryMove(newDir != Vector3.zero ? midPoint + newDir * time : transform.position, newDir, radius, time);
+            return TryMove(newDir != Vector3.zero ? midPoint + newDir * time : collider.bounds.center, newDir, time);
         }
         return position;
     }
 
-    float GetRightExtent(Vector3 direction)
+    float GetRightExtent(Vector3 position)
     {
-        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y) && Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
-            return collider.bounds.extents.x;
+        Vector3 dir = (position - collider.bounds.center).normalized;
+        dir = new Vector3(Mathf.Abs(dir.x), Mathf.Abs(dir.y), Mathf.Abs(dir.z));
+        return dir.x > dir.y ? (dir.x > dir.z ? collider.bounds.extents.x : collider.bounds.extents.z) : (dir.y > dir.z ? collider.bounds.extents.y : collider.bounds.extents.z);
+
+        /*if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y) && Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+            return collider.bounds.extents.x + collider.bounds.center.x;
         else if (Mathf.Abs(direction.y) > Mathf.Abs(direction.x) && Mathf.Abs(direction.y) > Mathf.Abs(direction.z))
-            return collider.bounds.extents.y;
+            return collider.bounds.extents.y + collider.bounds.center.y;
         else
-            return collider.bounds.extents.z;
+            return collider.bounds.extents.z + collider.bounds.center.z;*/
+    }
+
+    void OnTriggerEnter(Collider c)
+    {
     }
 }

@@ -1,8 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour
+public class Player : LivingBeing
 {
+
+    private void Start()
+    {
+        GetComponentInChildren<HUDManager>().InputAssetHUD = Stats;
+        Life = Stats.MaxHealth;
+    }
+    
     //CHANGED, FOR NOW ONLY ONE CAMERA WILL BE USED.
 
     //public Camera[] cameras;
