@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Steamworks;
-using GENUtility;
 
 public class ShootsMgr : MonoBehaviour
 {
@@ -54,7 +53,7 @@ public class ShootsMgr : MonoBehaviour
             {
                 //if (Application.isEditor)
                 //  Debug.Log(raycastHit.collider);
-
+                
                 if (rays[i].ActivateCallbacks)
                 {
                     GameNetworkObject obj = raycastHit.collider.gameObject.GetComponent<GameNetworkObject>();
@@ -79,12 +78,9 @@ public class ShootsMgr : MonoBehaviour
 
     void SendHitToHost(int id)
     {
-        byte[] data = ArrayPool<byte>.Get(sizeof(int));
-        ByteManipulator.Write(data, 0, id);
+        byte[] data = new byte[]{ (byte)id };
 
-        Client.SendPacketToHost(data, 0, data.Length, PacketType.ShootHitServer, Steamworks.EP2PSend.k_EP2PSendReliable);
-
-        ArrayPool<byte>.Recycle(data);
+        Client.SendPacketToHost(data, PacketType.ShootHitServer, Steamworks.EP2PSend.k_EP2PSendReliable);
 
         Debug.Log("hit");
     }
@@ -97,7 +93,7 @@ public class ShootsMgr : MonoBehaviour
 
     void ReceiveShootServer(byte[] data, uint lenght, CSteamID sender)
     {
-        Client.SendPacketToInGameUsers(data, 0, (int)lenght, PacketType.Shoot, sender, EP2PSend.k_EP2PSendReliable, false);
+        Client.SendPacketToInGameUsers(data, PacketType.Shoot, sender, EP2PSend.k_EP2PSendReliable, false);
         if (sender != Client.MyID)
             PlayersMgr.Players[sender].Shoot(false);
     }

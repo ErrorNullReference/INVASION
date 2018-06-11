@@ -1,14 +1,33 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.Events;
+
+[RequireComponent(typeof(Brain))]
 public abstract class AIBehaviour : MonoBehaviour
 {
-    [SerializeField]
     protected Brain owner;
 
-    protected virtual void Awake()
+    private bool initialized;
+
+    public bool Initialized { get { return initialized; } }
+
+    public void Init(Brain brain) { this.owner = brain; initialized = true; }
+    
+    public void Init() 
     {
-        this.enabled = false;
+        Brain[] brainCheck = this.gameObject.GetComponents<Brain>();
+        if (brainCheck.Length > 1)
+        {
+            Debug.LogError("You need only one brain!");
+        }
+        else
+        {
+            owner = brainCheck[0];
+            this.initialized = true;
+        }
     }
 
     public abstract void OnStateEnter();
     public abstract void OnStateExit();
+    public abstract void AIUpdate();
 }

@@ -4,15 +4,13 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using System.Collections;
-using SOPRO;
-using GENUtility;
+
+[Serializable]
+public class UnityEventPassingGameObject : UnityEvent<GameObject> { }
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class MovementManager : MonoBehaviour
 {
-    [SerializeField]
-    private ConeVision coneV;
-    [SerializeField]
-    private SphericalVision sphereV;
     [SerializeField]
     private float tolerance;
     [SerializeField]
@@ -27,16 +25,14 @@ public class MovementManager : MonoBehaviour
     private delegate void NetworkState();
 
     private NetworkState networkState;
+    public UnityEvent OnPathReached;
+    public UnityEvent OnPathStarted;
     private WaitForSeconds waitForSecond = new WaitForSeconds(0.1f);
 
     private Prediction prediction;
     private float time, interpolationTime, frac;
     private Vector3 startPos, endPos, speed;
     private Quaternion startRot, endRot;
-
-    private GameNetworkObject gnObject;
-
-    private static readonly BytePacket payload = new BytePacket((sizeof(float) * 7) + sizeof(int));
 
     private void Awake()
     {
@@ -68,8 +64,6 @@ public class MovementManager : MonoBehaviour
 
     private void Start()
     {
-        gnObject = GetComponent<GameNetworkObject>();
-
         if (Client.IsHost)
             networkState = HostState;
         else
@@ -91,18 +85,16 @@ public class MovementManager : MonoBehaviour
             currentCooldownLeft = cooldownBetweenRecalculations;
             agent.SetDestination(nextDestination);
             oldDestination = nextDestination;
-            sphereV.StopLooking();
-            coneV.StopLooking();
+            OnPathStarted.Invoke();
         }
 
         //Check if agent reached the destination, if yes calls the OnPathReached Event and then this won't be called again unless a new destination is set.
         if (!this.agent.isStopped && this.agent.hasPath && (this.transform.position - this.agent.destination).magnitude < tolerance)
         {
             this.agent.isStopped = true;
-            sphereV.StartLooking();
-            coneV.StartLooking();
+            OnPathReached.Invoke();
         }
-        Vector3 direction = this.agent.velocity.normalized;
+        Vector3 direction = this.agent.velocity.normalized;        
         animController.Animation(direction.x, direction.z);
         //SendTransform();
     }
@@ -111,24 +103,28 @@ public class MovementManager : MonoBehaviour
     {
         while (true)
         {
-            payload.CurrentSeek = 0;
-            payload.CurrentLength = 0;
+            byte[] payload = new byte[(sizeof(float) * 7) + 1];
+            int index = 0;
 
-            payload.Write(gnObject.NetworkId);
+            byte[] id = new byte[] { (byte)this.GetComponent<GameNetworkObject>().NetworkId };
 
-            Vector3 pos = transform.position;
-            Quaternion rot = transform.rotation;
+            Array.Copy(id, 0, payload, index, 1);
+            index++;
+            Array.Copy(BitConverter.GetBytes(this.transform.position.x), 0, payload, index, sizeof(float));
+            index += sizeof(float);
+            Array.Copy(BitConverter.GetBytes(this.transform.position.y), 0, payload, index, sizeof(float));
+            index += sizeof(float);
+            Array.Copy(BitConverter.GetBytes(this.transform.position.z), 0, payload, index, sizeof(float));
+            index += sizeof(float);
+            Array.Copy(BitConverter.GetBytes(this.transform.rotation.x), 0, payload, index, sizeof(float));
+            index += sizeof(float);
+            Array.Copy(BitConverter.GetBytes(this.transform.rotation.y), 0, payload, index, sizeof(float));
+            index += sizeof(float);
+            Array.Copy(BitConverter.GetBytes(this.transform.rotation.z), 0, payload, index, sizeof(float));
+            index += sizeof(float);
+            Array.Copy(BitConverter.GetBytes(this.transform.rotation.w), 0, payload, index, sizeof(float));
 
-            payload.Write(pos.x);
-            payload.Write(pos.y);
-            payload.Write(pos.z);
-
-            payload.Write(rot.x);
-            payload.Write(rot.y);
-            payload.Write(rot.z);
-            payload.Write(rot.w);
-
-            Client.SendPacketToInGameUsers(payload.Data, 0, payload.MaxCapacity, PacketType.NetObjTransform, Client.MyID, Steamworks.EP2PSend.k_EP2PSendUnreliable, false);
+            Client.SendPacketToInGameUsers(payload, PacketType.EnemyTransform, Client.MyID, Steamworks.EP2PSend.k_EP2PSendUnreliable, false);
             yield return waitForSecond;
         }
     }
@@ -146,13 +142,13 @@ public class MovementManager : MonoBehaviour
             frac = 1;
         transform.position = Vector3.Lerp(startPos, endPos, frac);
         transform.rotation = Quaternion.Slerp(startRot, endRot, frac);
-
+          
         //transform.position = Vector3.Lerp(oldDestination, nextDestination, frac);
     }
 
     public void ReceiveTransform(Vector3 pos, Quaternion rot) //USED BY MOVEMENTMANAGER
     {
-        //Debug.Log("Enemy: " + gnObject.NetworkId + "Position is: " + pos);
+        Debug.Log("Enemy: " + this.GetComponent<GameNetworkObject>().NetworkId + "Position is: " + pos);
 
         //oldDestination = nextDestination;
         //oldQuatenion = nextQuaternion;

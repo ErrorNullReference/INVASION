@@ -85,33 +85,6 @@
             </summary>
             <param name="layer">layer to convert</param>
         </member>
-        <member name="T:SOPRO.NavMeshAreaHolder">
-            <summary>
-            Class that holds an animator property name and calculates its hash value at load time
-            </summary>
-        </member>
-        <member name="F:SOPRO.NavMeshAreaHolder.AreaName">
-            <summary>
-            Area Name
-            </summary>
-        </member>
-        <member name="F:SOPRO.NavMeshAreaHolder.AreaId">
-            <summary>
-            Calculated area id at load time
-            </summary>
-        </member>
-        <member name="M:SOPRO.NavMeshAreaHolder.op_Implicit(SOPRO.NavMeshAreaHolder)~System.Int32">
-            <summary>
-            Converts to calculated area id value
-            </summary>
-            <param name="area">area to convert</param>
-        </member>
-        <member name="M:SOPRO.NavMeshAreaHolder.op_Implicit(SOPRO.NavMeshAreaHolder)~System.String">
-            <summary>
-            Converts to area name value
-            </summary>
-            <param name="area">area to convert</param>
-        </member>
         <member name="T:SOPRO.ShaderPropertyHolder">
             <summary>
             Class that holds a shader property name and calculates its id value at load time
@@ -154,11 +127,6 @@
             Prefab instance used by this pool
             </summary>
         </member>
-        <member name="F:SOPRO.SOPool.PersistentPoolInScenes">
-            <summary>
-            True if you want the pool to check whenever pooled objects have been destroyed for a scene change or for other reasons
-            </summary>
-        </member>
         <member name="M:SOPRO.SOPool.Recycle(UnityEngine.GameObject)">
             <summary>
             Recycles the given instance
@@ -167,7 +135,7 @@
         </member>
         <member name="M:SOPRO.SOPool.DirectRecycle(UnityEngine.GameObject)">
             <summary>
-            Recycles the given instance. The object will not be disabled
+            Recycles the given instance. No further action will be performed on the object
             </summary>
             <param name="toRecycle">object to recycle</param>
         </member>
@@ -193,64 +161,49 @@
         </member>
         <member name="M:SOPRO.SOPool.DirectGet">
             <summary>
-            Requests an element from the pool. The object will not be enabled
+            Requests an element from the pool. No further action will be performed on the object
             </summary>
             <returns>the requested element instance</returns>
         </member>
-        <member name="M:SOPRO.SOPool.DirectGet(UnityEngine.Transform,System.Boolean@)">
+        <member name="M:SOPRO.SOPool.DirectGet(UnityEngine.Transform)">
             <summary>
-            Requests an element from the pool. The object will not be enabled
+            Requests an element from the pool. No further action will be performed on the object
             </summary>
-            <param name="parent">transform to use as the requested element parent.</param>
-            <param name="hasBeenParented">true if obj was instantiated and parent setted, false otherwise</param>
+            <param name="parent">transform to use as the requested element parent. Used only on instantiated elements</param>
             <returns>the requested element instance</returns>
         </member>
-        <member name="M:SOPRO.SOPool.DirectGet(UnityEngine.Transform,UnityEngine.Vector3,UnityEngine.Quaternion,System.Boolean@)">
-            <summary>
-            Requests an element from the pool. The object will not be enabled
-            </summary>
-            <param name="parent">transform to use as the requested element parent.</param>
-            <param name="position">object position</param>
-            <param name="rotation">object rotation</param>
-            <param name="hasBeenParentedAndPositioned">true if obj was instantiated and parent and pos/rot have been setted, false otherwise</param>
-            <returns>the requested element instance</returns>
-        </member>
-        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,System.Action{UnityEngine.GameObject},System.Boolean)">
+        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,System.Action{UnityEngine.GameObject})">
             <summary>
             Requests an element from the pool.
             </summary>
-            <param name="parent">transform to use as the requested element parent.</param>
+            <param name="parent">transform to use as the requested element parent. Used only on instantiated elements</param>
             <param name="onGet">action called on element before activation</param>
-            <param name="parentAlways">false to set parent only when instantiating obj, true to set parent always</param>
             <returns>the requested element instance</returns>
         </member>
-        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,System.Boolean)">
+        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform)">
             <summary>
             Requests an element from the pool.
             </summary>
-            <param name="parent">transform to use as the requested element parent.</param>
-            <param name="parentAlways">false to set parent only when instantiating obj, true to set parent always</param>
+            <param name="parent">transform to use as the requested element parent. Used only on instantiated elements</param>
             <returns>the requested element instance</returns>
         </member>
-        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,UnityEngine.Vector3,UnityEngine.Quaternion,System.Action{UnityEngine.GameObject},System.Boolean)">
+        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,UnityEngine.Vector3,UnityEngine.Quaternion,System.Action{UnityEngine.GameObject})">
             <summary>
             Requests an element from the pool.
             </summary>
-            <param name="parent">transform to use as the requested element parent.</param>
+            <param name="parent">transform to use as the requested element parent. Used only on instantiated elements</param>
             <param name="position">object position</param>
             <param name="rotation">object rotation</param>
             <param name="onGet">action called on element before activation</param>
-            <param name="parentAlways">false to set parent only when instantiating obj, true to set parent always</param>
             <returns>the requested element instance</returns>
         </member>
-        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,UnityEngine.Vector3,UnityEngine.Quaternion,System.Boolean)">
+        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,UnityEngine.Vector3,UnityEngine.Quaternion)">
             <summary>
             Requests an element from the pool.
             </summary>
-            <param name="parent">transform to use as the requested element parent.</param>
+            <param name="parent">transform to use as the requested element parent. Used only on instantiated elements</param>
             <param name="position">object position</param>
             <param name="rotation">object rotation</param>
-            <param name="parentAlways">false to set parent only when instantiating obj, true to set parent always</param>
             <returns>the requested element instance</returns>
         </member>
         <member name="M:SOPRO.SOPool.Clear(System.Action{UnityEngine.GameObject})">
@@ -261,7 +214,7 @@
         </member>
         <member name="M:SOPRO.SOPool.Clear">
             <summary>
-            Clears the pool
+            Clears the pool invoking an action on each element
             </summary>
         </member>
         <member name="M:SOPRO.SOPool.ReSize(System.UInt32,System.Action{UnityEngine.GameObject},UnityEngine.Transform,UnityEngine.Vector3,UnityEngine.Quaternion,System.Action{UnityEngine.GameObject})">
@@ -269,7 +222,7 @@
             Resizes the pool to the given length, invoking an action on each destroyed element (if there are any) and each created element (if there are any)
             </summary>
             <param name="onDestroy">action invoked on each destroyed element in the pool</param>
-            <param name="parent">transform to use as the requested element parent.</param>
+            <param name="parent">transform to use as the requested element parent. Used only on instantiated elements</param>
             <param name="position">object position</param>
             <param name="rotation">object rotation</param>
             <param name="onRecycle">action called on element after deactivation</param>

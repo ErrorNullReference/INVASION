@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SOPRO;
+
 //Same as animationOnTriggers.cs, but with Keys
 public class animationOnKey : MonoBehaviour
 {
 	public Animator animator;
-	public AnimatorPropertyHolder paramName;
+	public string paramName;
 	public bool setBoolOnlyWhenPressed, setBoolPressOneTime;
 	public bool newBoolVal;
 	public bool setTrigger;
@@ -16,7 +16,7 @@ public class animationOnKey : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		var x = Input.GetAxis("Horizontal");//TODO: why is this in fixedupdate?
+		var x = Input.GetAxis("Horizontal");
 		var z = Input.GetAxis("Vertical");
 
 	}
@@ -25,24 +25,24 @@ public class animationOnKey : MonoBehaviour
 		if (Input.GetKey(triggerKey))
 		{
 			if (setTrigger)
-				animator.SetTrigger((int)paramName);
+				animator.SetTrigger(paramName);
 		}
 
 
 		if (setBoolOnlyWhenPressed)
 		{
 			if (Input.GetKey(triggerKey))
-				animator.SetBool((int)paramName, newBoolVal);
+				animator.SetBool(paramName, newBoolVal);
 			else
-				animator.SetBool((int)paramName, !newBoolVal);
+				animator.SetBool(paramName, !newBoolVal);
 		}
 
 		if (setBoolPressOneTime)
 		{
 			if (Input.GetKeyDown(triggerKey))
-				animator.SetBool((int)paramName, newBoolVal);
+				animator.SetBool(paramName, newBoolVal);
 			else
-				animator.SetBool((int)paramName, !newBoolVal);
+				animator.SetBool(paramName, !newBoolVal);
 		}
 
 	}

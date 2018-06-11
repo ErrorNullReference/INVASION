@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f27d98cd86e56f4fb7687b067e4c660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pool: {fileID: 11400000, guid: b7ed093dc475bc04bb229f5f69117446, type: 2}
+  Prefab: {fileID: 1651816473880666, guid: 9790625616e504a4d8f75ba6612b3b46, type: 2}
   ShootKey: 323
   Camera: {fileID: 1799582644}
 --- !u!1 &2064535378

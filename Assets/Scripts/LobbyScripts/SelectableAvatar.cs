@@ -45,12 +45,8 @@ public class SelectableAvatar : MonoBehaviour
                     return;
             }
         }
-        byte[] d = ArrayPool<byte>.Get(1);
-        d[0] = (byte)avatarID;
 
-        Client.SendPacketToHost(d,0,1, PacketType.RequestAvatarSelection, EP2PSend.k_EP2PSendReliable);
-
-        ArrayPool<byte>.Recycle(d);
+        Client.SendPacketToHost(new byte[] { (byte)avatarID }, PacketType.RequestAvatarSelection, EP2PSend.k_EP2PSendReliable);
     }
 
     public void UpdateOwner(User owner)

@@ -2,33 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using SOPRO;
+
 public class ShootOnSight : MonoBehaviour
 {
     public float GunRange;
 
-    public BaseSOEvVoid OnAbleToShot;
+    public UnityEvent OnAbleToShot;
 
-    [SerializeField]
-    private SOListPlayerContainer players;
+    private int mask;
 
-    void Update()
+    private void Start()
+    {
+        mask = LayerMask.GetMask("Default", "Player");
+    }
+
+    void Update ()
     {
         RaycastHit hit;
-
-        Transform t = transform;
-        Vector3 pos = t.position;
-        Vector3 forward = t.forward;
-
-        int length = players.Elements.Count;
-
-        for (int i = 0; i < length; i++)
+        if (Physics.Raycast(this.gameObject.transform.position + this.transform.forward * 0.1f, this.transform.forward, out hit, GunRange, mask))
         {
-            Player p = players[i];
-            if (p.PlayerCollider.Raycast(new Ray(pos + forward * 0.1f, forward), out hit, GunRange))
+            if (hit.collider.gameObject.GetComponent<Player>())
             {
-                OnAbleToShot.Raise();
+                OnAbleToShot.Invoke();
+                Debug.Log(hit.collider.gameObject.name);
             }
         }
-    }
+	}
 }

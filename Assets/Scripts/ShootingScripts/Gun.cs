@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SOPRO;
+
 public class Gun : MonoBehaviour
 {
-    public SOPool PrefabPool;
+    public GameObject Projectile;
 
     public GunScriptable values;
     public Transform Muzzle;
@@ -22,6 +22,9 @@ public class Gun : MonoBehaviour
 
     public void Shoot()
     {
-        PrefabPool.Get(null, Muzzle.position, Muzzle.rotation);
+        if (Projectile == null)
+            return;
+        
+        Instantiate(Projectile, Muzzle.transform.position, Muzzle.transform.rotation);
     }
 }

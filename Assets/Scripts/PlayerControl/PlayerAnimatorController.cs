@@ -1,16 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SOPRO;
+
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimatorController : MonoBehaviour
 {
     [SerializeField]
     bool UseInputs;
     [SerializeField]
-    AnimatorPropertyHolder speedZ, speedX, shoot, death;
+    string speedZ, speedX, shoot, death;
     [SerializeField]
     float RunTreshold, movementTreshold;
+    int speedZHash, speedXHash, shootHash, deathHash;
     Vector3 dir, oldPos, cameraDir, playerDirection;
     Camera camera;
     Animator animator;
@@ -19,6 +20,10 @@ public class PlayerAnimatorController : MonoBehaviour
     {
         camera = Camera.main;
         animator = GetComponent<Animator>();
+        speedZHash = Animator.StringToHash(speedZ);
+        speedXHash = Animator.StringToHash(speedX);
+        shootHash = Animator.StringToHash(shoot);
+        deathHash = Animator.StringToHash(death);
     }
 
     // Update is called once per frame
@@ -35,8 +40,8 @@ public class PlayerAnimatorController : MonoBehaviour
         else
             ExtrapolateDirectionWithoutInputs();
         
-        animator.SetFloat(speedX.PropertyHash, dir.x);
-        animator.SetFloat((int)speedZ, dir.z);
+        animator.SetFloat(speedXHash, dir.x);
+        animator.SetFloat(speedZHash, dir.z);
     }
 
     void ExtrapolateDirectionWithInputs()
@@ -68,17 +73,17 @@ public class PlayerAnimatorController : MonoBehaviour
             if (magnitude >= RunTreshold)
                 dir *= 2;
 
-            //Debug.Log(magnitude);
+            Debug.Log(magnitude);
         }
     }
 
     public void Shoot()
     {
-        animator.SetTrigger(shoot.PropertyHash);
+        animator.SetTrigger(shootHash);
     }
 
     public void Die()
     {
-        animator.SetTrigger(death.PropertyHash);
+        animator.SetTrigger(deathHash);
     }
 }

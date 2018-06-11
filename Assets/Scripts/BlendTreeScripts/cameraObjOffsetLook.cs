@@ -6,7 +6,7 @@ public class  cameraObjOffsetLook: MonoBehaviour {
 	public Transform parentObj;
 	public Vector3 offset;
 
-	void LateUpdate () {
+	void Update () {
 		transform.position = parentObj.position + offset;
 		transform.LookAt (parentObj.position, Vector3.up);
 	}

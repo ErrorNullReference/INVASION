@@ -659,7 +659,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Weapon: {fileID: 11400000, guid: c43314a2de333ea4da6821d50fff34a4, type: 2}
   Pivot: {fileID: 4756939531345260}
-  players: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
+  layer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &114537891568604332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -671,7 +673,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913ae4368205766478d27cd3df0e7201, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
   IsMoving: 0
   LifeTime: 0.5
   Speed: 100
