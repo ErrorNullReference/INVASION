@@ -3,15 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GENUtility;
-public class EnemyTransformSync : MonoBehaviour
+public class NetObjTransformSync : MonoBehaviour
 {
-    private float time, interpolationTime, frac;
+    private static readonly BytePacket payload = new BytePacket((sizeof(float) * 7) + sizeof(int));
     private WaitForSeconds waitForSecond;
+
+    private float time, interpolationTime, frac;
     private Prediction prediction;
     private Vector3 startPos, endPos, speed;
     private Quaternion startRot, endRot;
+
     private AnimationControllerScript animController;
-    private static readonly BytePacket payload = new BytePacket((sizeof(float) * 7) + sizeof(int));
     private GameNetworkObject gnObject;
     private Transform myTransform;
 
@@ -46,7 +48,7 @@ public class EnemyTransformSync : MonoBehaviour
             payload.CurrentLength = 0;
             payload.CurrentSeek = 0;
 
-            payload.Write(gnObject.NetworkId); //does this need to be byte? Seems strange, shouldn't it be int/uint?
+            payload.Write(gnObject.NetworkId); 
 
             Vector3 pos = myTransform.position;
             Quaternion rot = myTransform.rotation;
@@ -60,7 +62,7 @@ public class EnemyTransformSync : MonoBehaviour
             payload.Write(rot.z);
             payload.Write(rot.w);
 
-            Client.SendPacketToInGameUsers(payload.Data, 0, payload.MaxCapacity, PacketType.EnemyTransform, Client.MyID, Steamworks.EP2PSend.k_EP2PSendUnreliable, false);
+            Client.SendPacketToInGameUsers(payload.Data, 0, payload.MaxCapacity, PacketType.NetObjTransform, Client.MyID, Steamworks.EP2PSend.k_EP2PSendUnreliable, false);
             yield return waitForSecond;
         }
     }

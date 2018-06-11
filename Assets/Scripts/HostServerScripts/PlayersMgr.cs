@@ -45,39 +45,46 @@ public class PlayersMgr : MonoBehaviour
             avatars.Add(Client.Users[i].SteamID, a);
         }
 
-        Client.Commands[(int)PacketType.ServerTransform] = ManageServerTransform;
-        Client.Commands[(int)PacketType.Transform] = ManageTransform;
+        Client.AddCommand(PacketType.PlayerDataServer, ManageServerTransform);
+        Client.AddCommand(PacketType.PlayerData, ManageTransform);
     }
 
     void ManageServerTransform(byte[] data, uint dataLength, CSteamID sender)
     {
-        Client.SendPacketToInGameUsers(data, 0, (int)dataLength, PacketType.Transform, sender, EP2PSend.k_EP2PSendUnreliable);
+        Client.SendPacketToInGameUsers(data, 0, (int)dataLength, PacketType.PlayerData, sender, EP2PSend.k_EP2PSendUnreliable);
     }
 
     void ManageTransform(byte[] data, uint dataLength, CSteamID sender)
     {
-        if (avatars.ContainsKey(sender))
+        if (!avatars.ContainsKey(sender) || Client.MyID == sender)
+            return;
+
+        SimpleAvatar avatar = avatars[sender];
+
+        int overLength = (int)dataLength - 28;
+        if (overLength > 0)
         {
-            int offset = 0;
-            float posX = ByteManipulator.ReadSingle(data, offset);
-            offset += sizeof(float);
-            float posY = ByteManipulator.ReadSingle(data, offset);
-            offset += sizeof(float);
-            float posZ = ByteManipulator.ReadSingle(data, offset);
-            offset += sizeof(float);
-            float rotX = ByteManipulator.ReadSingle(data, offset);
-            offset += sizeof(float);
-            float rotY = ByteManipulator.ReadSingle(data, offset);
-            offset += sizeof(float);
-            float rotZ = ByteManipulator.ReadSingle(data, offset);
-            offset += sizeof(float);
-            float rotW = ByteManipulator.ReadSingle(data, offset);
-
-            Vector3 pos = new Vector3(posX, posY, posZ);
-            Quaternion rot = new Quaternion(rotX, rotY, rotZ, rotW);
-
-            if (sender != Client.MyID)
-                avatars[sender].SetTransform(pos, rot);
+            //Manage attached data
         }
+
+        int offset = overLength;
+        float posX = ByteManipulator.ReadSingle(data, offset);
+        offset += sizeof(float);
+        float posY = ByteManipulator.ReadSingle(data, offset);
+        offset += sizeof(float);
+        float posZ = ByteManipulator.ReadSingle(data, offset);
+        offset += sizeof(float);
+        float rotX = ByteManipulator.ReadSingle(data, offset);
+        offset += sizeof(float);
+        float rotY = ByteManipulator.ReadSingle(data, offset);
+        offset += sizeof(float);
+        float rotZ = ByteManipulator.ReadSingle(data, offset);
+        offset += sizeof(float);
+        float rotW = ByteManipulator.ReadSingle(data, offset);
+
+        Vector3 pos = new Vector3(posX, posY, posZ);
+        Quaternion rot = new Quaternion(rotX, rotY, rotZ, rotW);
+
+        avatars[sender].SetTransform(pos, rot);
     }
 }

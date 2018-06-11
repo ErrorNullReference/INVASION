@@ -10,36 +10,24 @@ public class ClientTransformManager : ScriptableObject
 
     public void RegisterTransformCommand()
     {
-        Client.AddCommand(PacketType.EnemyTransform, EnemyTransformReceive);
+        Client.AddCommand(PacketType.NetObjTransform, EnemyTransformReceive);
     }
 
     private void EnemyTransformReceive(byte[] data, uint dataLength, CSteamID sender)
     {
-        int index = 0;
+        int id = ByteManipulator.ReadInt32(data, 0);
 
-        int id = ByteManipulator.ReadInt32(data, index);
-        index += sizeof(int);
+        if (!netEntities.Elements.ContainsKey(id))
+            return;
 
-        float x = ByteManipulator.ReadSingle(data, index);
-        index += sizeof(float);
-        float y = ByteManipulator.ReadSingle(data, index);
-        index += sizeof(float);
-        float z = ByteManipulator.ReadSingle(data, index);
-        index += sizeof(float);
+        NetObjTransformSync sync = netEntities[id].GetComponent<NetObjTransformSync>();
 
-        Vector3 position = new Vector3(x, y, z);
+        if (!sync)
+            return;
 
-        x = ByteManipulator.ReadSingle(data, index);
-        index += sizeof(float);
-        y = ByteManipulator.ReadSingle(data, index);
-        index += sizeof(float);
-        z = ByteManipulator.ReadSingle(data, index);
-        index += sizeof(float);
-        float w = ByteManipulator.ReadSingle(data, index);
+        Vector3 position = new Vector3(ByteManipulator.ReadSingle(data, 4), ByteManipulator.ReadSingle(data, 8), ByteManipulator.ReadSingle(data, 12));
+        Quaternion rotation = new Quaternion(ByteManipulator.ReadSingle(data, 16), ByteManipulator.ReadSingle(data, 20), ByteManipulator.ReadSingle(data, 24), ByteManipulator.ReadSingle(data, 28));
 
-        Quaternion rotation = new Quaternion(x, y, z, w);
-
-        if (netEntities.Elements.ContainsKey(id))
-            netEntities[id].GetComponent<EnemyTransformSync>().ReceiveTransform(position, rotation);
+        sync.ReceiveTransform(position, rotation);
     }
 }

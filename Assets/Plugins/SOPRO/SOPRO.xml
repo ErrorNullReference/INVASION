@@ -154,6 +154,11 @@
             Prefab instance used by this pool
             </summary>
         </member>
+        <member name="F:SOPRO.SOPool.PersistentPoolInScenes">
+            <summary>
+            True if you want the pool to check whenever pooled objects have been destroyed for a scene change or for other reasons
+            </summary>
+        </member>
         <member name="M:SOPRO.SOPool.Recycle(UnityEngine.GameObject)">
             <summary>
             Recycles the given instance

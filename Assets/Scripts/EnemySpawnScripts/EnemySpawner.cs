@@ -21,12 +21,6 @@ public class EnemySpawner : ScriptableObject
 
     public void Init()
     {
-        //TODO: find out why resize works here but after a while all created instance become null
-        //for (int i = 0; i < EnemyPools.Length; i++)
-        //{
-        //    EnemyPools[i].ReSize(20, null, poolRoot, new Vector3(), new Quaternion(), (go) => go.GetComponent<GameNetworkObject>().ResetNetworkId());
-        //}
-
         Client.AddCommand(PacketType.EnemyDeath, OnEnemyDeath);
         Client.AddCommand(PacketType.EnemySpawn, InstantiateEnemy);
     }

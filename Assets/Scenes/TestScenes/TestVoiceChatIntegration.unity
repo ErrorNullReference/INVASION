@@ -2670,7 +2670,7 @@ MonoBehaviour:
   Button: {fileID: 865416678}
   AddButton: {fileID: 64110213}
   avatarImage: {fileID: 311712869}
-  DefaultTexture: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 0}
+  DefaultTexture: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 3}
 --- !u!224 &865416677
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4040,7 +4040,7 @@ MonoBehaviour:
   Button: {fileID: 1514482984}
   AddButton: {fileID: 637353282}
   avatarImage: {fileID: 941157368}
-  DefaultTexture: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 0}
+  DefaultTexture: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 3}
 --- !u!224 &1514482983
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4562,7 +4562,7 @@ MonoBehaviour:
   Button: {fileID: 1789876435}
   AddButton: {fileID: 969541825}
   avatarImage: {fileID: 502750941}
-  DefaultTexture: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 0}
+  DefaultTexture: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 3}
 --- !u!224 &1789876434
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5385,7 +5385,7 @@ MonoBehaviour:
   Button: {fileID: 2124194908}
   AddButton: {fileID: 205263545}
   avatarImage: {fileID: 578426127}
-  DefaultTexture: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 0}
+  DefaultTexture: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 3}
 --- !u!224 &2124194907
 RectTransform:
   m_ObjectHideFlags: 0

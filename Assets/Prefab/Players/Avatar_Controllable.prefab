@@ -1576,7 +1576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aace91807481ad54192f156fa41b214a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Projectile: {fileID: 1584354942422022, guid: 3f48662b35782ea4f8e79fbd311ac9a1, type: 2}
+  PrefabPool: {fileID: 11400000, guid: fea32aa680d513745a7e7a0283f9d5ee, type: 2}
   values: {fileID: 11400000, guid: e4305df8f3337154a93e1a7800ccb8fc, type: 2}
   Muzzle: {fileID: 4665897144846272}
   AmmoReady: 0

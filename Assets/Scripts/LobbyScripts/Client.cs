@@ -5,19 +5,19 @@ using Steamworks;
 using System;
 using GENUtility;
 using SOPRO;
-public enum PacketType
+public enum PacketType : byte
 {
     Test = 0,
-    Transform = 1,
-    ServerTransform,
-    EnemyTransform,
-    ServerEnemyTransform,
-    Chat = 5,
+    PlayerData,
+    PlayerDataServer,
+    NetObjTransform,
+    NetObjTransformServer,
+    Chat,
     Serverchat,
-    VoiceChatData = 7,
-    VoiceChatMutedMessage = 8,
+    VoiceChatData,
+    VoiceChatMutedMessage,
     EnemyDeath,
-    EnemySpawn = 10,
+    EnemySpawn,
     RequestAvatarSelection,
     AnswerAvatarSelection,
     LeaveLobby,
@@ -513,7 +513,7 @@ public class Client : MonoBehaviour
         Packet.Write(rot.z);
         Packet.Write(rot.w);
     }
-
+    //TODO: most of these sendtransform are redundant, expecially the playerDataServer packet.
     /// <summary>
     /// Send the transform given to the host.
     /// </summary>
@@ -521,7 +521,7 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        Client.SendPacketToHost(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.ServerTransform, sendType);
+        Client.SendPacketToHost(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.PlayerDataServer, sendType);
     }
 
     /// <summary>
@@ -537,7 +537,7 @@ public class Client : MonoBehaviour
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        Client.SendPacketToHost(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.ServerTransform, sendType);
+        Client.SendPacketToHost(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.PlayerDataServer, sendType);
     }
 
     /// <summary>
@@ -573,7 +573,7 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        Client.SendPacketToLobby(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.ServerTransform, sendType, sendToSender);
+        Client.SendPacketToLobby(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.PlayerDataServer, sendType, sendToSender);
     }
 
     /// <summary>
@@ -589,7 +589,7 @@ public class Client : MonoBehaviour
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        Client.SendPacketToLobby(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.ServerTransform, sendType, sendToSender);
+        Client.SendPacketToLobby(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.PlayerDataServer, sendType, sendToSender);
     }
 
     /// <summary>
@@ -625,7 +625,7 @@ public class Client : MonoBehaviour
     {
         instance.WriteTransformOnPacketData(transform, true);
 
-        Client.SendPacketToInGameUsers(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.ServerTransform, sendType, sendToSender);
+        Client.SendPacketToInGameUsers(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.PlayerDataServer, sendType, sendToSender);
     }
 
     /// <summary>
@@ -641,7 +641,7 @@ public class Client : MonoBehaviour
 
         instance.WriteTransformOnPacketData(transform, false);
 
-        Client.SendPacketToInGameUsers(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.ServerTransform, sendType, sendToSender);
+        Client.SendPacketToInGameUsers(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.PlayerDataServer, sendType, sendToSender);
     }
 
     /// <summary>
