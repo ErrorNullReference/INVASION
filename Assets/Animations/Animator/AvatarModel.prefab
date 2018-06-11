@@ -276,7 +276,7 @@ GameObject:
   - component: {fileID: 114370864050812774}
   - component: {fileID: 114201350714478028}
   m_Layer: 8
-  m_Name: Avatar(Clone)
+  m_Name: AvatarModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1507,6 +1507,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2aec9008d5db564daa34aebf9642616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  life: 0
+  Stats: {fileID: 0}
+  PlayerCollider: {fileID: 0}
+  players: {fileID: 0}
 --- !u!114 &114526275901222190
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1518,7 +1522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aace91807481ad54192f156fa41b214a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Projectile: {fileID: 1584354942422022, guid: 3f48662b35782ea4f8e79fbd311ac9a1, type: 2}
+  PrefabPool: {fileID: 0}
   values: {fileID: 11400000, guid: e4305df8f3337154a93e1a7800ccb8fc, type: 2}
   Muzzle: {fileID: 4647914150949276}
   AmmoReady: 0
@@ -1546,10 +1550,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d1cb89f792d894c961e58756283e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedZ: speedZ
-  speedX: speedX
-  RunTreshold: 6
   UseInputs: 0
+  speedZ: {fileID: 0}
+  speedX: {fileID: 0}
+  shoot: {fileID: 0}
+  death: {fileID: 0}
+  RunTreshold: 6
+  movementTreshold: 0
 --- !u!114 &114814207899205494
 MonoBehaviour:
   m_ObjectHideFlags: 1
