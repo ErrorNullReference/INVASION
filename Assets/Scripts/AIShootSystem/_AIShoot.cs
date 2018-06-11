@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SOPRO;
+
 public class _AIShoot : MonoBehaviour
 {
     public _WeaponScriptable Weapon;
     public Transform Pivot;
-    public SOListPlayerContainer players;
+    public LayerMask layer;
 
     private float tempActionTime;
     void Awake()
@@ -26,27 +26,21 @@ public class _AIShoot : MonoBehaviour
 
         Weapon.ActionTime -= Time.fixedDeltaTime;
         Debug.DrawRay(ray.origin, ray.direction);
-
-        int length = players.Elements.Count;
-        bool bulletShot = false;
-        for (int i = 0; i < length; i++)
+        if (Physics.Raycast(ray, out hitInfo, Weapon.Range, layer))
         {
-            Player p = players[i];
-            if (p.PlayerCollider.Raycast(ray, out hitInfo, Weapon.Range))
+            if (Weapon.ActionTime < Weapon.CoolDown)
             {
-                if (Weapon.ActionTime < Weapon.CoolDown)
+                if (hitInfo.collider.GetComponent<Player>())
                 {
-                    Weapon.AiProjectilePool.Get(null, ray.origin, Pivot.rotation);
-                    bulletShot = true;
-                    break;
+                    Instantiate(Weapon.AiProjectilePrefab, Pivot.position, Pivot.transform.rotation, null);
                 }
             }
         }
-        if (bulletShot)
+        else
         {
             Weapon.ActionTime = tempActionTime;
         }
-        //Debug.Log(Weapon.ActionTime);
+        Debug.Log(Weapon.ActionTime);
     }
 
     void OnDisable()

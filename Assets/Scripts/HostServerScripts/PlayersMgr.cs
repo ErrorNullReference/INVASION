@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Steamworks;
 using System;
-using GENUtility;
+
 public class PlayersMgr : MonoBehaviour
 {
     public SimpleAvatar AvatarTemplate, ControllableAvatarTemplate;
@@ -30,7 +30,7 @@ public class PlayersMgr : MonoBehaviour
         }
 
         avatars = new Dictionary<CSteamID, SimpleAvatar>();
-
+       
         for (int i = 0; i < Client.Users.Count; i++)
         {
             SimpleAvatar a;
@@ -45,46 +45,39 @@ public class PlayersMgr : MonoBehaviour
             avatars.Add(Client.Users[i].SteamID, a);
         }
 
-        Client.AddCommand(PacketType.PlayerDataServer, ManageServerTransform);
-        Client.AddCommand(PacketType.PlayerData, ManageTransform);
+        Client.Commands[(int)PacketType.ServerTransform] = ManageServerTransform;
+        Client.Commands[(int)PacketType.Transform] = ManageTransform;
     }
 
     void ManageServerTransform(byte[] data, uint dataLength, CSteamID sender)
     {
-        Client.SendPacketToInGameUsers(data, 0, (int)dataLength, PacketType.PlayerData, sender, EP2PSend.k_EP2PSendUnreliable);
+        Client.SendPacketToInGameUsers(data, PacketType.Transform, sender, EP2PSend.k_EP2PSendUnreliable);
     }
 
     void ManageTransform(byte[] data, uint dataLength, CSteamID sender)
     {
-        if (!avatars.ContainsKey(sender) || Client.MyID == sender)
-            return;
-
-        SimpleAvatar avatar = avatars[sender];
-
-        int overLength = (int)dataLength - 28;
-        if (overLength > 0)
+        if (avatars.ContainsKey(sender))
         {
-            //Manage attached data
+            int offset = 0;
+            float posX = BitConverter.ToSingle(data, offset);
+            offset += sizeof(float);
+            float posY = BitConverter.ToSingle(data, offset);
+            offset += sizeof(float);
+            float posZ = BitConverter.ToSingle(data, offset);
+            offset += sizeof(float);
+            float rotX = BitConverter.ToSingle(data, offset);
+            offset += sizeof(float);
+            float rotY = BitConverter.ToSingle(data, offset);
+            offset += sizeof(float);
+            float rotZ = BitConverter.ToSingle(data, offset);
+            offset += sizeof(float);
+            float rotW = BitConverter.ToSingle(data, offset);
+
+            Vector3 pos = new Vector3(posX, posY, posZ);
+            Quaternion rot = new Quaternion(rotX, rotY, rotZ, rotW);
+
+            if (sender != Client.MyID)
+                avatars[sender].SetTransform(pos, rot);
         }
-
-        int offset = overLength;
-        float posX = ByteManipulator.ReadSingle(data, offset);
-        offset += sizeof(float);
-        float posY = ByteManipulator.ReadSingle(data, offset);
-        offset += sizeof(float);
-        float posZ = ByteManipulator.ReadSingle(data, offset);
-        offset += sizeof(float);
-        float rotX = ByteManipulator.ReadSingle(data, offset);
-        offset += sizeof(float);
-        float rotY = ByteManipulator.ReadSingle(data, offset);
-        offset += sizeof(float);
-        float rotZ = ByteManipulator.ReadSingle(data, offset);
-        offset += sizeof(float);
-        float rotW = ByteManipulator.ReadSingle(data, offset);
-
-        Vector3 pos = new Vector3(posX, posY, posZ);
-        Quaternion rot = new Quaternion(rotX, rotY, rotZ, rotW);
-
-        avatars[sender].SetTransform(pos, rot);
     }
 }

@@ -4,14 +4,11 @@ using UnityEngine;
 using Steamworks;
 using System.Text;
 using UnityEngine.UI;
-using GENUtility;
+
 public class ChatLobby : MonoBehaviour
 {
     public Text Text;
     public InputField InputField;
-    private static readonly byte[] chatData = new byte[4096];
-    private static readonly byte[] inputData = new byte[1024];
-    private static readonly Encoding encoder = Encoding.UTF8;
 
     // Use this for initialization
     void Start()
@@ -28,23 +25,23 @@ public class ChatLobby : MonoBehaviour
 
     public void SendChatMessage(string message)
     {
-        int n = ByteManipulator.Write(inputData, 0, message, encoder);
-        SteamMatchmaking.SendLobbyChatMsg(Client.Lobby.LobbyID, inputData, n);
+        byte[] data = Encoding.UTF8.GetBytes(message);
+        SteamMatchmaking.SendLobbyChatMsg(Client.Lobby.LobbyID, data, data.Length);
         InputField.text = "";
     }
 
     void ReceiveChatMessage(LobbyChatMsg_t cb)
     {
         CSteamID user;
+        byte[] data = new byte[4096];
         EChatEntryType chatType;
-        int dataLenght = SteamMatchmaking.GetLobbyChatEntry((CSteamID)cb.m_ulSteamIDLobby, (int)cb.m_iChatID, out user, chatData, chatData.Length, out chatType);
+        int dataLenght = SteamMatchmaking.GetLobbyChatEntry((CSteamID)cb.m_ulSteamIDLobby, (int)cb.m_iChatID, out user, data, data.Length, out chatType);
 
         string name = SteamFriends.GetFriendPersonaName(user);
 
         if (chatType == EChatEntryType.k_EChatEntryTypeChatMsg)
         {
-            int n;
-            string message = ByteManipulator.ReadString(chatData, 0, encoder, out n);
+            string message = Encoding.UTF8.GetString(data, 0, dataLenght);
             Text.text += "\n" + name + " : " + message;
         }
     }
@@ -53,7 +50,7 @@ public class ChatLobby : MonoBehaviour
     {
         string name = SteamFriends.GetFriendPersonaName((CSteamID)cb.m_ulSteamIDUserChanged);
         EChatMemberStateChange chatType = (EChatMemberStateChange)cb.m_rgfChatMemberStateChange;
-
+        
         switch (chatType)
         {
             case EChatMemberStateChange.k_EChatMemberStateChangeEntered:

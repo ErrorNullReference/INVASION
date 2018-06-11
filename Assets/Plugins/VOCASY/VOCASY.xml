@@ -112,11 +112,6 @@
             Resets initialized status. Do not Reset an handler if it has not been disabled yet, otherwise it will remain in an incorrect state and lead to possible errors.
             </summary>
         </member>
-        <member name="M:VOCASY.Common.Handler.ForceInitializzation">
-            <summary>
-            Requests the handler to do its initialization. Initialization is performed only if it is not initialized yet and Identity is correctly set
-            </summary>
-        </member>
         <member name="T:VOCASY.Common.MuteStatus">
             <summary>
             Used to describe mute status

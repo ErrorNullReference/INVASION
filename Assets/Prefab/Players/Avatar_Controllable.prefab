@@ -1524,14 +1524,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 664bb93b7daa9314189621778db1056a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WalkSpeed:
-    UseConstant: 1
-    Variable: {fileID: 0}
-    constantValue: 15
-  RunSpeed:
-    UseConstant: 1
-    Variable: {fileID: 0}
-    constantValue: 25
+  WalkSpeed: 5
+  RunSpeed: 8
 --- !u!114 &114402471443833716
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1576,7 +1570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aace91807481ad54192f156fa41b214a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PrefabPool: {fileID: 11400000, guid: fea32aa680d513745a7e7a0283f9d5ee, type: 2}
+  Projectile: {fileID: 1584354942422022, guid: 3f48662b35782ea4f8e79fbd311ac9a1, type: 2}
   values: {fileID: 11400000, guid: e4305df8f3337154a93e1a7800ccb8fc, type: 2}
   Muzzle: {fileID: 4665897144846272}
   AmmoReady: 0
@@ -1620,8 +1614,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   life: 0
   Stats: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
-  PlayerCollider: {fileID: 136651011897755702}
-  players: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
 --- !u!114 &114749351794276356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1645,10 +1637,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UseInputs: 1
-  speedZ: {fileID: 11400000, guid: 23d50b1dcf3aed748bfde9a704ad84a8, type: 2}
-  speedX: {fileID: 11400000, guid: 4c195ab848bc64c4e84dbbce64c4b64f, type: 2}
-  shoot: {fileID: 11400000, guid: 577f79ee815855c4aa2b2cf8071b3438, type: 2}
-  death: {fileID: 11400000, guid: 9e4985d483722cd4fb7356f661d4cb25, type: 2}
+  speedZ: speedZ
+  speedX: speedX
+  shoot: shoot
+  death: death
   RunTreshold: 0
   movementTreshold: 0
 --- !u!114 &114842189039452322

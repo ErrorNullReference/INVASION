@@ -3,45 +3,40 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
-using SOPRO;
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class AIGoToTargetUntilOnSight : AIBehaviour
 {
     [SerializeField]
-    private LayerMaskHolder layerToLookInto;
+    private LayerMask layerToLookInto;
     [SerializeField]
     private float maxViewDistance;
-    [SerializeField]
-    [Range(1, 360)]
+    [SerializeField][Range(1, 360)]
     private int fov;
     [SerializeField]
     private float cooldownBeforeRecalculation;
     private float currentCooldownLeftBeforeRecalculation;
 
-    private Transform target;
-    public Transform Target { get { return this.target; } }
+    private GameObject target;
+    public GameObject Target { get { return this.target; } private set { } }
     private NavMeshAgent agent;
     private AnimationControllerScript animController;
 
-    [SerializeField]
-    private AIBehaviour next;
+    public UnityEvent OnTargetOnSight;
 
-    protected override void Awake()
+    public void Awake()
     {
-        base.Awake();
         agent = this.GetComponent<NavMeshAgent>();
         animController = this.GetComponent<AnimationControllerScript>();
     }
 
-    private void Update()
+    public override void AIUpdate()
     {
         currentCooldownLeftBeforeRecalculation -= Time.deltaTime;
         if (currentCooldownLeftBeforeRecalculation <= 0)
-            this.agent.SetDestination(target.position);
+            this.agent.SetDestination(this.target.gameObject.transform.position);
 
-        Vector3 vel = this.agent.velocity.normalized;
-
-        animController.Animation(vel.x, vel.z);
+        animController.Animation(this.agent.velocity.normalized.x, this.agent.velocity.normalized.z);
 
         CheckIfTargetInVision();
     }
@@ -49,15 +44,15 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
     public override void OnStateEnter()
     {
         AIVision aIVision = owner.PreviousState as AIVision;
-        if (aIVision == null || !aIVision.CurrentTarget)
+        if (aIVision == null)
         {
-            owner.SwitchState(next);
+            OnTargetOnSight.Invoke();
             return;
         }
 
         agent.isStopped = false;
         target = aIVision.CurrentTarget;
-        agent.SetDestination(target.position);
+        agent.SetDestination(target.transform.position);
     }
 
     public override void OnStateExit()
@@ -69,27 +64,24 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
 
     private void CheckIfTargetInVision()
     {
-        Vector3 targetPos = target.position;
-        Vector3 pos = transform.position;
-
-        float distanceToPlayer = Vector3.Distance(pos, targetPos);
+        float distanceToPlayer = Vector3.Distance(this.transform.position, target.gameObject.transform.position);
         if (distanceToPlayer > maxViewDistance)
             return;
 
-        Vector3 directionToPlayer = targetPos - pos;
+        Vector3 directionToPlayer = target.gameObject.transform.position - this.transform.position;
         float angleToPlayer = Vector3.Angle(this.transform.forward, directionToPlayer);
         if (angleToPlayer > fov * 0.5f)
             return;
 
         RaycastHit hit;
 
-        Vector3 raycastPositionStart = pos + new Vector3(0f, 0.5f, 0f);
+        Vector3 raycastPositionStart = transform.position + new Vector3(0f, 0.5f, 0f);
         if (Physics.Raycast(raycastPositionStart, directionToPlayer, out hit, maxViewDistance, layerToLookInto))
         {
-            if (hit.collider.transform == target)
+            if(hit.collider.gameObject == target)
             {
-                //Debug.Log("TARGET ON SIGHT!");
-                owner.SwitchState(next);
+                Debug.Log("TARGET ON SIGHT!");
+                OnTargetOnSight.Invoke();
             }
         }
     }

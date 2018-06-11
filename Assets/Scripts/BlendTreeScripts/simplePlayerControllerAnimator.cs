@@ -2,17 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SOPRO;
+
 public class simplePlayerControllerAnimator : MonoBehaviour
 {
-    public Camera Main;
 	public Animator animator;
-	public AnimatorPropertyHolder paramNameTranslate, paramNameRotate;
+	public string paramNameTranslate, paramNameRotate;
 	public bool sendTranslateParam;
 	public bool rotateRoot;
 	private float slowModifierKey;
 
-	public SOPool bulletPool;
+	public GameObject bulletPrefab;
 	public Transform bulletSpawn;
 	public KeyCode triggerKey;
 
@@ -31,14 +30,14 @@ public class simplePlayerControllerAnimator : MonoBehaviour
             slowModifierVal = 0.5f;*/
 
 		if (sendTranslateParam && z != 0)
-			animator.SetFloat((int)paramNameTranslate, z * slowModifierVal);
+			animator.SetFloat(paramNameTranslate, z * slowModifierVal);
 		//Debug.Log("Horizontal " + x);
 	}
 
 	void Update()
 	{
 		RaycastHit hit;
-		Ray ray = Main.ScreenPointToRay(Input.mousePosition);
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
 		if (Physics.Raycast(ray, out hit, 100))
 		{
@@ -53,8 +52,13 @@ public class simplePlayerControllerAnimator : MonoBehaviour
 
 	void Fire()
 	{
-        GameObject bullet = bulletPool.Get(null, bulletSpawn.position, bulletSpawn.rotation);
+		var bullet = Instantiate(
+			bulletPrefab,
+			bulletSpawn.position,
+			bulletSpawn.rotation);
 
 		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 10;
+
+		Destroy(bullet, 2.0f);
 	}
 }

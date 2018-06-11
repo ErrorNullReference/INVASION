@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SOPRO;
+
 public class Projectile : MonoBehaviour
 {
+
     public float Speed;
     private float time;
     public float Timer;
 
-    private void OnEnable()
+    private void Awake()
     {
         time = Timer;
     }
-
+    
     // Update is called once per frame
     void Update()
     {

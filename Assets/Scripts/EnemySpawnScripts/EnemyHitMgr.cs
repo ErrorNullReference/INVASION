@@ -2,30 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Steamworks;
-using SOPRO;
-using GENUtility;
 
-[CreateAssetMenu(menuName = "EnemyHitMgr")]
-public class EnemyHitMgr : ScriptableObject
+public class EnemyHitMgr : MonoBehaviour
 {
-    [SerializeField]
-    private SODictionaryTransformContainer netEntities;
-    public void Init()
+    private void Awake()
     {
-        if (Client.IsHost)
+        if (!Client.IsHost)
+        {
+            this.enabled = false;
             return;
+        }
         Client.AddCommand(PacketType.ShootHitServer, OnEnemyHit);
     }
 
     private void OnEnemyHit(byte[] data, uint length, CSteamID sender)
     {
-        int id = ByteManipulator.ReadInt32(data, 0);
+        int id = data[0];
 
-        Enemy e = netEntities[id].GetComponent<Enemy>();
+        Enemy e = ClientTransformManager.IdEnemies[id].gameObject.GetComponent<Enemy>();
         //Debug.Log("hit received");
         e.DecreaseLife();
         if (CheckLife(e))
-            Client.SendPacketToInGameUsers(data, 0, (int)length, PacketType.ShootHit, EP2PSend.k_EP2PSendReliable, false);
+            Client.SendPacketToInGameUsers(data, PacketType.ShootHit, EP2PSend.k_EP2PSendReliable, false);
         //send to all but this client a packet with hit command only if e life is not 0 
         //else send enemy death;
     }
