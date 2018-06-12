@@ -36,7 +36,8 @@ public class _AIShoot : MonoBehaviour
             {
                 if (Weapon.ActionTime < Weapon.CoolDown)
                 {
-                    Weapon.AiProjectilePool.Get(null, ray.origin, Pivot.rotation);
+                    int nullObjsRemovedFromPool;
+                    Weapon.AiProjectilePool.Get(null, ray.origin, Pivot.rotation, out nullObjsRemovedFromPool);
                     bulletShot = true;
                     break;
                 }

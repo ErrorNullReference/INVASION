@@ -53,7 +53,9 @@ public class simplePlayerControllerAnimator : MonoBehaviour
 
 	void Fire()
 	{
-        GameObject bullet = bulletPool.Get(null, bulletSpawn.position, bulletSpawn.rotation);
+        int nullObjsRemovedFromPool;
+
+        GameObject bullet = bulletPool.Get(null, bulletSpawn.position, bulletSpawn.rotation , out nullObjsRemovedFromPool);
 
 		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 10;
 	}

@@ -22,6 +22,7 @@ public class Gun : MonoBehaviour
 
     public void Shoot()
     {
-        PrefabPool.Get(null, Muzzle.position, Muzzle.rotation);
+        int nullObjsRemovedFromPool;
+        PrefabPool.Get(null, Muzzle.position, Muzzle.rotation,out nullObjsRemovedFromPool);
     }
 }

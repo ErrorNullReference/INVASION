@@ -37,7 +37,8 @@ public class VoiceChatSpawner : ScriptableObject
     }
     public void CreateSpeakers()
     {
-        GameObject recorder = SpeakerPool.Get();
+        int nullObjsRemovedFromPool;
+        GameObject recorder = SpeakerPool.Get(out nullObjsRemovedFromPool);
         Handler recorderIdentity = recorder.GetComponent<Handler>();
         recorderIdentity.Identity = new NetworkIdentity();
         recorderIdentity.Identity.NetworkId = (ulong)Client.MyID;
@@ -49,7 +50,7 @@ public class VoiceChatSpawner : ScriptableObject
         {
             if (user.SteamID != Client.MyID)
             {
-                GameObject speaker = SpeakerPool.Get();
+                GameObject speaker = SpeakerPool.Get(out nullObjsRemovedFromPool);
                 Handler speakerIdentity = speaker.GetComponent<Handler>();
                 speakerIdentity.Identity = new NetworkIdentity();
                 speakerIdentity.Identity.NetworkId = (ulong)user.SteamID;
@@ -79,7 +80,8 @@ public class VoiceChatSpawner : ScriptableObject
     }
     public void AddSpeaker(CSteamID entered)
     {
-        GameObject speaker = SpeakerPool.Get();
+        int nullObjsRemovedFromPool;
+        GameObject speaker = SpeakerPool.Get(out nullObjsRemovedFromPool);
         Handler speakerIdentity = speaker.GetComponent<Handler>();
         speakerIdentity.Identity = new NetworkIdentity();
         speakerIdentity.Identity.NetworkId = entered.m_SteamID;

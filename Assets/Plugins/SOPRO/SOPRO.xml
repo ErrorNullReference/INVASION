@@ -178,61 +178,68 @@
             <param name="toRecycle">object to recycle</param>
             <param name="onRecycle">action called on element after deactivation</param>
         </member>
-        <member name="M:SOPRO.SOPool.Get(System.Action{UnityEngine.GameObject})">
+        <member name="M:SOPRO.SOPool.Get(System.Action{UnityEngine.GameObject},System.Int32@)">
             <summary>
             Requests an element from the pool.
             </summary>
             <param name="onGet">action called on element before activation</param>
+            <param name="nullObjsRemoved">Number of objs removed when PersistentPoolInScenes is true</param>
             <returns>the requested element instance</returns>
         </member>
-        <member name="M:SOPRO.SOPool.Get">
+        <member name="M:SOPRO.SOPool.Get(System.Int32@)">
             <summary>
             Requests an element from the pool.
             </summary>
+            <param name="nullObjsRemoved">Number of objs removed when PersistentPoolInScenes is true</param>
             <returns>the requested element instance</returns>
         </member>
-        <member name="M:SOPRO.SOPool.DirectGet">
+        <member name="M:SOPRO.SOPool.DirectGet(System.Int32@)">
             <summary>
             Requests an element from the pool. The object will not be enabled
             </summary>
+            <param name="nullObjsRemoved">Number of objs removed when PersistentPoolInScenes is true</param>
             <returns>the requested element instance</returns>
         </member>
-        <member name="M:SOPRO.SOPool.DirectGet(UnityEngine.Transform,System.Boolean@)">
+        <member name="M:SOPRO.SOPool.DirectGet(UnityEngine.Transform,System.Int32@,System.Boolean@)">
             <summary>
             Requests an element from the pool. The object will not be enabled
             </summary>
             <param name="parent">transform to use as the requested element parent.</param>
+            <param name="nullObjsRemoved">Number of objs removed when PersistentPoolInScenes is true</param>
             <param name="hasBeenParented">true if obj was instantiated and parent setted, false otherwise</param>
             <returns>the requested element instance</returns>
         </member>
-        <member name="M:SOPRO.SOPool.DirectGet(UnityEngine.Transform,UnityEngine.Vector3,UnityEngine.Quaternion,System.Boolean@)">
+        <member name="M:SOPRO.SOPool.DirectGet(UnityEngine.Transform,UnityEngine.Vector3,UnityEngine.Quaternion,System.Int32@,System.Boolean@)">
             <summary>
             Requests an element from the pool. The object will not be enabled
             </summary>
             <param name="parent">transform to use as the requested element parent.</param>
             <param name="position">object position</param>
             <param name="rotation">object rotation</param>
+            <param name="nullObjsRemoved">Number of objs removed when PersistentPoolInScenes is true</param>
             <param name="hasBeenParentedAndPositioned">true if obj was instantiated and parent and pos/rot have been setted, false otherwise</param>
             <returns>the requested element instance</returns>
         </member>
-        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,System.Action{UnityEngine.GameObject},System.Boolean)">
+        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,System.Action{UnityEngine.GameObject},System.Int32@,System.Boolean)">
             <summary>
             Requests an element from the pool.
             </summary>
             <param name="parent">transform to use as the requested element parent.</param>
             <param name="onGet">action called on element before activation</param>
+            <param name="nullObjsRemoved">Number of objs removed when PersistentPoolInScenes is true</param>
             <param name="parentAlways">false to set parent only when instantiating obj, true to set parent always</param>
             <returns>the requested element instance</returns>
         </member>
-        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,System.Boolean)">
+        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,System.Int32@,System.Boolean)">
             <summary>
             Requests an element from the pool.
             </summary>
             <param name="parent">transform to use as the requested element parent.</param>
+            <param name="nullObjsRemoved">Number of objs removed when PersistentPoolInScenes is true</param>
             <param name="parentAlways">false to set parent only when instantiating obj, true to set parent always</param>
             <returns>the requested element instance</returns>
         </member>
-        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,UnityEngine.Vector3,UnityEngine.Quaternion,System.Action{UnityEngine.GameObject},System.Boolean)">
+        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,UnityEngine.Vector3,UnityEngine.Quaternion,System.Action{UnityEngine.GameObject},System.Int32@,System.Boolean)">
             <summary>
             Requests an element from the pool.
             </summary>
@@ -240,16 +247,18 @@
             <param name="position">object position</param>
             <param name="rotation">object rotation</param>
             <param name="onGet">action called on element before activation</param>
+            <param name="nullObjsRemoved">Number of objs removed when PersistentPoolInScenes is true</param>
             <param name="parentAlways">false to set parent only when instantiating obj, true to set parent always</param>
             <returns>the requested element instance</returns>
         </member>
-        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,UnityEngine.Vector3,UnityEngine.Quaternion,System.Boolean)">
+        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,UnityEngine.Vector3,UnityEngine.Quaternion,System.Int32@,System.Boolean)">
             <summary>
             Requests an element from the pool.
             </summary>
             <param name="parent">transform to use as the requested element parent.</param>
             <param name="position">object position</param>
             <param name="rotation">object rotation</param>
+            <param name="nullObjsRemoved">Number of objs removed when PersistentPoolInScenes is true</param>
             <param name="parentAlways">false to set parent only when instantiating obj, true to set parent always</param>
             <returns>the requested element instance</returns>
         </member>

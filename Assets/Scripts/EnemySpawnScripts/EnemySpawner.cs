@@ -52,7 +52,8 @@ public class EnemySpawner : ScriptableObject
         SOPool pool = EnemyPools[UnityEngine.Random.Range(0, EnemyPools.Length)];
 
         bool parented;
-        GameObject enemy = pool.DirectGet(poolRoot, out parented);
+        int nullObjsRemovedFromPool;
+        GameObject enemy = pool.DirectGet(poolRoot, out nullObjsRemovedFromPool, out parented);
 
         enemy.GetComponent<Enemy>().Pool = pool;
         GameNetworkObject NObj = enemy.GetComponent<GameNetworkObject>();

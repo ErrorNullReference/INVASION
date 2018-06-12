@@ -10,7 +10,8 @@ public class MouseShooter : MonoBehaviour
         if (Input.GetKeyDown(ShootKey))
         {
             Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
-            Pool.Get(null, ray.origin, Quaternion.LookRotation(ray.direction, this.transform.up));
+            int nullObjsRemovedFromPool;
+            Pool.Get(null, ray.origin, Quaternion.LookRotation(ray.direction, this.transform.up), out nullObjsRemovedFromPool);
         }
     }
 }
