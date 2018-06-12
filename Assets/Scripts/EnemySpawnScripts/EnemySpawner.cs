@@ -7,7 +7,7 @@ using Steamworks;
 using UnityEngine.AI;
 using GENUtility;
 using SOPRO;
-[CreateAssetMenu(menuName = "EnemySpawner")]
+[CreateAssetMenu(menuName = "Network/EnemySpawner")]
 public class EnemySpawner : ScriptableObject
 {
     public SODictionaryTransformContainer netEntities;
@@ -16,6 +16,8 @@ public class EnemySpawner : ScriptableObject
 
     public BaseSOEvGameNetworkObject OnEnemyAddEvent;
     public BaseSOEvGameNetworkObject OnEnemyRemoveEvent;
+
+    public NavMeshAreaMaskHolder Mask;
 
     private Transform poolRoot;
 
@@ -60,7 +62,7 @@ public class EnemySpawner : ScriptableObject
         NObj.SetNetworkId(Id);
         //cb.transform.position = position;
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(position, out hit, 1f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(position, out hit, 1f, Mask))
             enemy.GetComponent<NavMeshAgent>().Warp(hit.position);
         else
             Debug.LogWarning("NavMesh point for enemy spawn not found , souce pos = " + position);

@@ -9,12 +9,12 @@
             Class that holds an animator property name and calculates its hash value at load time
             </summary>
         </member>
-        <member name="F:SOPRO.AnimatorPropertyHolder.PropertyName">
+        <member name="P:SOPRO.AnimatorPropertyHolder.PropertyName">
             <summary>
             Property Name
             </summary>
         </member>
-        <member name="F:SOPRO.AnimatorPropertyHolder.PropertyHash">
+        <member name="P:SOPRO.AnimatorPropertyHolder.PropertyHash">
             <summary>
             Calculated property hash at load time
             </summary>
@@ -36,12 +36,12 @@
             Class that holds a Layer name and calculates its index at Editor time
             </summary>
         </member>
-        <member name="F:SOPRO.LayerHolder.LayerName">
+        <member name="P:SOPRO.LayerHolder.LayerName">
             <summary>
             Layer name
             </summary>
         </member>
-        <member name="F:SOPRO.LayerHolder.LayerIndex">
+        <member name="P:SOPRO.LayerHolder.LayerIndex">
             <summary>
             Layer index calculated at Editor time
             </summary>
@@ -63,12 +63,12 @@
             Class that holds a set of layers and calculates its index at Editor time
             </summary>
         </member>
-        <member name="F:SOPRO.LayerMaskHolder.LayerMask">
+        <member name="P:SOPRO.LayerMaskHolder.LayerMask">
             <summary>
             Layer mask
             </summary>
         </member>
-        <member name="F:SOPRO.LayerMaskHolder.LayerMaskIndex">
+        <member name="P:SOPRO.LayerMaskHolder.LayerMaskIndex">
             <summary>
             Layer mask index calculated at Editor time
             </summary>
@@ -87,15 +87,15 @@
         </member>
         <member name="T:SOPRO.NavMeshAreaHolder">
             <summary>
-            Class that holds an animator property name and calculates its hash value at load time
+            Class that holds a navmesh area name and calculates its hash value at load time
             </summary>
         </member>
-        <member name="F:SOPRO.NavMeshAreaHolder.AreaName">
+        <member name="P:SOPRO.NavMeshAreaHolder.AreaName">
             <summary>
             Area Name
             </summary>
         </member>
-        <member name="F:SOPRO.NavMeshAreaHolder.AreaId">
+        <member name="P:SOPRO.NavMeshAreaHolder.AreaId">
             <summary>
             Calculated area id at load time
             </summary>
@@ -112,17 +112,33 @@
             </summary>
             <param name="area">area to convert</param>
         </member>
+        <member name="T:SOPRO.NavMeshAreaMaskHolder">
+            <summary>
+            Class that holds a navmesh mask value and calculates its hash value at editor time
+            </summary>
+        </member>
+        <member name="P:SOPRO.NavMeshAreaMaskHolder.AreaMaskId">
+            <summary>
+            Calculated area mask id at editor time
+            </summary>
+        </member>
+        <member name="M:SOPRO.NavMeshAreaMaskHolder.op_Implicit(SOPRO.NavMeshAreaMaskHolder)~System.Int32">
+            <summary>
+            Converts to calculated area id value
+            </summary>
+            <param name="area">area to convert</param>
+        </member>
         <member name="T:SOPRO.ShaderPropertyHolder">
             <summary>
             Class that holds a shader property name and calculates its id value at load time
             </summary>
         </member>
-        <member name="F:SOPRO.ShaderPropertyHolder.PropertyName">
+        <member name="P:SOPRO.ShaderPropertyHolder.PropertyName">
             <summary>
             Property Name
             </summary>
         </member>
-        <member name="F:SOPRO.ShaderPropertyHolder.PropertyID">
+        <member name="P:SOPRO.ShaderPropertyHolder.PropertyHash">
             <summary>
             Calculated property id at load time
             </summary>

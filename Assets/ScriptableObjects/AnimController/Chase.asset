@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 1294407359, guid: 7d6b284e18a06314ea7b65d1fe4236f6, type: 3}
   m_Name: Chase
   m_EditorClassIdentifier: 
-  PropertyName: chase
-  PropertyHash: 0
+  propertyName: Chase
+  propertyHash: -1761789031

@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 1294407359, guid: 7d6b284e18a06314ea7b65d1fe4236f6, type: 3}
   m_Name: Steer
   m_EditorClassIdentifier: 
-  PropertyName: steer
-  PropertyHash: 1955650800
+  propertyName: steer
+  propertyHash: 1955650800

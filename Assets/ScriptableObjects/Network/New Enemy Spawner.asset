@@ -17,4 +17,4 @@ MonoBehaviour:
   PoolRoot: {fileID: 1507460858770256, guid: 07ed9b25ff098e14aa3df81bbca13e31, type: 2}
   OnEnemyAddEvent: {fileID: 11400000, guid: 6222d5a7c25fbb549b59073c231bf989, type: 2}
   OnEnemyRemoveEvent: {fileID: 11400000, guid: 607e8abc1e3e0a947933eca8ce1af62a, type: 2}
-  Areas: {fileID: 11400000, guid: b844a7804b90bb041b733300116947c9, type: 2}
+  Mask: {fileID: 11400000, guid: ddc61fca2bd6a664ca21fe8d3d467156, type: 2}

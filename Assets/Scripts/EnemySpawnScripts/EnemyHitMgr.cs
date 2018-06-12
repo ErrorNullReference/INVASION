@@ -5,7 +5,7 @@ using Steamworks;
 using SOPRO;
 using GENUtility;
 
-[CreateAssetMenu(menuName = "EnemyHitMgr")]
+[CreateAssetMenu(menuName = "Network/EnemyHitMgr")]
 public class EnemyHitMgr : ScriptableObject
 {
     [SerializeField]

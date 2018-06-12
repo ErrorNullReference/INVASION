@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-[CreateAssetMenu(menuName = "NetIdDipsenser")]
+[CreateAssetMenu(menuName = "Network/IdDipsenser")]
 public class NetIdDispenser : ScriptableObject
 {
     [SerializeField]

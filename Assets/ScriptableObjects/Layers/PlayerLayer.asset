@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: -295101368, guid: 7d6b284e18a06314ea7b65d1fe4236f6, type: 3}
   m_Name: PlayerLayer
   m_EditorClassIdentifier: 
-  LayerName: Player
-  LayerIndex: 8
+  layerName: Player
+  layerIndex: 8

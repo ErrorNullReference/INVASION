@@ -2,7 +2,7 @@
 using Steamworks;
 using GENUtility;
 using SOPRO;
-[CreateAssetMenu(menuName = "ClientTransformManager")]
+[CreateAssetMenu(menuName = "Network/TransformMgr")]
 public class ClientTransformManager : ScriptableObject
 {
     [SerializeField]
@@ -10,10 +10,10 @@ public class ClientTransformManager : ScriptableObject
 
     public void RegisterTransformCommand()
     {
-        Client.AddCommand(PacketType.NetObjTransform, EnemyTransformReceive);
+        Client.AddCommand(PacketType.NetObjTransform, NetObjTransformReceive);
     }
 
-    private void EnemyTransformReceive(byte[] data, uint dataLength, CSteamID sender)
+    private void NetObjTransformReceive(byte[] data, uint dataLength, CSteamID sender)
     {
         int id = ByteManipulator.ReadInt32(data, 0);
 

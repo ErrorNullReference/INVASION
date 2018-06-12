@@ -4,7 +4,7 @@ using UnityEngine;
 using Steamworks;
 using SOPRO;
 using GENUtility;
-[CreateAssetMenu(menuName = "ClientEnemyStatsMgr")]
+[CreateAssetMenu(menuName = "Network/EnemyMgr")]
 public class ClientEnemyStatsMgr : ScriptableObject
 {
 

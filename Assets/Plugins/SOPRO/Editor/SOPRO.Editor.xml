@@ -1199,6 +1199,16 @@
             Default folder path
             </summary>
         </member>
+        <member name="T:SOPRO.Editor.NavMeshAreaMaskHolderDrawer">
+            <summary>
+            Class that draws a custom inspector for NavMeshAreaMaskHolder
+            </summary>
+        </member>
+        <member name="M:SOPRO.Editor.NavMeshAreaMaskHolderDrawer.OnInspectorGUI">
+            <summary>
+            Custom inspector draw
+            </summary>
+        </member>
         <member name="T:SOPRO.Editor.ListenerGenMode">
             <summary>
             Describes how a listener will register/unregister to SOEvents
