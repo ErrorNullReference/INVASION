@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Steamworks;
 using SOPRO;
-namespace SOPRO 
+using Steamworks;
+namespace SOPRO
 {
     /// <summary>
     /// Basic Scriptable Object event
@@ -35,7 +35,8 @@ namespace SOPRO
         /// </summary>
         public override void Raise(CSteamID Value0)
         {
-			Event.Invoke(Value0);
+			if(Event != null)
+				Event.Invoke(Value0);
         }
     }
 }

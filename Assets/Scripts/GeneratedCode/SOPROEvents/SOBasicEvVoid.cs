@@ -28,7 +28,8 @@ namespace SOPRO
         /// </summary>
         public override void Raise()
         {
-			Event.Invoke();
+			if(Event != null)
+				Event.Invoke();
         }
     }
 }
