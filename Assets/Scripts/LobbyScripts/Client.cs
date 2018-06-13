@@ -165,9 +165,9 @@ public class Client : MonoBehaviour
 
     void P2PStatus(P2PSessionConnectFail_t cb)
     {
-        //#if UNITY_EDITOR
-        //        Debug.Log(cb.m_eP2PSessionError);
-        //#endif
+        #if UNITY_EDITOR
+                Debug.Log(cb.m_eP2PSessionError);
+        #endif
     }
 
     void AddCommands(PacketType commandType, Command command)
@@ -347,16 +347,19 @@ public class Client : MonoBehaviour
 
     void Send(byte[] data, int startIndex, int length, PacketType command, CSteamID sender, CSteamID receiver, EP2PSend sendType)
     {
+        if (MyID == receiver)
+        {
+            InvokeCommand((int)command, data, (uint)length, sender);
+            return;
+        }
+
         byte[] toSend = ArrayPool<byte>.Get(length + HeaderLength);
 
         ByteManipulator.Write(toSend, 0, (byte)command);
         ByteManipulator.Write(toSend, sizeof(byte), (ulong)sender);
         ByteManipulator.Write<byte>(data, startIndex, toSend, HeaderLength, length);
 
-        if (MyID != receiver)
-            SteamNetworking.SendP2PPacket(receiver, toSend, (uint)toSend.Length, sendType);
-        else
-            InvokeCommand((int)command, data, (uint)length, sender);
+        SteamNetworking.SendP2PPacket(receiver, toSend, (uint)toSend.Length, sendType);
 
         ArrayPool<byte>.Recycle(toSend);
     }
@@ -368,9 +371,10 @@ public class Client : MonoBehaviour
 
         for (int i = 0; i < Users.Count; i++)
         {
-            if (!sendToSender && Users[i].SteamID == MyID)
+            User user = Users[i];
+            if (!sendToSender && user.SteamID == MyID)
                 continue;
-            Send(data, startIndex, length, command, sender, Users[i].SteamID, sendType);
+            Send(data, startIndex, length, command, sender, user.SteamID, sendType);
         }
     }
 
@@ -381,9 +385,10 @@ public class Client : MonoBehaviour
 
         for (int i = 0; i < Users.Count; i++)
         {
-            if (!sendToSender && Users[i].SteamID == MyID)
+            User user = Users[i];
+            if (!sendToSender && user.SteamID == MyID)
                 continue;
-            Send(data, startIndex, length, command, sender, Users[i].SteamID, sendType);
+            Send(data, startIndex, length, command, sender, user.SteamID, sendType);
         }
     }
 
@@ -513,7 +518,7 @@ public class Client : MonoBehaviour
         Packet.Write(rot.z);
         Packet.Write(rot.w);
     }
-    //TODO: most of these sendtransform are redundant. Why are there so many?
+    //TODO: most of these methods are redundant. Why are there so many?
     /// <summary>
     /// Send the transform given to the host.
     /// </summary>
