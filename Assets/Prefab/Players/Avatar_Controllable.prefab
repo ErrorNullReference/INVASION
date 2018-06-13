@@ -1513,6 +1513,7 @@ MonoBehaviour:
   shootingType: 1
   gun: {fileID: 114562285994956100}
   muzzle: {fileID: 114668044310168862}
+  mask: {fileID: 11400000, guid: b3cd3679c53bbaf468cf6a30caf76859, type: 2}
 --- !u!114 &114284937430153682
 MonoBehaviour:
   m_ObjectHideFlags: 1

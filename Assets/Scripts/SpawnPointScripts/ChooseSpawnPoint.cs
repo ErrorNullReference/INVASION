@@ -1,26 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using SOPRO;
 public class ChooseSpawnPoint : MonoBehaviour
 {
-    private int count;
     public bool IsDead = false;
     public int PosIndex;
-	
-	void Start ()
+    void Start()
     {
         transform.position = PointManager.Instance.nodes[PosIndex];
-        count = PointManager.Instance.nodes.Count;
     }
-	
-	void Update ()
+
+    void Update()
     {
         if (IsDead == true)
         {
-            transform.position = PointManager.Instance.nodes[UnityEngine.Random.Range(0, count)];
+            transform.position = PointManager.Instance.nodes[UnityEngine.Random.Range(0, PointManager.Instance.nodes.Count)];
             IsDead = false;
-            return;
         }
-	}
+    }
 }

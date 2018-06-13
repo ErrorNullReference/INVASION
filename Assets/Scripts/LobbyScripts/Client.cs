@@ -513,7 +513,7 @@ public class Client : MonoBehaviour
         Packet.Write(rot.z);
         Packet.Write(rot.w);
     }
-    //TODO: most of these sendtransform are redundant, expecially the playerDataServer packet.
+    //TODO: most of these sendtransform are redundant. Why are there so many?
     /// <summary>
     /// Send the transform given to the host.
     /// </summary>
