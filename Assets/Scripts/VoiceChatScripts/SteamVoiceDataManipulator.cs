@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "VOCASY/DataManipulators/Steam")]
 public class SteamVoiceDataManipulator : VoiceDataManipulator
 {
-    private const int defaultBufferSize = 1000;
+    private const int defaultBufferSize = 1200;
 
     public override AudioDataTypeFlag AvailableTypes { get { return AudioDataTypeFlag.Int16; } }
 
