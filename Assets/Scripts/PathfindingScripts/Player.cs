@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using SOPRO;
+
 public class Player : LivingBeing
 {
     public Collider PlayerCollider;
