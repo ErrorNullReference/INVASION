@@ -11,11 +11,11 @@ public class VoiceChatSpawner : ScriptableObject
 
     public void DisableAndStoreSpeakers()
     {
-
+        throw new System.NotImplementedException();
     }
     public void RestoreAndEnableSpeakers()
     {
-
+        throw new System.NotImplementedException();
     }
     public void RemoveLocalSpeaker()
     {

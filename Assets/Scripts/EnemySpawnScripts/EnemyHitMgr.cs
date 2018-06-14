@@ -14,10 +14,10 @@ public class EnemyHitMgr : ScriptableObject
     {
         if (Client.IsHost)
             return;
-        Client.AddCommand(PacketType.ShootHitServer, OnEnemyHit);
+        Client.AddCommand(PacketType.ShootHitServer, OnNetObjHit);
     }
 
-    private void OnEnemyHit(byte[] data, uint length, CSteamID sender)
+    private void OnNetObjHit(byte[] data, uint length, CSteamID sender)
     {
         int id = ByteManipulator.ReadInt32(data, 0);
 

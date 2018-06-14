@@ -29,27 +29,30 @@ public class PlayerAnimatorController : MonoBehaviour
         if (UseInputs)
         {
             ExtrapolateDirectionWithInputs();
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown(fire1))
                 Shoot();
         }
         else
             ExtrapolateDirectionWithoutInputs();
         
-        animator.SetFloat(speedX.PropertyHash, dir.x);
+        animator.SetFloat((int)speedX, dir.x);
         animator.SetFloat((int)speedZ, dir.z);
     }
-
+    private const string horizontal = "Horizontal";
+    private const string vertical = "Vertical";
+    private const string sprint = "Sprint";
+    private const string fire1 = "Fire1";
     void ExtrapolateDirectionWithInputs()
     {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        float x = Input.GetAxis(horizontal);
+        float z = Input.GetAxis(vertical);
 
         if (x != 0 || z != 0)
         {
             float angle = -Mathf.Deg2Rad * Vector3.SignedAngle(new Vector3(x, 0, z).normalized, transform.forward, Vector3.up);
             dir = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
 
-            if (Input.GetButton("Sprint"))
+            if (Input.GetButton(sprint))
                 dir *= 2;
         }
     }
@@ -74,11 +77,11 @@ public class PlayerAnimatorController : MonoBehaviour
 
     public void Shoot()
     {
-        animator.SetTrigger(shoot.PropertyHash);
+        animator.SetTrigger((int)shoot);
     }
 
     public void Die()
     {
-        animator.SetTrigger(death.PropertyHash);
+        animator.SetTrigger((int)death);
     }
 }

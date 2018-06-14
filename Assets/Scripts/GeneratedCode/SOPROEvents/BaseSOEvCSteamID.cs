@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Steamworks;
 using SOPRO;
-namespace SOPRO 
+using Steamworks;
+namespace SOPRO
 {
     /// <summary>
     /// Base class for Scriptable Object event

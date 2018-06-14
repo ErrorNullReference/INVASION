@@ -11,7 +11,7 @@ public class AnimationControllerScript : MonoBehaviour
 
     public float SpeedForward
     {
-        get { return anim.GetFloat(AnimSpeed.PropertyHash); }
+        get { return anim.GetFloat((int)AnimSpeed); }
     }
     private void Awake()
     {

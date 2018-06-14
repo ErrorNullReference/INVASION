@@ -29,6 +29,7 @@ public class ShootSystem : MonoBehaviour
     public Gun gun;
     public Muzzle muzzle;
     private RaycastHit raycastHit;
+    [SerializeField]
     private LayerMaskHolder mask;
     private static readonly byte[] emptyArray = new byte[0];
 
@@ -69,7 +70,7 @@ public class ShootSystem : MonoBehaviour
         //  Debug.DrawRay(ray.origin, ray.direction * distance, Color.red, 0.5f);
 
         //if it shot someone
-        if (Physics.Raycast(ray, out raycastHit, distance))
+        if (Physics.Raycast(ray, out raycastHit, distance, mask))
         {
             //this method went call when 
             if (activateCallbacks)

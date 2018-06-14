@@ -34,7 +34,8 @@ namespace SOPRO
         /// </summary>
         public override void Raise(GameNetworkObject Value0)
         {
-			Event.Invoke(Value0);
+			if(Event != null)
+				Event.Invoke(Value0);
         }
     }
 }

@@ -16,7 +16,7 @@ public class animationOnKey : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		var x = Input.GetAxis("Horizontal");//TODO: why is this in fixedupdate?
+		var x = Input.GetAxis("Horizontal");//TODO: why is this in fixedupdate???
 		var z = Input.GetAxis("Vertical");
 
 	}
