@@ -1,21 +1,24 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+using SOPRO;
 public class ConeVision : MonoBehaviour
 {
-    public UnityEventPassingGameObject OnPlayerSight;
+    public BaseSOEvGameObject OnPlayerSight;
 
+    List<Player> possibleTargets;
     [SerializeField]
     private bool workAsClient;
 
-    [SerializeField] [Range(1f, 360f)]
+    [SerializeField]
+    [Range(1f, 360f)]
     private float fov;
 
     [SerializeField]
     private float maxViewDistance;
 
-    private Player[] connectedPlayers;
+    [SerializeField]
+    private SOListPlayerContainer players;
 
     private GameObject target;
 
@@ -25,21 +28,12 @@ public class ConeVision : MonoBehaviour
     {
         if (!workAsClient && !Client.IsHost)
             this.enabled = false;
+        possibleTargets = new List<Player>();
     }
 
     private void OnEnable()
     {
         isLooking = true;
-    }
-
-    private void Start()
-    {
-        if (connectedPlayers == null)
-        {
-            connectedPlayers = FindObjectsOfType<Player>();
-            foreach (ConeVision component in FindObjectsOfType<ConeVision>())
-                component.SetPlayers(connectedPlayers);
-        }
     }
 
     private void Update()
@@ -50,33 +44,36 @@ public class ConeVision : MonoBehaviour
             CheckPlayerInVision();
 
         if (target != null)
-            OnPlayerSight.Invoke(target);
+            OnPlayerSight.Raise(target);
     }
 
     private void CheckPlayerInVision()
     {
-        if (connectedPlayers == null)
-            return;
+        int length = players.Elements.Count;
+        Vector3 pos = transform.position;
 
-        List<Player> possibleTargets = new List<Player>();
-        for (int i = 0; i < connectedPlayers.Length; i++)
+        possibleTargets.Clear();
+
+        for (int i = 0; i < length; i++)
         {
-            float distanceToPlayer = Vector3.Distance(this.transform.position, connectedPlayers[i].gameObject.transform.position);
+            Player p = players[i];
+            Vector3 playerPos = p.transform.position;
+            float distanceToPlayer = Vector3.Distance(pos, playerPos);
             if (distanceToPlayer > maxViewDistance)
                 continue;
 
-            Vector3 directionToPlayer = connectedPlayers[i].gameObject.transform.position - this.transform.position;
+            Vector3 directionToPlayer = playerPos - pos;
             float angleToPlayer = Vector3.Angle(this.transform.forward, directionToPlayer);
             if (angleToPlayer > fov * 0.5f)
                 continue;
 
             RaycastHit hit;
-            if (Physics.Raycast(this.transform.position, directionToPlayer, out hit, maxViewDistance))
+
+            Vector3 raycastPositionStart = pos + new Vector3(0f, 0.5f, 0f);
+            Debug.DrawRay(raycastPositionStart, directionToPlayer, Color.magenta);
+            if (p.PlayerCollider.Raycast(new Ray(raycastPositionStart, directionToPlayer), out hit, maxViewDistance))
             {
-                if (hit.collider.gameObject.GetComponentInParent<Player>() != null)
-                {
-                    possibleTargets.Add(connectedPlayers[i]);
-                }
+                possibleTargets.Add(p);
             }
         }
 
@@ -85,12 +82,6 @@ public class ConeVision : MonoBehaviour
 
         target = possibleTargets[Random.Range(0, possibleTargets.Count)].gameObject;
         //movementManager.SetDestination(possibleTargets[UnityEngine.Random.Range(0, possibleTargets.Count)]);
-    }
-
-    public void SetPlayers(Player[] connectedPlayers)
-    {
-        if (connectedPlayers != null)
-            this.connectedPlayers = connectedPlayers;
     }
 
     public void StopLooking()

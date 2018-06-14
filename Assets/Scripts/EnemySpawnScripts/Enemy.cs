@@ -1,50 +1,57 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Enemy : MonoBehaviour
+using UnityEngine.UI;
+using SOPRO;
+public class Enemy : LivingBeing
 {
-    public HeadsUpDisplay Stats;
     public bool Destroy;
     public bool Recycling;
     public float randomSpawnTimer;
+    [HideInInspector]
+    public SOPool Pool;
+    private float HUDTimer;
     [SerializeField]
-    private int networkId;
+    private float HUDTimerShow;
+    private GameNetworkObject networkId;
+    HUDManager hudManager;
+    Image healthImage;
 
-    public int NetworkId
+    public GameNetworkObject NetworkId
     {
         get
         {
             return networkId;
         }
-        
     }
 
     private void Start()
     {
-        GetComponentInChildren<HUDManager>().InputAssetHUD = Stats;
+        hudManager = GetComponentInChildren<HUDManager>();
+        healthImage = hudManager.GetComponent<Image>();
+        healthImage.enabled = false;
+        hudManager.InputAssetHUD = Stats;
     }
-    //network id of object, needed to get object from list and update its transform
-    public float Life;
-    public Vector3 position;
-//variable to save position for pathfinding. it does not affect gameobject position!
 
     private void OnEnable()
     {
-        networkId = GetComponent<GameNetworkObject>().NetworkId;
-        //Debug.Log("Spawn: " + networkId);
+        if (!networkId)
+            networkId = GetComponent<GameNetworkObject>();
+
         randomSpawnTimer = Random.Range(0f, 5.0f);
-        Stats.MaxHealth = 5;
         Life = Stats.MaxHealth;
         Destroy = false;
         Recycling = false;
     }
-
+    private void OnDisable()
+    {
+        networkId.ResetNetworkId();
+    }
     private void Awake()
-    {       
+    {
         randomSpawnTimer = Random.Range(0f, 5.0f);
         Destroy = false;
-        Recycling = false;        
+        Recycling = false;
     }
 
     public void Reset()
@@ -52,19 +59,31 @@ public class Enemy : MonoBehaviour
         Life = Stats.MaxHealth;
     }
 
-    //this will be managed by the host to send enemies datas to players
     public void DestroyAndRecycle()
     {
         Destroy = true;
         Recycling = true;
     }
 
-    //TO DELETE
     public void DecreaseLife()
     {
+        healthImage.enabled = true;
+        HUDTimer = HUDTimerShow;
         Life--;
     }
 
-   
+    private void Update()
+    {
+        if (HUDTimer > 0)
+        {
+            HUDTimer -= Time.deltaTime;
+            if (HUDTimer <= 0)
+            {
+                healthImage.enabled = false;
+            }
+        }
+    }
+
+
 
 }

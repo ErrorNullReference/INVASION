@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using SOPRO;
 public class playerShooting : MonoBehaviour {
 
 	public GameObject bulletPrefab;

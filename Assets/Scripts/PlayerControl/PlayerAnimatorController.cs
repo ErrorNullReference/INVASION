@@ -1,29 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using SOPRO;
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimatorController : MonoBehaviour
 {
     [SerializeField]
     bool UseInputs;
     [SerializeField]
-    string speedZ, speedX, shoot, death;
+    AnimatorPropertyHolder speedZ, speedX, shoot, death;
     [SerializeField]
     float RunTreshold, movementTreshold;
-    int speedZHash, speedXHash, shootHash, deathHash;
-    Animator animator;
     Vector3 dir, oldPos, cameraDir, playerDirection;
     Camera camera;
+    Animator animator;
 
     void Start()
     {
         camera = Camera.main;
         animator = GetComponent<Animator>();
-        speedZHash = Animator.StringToHash(speedZ);
-        speedXHash = Animator.StringToHash(speedX);
-        shootHash = Animator.StringToHash(shoot);
-        deathHash = Animator.StringToHash(death);
     }
 
     // Update is called once per frame
@@ -34,31 +29,30 @@ public class PlayerAnimatorController : MonoBehaviour
         if (UseInputs)
         {
             ExtrapolateDirectionWithInputs();
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown(fire1))
                 Shoot();
         }
         else
             ExtrapolateDirectionWithoutInputs();
         
-        animator.SetFloat(speedXHash, dir.x);
-        animator.SetFloat(speedZHash, dir.z);
+        animator.SetFloat((int)speedX, dir.x);
+        animator.SetFloat((int)speedZ, dir.z);
     }
-
+    private const string horizontal = "Horizontal";
+    private const string vertical = "Vertical";
+    private const string sprint = "Sprint";
+    private const string fire1 = "Fire1";
     void ExtrapolateDirectionWithInputs()
     {
-        float x = Input.GetAxis("Horizontal");
-        float z = -Input.GetAxis("Vertical");
+        float x = Input.GetAxis(horizontal);
+        float z = Input.GetAxis(vertical);
 
         if (x != 0 || z != 0)
         {
-            cameraDir = camera.transform.forward * x + camera.transform.right * z;
-            cameraDir.y = 0;
-            cameraDir = cameraDir.normalized;
+            float angle = -Mathf.Deg2Rad * Vector3.SignedAngle(new Vector3(x, 0, z).normalized, transform.forward, Vector3.up);
+            dir = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
 
-            float ang = Mathf.Deg2Rad * Vector3.SignedAngle(cameraDir, transform.forward, Vector3.up);
-            dir = new Vector3(Mathf.Cos(ang), 0, Mathf.Sin(ang));
-
-            if (Input.GetButton("Sprint"))
+            if (Input.GetButton(sprint))
                 dir *= 2;
         }
     }
@@ -68,30 +62,26 @@ public class PlayerAnimatorController : MonoBehaviour
         playerDirection = transform.position - oldPos;
         oldPos = transform.position;
 
-        float magnitude = playerDirection.magnitude;
+        float magnitude = playerDirection.magnitude / Time.deltaTime;
         if (magnitude >= movementTreshold)
         {
-            playerDirection = playerDirection.normalized;
-            cameraDir = camera.transform.forward * playerDirection.x + camera.transform.right * -playerDirection.z;
-            cameraDir.y = 0;
-            cameraDir = cameraDir.normalized;
-
-            float ang = Mathf.Deg2Rad * Vector3.SignedAngle(cameraDir, transform.forward, Vector3.up);
-            dir = new Vector3(Mathf.Cos(ang), 0, Mathf.Sin(ang));
+            float angle = -Mathf.Deg2Rad * Vector3.SignedAngle(playerDirection.normalized, transform.forward, Vector3.up);
+            dir = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
 
             if (magnitude >= RunTreshold)
                 dir *= 2;
+
+            //Debug.Log(magnitude);
         }
-        Debug.Log(magnitude);
     }
 
     public void Shoot()
     {
-        animator.SetTrigger(shootHash);
+        animator.SetTrigger((int)shoot);
     }
 
     public void Die()
     {
-        animator.SetTrigger(deathHash);
+        animator.SetTrigger((int)death);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
-using System;
+using System.IO;
 
 [CustomEditor(typeof(PointManager))]
 public class PointEditor : Editor
@@ -12,7 +12,7 @@ public class PointEditor : Editor
 
     void OnEnable()
     {
-        nodeTexture = Resources.Load<Texture>("Handle");
+        nodeTexture = Resources.Load<Texture>(Path.Combine("Editor", "Handle"));
         if (nodeTexture == null)
         {
             nodeTexture = EditorGUIUtility.whiteTexture;

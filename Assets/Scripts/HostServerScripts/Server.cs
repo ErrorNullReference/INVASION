@@ -5,8 +5,10 @@ using Steamworks;
 
 public class Server : MonoBehaviour
 {
+    private static readonly byte[] emptyArray = new byte[0];
     static Server Instance;
     public List<User> InGameUsers;
+    public User MyPlayer;
 
     public static List<User> Users { get { return Instance.InGameUsers; } }
 
@@ -25,6 +27,12 @@ public class Server : MonoBehaviour
     void InitServer()
     {
         InGameUsers = new List<User>(Client.Users);
+        for (int i = 0; i < InGameUsers.Count; i++)
+        {
+            if (InGameUsers[i].SteamID == Client.MyID)
+                MyPlayer = InGameUsers[i];
+        }
+
         Host = Client.Host;
         Client.AddCommand(PacketType.LatencyServer, LatencyResponse);
     }
@@ -52,6 +60,6 @@ public class Server : MonoBehaviour
 
     void LatencyResponse(byte[] data, uint lenght, CSteamID id)
     {
-        Client.SendPacket(new byte[]{ }, PacketType.Latency, Client.MyID, id, EP2PSend.k_EP2PSendReliable);
+        Client.SendPacket(emptyArray, 0, 0, PacketType.Latency, Client.MyID, id, EP2PSend.k_EP2PSendReliable);
     }
 }

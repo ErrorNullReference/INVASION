@@ -900,7 +900,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1359835376740600}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.31}
+  m_LocalPosition: {x: 139.86993, y: 1.5203905, z: 122.91794}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224135848765037470}
@@ -1423,12 +1423,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UseInputs: 0
-  speedZ: speedZ
-  speedX: speedX
-  shoot: shoot
-  death: death
-  RunTreshold: 0.13
-  movementTreshold: 0.01
+  speedZ: {fileID: 11400000, guid: 23d50b1dcf3aed748bfde9a704ad84a8, type: 2}
+  speedX: {fileID: 11400000, guid: 4c195ab848bc64c4e84dbbce64c4b64f, type: 2}
+  shoot: {fileID: 11400000, guid: 577f79ee815855c4aa2b2cf8071b3438, type: 2}
+  death: {fileID: 11400000, guid: 9e4985d483722cd4fb7356f661d4cb25, type: 2}
+  RunTreshold: 6
+  movementTreshold: 1
 --- !u!114 &114130298613650360
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1440,6 +1440,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2aec9008d5db564daa34aebf9642616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  life: 0
+  Stats: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
+  PlayerCollider: {fileID: 0}
+  players: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
 --- !u!114 &114221379915374024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1481,6 +1485,7 @@ MonoBehaviour:
   shootingType: 0
   gun: {fileID: 114329797879480352}
   muzzle: {fileID: 114886338899470942}
+  mask: {fileID: 11400000, guid: b3cd3679c53bbaf468cf6a30caf76859, type: 2}
 --- !u!114 &114329797879480352
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1492,7 +1497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aace91807481ad54192f156fa41b214a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Projectile: {fileID: 1584354942422022, guid: 3f48662b35782ea4f8e79fbd311ac9a1, type: 2}
+  PrefabPool: {fileID: 11400000, guid: fea32aa680d513745a7e7a0283f9d5ee, type: 2}
   values: {fileID: 11400000, guid: e4305df8f3337154a93e1a7800ccb8fc, type: 2}
   Muzzle: {fileID: 4454689321706160}
   AmmoReady: 0
@@ -5232,7 +5237,7 @@ RectTransform:
   m_GameObject: {fileID: 1407112764881076}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children: []
   m_Father: {fileID: 224350750386617200}
   m_RootOrder: 0

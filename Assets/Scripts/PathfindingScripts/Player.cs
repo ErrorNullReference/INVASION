@@ -1,8 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
-
-public class Player : MonoBehaviour
+using SOPRO;
+public class Player : LivingBeing
 {
+    [HideInInspector]
+    public Collider PlayerCollider;
+    [SerializeField]
+    private SOListPlayerContainer players;
+    private void Start()
+    {
+        GetComponentInChildren<HUDManager>().InputAssetHUD = Stats;
+        PlayerCollider = GetComponentInChildren<Collider>();
+        Life = Stats.MaxHealth;
+    }
+    private void OnEnable()
+    {
+        players.Elements.Add(this);
+    }
+    private void OnDisable()
+    {
+        players.Elements.Remove(this);
+    }
     //CHANGED, FOR NOW ONLY ONE CAMERA WILL BE USED.
 
     //public Camera[] cameras;

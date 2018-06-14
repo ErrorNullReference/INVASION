@@ -42,6 +42,9 @@ public class AvatarsMgr : MonoBehaviour
         for (int j = 0; j < Avatars.Length; j++)
             Avatars[j].Reset();
 
+        if (Client.Users == null)
+            return;
+
         for (int i = 0; i < Client.Users.Count; i++)
         {
             string data = SteamMatchmaking.GetLobbyMemberData(Client.Lobby.LobbyID, Client.Users[i].SteamID, "AvatarID");
@@ -66,7 +69,7 @@ public class AvatarsMgr : MonoBehaviour
 
     void ControlAvatarDisponibility(byte[] data, uint dataLenght, CSteamID sender)
     {
-        int avatarIndex = (int)data[0];
+        int avatarIndex = data[0];
         for (int i = 0; i < Client.Users.Count; i++)
         {
             string userIndex = SteamMatchmaking.GetLobbyMemberData(Client.Lobby.LobbyID, Client.Users[i].SteamID, "AvatarID");
@@ -79,12 +82,18 @@ public class AvatarsMgr : MonoBehaviour
                     return;
             }
         }
-        Client.SendPacket(new byte[]{ (byte)avatarIndex }, PacketType.AnswerAvatarSelection, Client.MyID, sender, EP2PSend.k_EP2PSendReliable);
+
+        byte[] d = ArrayPool<byte>.Get(1);
+        d[0] = (byte)avatarIndex;
+
+        Client.SendPacket(d, 0, d.Length, PacketType.AnswerAvatarSelection, Client.MyID, sender, EP2PSend.k_EP2PSendReliable);
+
+        ArrayPool<byte>.Recycle(d);
     }
 
     void SetAvatar(byte[] data, uint dataLenght, CSteamID sender)
     {
-        int avatarIndex = (int)data[0];
+        int avatarIndex = data[0];
 
         SteamMatchmaking.SetLobbyMemberData(Client.Lobby.LobbyID, "AvatarID", avatarIndex.ToString());
     }

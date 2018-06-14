@@ -1,0 +1,991 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GENUtility</name>
+    </assembly>
+    <members>
+        <member name="T:GENUtility.BytePacket">
+            <summary>
+            Class that manages a packet data. 
+            </summary>
+        </member>
+        <member name="F:GENUtility.BytePacket.CurrentLength">
+            <summary>
+            Amount of bytes that has been written in the packet. This may not return a correct value if already written data in the packet has been overwritten or if methods other than the given Write methods in this class has been used to modify the internal buffer, and it must be reset manually. GamePackets created through CreatePacket will be already resetted. This value has no impact in the internal logic of GamePacket and should be used as a way to store the current amount of written byte data
+            </summary>
+        </member>
+        <member name="F:GENUtility.BytePacket.CurrentSeek">
+            <summary>
+            Current seek position in the packet, used for all Read/Write operations
+            </summary>
+        </member>
+        <member name="P:GENUtility.BytePacket.MaxCapacity">
+            <summary>
+            Max capacity of the packet. Write/Read operations that go beyond this limit will throw exceptions
+            </summary>
+        </member>
+        <member name="F:GENUtility.BytePacket.Data">
+            <summary>
+            Internal buffer used by the packet. Changes done to the buffer directly will not automatically modify the other variables
+            </summary>
+        </member>
+        <member name="M:GENUtility.BytePacket.Copy(GENUtility.BytePacket)">
+            <summary>
+            Copies n elements from internal buffer of the given gamepacket starting from its seek position to the current instance. Elements copied are equal to the minimum between the packet to (copy current length - seek pos), the space effectively available starting from vopy seek pos and the space available in the current instance buffer.
+            </summary>
+            <param name="toCopy">gamepacket to copy from</param>
+            <returns>effective number of elements copied successfully</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadByteData(System.Byte[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Reads the internal buffer into the given array
+            </summary>
+            <param name="buffer">buffer on which the internal buffer elements will be written</param>
+            <param name="bufferOffset">buffer offset</param>
+            <param name="dataOffset">internal buffer offset</param>
+            <param name="lengthToRead">number of bytes to read</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadByteData(GENUtility.BytePacket,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Reads the internal buffer into the given array
+            </summary>
+            <param name="buffer">buffer on which the internal buffer elements will be written. Buffer Seek will not be moved</param>
+            <param name="bufferOffset">buffer offset</param>
+            <param name="dataOffset">internal buffer offset</param>
+            <param name="lengthToRead">number of bytes to read</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadByteData(GENUtility.BytePacket,System.Int32)">
+            <summary>
+            Reads the internal buffer into the given array
+            </summary>
+            <param name="buffer">buffer on which the internal buffer elements will be written. Buffer Seek will not be moved</param>
+            <param name="lengthToRead">number of bytes to read</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadByteData(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads the internal buffer into the given array
+            </summary>
+            <param name="buffer">buffer on which the internal buffer elements will be written</param>
+            <param name="bufferOffset">buffer offset</param>
+            <param name="lengthToRead">number of bytes to read</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.WriteByteData(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes the given byte array into the internal buffer
+            </summary>
+            <param name="buffer">buffer from which elements will be written on the internal buffer</param>
+            <param name="bufferOffset">buffer offset</param>
+            <param name="lengthToWrite">number of bytes to write</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.WriteByteData(System.Byte[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Writes the given byte array into the internal buffer
+            </summary>
+            <param name="buffer">buffer from which elements will be written on the internal buffer</param>
+            <param name="bufferOffset">buffer offset</param>
+            <param name="dataOffset">internal buffer offset</param>
+            <param name="lengthToWrite">number of bytes to write</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.WriteByteData(GENUtility.BytePacket,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Writes the given byte array into the internal buffer
+            </summary>
+            <param name="buffer">buffer from which elements will be written on the internal buffer. Buffer Seek will not be moved</param>
+            <param name="bufferOffset">buffer offset</param>
+            <param name="dataOffset">internal buffer offset</param>
+            <param name="lengthToWrite">number of bytes to write</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.WriteByteData(GENUtility.BytePacket,System.Int32)">
+            <summary>
+            Writes the given byte array into the internal buffer
+            </summary>
+            <param name="buffer">buffer from which elements will be written on the internal buffer. Buffer Seek will not be moved</param>
+            <param name="lengthToWrite">number of bytes to write</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.Char[],System.Text.Encoding)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="values">values to write</param>
+            <param name="encoder">encoder to use</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.Int32,System.Char[],System.Text.Encoding)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="offset">move the seek at this offset</param>
+            <param name="values">values to write</param>
+            <param name="encoder">encoder to use</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.String,System.Text.Encoding)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+            <param name="encoder">encoder to use</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.String,System.Int32,System.Text.Encoding)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+            <param name="offset">move the seek at this offset</param>
+            <param name="encoder">encoder to use</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.Char)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.Char,System.Int32)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+            <param name="offset">move the seek at this offset</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.Single)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.Single,System.Int32)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+            <param name="offset">move the seek at this offset</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.Double)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.Double,System.Int32)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+            <param name="offset">move the seek at this offset</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.Boolean)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.Boolean,System.Int32)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+            <param name="offset">move the seek at this offset</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.Int16)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.Int16,System.Int32)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+            <param name="offset">move the seek at this offset</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.UInt16)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.UInt16,System.Int32)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+            <param name="offset">move the seek at this offset</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.Byte)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.Byte,System.Int32)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+            <param name="offset">move the seek at this offset</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.Int32)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.Int32,System.Int32)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+            <param name="offset">move the seek at this offset</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.UInt32)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.UInt32,System.Int32)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+            <param name="offset">move the seek at this offset</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.Int64)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.Int64,System.Int32)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+            <param name="offset">move the seek at this offset</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.UInt64)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.UInt64,System.Int32)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+            <param name="offset">move the seek at this offset</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.SByte)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.Write(System.SByte,System.Int32)">
+            <summary>
+            Writes the value in the packet
+            </summary>
+            <param name="value">value to write</param>
+            <param name="offset">move the seek at this offset</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadChars(System.Char[],System.Int32,System.Text.Encoding)">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <param name="out_chars">output char array</param>
+            <param name="out_charsOffset">output char array offset from which to start writing</param>
+            <param name="encoder">encoder to use</param>
+            <returns>total number of char elements</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadChars(System.Int32,System.Char[],System.Int32,System.Text.Encoding)">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <param name="offset">move the seek at this offset</param>
+            <param name="out_chars">output char array</param>
+            <param name="out_charsOffset">output char array offset from which to start writing</param>
+            <param name="encoder">encoder to use</param>
+            <returns>total number of char elements</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadChar">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadChar(System.Int32)">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <param name="offset">move the seek at this offset</param>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadString(System.Text.Encoding)">
+            <summary>
+            Reads a value from the packet (Causes char array allocation)
+            </summary>
+            <param name="encoder">encoder to use</param>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadString(System.Int32,System.Text.Encoding)">
+            <summary>
+            Reads a value from the packet (Causes char array allocation)
+            </summary>
+            <param name="offset">move the seek at this offset</param>
+            <param name="encoder">encoder to use</param>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadFloat">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadFloat(System.Int32)">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <param name="offset">move the seek at this offset</param>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadDouble">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadDouble(System.Int32)">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <param name="offset">move the seek at this offset</param>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadShort">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadShort(System.Int32)">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <param name="offset">move the seek at this offset</param>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadUShort">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadUShort(System.Int32)">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <param name="offset">move the seek at this offset</param>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadInt">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadInt(System.Int32)">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <param name="offset">move the seek at this offset</param>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadUInt">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadUInt(System.Int32)">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <param name="offset">move the seek at this offset</param>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadLong">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadLong(System.Int32)">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <param name="offset">move the seek at this offset</param>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadULong">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadULong(System.Int32)">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <param name="offset">move the seek at this offset</param>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadBool">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadBool(System.Int32)">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <param name="offset">move the seek at this offset</param>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadByte">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadByte(System.Int32)">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <param name="offset">move the seek at this offset</param>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadSByte">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ReadSByte(System.Int32)">
+            <summary>
+            Reads a value from the packet
+            </summary>
+            <param name="offset">move the seek at this offset</param>
+            <returns>value</returns>
+        </member>
+        <member name="M:GENUtility.BytePacket.ResetSeekLength">
+            <summary>
+            Sets current length and seek to 0
+            </summary>
+        </member>
+        <member name="M:GENUtility.BytePacket.#ctor(System.Int32)">
+            <summary>
+            Creates new packet instance with the given capacity
+            </summary>
+            <param name="maxCapacity">packet capacity</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.#ctor(System.Byte[])">
+            <summary>
+            Creates new instance with the given buffer as the internal buffer. MaxCapacity == bufferToUse.Length
+            </summary>
+            <param name="bufferToUse">buffer to use as the internalBuffer</param>
+        </member>
+        <member name="M:GENUtility.BytePacket.#ctor(GENUtility.BytePacket)">
+            <summary>
+            Creates new instance by copying the given packet. MaxCapacity == gamePacketToCopy.Length
+            </summary>
+            <param name="toCopy">GamePacket to copy</param>
+        </member>
+        <member name="T:GENUtility.ByteManipulator">
+            <summary>
+            Utility class
+            </summary>
+        </member>
+        <member name="F:GENUtility.ByteManipulator.FullByte">
+            <summary>
+            Integer with first right 8 bits on. Value = 255;
+            </summary>
+        </member>
+        <member name="F:GENUtility.ByteManipulator.LastBitOnByte">
+            <summary>
+            Byte with first left bit on. Value = 128;
+            </summary>
+        </member>
+        <member name="F:GENUtility.ByteManipulator.FirstBitOnByte">
+            <summary>
+            Byte with first right bit on. Value = 1;
+            </summary>
+        </member>
+        <member name="F:GENUtility.ByteManipulator.ByteSize">
+            <summary>
+            Byte size in bits. Value = 8
+            </summary>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.WriteFromCycle``1(``0[],System.Int32,``0[],System.Int32,System.Int32)">
+            <summary>
+            Writes the given values into the output array. The read of a number of elements superior to the cyclic buffer total length is not supported
+            </summary>
+            <typeparam name="T">type</typeparam>
+            <param name="cyclicBuffer">array from which to get elements, it is considered a cyclic array</param>
+            <param name="bufferStartIndex">buffer start index</param>
+            <param name="output">output array to write</param>
+            <param name="outputStartIndex">output start index</param>
+            <param name="count">amount of elements to write</param>
+            <returns>new buffer start index</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.WriteToCycle``1(``0[],System.Int32,``0[],System.Int32,System.Int32)">
+            <summary>
+            Writes the given values into the output array. The write of a number of elements superior to the cyclic buffer total length is not supported
+            </summary>
+            <typeparam name="T">type</typeparam>
+            <param name="buffer">array from which to get elements</param>
+            <param name="bufferStartIndex">buffer start index</param>
+            <param name="cyclicOutput">output array to write, it is considered a cyclic array</param>
+            <param name="outputStartIndex">output start index</param>
+            <param name="count">amount of elements to write</param>
+            <returns>new output start index</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write``1(``0[],System.Int32,``0[],System.Int32,System.Int32)">
+            <summary>
+            Writes the given values into the output array
+            </summary>
+            <typeparam name="T">type</typeparam>
+            <param name="buffer">array from which to get elements</param>
+            <param name="bufferStartIndex">buffer start index</param>
+            <param name="output">output array to write</param>
+            <param name="outputStartIndex">output start index</param>
+            <param name="count">amount of elements to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Byte[],System.Int32,System.String,System.Text.Encoding)">
+            <summary>
+            Writes the given value in the given byte array
+            </summary>
+            <param name="buffer">byte array to write on</param>
+            <param name="startIndex">array index from which to start writing</param>
+            <param name="value">value to write</param>
+            <param name="encoder">encoder to use</param>
+            <returns>Number of bytes used to store the given string starting from startIndex</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadString(System.Byte[],System.Int32,System.Text.Encoding,System.Int32@)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <param name="encoder">encoder to use</param>
+            <param name="count">Number of bytes used to store the given string starting from startIndex</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Byte[],System.Int32,System.Char[],System.Text.Encoding)">
+            <summary>
+            Writes the given value in the given byte array
+            </summary>
+            <param name="buffer">byte array to write on</param>
+            <param name="startIndex">array index from which to start writing</param>
+            <param name="value">value to write</param>
+            <param name="encoder">encoder to use</param>
+            <returns>Number of bytes used to store the given string starting from startIndex</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadChars(System.Byte[],System.Int32,System.Char[],System.Int32,System.Text.Encoding,System.Int32@,System.Int32@)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <param name="output">output char array</param>
+            <param name="outputOffset">output char array offset</param>
+            <param name="encoder">encoder to use</param>
+            <param name="byteCount">Number of bytes used to store the given string starting from startIndex</param>
+            <param name="charCount">Number of chars recovered from buffer</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Byte[],System.Int32,System.UInt32)">
+            <summary>
+            Writes the given value in the given byte array
+            </summary>
+            <param name="buffer">byte array to write on</param>
+            <param name="startIndex">array index from which to start writing</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadUInt32(System.Byte[],System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadUInt32(System.Collections.Generic.List{System.Byte},System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes the given value in the given byte array
+            </summary>
+            <param name="buffer">byte array to write on</param>
+            <param name="startIndex">array index from which to start writing</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadInt32(System.Byte[],System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadInt32(System.Collections.Generic.List{System.Byte},System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Byte[],System.Int32,System.Byte)">
+            <summary>
+            Writes the given value in the given byte array
+            </summary>
+            <param name="buffer">byte array to write on</param>
+            <param name="index">array index to write on</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadByte(System.Byte[],System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadByte(System.Collections.Generic.List{System.Byte},System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Byte[],System.Int32,System.SByte)">
+            <summary>
+            Writes the given value in the given byte array
+            </summary>
+            <param name="buffer">byte array to write on</param>
+            <param name="index">array index to write on</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadSByte(System.Byte[],System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadSByte(System.Collections.Generic.List{System.Byte},System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Byte[],System.Int32,System.Boolean)">
+            <summary>
+            Writes the given value in the given byte array
+            </summary>
+            <param name="buffer">byte array to write on</param>
+            <param name="index">array index to write on</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadBoolean(System.Byte[],System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadBoolean(System.Collections.Generic.List{System.Byte},System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Byte[],System.Int32,System.Int16)">
+            <summary>
+            Writes the given value in the given byte array
+            </summary>
+            <param name="buffer">byte array to write on</param>
+            <param name="startIndex">array index from which to start writing</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadInt16(System.Byte[],System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadInt16(System.Collections.Generic.List{System.Byte},System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Byte[],System.Int32,System.Char)">
+            <summary>
+            Writes the given value in the given byte array
+            </summary>
+            <param name="buffer">byte array to write on</param>
+            <param name="startIndex">array index from which to start writing</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadChar(System.Byte[],System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadChar(System.Collections.Generic.List{System.Byte},System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Byte[],System.Int32,System.UInt16)">
+            <summary>
+            Writes the given value in the given byte array
+            </summary>
+            <param name="buffer">byte array to write on</param>
+            <param name="startIndex">array index from which to start writing</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadUInt16(System.Byte[],System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadUInt16(System.Collections.Generic.List{System.Byte},System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Byte[],System.Int32,System.UInt64)">
+            <summary>
+            Writes the given value in the given byte array
+            </summary>
+            <param name="buffer">byte array to write on</param>
+            <param name="startIndex">array index from which to start writing</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadUInt64(System.Byte[],System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadUInt64(System.Collections.Generic.List{System.Byte},System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Byte[],System.Int32,System.Int64)">
+            <summary>
+            Writes the given value in the given byte array
+            </summary>
+            <param name="buffer">byte array to write on</param>
+            <param name="startIndex">array index from which to start writing</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadInt64(System.Byte[],System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadInt64(System.Collections.Generic.List{System.Byte},System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Byte[],System.Int32,System.Single)">
+            <summary>
+            Writes the given value in the given byte array
+            </summary>
+            <param name="buffer">byte array to write on</param>
+            <param name="startIndex">array index from which to start writing</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadSingle(System.Byte[],System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadSingle(System.Collections.Generic.List{System.Byte},System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Byte[],System.Int32,System.Double)">
+            <summary>
+            Writes the given value in the given byte array
+            </summary>
+            <param name="buffer">byte array to write on</param>
+            <param name="startIndex">array index from which to start writing</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadDouble(System.Byte[],System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.ReadDouble(System.Collections.Generic.List{System.Byte},System.Int32)">
+            <summary>
+            Reads a value from the given byte array
+            </summary>
+            <param name="buffer">byte array to read from</param>
+            <param name="startIndex">array index from which to start reading</param>
+            <returns>value read</returns>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Collections.Generic.List{System.Byte},System.Int32,System.UInt32)">
+            <summary>
+            Writes the given value in the given byte list
+            </summary>
+            <param name="buffer">byte list to write on</param>
+            <param name="startIndex">list index from which to start writing</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Collections.Generic.List{System.Byte},System.Int32,System.Int32)">
+            <summary>
+            Writes the given value in the given byte list
+            </summary>
+            <param name="buffer">byte list to write on</param>
+            <param name="startIndex">list index from which to start writing</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Collections.Generic.List{System.Byte},System.Int32,System.Byte)">
+            <summary>
+            Writes the given value in the given byte list
+            </summary>
+            <param name="buffer">byte list to write on</param>
+            <param name="index">list index to write on</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Collections.Generic.List{System.Byte},System.Int32,System.SByte)">
+            <summary>
+            Writes the given value in the given byte list
+            </summary>
+            <param name="buffer">byte list to write on</param>
+            <param name="index">list index to write on</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Collections.Generic.List{System.Byte},System.Int32,System.Boolean)">
+            <summary>
+            Writes the given value in the given byte list
+            </summary>
+            <param name="buffer">byte list to write on</param>
+            <param name="index">list index to write on</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Collections.Generic.List{System.Byte},System.Int32,System.Int16)">
+            <summary>
+            Writes the given value in the given byte list
+            </summary>
+            <param name="buffer">byte list to write on</param>
+            <param name="startIndex">list index from which to start writing</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Collections.Generic.List{System.Byte},System.Int32,System.Char)">
+            <summary>
+            Writes the given value in the given byte list
+            </summary>
+            <param name="buffer">byte list to write on</param>
+            <param name="startIndex">list index from which to start writing</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Collections.Generic.List{System.Byte},System.Int32,System.UInt16)">
+            <summary>
+            Writes the given value in the given byte list
+            </summary>
+            <param name="buffer">byte list to write on</param>
+            <param name="startIndex">list index from which to start writing</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Collections.Generic.List{System.Byte},System.Int32,System.UInt64)">
+            <summary>
+            Writes the given value in the given byte list
+            </summary>
+            <param name="buffer">byte list to write on</param>
+            <param name="startIndex">list index from which to start writing</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Collections.Generic.List{System.Byte},System.Int32,System.Int64)">
+            <summary>
+            Writes the given value in the given byte list
+            </summary>
+            <param name="buffer">byte list to write on</param>
+            <param name="startIndex">list index from which to start writing</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Collections.Generic.List{System.Byte},System.Int32,System.Single)">
+            <summary>
+            Writes the given value in the given byte list
+            </summary>
+            <param name="buffer">byte list to write on</param>
+            <param name="startIndex">list index from which to start writing</param>
+            <param name="value">value to write</param>
+        </member>
+        <member name="M:GENUtility.ByteManipulator.Write(System.Collections.Generic.List{System.Byte},System.Int32,System.Double)">
+            <summary>
+            Writes the given value in the given byte list
+            </summary>
+            <param name="buffer">byte list to write on</param>
+            <param name="startIndex">list index from which to start writing</param>
+            <param name="value">value to write</param>
+        </member>
+    </members>
+</doc>

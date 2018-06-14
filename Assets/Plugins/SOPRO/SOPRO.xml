@@ -1,0 +1,304 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SOPRO</name>
+    </assembly>
+    <members>
+        <member name="T:SOPRO.AnimatorPropertyHolder">
+            <summary>
+            Class that holds an animator property name and calculates its hash value at load time
+            </summary>
+        </member>
+        <member name="P:SOPRO.AnimatorPropertyHolder.PropertyName">
+            <summary>
+            Property Name
+            </summary>
+        </member>
+        <member name="P:SOPRO.AnimatorPropertyHolder.PropertyHash">
+            <summary>
+            Calculated property hash at load time
+            </summary>
+        </member>
+        <member name="M:SOPRO.AnimatorPropertyHolder.op_Implicit(SOPRO.AnimatorPropertyHolder)~System.Int32">
+            <summary>
+            Converts to calculated property hash value
+            </summary>
+            <param name="prop">property to convert</param>
+        </member>
+        <member name="M:SOPRO.AnimatorPropertyHolder.op_Implicit(SOPRO.AnimatorPropertyHolder)~System.String">
+            <summary>
+            Converts to property name value
+            </summary>
+            <param name="prop">property to convert</param>
+        </member>
+        <member name="T:SOPRO.LayerHolder">
+            <summary>
+            Class that holds a Layer name and calculates its index at Editor time
+            </summary>
+        </member>
+        <member name="P:SOPRO.LayerHolder.LayerName">
+            <summary>
+            Layer name
+            </summary>
+        </member>
+        <member name="P:SOPRO.LayerHolder.LayerIndex">
+            <summary>
+            Layer index calculated at Editor time
+            </summary>
+        </member>
+        <member name="M:SOPRO.LayerHolder.op_Implicit(SOPRO.LayerHolder)~System.Int32">
+            <summary>
+            Converts to calculated layer index value
+            </summary>
+            <param name="layer">layer to convert</param>
+        </member>
+        <member name="M:SOPRO.LayerHolder.op_Implicit(SOPRO.LayerHolder)~System.String">
+            <summary>
+            Converts to layer name value
+            </summary>
+            <param name="layer">layer to convert</param>
+        </member>
+        <member name="T:SOPRO.LayerMaskHolder">
+            <summary>
+            Class that holds a set of layers and calculates its index at Editor time
+            </summary>
+        </member>
+        <member name="P:SOPRO.LayerMaskHolder.LayerMask">
+            <summary>
+            Layer mask
+            </summary>
+        </member>
+        <member name="P:SOPRO.LayerMaskHolder.LayerMaskIndex">
+            <summary>
+            Layer mask index calculated at Editor time
+            </summary>
+        </member>
+        <member name="M:SOPRO.LayerMaskHolder.op_Implicit(SOPRO.LayerMaskHolder)~System.Int32">
+            <summary>
+            Converts to calculated layer index value
+            </summary>
+            <param name="layer">layer to convert</param>
+        </member>
+        <member name="M:SOPRO.LayerMaskHolder.op_Implicit(SOPRO.LayerMaskHolder)~UnityEngine.LayerMask">
+            <summary>
+            Converts to layer mask
+            </summary>
+            <param name="layer">layer to convert</param>
+        </member>
+        <member name="T:SOPRO.NavMeshAreaHolder">
+            <summary>
+            Class that holds a navmesh area name and calculates its hash value at load time
+            </summary>
+        </member>
+        <member name="P:SOPRO.NavMeshAreaHolder.AreaName">
+            <summary>
+            Area Name
+            </summary>
+        </member>
+        <member name="P:SOPRO.NavMeshAreaHolder.AreaId">
+            <summary>
+            Calculated area id at load time
+            </summary>
+        </member>
+        <member name="M:SOPRO.NavMeshAreaHolder.op_Implicit(SOPRO.NavMeshAreaHolder)~System.Int32">
+            <summary>
+            Converts to calculated area id value
+            </summary>
+            <param name="area">area to convert</param>
+        </member>
+        <member name="M:SOPRO.NavMeshAreaHolder.op_Implicit(SOPRO.NavMeshAreaHolder)~System.String">
+            <summary>
+            Converts to area name value
+            </summary>
+            <param name="area">area to convert</param>
+        </member>
+        <member name="T:SOPRO.NavMeshAreaMaskHolder">
+            <summary>
+            Class that holds a navmesh mask value and calculates its hash value at editor time
+            </summary>
+        </member>
+        <member name="P:SOPRO.NavMeshAreaMaskHolder.AreaMaskId">
+            <summary>
+            Calculated area mask id at editor time
+            </summary>
+        </member>
+        <member name="M:SOPRO.NavMeshAreaMaskHolder.op_Implicit(SOPRO.NavMeshAreaMaskHolder)~System.Int32">
+            <summary>
+            Converts to calculated area id value
+            </summary>
+            <param name="area">area to convert</param>
+        </member>
+        <member name="T:SOPRO.ShaderPropertyHolder">
+            <summary>
+            Class that holds a shader property name and calculates its id value at load time
+            </summary>
+        </member>
+        <member name="P:SOPRO.ShaderPropertyHolder.PropertyName">
+            <summary>
+            Property Name
+            </summary>
+        </member>
+        <member name="P:SOPRO.ShaderPropertyHolder.PropertyHash">
+            <summary>
+            Calculated property id at load time
+            </summary>
+        </member>
+        <member name="M:SOPRO.ShaderPropertyHolder.op_Implicit(SOPRO.ShaderPropertyHolder)~System.Int32">
+            <summary>
+            Converts to calculated property id value
+            </summary>
+            <param name="prop">property to convert</param>
+        </member>
+        <member name="M:SOPRO.ShaderPropertyHolder.op_Implicit(SOPRO.ShaderPropertyHolder)~System.String">
+            <summary>
+            Converts to property name value
+            </summary>
+            <param name="prop">property to convert</param>
+        </member>
+        <member name="T:SOPRO.SOPool">
+            <summary>
+            Gameobject pool
+            </summary>
+        </member>
+        <member name="P:SOPRO.SOPool.ElementsStored">
+            <summary>
+            Number of elements stored in the pool
+            </summary>
+        </member>
+        <member name="F:SOPRO.SOPool.Prefab">
+            <summary>
+            Prefab instance used by this pool
+            </summary>
+        </member>
+        <member name="F:SOPRO.SOPool.PersistentPoolInScenes">
+            <summary>
+            True if you want the pool to check whenever pooled objects have been destroyed for a scene change or for other reasons
+            </summary>
+        </member>
+        <member name="M:SOPRO.SOPool.Recycle(UnityEngine.GameObject)">
+            <summary>
+            Recycles the given instance
+            </summary>
+            <param name="toRecycle">object to recycle</param>
+        </member>
+        <member name="M:SOPRO.SOPool.DirectRecycle(UnityEngine.GameObject)">
+            <summary>
+            Recycles the given instance. The object will not be disabled
+            </summary>
+            <param name="toRecycle">object to recycle</param>
+        </member>
+        <member name="M:SOPRO.SOPool.Recycle(UnityEngine.GameObject,System.Action{UnityEngine.GameObject})">
+            <summary>
+            Recycles the given instance
+            </summary>
+            <param name="toRecycle">object to recycle</param>
+            <param name="onRecycle">action called on element after deactivation</param>
+        </member>
+        <member name="M:SOPRO.SOPool.Get(System.Action{UnityEngine.GameObject},System.Int32@)">
+            <summary>
+            Requests an element from the pool.
+            </summary>
+            <param name="onGet">action called on element before activation</param>
+            <param name="nullObjsRemoved">Number of objs removed when PersistentPoolInScenes is true</param>
+            <returns>the requested element instance</returns>
+        </member>
+        <member name="M:SOPRO.SOPool.Get(System.Int32@)">
+            <summary>
+            Requests an element from the pool.
+            </summary>
+            <param name="nullObjsRemoved">Number of objs removed when PersistentPoolInScenes is true</param>
+            <returns>the requested element instance</returns>
+        </member>
+        <member name="M:SOPRO.SOPool.DirectGet(System.Int32@)">
+            <summary>
+            Requests an element from the pool. The object will not be enabled
+            </summary>
+            <param name="nullObjsRemoved">Number of objs removed when PersistentPoolInScenes is true</param>
+            <returns>the requested element instance</returns>
+        </member>
+        <member name="M:SOPRO.SOPool.DirectGet(UnityEngine.Transform,System.Int32@,System.Boolean@)">
+            <summary>
+            Requests an element from the pool. The object will not be enabled
+            </summary>
+            <param name="parent">transform to use as the requested element parent.</param>
+            <param name="nullObjsRemoved">Number of objs removed when PersistentPoolInScenes is true</param>
+            <param name="hasBeenParented">true if obj was instantiated and parent setted, false otherwise</param>
+            <returns>the requested element instance</returns>
+        </member>
+        <member name="M:SOPRO.SOPool.DirectGet(UnityEngine.Transform,UnityEngine.Vector3,UnityEngine.Quaternion,System.Int32@,System.Boolean@)">
+            <summary>
+            Requests an element from the pool. The object will not be enabled
+            </summary>
+            <param name="parent">transform to use as the requested element parent.</param>
+            <param name="position">object position</param>
+            <param name="rotation">object rotation</param>
+            <param name="nullObjsRemoved">Number of objs removed when PersistentPoolInScenes is true</param>
+            <param name="hasBeenParentedAndPositioned">true if obj was instantiated and parent and pos/rot have been setted, false otherwise</param>
+            <returns>the requested element instance</returns>
+        </member>
+        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,System.Action{UnityEngine.GameObject},System.Int32@,System.Boolean)">
+            <summary>
+            Requests an element from the pool.
+            </summary>
+            <param name="parent">transform to use as the requested element parent.</param>
+            <param name="onGet">action called on element before activation</param>
+            <param name="nullObjsRemoved">Number of objs removed when PersistentPoolInScenes is true</param>
+            <param name="parentAlways">false to set parent only when instantiating obj, true to set parent always</param>
+            <returns>the requested element instance</returns>
+        </member>
+        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,System.Int32@,System.Boolean)">
+            <summary>
+            Requests an element from the pool.
+            </summary>
+            <param name="parent">transform to use as the requested element parent.</param>
+            <param name="nullObjsRemoved">Number of objs removed when PersistentPoolInScenes is true</param>
+            <param name="parentAlways">false to set parent only when instantiating obj, true to set parent always</param>
+            <returns>the requested element instance</returns>
+        </member>
+        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,UnityEngine.Vector3,UnityEngine.Quaternion,System.Action{UnityEngine.GameObject},System.Int32@,System.Boolean)">
+            <summary>
+            Requests an element from the pool.
+            </summary>
+            <param name="parent">transform to use as the requested element parent.</param>
+            <param name="position">object position</param>
+            <param name="rotation">object rotation</param>
+            <param name="onGet">action called on element before activation</param>
+            <param name="nullObjsRemoved">Number of objs removed when PersistentPoolInScenes is true</param>
+            <param name="parentAlways">false to set parent only when instantiating obj, true to set parent always</param>
+            <returns>the requested element instance</returns>
+        </member>
+        <member name="M:SOPRO.SOPool.Get(UnityEngine.Transform,UnityEngine.Vector3,UnityEngine.Quaternion,System.Int32@,System.Boolean)">
+            <summary>
+            Requests an element from the pool.
+            </summary>
+            <param name="parent">transform to use as the requested element parent.</param>
+            <param name="position">object position</param>
+            <param name="rotation">object rotation</param>
+            <param name="nullObjsRemoved">Number of objs removed when PersistentPoolInScenes is true</param>
+            <param name="parentAlways">false to set parent only when instantiating obj, true to set parent always</param>
+            <returns>the requested element instance</returns>
+        </member>
+        <member name="M:SOPRO.SOPool.Clear(System.Action{UnityEngine.GameObject})">
+            <summary>
+            Clears the pool invoking an action on each element
+            </summary>
+            <param name="onDestroy">action invoked on each element in the pool</param>
+        </member>
+        <member name="M:SOPRO.SOPool.Clear">
+            <summary>
+            Clears the pool
+            </summary>
+        </member>
+        <member name="M:SOPRO.SOPool.ReSize(System.UInt32,System.Action{UnityEngine.GameObject},UnityEngine.Transform,UnityEngine.Vector3,UnityEngine.Quaternion,System.Action{UnityEngine.GameObject})">
+            <summary>
+            Resizes the pool to the given length, invoking an action on each destroyed element (if there are any) and each created element (if there are any)
+            </summary>
+            <param name="onDestroy">action invoked on each destroyed element in the pool</param>
+            <param name="parent">transform to use as the requested element parent.</param>
+            <param name="position">object position</param>
+            <param name="rotation">object rotation</param>
+            <param name="onRecycle">action called on element after deactivation</param>
+            <param name="value">target length</param>
+        </member>
+    </members>
+</doc>

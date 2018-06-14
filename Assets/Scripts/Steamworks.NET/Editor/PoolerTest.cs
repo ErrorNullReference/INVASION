@@ -3,20 +3,31 @@ using UnityEngine.TestTools;
 using NUnit.Framework;
 using System.Collections;
 
-public class PoolerTest {
-
+public class PoolerTest
+{
+    EnemySpawner spawner;
+    [SetUp]
+    public void SetupSpawner()
+    {
+        spawner = ScriptableObject.CreateInstance<EnemySpawner>();
+    }
+    [TearDown]
+    public void TeardownSpawner()
+    {
+        ScriptableObject.Destroy(spawner);
+    }
     [UnityTest]
     public IEnumerator AddToQueueTest()
     {
         GameObject[] obj = new GameObject[] { new GameObject() };
         GameObject obj1 = new GameObject();
-        Pool<GameObject> objs = new Pool<GameObject>(obj, EnemySpawner.Instance.EnemyCreation, obj1);
+        Pool<GameObject> objs = new Pool<GameObject>(obj, (go, p) => GameObject.Instantiate(go, p.transform), obj1);
         objs.AddToQueue(20, cb => { cb.SetActive(false); });
 
         bool AllInactive = true;
-        foreach(GameObject o in objs.pool)
+        foreach (GameObject o in objs.pool)
         {
-            if(o.activeInHierarchy)
+            if (o.activeInHierarchy)
             {
                 AllInactive = false;
                 break;
@@ -24,7 +35,7 @@ public class PoolerTest {
             else
             {
                 AllInactive = true;
-            }            
+            }
         }
         Assert.That(AllInactive, Is.EqualTo(true));
         yield return null;
@@ -35,7 +46,7 @@ public class PoolerTest {
     {
         GameObject[] obj = new GameObject[] { new GameObject() };
         GameObject obj1 = new GameObject();
-        Pool<GameObject> objs = new Pool<GameObject>(obj, EnemySpawner.Instance.EnemyCreation, obj1);
+        Pool<GameObject> objs = new Pool<GameObject>(obj, (go, p) => GameObject.Instantiate(go, p.transform), obj1);
         objs.AddToQueue(20, cb => { cb.SetActive(false); });
 
         Assert.That(objs.pool.Count, Is.EqualTo(20));
@@ -47,7 +58,7 @@ public class PoolerTest {
     {
         GameObject[] obj = new GameObject[] { new GameObject() };
         GameObject obj1 = new GameObject();
-        Pool<GameObject> objs = new Pool<GameObject>(obj, EnemySpawner.Instance.EnemyCreation, obj1);
+        Pool<GameObject> objs = new Pool<GameObject>(obj, (go, p) => GameObject.Instantiate(go, p.transform), obj1);
         objs.AddToQueue(20, cb => { cb.SetActive(false); });
         GameObject o = objs.Get(cb => { cb.SetActive(true); });
 
@@ -60,7 +71,7 @@ public class PoolerTest {
     {
         GameObject[] obj = new GameObject[] { new GameObject() };
         GameObject obj1 = new GameObject();
-        Pool<GameObject> objs = new Pool<GameObject>(obj, EnemySpawner.Instance.EnemyCreation, obj1);
+        Pool<GameObject> objs = new Pool<GameObject>(obj, (go, p) => GameObject.Instantiate(go, p.transform), obj1);
         objs.AddToQueue(20, cb => { cb.SetActive(false); });
         GameObject o = objs.Get(cb => { cb.SetActive(true); });
 
@@ -72,7 +83,7 @@ public class PoolerTest {
     {
         GameObject[] obj = new GameObject[] { new GameObject() };
         GameObject obj1 = new GameObject();
-        Pool<GameObject> objs = new Pool<GameObject>(obj, EnemySpawner.Instance.EnemyCreation, obj1);
+        Pool<GameObject> objs = new Pool<GameObject>(obj, (go, p) => GameObject.Instantiate(go, p.transform), obj1);
         GameObject o = objs.Get(cb => { cb.SetActive(true); });
 
         Assert.That(o.activeInHierarchy, Is.EqualTo(true));
@@ -84,7 +95,7 @@ public class PoolerTest {
     {
         GameObject[] obj = new GameObject[] { new GameObject() };
         GameObject obj1 = new GameObject();
-        Pool<GameObject> objs = new Pool<GameObject>(obj, EnemySpawner.Instance.EnemyCreation, obj1);
+        Pool<GameObject> objs = new Pool<GameObject>(obj, (go, p) => GameObject.Instantiate(go, p.transform), obj1);
         GameObject o = objs.Get(cb => { cb.SetActive(true); });
         objs.Recycle(o, cb => { cb.SetActive(false); });
         Assert.That(o.activeInHierarchy, Is.EqualTo(false));
@@ -96,7 +107,7 @@ public class PoolerTest {
     {
         GameObject[] obj = new GameObject[] { new GameObject() };
         GameObject obj1 = new GameObject();
-        Pool<GameObject> objs = new Pool<GameObject>(obj, EnemySpawner.Instance.EnemyCreation, obj1);
+        Pool<GameObject> objs = new Pool<GameObject>(obj, (go, p) => GameObject.Instantiate(go, p.transform), obj1);
         GameObject o = objs.Get(cb => { cb.SetActive(true); });
         objs.Recycle(o, cb => { cb.SetActive(false); });
         Assert.That(objs.pool.Contains(o));
@@ -104,5 +115,5 @@ public class PoolerTest {
     }
 }
 
-	
+
 
