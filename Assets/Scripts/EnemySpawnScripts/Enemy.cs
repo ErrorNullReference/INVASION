@@ -59,7 +59,7 @@ public class Enemy : LivingBeing
         Life = Stats.MaxHealth;
     }
 
-    public void DestroyAndRecycle()
+    public override void Die()
     {
         Destroy = true;
         Recycling = true;

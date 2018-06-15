@@ -10,6 +10,7 @@ public enum PacketType : byte
     Test = 0,
     PlayerData,
     PlayerDataServer,
+    PlayerStatus,
     NetObjTransform,
     NetObjTransformServer,
     Chat,

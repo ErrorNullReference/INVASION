@@ -4,6 +4,7 @@ using UnityEngine;
 using Steamworks;
 using System;
 using GENUtility;
+using SOPRO;
 public class PlayersMgr : MonoBehaviour
 {
     public SimpleAvatar AvatarTemplate, ControllableAvatarTemplate;
@@ -47,6 +48,21 @@ public class PlayersMgr : MonoBehaviour
 
         Client.AddCommand(PacketType.PlayerDataServer, ManageServerTransform);
         Client.AddCommand(PacketType.PlayerData, ManageTransform);
+        Client.AddCommand(PacketType.PlayerStatus, ManagePlayerStatus);
+    }
+    void ManagePlayerStatus(byte[] data, uint dataLength, CSteamID sender)
+    {
+        CSteamID target = (CSteamID)ByteManipulator.ReadUInt64(data, 0);
+
+        if (!avatars.ContainsKey(target))
+            return;
+
+        Player player = avatars[target].GetComponent<Player>();
+
+        player.Life = ByteManipulator.ReadSingle(data, 8);
+
+        if (player.Life <= 0f)
+            player.Die();
     }
 
     void ManageServerTransform(byte[] data, uint dataLength, CSteamID sender)

@@ -35,7 +35,7 @@ public class EnemyHitMgr : ScriptableObject
         //will then send status info to players and they'll update their enemies lives
         if (e.Life <= 0)
         {
-            e.DestroyAndRecycle();
+            e.Die();
             HostEnemyDestroyer.EnemyToRecycleToAdd.Add(e);
             return false;
         }
