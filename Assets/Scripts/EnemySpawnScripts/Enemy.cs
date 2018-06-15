@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using SOPRO;
+
 public class Enemy : LivingBeing
 {
     public bool Destroy;
@@ -43,10 +44,12 @@ public class Enemy : LivingBeing
         Destroy = false;
         Recycling = false;
     }
+
     private void OnDisable()
     {
         networkId.ResetNetworkId();
     }
+
     private void Awake()
     {
         randomSpawnTimer = Random.Range(0f, 5.0f);
@@ -83,7 +86,4 @@ public class Enemy : LivingBeing
             }
         }
     }
-
-
-
 }

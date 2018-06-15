@@ -6,10 +6,12 @@ public class FollowPlayer : MonoBehaviour
 {
     Transform Target;
     public Vector3 Offset;
+    public Vector3 Rotation;
 
     void Start()
     {
-        Target = FindObjectOfType<PlayerController>().transform;    
+        Target = FindObjectOfType<PlayerController>().transform;   
+        transform.rotation = Quaternion.Euler(Rotation);
     }
 
     // Update is called once per frame

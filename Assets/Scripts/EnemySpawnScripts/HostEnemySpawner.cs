@@ -4,14 +4,13 @@ using UnityEngine;
 using System;
 using Steamworks;
 using GENUtility;
+
 public class HostEnemySpawner : MonoBehaviour
 {
     public static HostEnemySpawner Instance;
     int enemyId;
     public const int MAX_NUM_ENEMIES = 200;
     public NetIdDispenser IdDispenser;
-    public Transform[] spawnPoints;
-    public Transform firstWavePosition;
     int firstWaveCount;
     public int enemiesCount;
     private Dictionary<int, Enemy> IdEnemies;
@@ -27,7 +26,8 @@ public class HostEnemySpawner : MonoBehaviour
             Destroy(this);
             return;
         }
-        else Instance = this;
+        else
+            Instance = this;
         if (!Client.IsHost)
         {
             this.enabled = false;
@@ -53,22 +53,18 @@ public class HostEnemySpawner : MonoBehaviour
     {
         for (int i = 0; i < firstWaveCount; i++)
         {
-            InstantiateEnemy(firstWavePosition.position.x, firstWavePosition.position.y, firstWavePosition.position.z);
+            InstantiateEnemy(EnemySpawnSystem.GetSpawnPoint());
             yield return waitForFrame;
         }
     }
 
     //sends to clients the command to instantiate an enemy in a given position, or it takes a random position from an array of randomic given positions if none is specified
-    public void InstantiateEnemy(float x = 0, float y = 0, float z = 0)
+    public void InstantiateEnemy(Vector3 position)
     {
         int Id = IdDispenser.GetNewNetId();
 
-        int randomIndex = UnityEngine.Random.Range(0, spawnPoints.Length);
-        Vector3 position = new Vector3(x, y, z);
         if (position == Vector3.zero)
-        {
-            position = spawnPoints[randomIndex].position;
-        }
+            position = EnemySpawnSystem.GetSpawnPoint();
 
         idAndPos.CurrentLength = 0;
         idAndPos.CurrentSeek = 0;
@@ -84,7 +80,7 @@ public class HostEnemySpawner : MonoBehaviour
 
     //this won't be in this cass, is just for testing
     //will be managed differently: client will send data when enemy is hit, host will decrease life and send datas back for clients to update enemies lives
-    //TO DELETE    
+    //TO DELETE
 
     void InitCoroutine(LobbyDataUpdate_t cb)
     {
@@ -93,7 +89,7 @@ public class HostEnemySpawner : MonoBehaviour
 
         Server.Init();
         Client.LeaveCurrentLobby();
-        Client.SendPacketToInGameUsers(emptyArray,0, 0, PacketType.LeaveLobby, EP2PSend.k_EP2PSendReliable);
+        Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.LeaveLobby, EP2PSend.k_EP2PSendReliable);
         StartCoroutine(SpawnEnemiesAtStart());
         coroutineStart = true;
     }
@@ -105,7 +101,7 @@ public class HostEnemySpawner : MonoBehaviour
 
         Server.Init();
         Client.LeaveCurrentLobby();
-        Client.SendPacketToInGameUsers(emptyArray,0, 0, PacketType.LeaveLobby, EP2PSend.k_EP2PSendReliable);
+        Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.LeaveLobby, EP2PSend.k_EP2PSendReliable);
         StartCoroutine(SpawnEnemiesAtStart());
         coroutineStart = true;
     }

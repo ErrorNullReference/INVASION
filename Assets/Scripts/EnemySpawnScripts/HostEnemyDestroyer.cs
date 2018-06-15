@@ -18,7 +18,8 @@ public class HostEnemyDestroyer : MonoBehaviour
             Destroy(this);
             return;
         }
-        else Instance = this;
+        else
+            Instance = this;
         if (!Client.IsHost)
         {
             this.enabled = false;
@@ -68,7 +69,7 @@ public class HostEnemyDestroyer : MonoBehaviour
             enemy.randomSpawnTimer -= Time.deltaTime;
             if (enemy.randomSpawnTimer <= 0)
             {
-                HostEnemySpawner.Instance.InstantiateEnemy();
+                HostEnemySpawner.Instance.InstantiateEnemy(Vector3.zero);
                 enemy.randomSpawnTimer = UnityEngine.Random.Range(0f, 5.0f);
                 enemy.Recycling = false;
                 EnemyToRecycleToRemove.Add(enemy);
