@@ -52,17 +52,7 @@ public class PlayersMgr : MonoBehaviour
     }
     void ManagePlayerStatus(byte[] data, uint dataLength, CSteamID sender)
     {
-        CSteamID target = (CSteamID)ByteManipulator.ReadUInt64(data, 0);
-
-        if (!avatars.ContainsKey(target))
-            return;
-
-        Player player = avatars[target].GetComponent<Player>();
-
-        player.Life = ByteManipulator.ReadSingle(data, 8);
-
-        if (player.Life <= 0f)
-            player.Die();
+        SetHealth(data);
     }
 
     void ManageServerTransform(byte[] data, uint dataLength, CSteamID sender)
@@ -83,20 +73,7 @@ public class PlayersMgr : MonoBehaviour
 
         if (overLength > 0)
         {
-            CSteamID target = (CSteamID)ByteManipulator.ReadUInt64(data, 0);
-
-            if (avatars.ContainsKey(target))
-            {
-                Player player = avatars[target].GetComponent<Player>();
-
-                player.Life = ByteManipulator.ReadSingle(data, 8);
-
-                if (player.Life <= 0f)
-                {
-                    setDirectTransform = true;
-                    player.Die();
-                }
-            }
+            setDirectTransform = SetHealth(data);
         }
 
         int offset = overLength;
@@ -121,5 +98,24 @@ public class PlayersMgr : MonoBehaviour
             avatar.transform.SetPositionAndRotation(pos, rot);
         else
             avatar.SetTransform(pos, rot);
+    }
+    private bool SetHealth(byte[] data)
+    {
+        CSteamID target = (CSteamID)ByteManipulator.ReadUInt64(data, 0);
+
+        if (avatars.ContainsKey(target))
+        {
+            Player player = avatars[target].GetComponent<Player>();
+
+            player.Life = ByteManipulator.ReadSingle(data, 8);
+
+            if (player.Life <= 0f)
+            {
+                player.Die();
+                return true;
+            }
+        }
+
+        return false;
     }
 }
