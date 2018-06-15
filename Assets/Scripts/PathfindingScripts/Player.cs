@@ -35,7 +35,7 @@ public class Player : LivingBeing
     }
     protected void Update()
     {
-        if (!Client.IsHost && Dead)
+        if (!Client.IsHost || Dead)
             return;
 
         if (!Mathf.Approximately(prevLife, Life))
