@@ -60,6 +60,7 @@ public class Player : LivingBeing
     public override void Die()
     {
         Dead = true;
+
         if (avatar.UserInfo.SteamID == Client.MyID)
             PlayerAliveStatusChanged.Raise(false);
     }
