@@ -3,7 +3,7 @@ using UnityEngine;
 using System;
 using SOPRO;
 using Steamworks;
-namespace SOPRO
+namespace SOPRO 
 {
     /// <summary>
     /// Base class for Scriptable Object event

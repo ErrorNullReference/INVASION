@@ -20,7 +20,20 @@ public class ClientEnemyStatsMgr : ScriptableObject
     private void SetHealthStat(byte[] data, uint length, CSteamID sender)
     {
         int id = ByteManipulator.ReadInt32(data, 0);
-        netEntities[id].GetComponent<Enemy>().DecreaseLife();
+
+        Enemy enemy = netEntities[id].GetComponent<Enemy>();
+
+        float damage = ByteManipulator.ReadSingle(data, 4);
+        enemy.DecreaseLife(damage);
+
+        ulong shooter = ByteManipulator.ReadUInt64(data, 8);
+
+        int points = (int)(damage * 10f);
+        //if enemy dead give bonus points
+        if (enemy.Destroy)
+            points += (int)(enemy.Stats.MaxHealth * 10f);
+
+        PlayersMgr.Players[(CSteamID)shooter].GetComponent<Player>().TotalPoints += points;
     }
 
     private void ShootCall(byte[] data, uint length, CSteamID sender)

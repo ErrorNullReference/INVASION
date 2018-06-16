@@ -1,17 +1,42 @@
 ﻿using UnityEngine;
-using System.Collections;
+using Steamworks;
 using SOPRO;
+using GENUtility;
 public class Player : LivingBeing
 {
+    private static readonly byte[] packet = new byte[12];
+    public SimpleAvatar Avatar { get { return avatar; } }
+
+    public int TotalPoints = 0;
+
+    public bool Dead; 
+
+    public float MaxRessTime = 120f;
+    public float MaxRessDistance = 10f;
+    public float RessTimeMultiplier = 0.2f;
+    public float RessHealthPercentage = 0.5f;
+
+    public SOEvBool PlayerAliveStatusChanged;
     [HideInInspector]
     public Collider PlayerCollider;
     [SerializeField]
     private SOListPlayerContainer players;
+    [SerializeField]
+    private SimpleAvatar avatar;
+    [SerializeField]
+    private PlayerAnimatorController controller;
+
+    private float timer;
+
+    private float prevLife;
+
     private void Start()
     {
         GetComponentInChildren<HUDManager>().InputAssetHUD = Stats;
         PlayerCollider = GetComponentInChildren<Collider>();
         Life = Stats.MaxHealth;
+        prevLife = Life;
+        Dead = Life <= 0f;
     }
     private void OnEnable()
     {
@@ -20,6 +45,83 @@ public class Player : LivingBeing
     private void OnDisable()
     {
         players.Elements.Remove(this);
+    }
+    protected void LateUpdate()
+    {
+        if (!Client.IsHost)
+            return;
+
+        if (Dead)
+        {
+            int length = players.Elements.Count;
+            for (int i = 0; i < length; i++)
+            {
+                Player other = players[i];
+                if (other != this && (this.transform.position - other.transform.position).sqrMagnitude < MaxRessDistance * MaxRessDistance)
+                {
+                    this.Life += RessTimeMultiplier * Time.deltaTime;
+                    if (this.Life >= 1f)
+                        this.Resurrect(Stats.MaxHealth * RessHealthPercentage);
+                    return;
+                }
+            }
+
+            //if no player is near the dead player the death timer will proceed
+            timer += Time.deltaTime;
+            if(timer > MaxRessTime)
+            {
+                Destroy(this.gameObject);
+            }
+
+            return;
+        }
+
+        if (!Mathf.Approximately(prevLife, Life))
+        {
+            Life = Mathf.Min(Life, Stats.MaxHealth);
+            prevLife = Life;
+
+            ByteManipulator.Write(packet, 0, (ulong)avatar.UserInfo.SteamID);
+            ByteManipulator.Write(packet, 8, Life);
+
+            if (Life > 0f)
+            {
+                Client.SendPacketToInGameUsers(packet, 0, packet.Length, PacketType.PlayerStatus, EP2PSend.k_EP2PSendUnreliable, false);
+            }
+            else
+            {
+                Client.SendTransformToInGameUsers(packet, this.transform, EP2PSend.k_EP2PSendUnreliable, false);
+                Die();
+            }
+        }
+    }
+    public override void Die()
+    {
+        Dead = true;
+
+        controller.Die(true);
+
+        Life = 0f;
+        timer = 0f;
+
+        if (avatar.UserInfo.SteamID == Client.MyID)
+            PlayerAliveStatusChanged.Raise(false);
+    }
+    /// <summary>
+    /// Requires Life value to be already setted
+    /// </summary>
+    public void Resurrect(float newLife)
+    {
+        Life = Mathf.Min(newLife, Stats.MaxHealth);
+        if (Life <= 0f)
+            return;
+
+        Dead = false;
+
+        controller.Die(false);
+
+        if (avatar.UserInfo.SteamID == Client.MyID)
+            PlayerAliveStatusChanged.Raise(true);
     }
     //CHANGED, FOR NOW ONLY ONE CAMERA WILL BE USED.
 

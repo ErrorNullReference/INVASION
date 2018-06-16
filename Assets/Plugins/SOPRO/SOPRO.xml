@@ -31,6 +31,42 @@
             </summary>
             <param name="prop">property to convert</param>
         </member>
+        <member name="T:SOPRO.AnimatorUtility">
+            <summary>
+            Utility class for Unity animator
+            </summary>
+        </member>
+        <member name="M:SOPRO.AnimatorUtility.SetTrigger(UnityEngine.Animator,SOPRO.AnimatorPropertyHolder)">
+            <summary>
+            Sets an animator trigger
+            </summary>
+            <param name="animator">animator</param>
+            <param name="property">trigger property</param>
+        </member>
+        <member name="M:SOPRO.AnimatorUtility.SetBoolean(UnityEngine.Animator,SOPRO.AnimatorPropertyHolder,System.Boolean)">
+            <summary>
+            Sets an animator boolean value
+            </summary>
+            <param name="animator">animator</param>
+            <param name="property">boolean property</param>
+            <param name="value">value to set</param>
+        </member>
+        <member name="M:SOPRO.AnimatorUtility.SetFloat(UnityEngine.Animator,SOPRO.AnimatorPropertyHolder,System.Single)">
+            <summary>
+            Sets an animator float value
+            </summary>
+            <param name="animator">animator</param>
+            <param name="property">float property</param>
+            <param name="value">value to set</param>
+        </member>
+        <member name="M:SOPRO.AnimatorUtility.SetInteger(UnityEngine.Animator,SOPRO.AnimatorPropertyHolder,System.Int32)">
+            <summary>
+            Sets an animator integer value
+            </summary>
+            <param name="animator">animator</param>
+            <param name="property">integer property</param>
+            <param name="value">value to set</param>
+        </member>
         <member name="T:SOPRO.LayerHolder">
             <summary>
             Class that holds a Layer name and calculates its index at Editor time

@@ -46,6 +46,11 @@ public class PlayersMgr : MonoBehaviour
 
         Client.AddCommand(PacketType.PlayerDataServer, ManageServerTransform);
         Client.AddCommand(PacketType.PlayerData, ManageTransform);
+        Client.AddCommand(PacketType.PlayerStatus, ManagePlayerStatus);
+    }
+    void ManagePlayerStatus(byte[] data, uint dataLength, CSteamID sender)
+    {
+        SetHealth(data);
     }
 
     void ManageServerTransform(byte[] data, uint dataLength, CSteamID sender)
@@ -60,10 +65,13 @@ public class PlayersMgr : MonoBehaviour
 
         SimpleAvatar avatar = avatars[sender];
 
+        bool setDirectTransform = false;
+
         int overLength = (int)dataLength - 28;
+
         if (overLength > 0)
         {
-            //Manage attached data
+            setDirectTransform = SetHealth(data);
         }
 
         int offset = overLength;
@@ -84,6 +92,32 @@ public class PlayersMgr : MonoBehaviour
         Vector3 pos = new Vector3(posX, posY, posZ);
         Quaternion rot = new Quaternion(rotX, rotY, rotZ, rotW);
 
-        avatars[sender].SetTransform(pos, rot);
+        if (setDirectTransform)
+            avatar.transform.SetPositionAndRotation(pos, rot);
+        else
+            avatar.SetTransform(pos, rot);
+    }
+    private bool SetHealth(byte[] data)
+    {
+        CSteamID target = (CSteamID)ByteManipulator.ReadUInt64(data, 0);
+
+        if (avatars.ContainsKey(target))
+        {
+            Player player = avatars[target].GetComponent<Player>();
+
+            player.Life = ByteManipulator.ReadSingle(data, 8);
+
+            if (player.Life <= 0f)
+            {
+                player.Die();
+                return true;
+            }
+            else if (player.Dead)
+            {
+                player.Resurrect(player.Life);
+            }
+        }
+
+        return false;
     }
 }

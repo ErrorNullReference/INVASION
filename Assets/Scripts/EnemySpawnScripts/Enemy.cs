@@ -62,17 +62,23 @@ public class Enemy : LivingBeing
         Life = Stats.MaxHealth;
     }
 
-    public void DestroyAndRecycle()
+    public override void Die()
     {
         Destroy = true;
         Recycling = true;
     }
 
-    public void DecreaseLife()
+    public void DecreaseLife(float decrease)
     {
         healthImage.enabled = true;
         HUDTimer = HUDTimerShow;
-        Life--;
+        Life -= decrease;
+
+        if (Life <= 0)
+        {
+            Die();
+            HostEnemyDestroyer.EnemyToRecycleToAdd.Add(this);
+        }
     }
 
     private void Update()

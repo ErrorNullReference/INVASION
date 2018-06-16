@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51f144835965c834480c8aa171974ecd, type: 3}
+  m_Name: PlayerAliveStatusChanged
+  m_EditorClassIdentifier: 
+  DEBUG_DeveloperDescription: event raised when one player changed its alive status
+  DEBUG_bool_0: 0

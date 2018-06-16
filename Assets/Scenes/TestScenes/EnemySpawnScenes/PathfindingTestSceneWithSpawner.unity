@@ -849,6 +849,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 715918687}
+  - component: {fileID: 715918688}
   m_Layer: 0
   m_Name: SpawnPoints
   m_TagString: Untagged
@@ -910,6 +911,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &715918688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 715918686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63c5e484462069b44b110b2fe01ff1c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PositionsToFill: {fileID: 11400000, guid: 550982ae39b217d4f84a14b45e7715a5, type: 2}
+  ClearFirst: 1
 --- !u!1 &763930884
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,7 +1050,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &769313094
 MonoBehaviour:
@@ -10162,6 +10176,52 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9a9f71b47b7bd9e45b722f702ddedfa9, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1692884746
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1692884748}
+  - component: {fileID: 1692884747}
+  m_Layer: 0
+  m_Name: HealthSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1692884747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1692884746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0ed297c40381184dbaf62c51442ece1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PowUpManager: {fileID: 11400000, guid: 91a7ce736c31c6b43a5ecf97762456d3, type: 2}
+  Players: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
+  SpawnPoints: {fileID: 11400000, guid: 550982ae39b217d4f84a14b45e7715a5, type: 2}
+  IdDispenser: {fileID: 11400000, guid: 56e47d53dc614774bba72546195db65d, type: 2}
+  IdealDistanceSpawn: 10
+  SpawnTime: 10
+--- !u!4 &1692884748
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1692884746}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 12.780435, y: -7.813888, z: 103.597916}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1735348482
 GameObject:
   m_ObjectHideFlags: 0
@@ -10175,6 +10235,8 @@ GameObject:
   - component: {fileID: 1735348483}
   - component: {fileID: 1735348487}
   - component: {fileID: 1735348488}
+  - component: {fileID: 1735348490}
+  - component: {fileID: 1735348489}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -10256,8 +10318,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52889a9de104ab94a821fae5dce179c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Players: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
   Offset: {x: -4.73, y: 9.46, z: 4.73}
-  Rotation: {x: 55, y: 135, z: 0}
+  CurrentIndex: 0
 --- !u!114 &1735348488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10274,6 +10337,48 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   zoomIn: {x: 0, y: 0, z: 0}
   maxSpeed: 0
+--- !u!114 &1735348489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1735348482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ecf17378b2f7ee49aa54d697a3bc7da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 19c5cfa168636f147a93e63cfc145108, type: 2}
+  Actions:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1735348490}
+        m_MethodName: IsInactive
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: SOPRO.UnEvBool, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &1735348490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1735348482}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2610bd025adc5bd49a0d1000f39ba48f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Players: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
+  SwitchPlayer: 9
+  Follow: {fileID: 1735348487}
 --- !u!1 &1838048724
 GameObject:
   m_ObjectHideFlags: 0

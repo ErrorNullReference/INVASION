@@ -10,6 +10,7 @@ public enum PacketType : byte
     Test = 0,
     PlayerData,
     PlayerDataServer,
+    PlayerStatus,
     NetObjTransform,
     NetObjTransformServer,
     Chat,
@@ -27,7 +28,9 @@ public enum PacketType : byte
     ShootServer,
     ShootHit,
     ShootHitServer,
-    ShootCall
+    ShootCall,
+    PowerUpSpawn,
+    PowerUpDespawn,
 }
 
 public enum PacketOffset
