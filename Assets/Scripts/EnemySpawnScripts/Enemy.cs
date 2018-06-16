@@ -65,11 +65,17 @@ public class Enemy : LivingBeing
         Recycling = true;
     }
 
-    public void DecreaseLife()
+    public void DecreaseLife(float decrease)
     {
         healthImage.enabled = true;
         HUDTimer = HUDTimerShow;
-        Life--;
+        Life -= decrease;
+
+        if (Life <= 0)
+        {
+            Die();
+            HostEnemyDestroyer.EnemyToRecycleToAdd.Add(this);
+        }
     }
 
     private void Update()

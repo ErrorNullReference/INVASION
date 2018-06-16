@@ -1632,6 +1632,7 @@ MonoBehaviour:
   PlayerCollider: {fileID: 136651011897755702}
   players: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
   avatar: {fileID: 114749351794276356}
+  controller: {fileID: 114839815314079412}
 --- !u!114 &114741821120968036
 MonoBehaviour:
   m_ObjectHideFlags: 1

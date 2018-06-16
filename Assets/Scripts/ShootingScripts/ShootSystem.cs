@@ -77,7 +77,7 @@ public class ShootSystem : MonoBehaviour
             {
                 GameNetworkObject obj = raycastHit.collider.gameObject.GetComponent<GameNetworkObject>();
                 if (obj != null)
-                    SendHitToHost(obj.NetworkId);
+                    SendHitToHost(obj.NetworkId, gun.values.Damage);
             }
         }
         else if (shootingType == ShootingType.Consecutive) // else add the ray in a list
@@ -95,10 +95,11 @@ public class ShootSystem : MonoBehaviour
         Client.SendPacketToHost(emptyArray, 0, 0, PacketType.ShootServer, Steamworks.EP2PSend.k_EP2PSendReliable);
     }
 
-    void SendHitToHost(int id)
+    void SendHitToHost(int id, float damage)
     {
-        byte[] data = ArrayPool<byte>.Get(sizeof(int));
+        byte[] data = ArrayPool<byte>.Get(8);
         ByteManipulator.Write(data, 0, id);
+        ByteManipulator.Write(data, 4, damage);
 
         Client.SendPacketToHost(data, 0, data.Length, PacketType.ShootHitServer, Steamworks.EP2PSend.k_EP2PSendReliable);
 

@@ -20,7 +20,7 @@ public class ClientEnemyStatsMgr : ScriptableObject
     private void SetHealthStat(byte[] data, uint length, CSteamID sender)
     {
         int id = ByteManipulator.ReadInt32(data, 0);
-        netEntities[id].GetComponent<Enemy>().DecreaseLife();
+        netEntities[id].GetComponent<Enemy>().DecreaseLife(ByteManipulator.ReadSingle(data, 4));
     }
 
     private void ShootCall(byte[] data, uint length, CSteamID sender)
