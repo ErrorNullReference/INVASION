@@ -9,7 +9,8 @@ public class EnemySpawnSystem : MonoBehaviour
     public Transform[] SpawnPoints;
     public bool Debug;
     List<Vector3> notRenderedPositions;
-    Vector3[] cameraBounds, playerBounds;
+    Vector3[] cameraBounds;
+    Vector3[][] playerBounds;
     Vector3 nearestPoint, cameraOffset;
     bool nearestUpdated;
 
@@ -21,7 +22,9 @@ public class EnemySpawnSystem : MonoBehaviour
     {
         instance = this;
         cameraBounds = new Vector3[4];
-        playerBounds = new Vector3[4];
+        playerBounds = new Vector3[4][];
+        for (int i = 0; i < playerBounds.Length; i++)
+            playerBounds[i] = new Vector3[4];
         notRenderedPositions = new List<Vector3>();
         cameraOffset = Camera.main.GetComponent<FollowPlayer>().Offset;
 
@@ -123,26 +126,40 @@ public class EnemySpawnSystem : MonoBehaviour
     void PopulateSpawnPointList()
     {
         notRenderedPositions.Clear();
+
+        int index = 0;
         foreach (var p in PlayersMgr.Players.Values)
         {
             Vector3 pPos = p.transform.position + cameraOffset;
             pPos.y = 0;
 
             for (int i = 0; i < playerBounds.Length; i++)
-                playerBounds[i] = cameraBounds[i] + pPos;
+                playerBounds[index][i] = cameraBounds[i] + pPos;
+            index++;
+        }
 
-            for (int i = 0; i < SpawnPoints.Length; i++)
+        bool contained = false;
+        for (int i = 0; i < SpawnPoints.Length; i++)
+        {
+            contained = false;
+            for (int j = 0; j < PlayersMgr.Players.Count; j++)
             {
-                if (!BoundsContains(playerBounds, SpawnPoints[i].position))
+                if (BoundsContains(playerBounds[j], SpawnPoints[i].position))
                 {
-                    if (!notRenderedPositions.Contains(SpawnPoints[i].position))
-                        notRenderedPositions.Add(SpawnPoints[i].position);
+                    contained = true;
+                    break;
                 }
-                else
-                {
-                    if (notRenderedPositions.Contains(SpawnPoints[i].position))
-                        notRenderedPositions.Remove(SpawnPoints[i].position);
-                }
+            }
+
+            if (!contained)
+            {
+                if (!notRenderedPositions.Contains(SpawnPoints[i].position))
+                    notRenderedPositions.Add(SpawnPoints[i].position);
+            }
+            else
+            {
+                if (notRenderedPositions.Contains(SpawnPoints[i].position))
+                    notRenderedPositions.Remove(SpawnPoints[i].position);
             }
         }
     }
@@ -174,20 +191,26 @@ public class EnemySpawnSystem : MonoBehaviour
         if (!Debug)
             return;
 
-        if (cameraBounds == null || cameraBounds.Length != 4)
+        if (cameraBounds == null || cameraBounds.Length != 4 || playerBounds == null || playerBounds.Length != 4)
         {
             cameraBounds = new Vector3[4];
-            playerBounds = new Vector3[4];
+            playerBounds = new Vector3[4][];
+            for (int i = 0; i < playerBounds.Length; i++)
+                playerBounds[i] = new Vector3[4];
             notRenderedPositions = new List<Vector3>();
         }
 
         nearestPoint = GetPosition();
 
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(playerBounds[0], playerBounds[1]);
-        Gizmos.DrawLine(playerBounds[1], playerBounds[3]);
-        Gizmos.DrawLine(playerBounds[3], playerBounds[2]);
-        Gizmos.DrawLine(playerBounds[2], playerBounds[0]);
+
+        for (int i = 0; i < playerBounds.Length; i++)
+        {
+            Gizmos.DrawLine(playerBounds[i][0], playerBounds[i][1]);
+            Gizmos.DrawLine(playerBounds[i][1], playerBounds[i][3]);
+            Gizmos.DrawLine(playerBounds[i][3], playerBounds[i][2]);
+            Gizmos.DrawLine(playerBounds[i][2], playerBounds[i][0]);
+        }
 
         Gizmos.color = Color.red;
         for (int i = 0; i < SpawnPoints.Length; i++)
