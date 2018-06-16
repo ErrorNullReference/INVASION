@@ -1442,6 +1442,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Life: 0
   Stats: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
+  TotalPoints: 0
   Dead: 0
   MaxRessTime: 120
   MaxRessDistance: 10
@@ -1535,7 +1536,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataType: 0
-  InputAssetHUD: {fileID: 0}
+  InputAssetHUD: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
+  DataContainer: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
   OneTimeUpdate: 0
 --- !u!114 &114772623448650526
 MonoBehaviour:
@@ -1613,7 +1615,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataType: 6
-  InputAssetHUD: {fileID: 0}
+  InputAssetHUD: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
+  DataContainer: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
   OneTimeUpdate: 0
 --- !u!114 &114886338899470942
 MonoBehaviour:
