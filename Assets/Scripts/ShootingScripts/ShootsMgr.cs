@@ -110,7 +110,18 @@ public class ShootsMgr : MonoBehaviour
 
 public class RayPlus
 {
-    public RayPlus(Vector3 position, Vector3 direction, float distance, float damage, float speed, float maxDistance, bool activateCallbacks = false)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="direction"></param>
+    /// <param name="distance"></param>
+    /// <param name="damage"></param>
+    /// <param name="speed"></param>
+    /// <param name="maxDistance"></param>
+    /// <param name="owner"> If is 0 is player, if is 1 is enemy</param>
+    /// <param name="activateCallbacks"></param>
+    public RayPlus(Vector3 position, Vector3 direction, float distance, float damage, float speed, float maxDistance, int owner, bool activateCallbacks = false)
     {
         Ray = new Ray(position, direction);
         Distance = distance;
@@ -118,8 +129,9 @@ public class RayPlus
         Speed = speed;
         MaxDistance = maxDistance;
         ActivateCallbacks = activateCallbacks;
+        Owner = owner;
     }
-
+    public int Owner;
     public float Distance;
     public Ray Ray;
     public float Damage;
