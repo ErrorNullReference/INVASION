@@ -7,7 +7,9 @@ public class Player : LivingBeing
     private static readonly byte[] packet = new byte[12];
     public SimpleAvatar Avatar { get { return avatar; } }
 
-    public bool Dead; //TODO: da sostituire poi con animator bool property Dead
+    public int TotalPoints = 0;
+
+    public bool Dead; 
 
     public float MaxRessTime = 120f;
     public float MaxRessDistance = 10f;

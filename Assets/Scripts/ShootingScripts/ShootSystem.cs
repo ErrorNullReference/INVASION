@@ -33,10 +33,13 @@ public class ShootSystem : MonoBehaviour
     private LayerMaskHolder mask;
     private static readonly byte[] emptyArray = new byte[0];
 
+    SimpleAvatar avatar;
+
     private void Awake()
     {
         recoilTime = 0;
         raycastHit = new RaycastHit();
+        avatar = GetComponent<SimpleAvatar>();
     }
 
     void CallShoot()
@@ -97,11 +100,12 @@ public class ShootSystem : MonoBehaviour
 
     void SendHitToHost(int id, float damage)
     {
-        byte[] data = ArrayPool<byte>.Get(8);
+        byte[] data = ArrayPool<byte>.Get(16);
         ByteManipulator.Write(data, 0, id);
         ByteManipulator.Write(data, 4, damage);
+        ByteManipulator.Write(data, 8, (ulong)avatar.UserInfo.SteamID);
 
-        Client.SendPacketToHost(data, 0, data.Length, PacketType.ShootHitServer, Steamworks.EP2PSend.k_EP2PSendReliable);
+        Client.SendPacketToInGameUsers(data, 0, data.Length, PacketType.ShootHitServer, Steamworks.EP2PSend.k_EP2PSendReliable);
 
         ArrayPool<byte>.Recycle(data);
         //Debug.Log("hit");
