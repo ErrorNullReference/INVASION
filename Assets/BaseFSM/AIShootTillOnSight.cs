@@ -17,23 +17,28 @@ public class AIShootTillOnSight : AIBehaviour
     [SerializeField]
     private AIBehaviour next;
 
+    private ShootSystemEnemy sse;
+
     protected override void Awake()
     {
         base.Awake();
         shootSync = this.GetComponent<EnemyShootSync>();
+        sse = GetComponent<ShootSystemEnemy>();
     }
 
     private void Update()
     {
         this.transform.LookAt(targetToShot.position);
 
-        if(CheckIfStillOnSight())
+        if (CheckIfStillOnSight())
             Shot();
     }
 
     private void Shot()
     {
         //Debug.Log("BANG BANG");
+                      //positin to shoot
+        sse.CallShoot(new Vector3());
         if (shootSync != null)
             shootSync.SendShotCall();
     }
@@ -47,7 +52,7 @@ public class AIShootTillOnSight : AIBehaviour
             return false;
         }
 
-        if(hit.collider.transform == targetToShot)
+        if (hit.collider.transform == targetToShot)
             return true;
         else
         {
