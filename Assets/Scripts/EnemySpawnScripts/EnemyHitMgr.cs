@@ -19,14 +19,15 @@ public class EnemyHitMgr : ScriptableObject
 
     private void OnNetObjHit(byte[] data, uint length, CSteamID sender)
     {
-        //int id = ByteManipulator.ReadInt32(data, 0);
+        int id = ByteManipulator.ReadInt32(data, 0);
         //float damage = ByteManipulator.ReadSingle(data, 4);
         //ulong shooter = ByteManipulator.ReadUInt64(data, 8);
 
-        //Enemy e = netEntities[id].GetComponent<Enemy>();
+        Enemy e = netEntities[id].GetComponent<Enemy>();
         //Debug.Log("hit received");
         //e.DecreaseLife(damage);
-        Client.SendPacketToInGameUsers(data, 0, (int)length, PacketType.ShootHit, EP2PSend.k_EP2PSendReliable, true);
+        if (e)
+            Client.SendPacketToInGameUsers(data, 0, (int)length, PacketType.ShootHit, EP2PSend.k_EP2PSendReliable, true);
         //send to all but this client a packet with hit command only if e life is not 0 
         //else send enemy death;
     }
