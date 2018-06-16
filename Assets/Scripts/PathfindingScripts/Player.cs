@@ -6,7 +6,14 @@ public class Player : LivingBeing
 {
     private static readonly byte[] packet = new byte[12];
     public SimpleAvatar Avatar { get { return avatar; } }
+
     public bool Dead; //TODO: da sostituire poi con animator bool property Dead
+
+    public float MaxRessTime = 120f;
+    public float MaxRessDistance = 10f;
+    public float RessTimeMultiplier = 0.2f;
+    public float RessHealthPercentage = 0.5f;
+
     public SOEvBool PlayerAliveStatusChanged;
     [HideInInspector]
     public Collider PlayerCollider;
@@ -14,6 +21,8 @@ public class Player : LivingBeing
     private SOListPlayerContainer players;
     [SerializeField]
     private SimpleAvatar avatar;
+
+    private float timer;
 
     private float prevLife;
 
@@ -35,8 +44,33 @@ public class Player : LivingBeing
     }
     protected void LateUpdate()
     {
-        if (!Client.IsHost || Dead)
+        if (!Client.IsHost)
             return;
+
+        if (Dead)
+        {
+            int length = players.Elements.Count;
+            for (int i = 0; i < length; i++)
+            {
+                Player other = players[i];
+                if (other != this && (this.transform.position - other.transform.position).sqrMagnitude < MaxRessDistance * MaxRessDistance)
+                {
+                    this.Life += RessTimeMultiplier * Time.deltaTime;
+                    if (this.Life >= 1f)
+                        this.Resurrect(Stats.MaxHealth * RessHealthPercentage);
+                    return;
+                }
+            }
+
+            //if no player is near the dead player the death timer will proceed
+            timer += Time.deltaTime;
+            if(timer > MaxRessTime)
+            {
+                Destroy(this.gameObject);
+            }
+
+            return;
+        }
 
         if (!Mathf.Approximately(prevLife, Life))
         {
@@ -60,6 +94,9 @@ public class Player : LivingBeing
     public override void Die()
     {
         Dead = true;
+
+        Life = 0f;
+        timer = 0f;
 
         if (avatar.UserInfo.SteamID == Client.MyID)
             PlayerAliveStatusChanged.Raise(false);
