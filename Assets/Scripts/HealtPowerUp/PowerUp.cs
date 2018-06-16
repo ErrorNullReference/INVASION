@@ -1,17 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
+using SOPRO;
 public enum PowerUpType
 {
-    Healt = 0,
+    Health = 0,
     Energy = 1
 }
 
 public class Timer
 {
     public float MaxTime { get { return timeLimit; } }
-    public bool IsActive { get; set; }
+    public bool IsActive;
 
     public float currentTime;
     private float timeLimit;
@@ -21,25 +22,22 @@ public class Timer
         this.timeLimit = timeLimit;
     }
 
-    public void Update()
+    public void Update(float deltaTime)
     {
-        currentTime += Time.deltaTime;
+        currentTime += deltaTime;
     }
 
     public bool IsOver()
     {
         return currentTime > timeLimit;
     }
-
-    public void Reset()
-    {
-        currentTime = 0f;
-    }
 }
 
 public class PowerUp : MonoBehaviour
 {
     public PowerUpType Type;
+    [NonSerialized]
+    public SOPool Pool;
 
     [SerializeField]
     private float lifeTime;
@@ -51,32 +49,38 @@ public class PowerUp : MonoBehaviour
     private int value;
     private Timer timer;
 
-    private void Start()
+    private void OnEnable()
     {
-        value = Random.Range(minValue,maxValue);
-        timer = new Timer(lifeTime);
+        value = UnityEngine.Random.Range(minValue, maxValue + 1);
+        if (timer == null)
+            timer = new Timer(lifeTime);
+        timer.currentTime = 0;
     }
 
     private void Update()
     {
-        timer.Update();
+        timer.Update(Time.deltaTime);
         if (timer.IsOver())
         {
-            timer.Reset();
+            timer.currentTime = 0f;
             //Recycle
-            Destroy(this.gameObject);
+            Pool.Recycle(this.gameObject);
         }
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.GetComponent<Player>() != null && Type == PowerUpType.Healt)
+        Player p = collision.gameObject.GetComponent<Player>();
+        if (!p)
+            return;
+
+        if (Type == PowerUpType.Health)
         {
-            Debug.Log("Before: " + collision.gameObject.GetComponent<Player>().Life);
-            collision.gameObject.GetComponent<Player>().Life += value;
+            Debug.Log("Before: " + p.Life);
+            p.Life += value;
         }
-        Debug.Log("After : " + collision.gameObject.GetComponent<Player>().Life);
+        Debug.Log("After : " + p.Life);
 
         //Manager call the recycle of this istance maybe
-        Destroy(gameObject);
+        Pool.Recycle(this.gameObject);
     }
 }
