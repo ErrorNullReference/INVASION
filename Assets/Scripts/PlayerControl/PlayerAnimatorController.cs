@@ -25,7 +25,7 @@ public class PlayerAnimatorController : MonoBehaviour
     void Update()
     {
         dir = Vector3.zero;
-            
+
         if (UseInputs)
         {
             ExtrapolateDirectionWithInputs();
@@ -34,7 +34,7 @@ public class PlayerAnimatorController : MonoBehaviour
         }
         else
             ExtrapolateDirectionWithoutInputs();
-        
+
         animator.SetFloat((int)speedX, dir.x);
         animator.SetFloat((int)speedZ, dir.z);
     }
@@ -80,8 +80,8 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.SetTrigger((int)shoot);
     }
 
-    public void Die()
+    public void Die(bool isDead)
     {
-        animator.SetTrigger((int)death);
+        animator.SetBool((int)death, isDead);
     }
 }

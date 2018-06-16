@@ -21,6 +21,8 @@ public class Player : LivingBeing
     private SOListPlayerContainer players;
     [SerializeField]
     private SimpleAvatar avatar;
+    [SerializeField]
+    private PlayerAnimatorController controller;
 
     private float timer;
 
@@ -95,6 +97,8 @@ public class Player : LivingBeing
     {
         Dead = true;
 
+        controller.Die(true);
+
         Life = 0f;
         timer = 0f;
 
@@ -111,6 +115,8 @@ public class Player : LivingBeing
             return;
 
         Dead = false;
+
+        controller.Die(false);
 
         if (avatar.UserInfo.SteamID == Client.MyID)
             PlayerAliveStatusChanged.Raise(true);
