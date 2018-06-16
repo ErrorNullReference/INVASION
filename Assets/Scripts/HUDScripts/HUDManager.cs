@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using System.IO;
-
+using SOPRO;
 
 public class HUDManager : MonoBehaviour
 {
@@ -18,6 +18,7 @@ public class HUDManager : MonoBehaviour
     //    LevelXP_amount,
      //   LevelXP_lvlNum,
      //   GunName,
+        Score,
         AmmoHeld,
         AmmoMag,
      //   LevelName,
@@ -31,6 +32,7 @@ public class HUDManager : MonoBehaviour
     private LivingBeing livingBeing;
     public DisplayDataType dataType;
     public HeadsUpDisplay InputAssetHUD;
+    public SOListPlayerContainer DataContainer;
     public bool OneTimeUpdate;  //Set to true to disable component.
     Slider GOSlider;
     Text GOText;
@@ -146,7 +148,17 @@ public class HUDManager : MonoBehaviour
                     GOImg.material.SetTexture("PlayerAvatarImage", Server.Users[InputAssetHUD.ClientID].SteamAvatarImage);
                 OneTimeUpdate = true;
                 break;
+            case DisplayDataType.Score:
 
+                for (int i = 0; i < DataContainer.Elements.Count; i++)
+                {
+                    if (DataContainer.Elements[i].Avatar.UserInfo.SteamID == Client.MyID)
+                    {
+                        GOText.text = DataContainer.Elements[i].TotalPoints.ToString();
+                    }
+                }
+
+                break;
 
             default:                
                 break;
