@@ -114,6 +114,10 @@ public class PlayersMgr : MonoBehaviour
                 player.Die();
                 return true;
             }
+            else if (player.Dead)
+            {
+                player.Resurrect(player.Life);
+            }
         }
 
         return false;

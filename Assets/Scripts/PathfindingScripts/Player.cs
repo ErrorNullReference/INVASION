@@ -5,15 +5,15 @@ using GENUtility;
 public class Player : LivingBeing
 {
     private static readonly byte[] packet = new byte[12];
+    public SimpleAvatar Avatar { get { return avatar; } }
     public bool Dead; //TODO: da sostituire poi con animator bool property Dead
+    public SOEvBool PlayerAliveStatusChanged;
     [HideInInspector]
     public Collider PlayerCollider;
     [SerializeField]
     private SOListPlayerContainer players;
     [SerializeField]
     private SimpleAvatar avatar;
-    [SerializeField]
-    private MonoBehaviour[] onDeathDisable = new MonoBehaviour[0];
 
     private float prevLife;
 
@@ -33,7 +33,7 @@ public class Player : LivingBeing
     {
         players.Elements.Remove(this);
     }
-    protected void Update()
+    protected void LateUpdate()
     {
         if (!Client.IsHost || Dead)
             return;
@@ -60,18 +60,19 @@ public class Player : LivingBeing
     public override void Die()
     {
         Dead = true;
-        for (int i = 0; i < onDeathDisable.Length; i++)
-        {
-            onDeathDisable[i].enabled = false;
-        }
+        PlayerAliveStatusChanged.Raise(false);
     }
-    public void Resurrect()
+    /// <summary>
+    /// Requires Life value to be already setted
+    /// </summary>
+    public void Resurrect(float newLife)
     {
+        Life = Mathf.Min(newLife, Stats.MaxHealth);
+        if (Life <= 0f)
+            return;
+
         Dead = false;
-        for (int i = 0; i < onDeathDisable.Length; i++)
-        {
-            onDeathDisable[i].enabled = true;
-        }
+        PlayerAliveStatusChanged.Raise(true);
     }
     //CHANGED, FOR NOW ONLY ONE CAMERA WILL BE USED.
 
