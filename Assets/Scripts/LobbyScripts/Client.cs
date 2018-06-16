@@ -28,7 +28,9 @@ public enum PacketType : byte
     ShootServer,
     ShootHit,
     ShootHitServer,
-    ShootCall
+    ShootCall,
+    PowerUpSpawn,
+    PowerUpDespawn,
 }
 
 public enum PacketOffset

@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33838739156393794}
   - component: {fileID: 135577056917922198}
   - component: {fileID: 23661752461329146}
+  - component: {fileID: 114592951333106626}
   - component: {fileID: 114098877071326540}
   m_Layer: 0
   m_Name: HealthPowerUp
@@ -96,9 +97,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
-  lifeTime: 20
-  minValue: 5
-  maxValue: 10
+  Value: 5
+  LifeTime: 10
+  coll: {fileID: 135577056917922198}
+--- !u!114 &114592951333106626
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1054413260009574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7012d827424c321428681592efbc37ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  networkObjects: {fileID: 11400000, guid: 209e760079e7a28429153a90e96df903, type: 2}
 --- !u!135 &135577056917922198
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -106,7 +119,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1054413260009574}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
