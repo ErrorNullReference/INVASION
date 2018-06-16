@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SOPRO;
+
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimatorController : MonoBehaviour
 {
@@ -38,10 +39,12 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.SetFloat((int)speedX, dir.x);
         animator.SetFloat((int)speedZ, dir.z);
     }
+
     private const string horizontal = "Horizontal";
     private const string vertical = "Vertical";
     private const string sprint = "Sprint";
     private const string fire1 = "Fire1";
+
     void ExtrapolateDirectionWithInputs()
     {
         float x = Input.GetAxis(horizontal);
@@ -49,7 +52,9 @@ public class PlayerAnimatorController : MonoBehaviour
 
         if (x != 0 || z != 0)
         {
-            float angle = -Mathf.Deg2Rad * Vector3.SignedAngle(new Vector3(x, 0, z).normalized, transform.forward, Vector3.up);
+            cameraDir = camera.transform.forward * z + camera.transform.right * x;
+            cameraDir.y = 0;
+            float angle = -Mathf.Deg2Rad * Vector3.SignedAngle(cameraDir.normalized, transform.forward, Vector3.up);
             dir = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
 
             if (Input.GetButton(sprint))

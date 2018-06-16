@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GENUtility;
+
 public class NetObjTransformSync : MonoBehaviour
 {
     private static readonly BytePacket payload = new BytePacket((sizeof(float) * 7) + sizeof(int));
@@ -22,6 +23,7 @@ public class NetObjTransformSync : MonoBehaviour
         waitForSecond = new WaitForSeconds(0.1f);
         animController = GetComponent<AnimationControllerScript>();
     }
+
     private void OnEnable()
     {
         if (!myTransform)
@@ -36,11 +38,13 @@ public class NetObjTransformSync : MonoBehaviour
         startRot = endRot = transform.rotation;
         prediction = new Prediction(startPos, startRot);
     }
+
     private void OnDisable()
     {
         if (Client.IsHost)
             StopCoroutine(SendTransform());
     }
+
     private IEnumerator SendTransform()
     {
         while (true)
@@ -81,6 +85,7 @@ public class NetObjTransformSync : MonoBehaviour
         }
 
     }
+
     public void ReceiveTransform(Vector3 pos, Quaternion rot) //USED BY MOVEMENTMANAGER
     {
         // Debug.Log("Enemy: " + this.GetComponent<GameNetworkObject>().NetworkId + "Position is: " + pos);

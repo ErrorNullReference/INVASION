@@ -4,17 +4,18 @@ using UnityEngine;
 using Steamworks;
 using System;
 using GENUtility;
+
 public class PlayersMgr : MonoBehaviour
 {
     public SimpleAvatar AvatarTemplate, ControllableAvatarTemplate;
-    public Vector3 SpawnPosition;
+    public Transform SpawnPosition;
     public Material[] Materials;
 
     static PlayersMgr instance;
 
     Dictionary<CSteamID, SimpleAvatar> avatars;
 
-    public static Dictionary<CSteamID, SimpleAvatar> Players { get { return instance.avatars; } }
+    public static Dictionary<CSteamID, SimpleAvatar> Players { get { return instance != null ? instance.avatars : null; } }
 
     // Use this for initialization
     void Start()
@@ -30,7 +31,6 @@ public class PlayersMgr : MonoBehaviour
         }
 
         avatars = new Dictionary<CSteamID, SimpleAvatar>();
-
         for (int i = 0; i < Client.Users.Count; i++)
         {
             SimpleAvatar a;
@@ -40,8 +40,7 @@ public class PlayersMgr : MonoBehaviour
                 a = Instantiate(AvatarTemplate);
 
             a.UserInfo = Client.Users[i];
-            a.transform.position = SpawnPosition;
-            //a.gameObject.GetComponent<Renderer>().material = Materials[Client.Users[i].AvatarID];
+            a.transform.position = SpawnPosition.position;
             avatars.Add(Client.Users[i].SteamID, a);
         }
 
