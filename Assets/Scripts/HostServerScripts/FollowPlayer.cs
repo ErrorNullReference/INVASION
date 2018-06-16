@@ -13,7 +13,7 @@ public class FollowPlayer : MonoBehaviour
         for (int i = 0; i < Players.Elements.Count; i++)
         {
             Player p = Players[i];
-            if (!p.Dead && p.GetComponent<SimpleAvatar>().UserInfo.SteamID == Client.MyID)
+            if (!p.Dead && p.Avatar.UserInfo.SteamID == Client.MyID)
             {
                 CurrentIndex = i;
                 break;

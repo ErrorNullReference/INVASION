@@ -60,7 +60,8 @@ public class Player : LivingBeing
     public override void Die()
     {
         Dead = true;
-        PlayerAliveStatusChanged.Raise(false);
+        if (avatar.UserInfo.SteamID == Client.MyID)
+            PlayerAliveStatusChanged.Raise(false);
     }
     /// <summary>
     /// Requires Life value to be already setted
@@ -72,7 +73,9 @@ public class Player : LivingBeing
             return;
 
         Dead = false;
-        PlayerAliveStatusChanged.Raise(true);
+
+        if (avatar.UserInfo.SteamID == Client.MyID)
+            PlayerAliveStatusChanged.Raise(true);
     }
     //CHANGED, FOR NOW ONLY ONE CAMERA WILL BE USED.
 

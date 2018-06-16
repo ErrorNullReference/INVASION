@@ -329,7 +329,6 @@ GameObject:
   - component: {fileID: 114589947947188420}
   - component: {fileID: 114130298613650360}
   - component: {fileID: 114306316975834924}
-  - component: {fileID: 114947946457787774}
   m_Layer: 8
   m_Name: Avatar
   m_TagString: Untagged
@@ -1622,45 +1621,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b96e96a6367a9b4fa43eff1a9c871ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114947946457787774
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1359835376740600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ecf17378b2f7ee49aa54d697a3bc7da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 19c5cfa168636f147a93e63cfc145108, type: 2}
-  Actions:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114110360840130282}
-        m_MethodName: set_enabled
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 114589947947188420}
-        m_MethodName: set_enabled
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: SOPRO.UnEvBool, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
 --- !u!136 &136226636795074944
 CapsuleCollider:
   m_ObjectHideFlags: 1
