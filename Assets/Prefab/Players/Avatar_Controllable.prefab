@@ -246,6 +246,7 @@ GameObject:
   - component: {fileID: 54834340662259576}
   - component: {fileID: 114284937430153682}
   - component: {fileID: 114741821120968036}
+  - component: {fileID: 114294811970939392}
   m_Layer: 8
   m_Name: Avatar_Controllable
   m_TagString: Untagged
@@ -1534,6 +1535,18 @@ MonoBehaviour:
     UseConstant: 1
     Variable: {fileID: 0}
     constantValue: 25
+--- !u!114 &114294811970939392
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1248683764693932}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8e6ec6adad04f646b4944b4ecf69549, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxTime: 100
 --- !u!114 &114402471443833716
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1688,6 +1701,28 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 114839815314079412}
+        m_MethodName: set_enabled
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114294811970939392}
+        m_MethodName: IsInactive
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 136651011897755702}
         m_MethodName: set_enabled
         m_Mode: 0
         m_Arguments:
