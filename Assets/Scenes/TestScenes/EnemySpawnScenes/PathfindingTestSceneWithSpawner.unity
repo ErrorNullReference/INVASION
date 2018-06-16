@@ -1786,12 +1786,24 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 4969094081670286, guid: 504be5db83b57664cb6d2119deb57bad, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -39.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4969094081670286, guid: 504be5db83b57664cb6d2119deb57bad, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 2.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4969094081670286, guid: 504be5db83b57664cb6d2119deb57bad, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 504be5db83b57664cb6d2119deb57bad, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1201646790 stripped
 Transform:
-  m_PrefabParentObject: {fileID: 4824581554362494, guid: 504be5db83b57664cb6d2119deb57bad,
+  m_PrefabParentObject: {fileID: 4913861347994080, guid: 504be5db83b57664cb6d2119deb57bad,
     type: 2}
   m_PrefabInternal: {fileID: 1201646789}
 --- !u!1 &1242420291
