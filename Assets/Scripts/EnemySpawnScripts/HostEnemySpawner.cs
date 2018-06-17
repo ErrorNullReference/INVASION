@@ -15,7 +15,6 @@ public class HostEnemySpawner : MonoBehaviour
     int waveCount;
     WaitForEndOfFrame waitForFrame;
     private Vector3 spawnPos;
-    bool coroutineStart;
     bool coroutineOver = true;
     private static readonly BytePacket idAndPos = new BytePacket(16);
     private static readonly byte[] emptyArray = new byte[0];
@@ -23,7 +22,6 @@ public class HostEnemySpawner : MonoBehaviour
     void Start()
     {
         waitForFrame = new WaitForEndOfFrame();
-        waveCount = UnityEngine.Random.Range(1, 20);
 
         SteamCallbackReceiver.ChatUpdateEvent += InitCoroutine;
         SteamCallbackReceiver.LobbyDataUpdateEvent += InitCoroutine;
@@ -49,7 +47,6 @@ public class HostEnemySpawner : MonoBehaviour
         }
         spawnPos = NearestSpawnPointOutsideView;
         coroutineOver = true;
-        coroutineStart = false;
     }
 
     private IEnumerator SpawnEnemiesAtStart()
@@ -89,26 +86,28 @@ public class HostEnemySpawner : MonoBehaviour
 
     void InitCoroutine(LobbyDataUpdate_t cb)
     {
-        if (coroutineStart || !ControlUsersStatus())
+        if (!coroutineOver || !ControlUsersStatus())
             return;
 
         Server.Init();
         Client.LeaveCurrentLobby();
         Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.LeaveLobby, EP2PSend.k_EP2PSendReliable);
+        spawnPos = NearestSpawnPointOutsideView;
+        waveCount = Random.Range(1, 5) * 5;
         StartCoroutine(SpawnEnemiesAtStart());
-        coroutineStart = true;
     }
 
     void InitCoroutine(LobbyChatUpdate_t cb)
     {
-        if (coroutineStart || !ControlUsersStatus())
+        if (!coroutineOver || !ControlUsersStatus())
             return;
 
         Server.Init();
         Client.LeaveCurrentLobby();
         Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.LeaveLobby, EP2PSend.k_EP2PSendReliable);
+        spawnPos = NearestSpawnPointOutsideView;
+        waveCount = Random.Range(1, 5) * 5;
         StartCoroutine(SpawnEnemiesAtStart());
-        coroutineStart = true;
     }
 
     bool ControlUsersStatus()
