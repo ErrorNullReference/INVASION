@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 347bf0ab51055c543880e80d2b6b6761, type: 3}
   m_Name: New Net Id Dispenser
   m_EditorClassIdentifier: 
-  nextDispensedId: 47
+  nextDispensedId: -2111111

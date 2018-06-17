@@ -11,10 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c13fc0e49bf0034dad17f46686cdf7d, type: 3}
   m_Name: New Enemy Spawner
   m_EditorClassIdentifier: 
-  netEntities: {fileID: 11400000, guid: 209e760079e7a28429153a90e96df903, type: 2}
-  EnemyPools:
+  pools:
   - {fileID: 11400000, guid: ec80055c0b6a7d94f8161aa139ca11af, type: 2}
+  netEntities: {fileID: 11400000, guid: 209e760079e7a28429153a90e96df903, type: 2}
   PoolRoot: {fileID: 1507460858770256, guid: 07ed9b25ff098e14aa3df81bbca13e31, type: 2}
   OnEnemyAddEvent: {fileID: 11400000, guid: 6222d5a7c25fbb549b59073c231bf989, type: 2}
   OnEnemyRemoveEvent: {fileID: 11400000, guid: 607e8abc1e3e0a947933eca8ce1af62a, type: 2}
+  EnemiesCount: {fileID: 11400000, guid: 680e3e3bfab9c0b49b9e0bb02d964541, type: 2}
   Mask: {fileID: 11400000, guid: ddc61fca2bd6a664ca21fe8d3d467156, type: 2}

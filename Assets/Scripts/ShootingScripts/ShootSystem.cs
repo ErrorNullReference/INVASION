@@ -33,10 +33,13 @@ public class ShootSystem : MonoBehaviour
     private LayerMaskHolder mask;
     private static readonly byte[] emptyArray = new byte[0];
 
+    SimpleAvatar avatar;
+
     private void Awake()
     {
         recoilTime = 0;
         raycastHit = new RaycastHit();
+        avatar = GetComponent<SimpleAvatar>();
     }
 
     void CallShoot()
@@ -77,12 +80,12 @@ public class ShootSystem : MonoBehaviour
             {
                 GameNetworkObject obj = raycastHit.collider.gameObject.GetComponent<GameNetworkObject>();
                 if (obj != null)
-                    SendHitToHost(obj.NetworkId);
+                    SendHitToHost(obj.NetworkId, gun.values.Damage);
             }
         }
         else if (shootingType == ShootingType.Consecutive) // else add the ray in a list
         {
-            ShootsMgr.AddRay(new RayPlus(ray.origin + ray.direction * distance, ray.direction, distance, gun.values.Damage, gun.values.Speed, gun.values.MaxDistance, activateCallbacks));
+            ShootsMgr.AddRay(new RayPlus(ray.origin + ray.direction * distance, ray.direction, distance, gun.values.Damage, gun.values.Speed, gun.values.MaxDistance, (ulong)avatar.UserInfo.SteamID, activateCallbacks));
         }
         //set rotation on identity
         muzzle.transform.localRotation = Quaternion.identity;
@@ -95,12 +98,14 @@ public class ShootSystem : MonoBehaviour
         Client.SendPacketToHost(emptyArray, 0, 0, PacketType.ShootServer, Steamworks.EP2PSend.k_EP2PSendReliable);
     }
 
-    void SendHitToHost(int id)
+    void SendHitToHost(int id, float damage)
     {
-        byte[] data = ArrayPool<byte>.Get(sizeof(int));
+        byte[] data = ArrayPool<byte>.Get(16);
         ByteManipulator.Write(data, 0, id);
+        ByteManipulator.Write(data, 4, damage);
+        ByteManipulator.Write(data, 8, (ulong)avatar.UserInfo.SteamID);
 
-        Client.SendPacketToHost(data, 0, data.Length, PacketType.ShootHitServer, Steamworks.EP2PSend.k_EP2PSendReliable);
+        Client.SendPacketToInGameUsers(data, 0, data.Length, PacketType.ShootHitServer, Steamworks.EP2PSend.k_EP2PSendReliable);
 
         ArrayPool<byte>.Recycle(data);
         //Debug.Log("hit");

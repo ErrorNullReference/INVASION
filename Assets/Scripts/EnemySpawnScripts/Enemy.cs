@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using SOPRO;
-
+using GENUtility;
+using System;
+[RequireComponent(typeof(GameNetworkObject))]
 public class Enemy : LivingBeing
 {
-    public bool Destroy;
-    public bool Recycling;
-    public float randomSpawnTimer;
-    [HideInInspector]
+    public SOVariableEnemyType Type;
+    [NonSerialized]
     public SOPool Pool;
     private float HUDTimer;
     [SerializeField]
@@ -18,7 +18,7 @@ public class Enemy : LivingBeing
     HUDManager hudManager;
     Image healthImage;
 
-    public GameNetworkObject NetworkId
+    public GameNetworkObject NetObj
     {
         get
         {
@@ -33,16 +33,13 @@ public class Enemy : LivingBeing
         healthImage.enabled = false;
         hudManager.InputAssetHUD = Stats;
     }
-
+    private void Awake()
+    {
+        networkId = GetComponent<GameNetworkObject>();
+    }
     private void OnEnable()
     {
-        if (!networkId)
-            networkId = GetComponent<GameNetworkObject>();
-
-        randomSpawnTimer = Random.Range(0f, 5.0f);
         Life = Stats.MaxHealth;
-        Destroy = false;
-        Recycling = false;
     }
 
     private void OnDisable()
@@ -50,29 +47,32 @@ public class Enemy : LivingBeing
         networkId.ResetNetworkId();
     }
 
-    private void Awake()
-    {
-        randomSpawnTimer = Random.Range(0f, 5.0f);
-        Destroy = false;
-        Recycling = false;
-    }
-
     public void Reset()
     {
         Life = Stats.MaxHealth;
     }
 
-    public void DestroyAndRecycle()
+    public override void Die()
     {
-        Destroy = true;
-        Recycling = true;
+        if (!Client.IsHost)
+            return;
+
+        byte[] d = ArrayPool<byte>.Get(sizeof(int));
+        ByteManipulator.Write(d, 0, networkId.NetworkId);
+
+        Client.SendPacketToInGameUsers(d, 0, d.Length, PacketType.EnemyDeath, Steamworks.EP2PSend.k_EP2PSendReliable);
+
+        ArrayPool<byte>.Recycle(d);
     }
 
-    public void DecreaseLife()
+    public void DecreaseLife(float decrease)
     {
         healthImage.enabled = true;
         HUDTimer = HUDTimerShow;
-        Life--;
+        Life -= decrease;
+
+        if (Life <= 0)
+            Die();
     }
 
     private void Update()

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: GunValues
   m_EditorClassIdentifier: 
   Rateo: 0.2
-  ammoReady: 0
-  ammoInMagazine: 0
-  maxAmmoStored: 0
+  currentAmmoInMag: 0
+  magCapacity: 0
+  complessiveAmmoInMags: 0
   range: 0
   maxDistance: 100
   speed: 715
@@ -22,4 +22,4 @@ MonoBehaviour:
   wallParticle: {fileID: 0}
   bloodParticles: {fileID: 0}
   gunSystem: 0
-  damage: 0
+  damage: 2

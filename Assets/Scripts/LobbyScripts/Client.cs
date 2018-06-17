@@ -10,6 +10,8 @@ public enum PacketType : byte
     Test = 0,
     PlayerData,
     PlayerDataServer,
+    PlayerStatus,
+    PlayerDeath,
     NetObjTransform,
     NetObjTransformServer,
     Chat,
@@ -27,7 +29,9 @@ public enum PacketType : byte
     ShootServer,
     ShootHit,
     ShootHitServer,
-    ShootCall
+    ShootCall,
+    PowerUpSpawn,
+    PowerUpDespawn,
 }
 
 public enum PacketOffset
@@ -61,7 +65,7 @@ public class Client : MonoBehaviour
     /// <summary>
     /// Return true if you are the lobby owner.
     /// </summary>
-    public static bool IsHost { get { return Host == MyID ? true : false; } }
+    public static bool IsHost { get { return Host == MyID; } }
 
     public static CSteamID MyID;
 

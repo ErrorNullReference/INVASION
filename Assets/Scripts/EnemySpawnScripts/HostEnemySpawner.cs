@@ -1,74 +1,105 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Steamworks;
 using GENUtility;
-
+using SOPRO;
 public class HostEnemySpawner : MonoBehaviour
 {
-    public static HostEnemySpawner Instance;
-    int enemyId;
-    public const int MAX_NUM_ENEMIES = 200;
+    public SOVariableVector3 NearestSpawnPointOutsideView;
+    public SOListVector3Container AllSpawnPointsOutsideView;
+    public ReferenceInt MaxEnemyCount;
+    public SOVariableInt CurrentEnemyCount;
     public NetIdDispenser IdDispenser;
-    int firstWaveCount;
-    public int enemiesCount;
-    private Dictionary<int, Enemy> IdEnemies;
+
+    public ReferenceFloat TimeForLittleSquadSpawn;
+    public ReferenceInt EnemyCountForBigSquadSpawn;
+
+    public ReferenceInt MinLittleSquadSpawn;
+    public ReferenceInt MaxLittleSquadSpawn;
+
+    public ReferenceInt BigSquadSpawnMultiplier;
+
+    int waveCount;
     WaitForEndOfFrame waitForFrame;
-    bool coroutineStart;
-    private static readonly BytePacket idAndPos = new BytePacket(16);
+    WaitForSeconds waitForSeconds;
+    private Vector3 spawnPos;
+    bool coroutineOver = true;
+    bool continuousCoroutineStarted;
+    private static readonly BytePacket idAndPos = new BytePacket(17);
     private static readonly byte[] emptyArray = new byte[0];
     // Use this for initialization
     void Start()
     {
-        if (Instance != null)
-        {
-            Destroy(this);
-            return;
-        }
-        else
-            Instance = this;
-        if (!Client.IsHost)
-        {
-            this.enabled = false;
-            return;
-        }
         waitForFrame = new WaitForEndOfFrame();
-        enemiesCount = 0;
-        enemyId = 0;
-        firstWaveCount = UnityEngine.Random.Range(1, 20);
 
         SteamCallbackReceiver.ChatUpdateEvent += InitCoroutine;
         SteamCallbackReceiver.LobbyDataUpdateEvent += InitCoroutine;
 
         //InitCoroutine(new LobbyDataUpdate_t());
     }
-
-    void OnEnable()
+    private void Update()
     {
-        coroutineStart = false;
-    }
-
-    private IEnumerator SpawnEnemiesAtStart()
-    {
-        for (int i = 0; i < firstWaveCount; i++)
+        if (coroutineOver && CurrentEnemyCount < EnemyCountForBigSquadSpawn)
         {
-            InstantiateEnemy(EnemySpawnSystem.GetSpawnPoint());
-            yield return waitForFrame;
+            spawnPos = AllSpawnPointsOutsideView[Random.Range(0, AllSpawnPointsOutsideView.Elements.Count)];
+            waveCount = Random.Range(MinLittleSquadSpawn, MaxLittleSquadSpawn) * BigSquadSpawnMultiplier;
+            StartCoroutine(SpawnEnemyWave());
+        }
+        if (!continuousCoroutineStarted)
+        {
+            continuousCoroutineStarted = true;
+            StartCoroutine(SpawnEnemyContinuous());
         }
     }
 
-    //sends to clients the command to instantiate an enemy in a given position, or it takes a random position from an array of randomic given positions if none is specified
-    public void InstantiateEnemy(Vector3 position)
+    void OnEnable()
     {
-        int Id = IdDispenser.GetNewNetId();
+        if (!Client.IsHost)
+        {
+            this.enabled = false;
+            return;
+        }
+        continuousCoroutineStarted = false;
+        waitForSeconds = new WaitForSeconds(TimeForLittleSquadSpawn);
+        spawnPos = NearestSpawnPointOutsideView;
+        coroutineOver = true;
+    }
+    private IEnumerator SpawnEnemyContinuous()
+    {
+        while (true)
+        {
+            yield return waitForSeconds;
+            int length = Random.Range(MinLittleSquadSpawn, MaxLittleSquadSpawn);
+            for (int i = 0; i < length; i++)
+            {
+                InstantiateEnemy(EnemyType.Normal, NearestSpawnPointOutsideView);
+            }
+        }
+    }
+    private IEnumerator SpawnEnemyWave()
+    {
+        coroutineOver = false;
+        for (int i = 0; i < waveCount; i++)
+        {
+            yield return waitForFrame;
+            InstantiateEnemy(EnemyType.Normal, spawnPos);
+        }
+        coroutineOver = true;
+    }
 
-        if (position == Vector3.zero)
-            position = EnemySpawnSystem.GetSpawnPoint();
+    //sends to clients the command to instantiate an enemy in a given position, or it takes a random position from an array of randomic given positions if none is specified
+    public void InstantiateEnemy(EnemyType type, Vector3 position)
+    {
+        if (CurrentEnemyCount >= MaxEnemyCount)
+            return;
+
+        int Id = IdDispenser.GetNewNetId();
 
         idAndPos.CurrentLength = 0;
         idAndPos.CurrentSeek = 0;
 
+        idAndPos.Write((byte)type);
         idAndPos.Write(Id);
         idAndPos.Write(position.x);
         idAndPos.Write(position.y);
@@ -84,26 +115,28 @@ public class HostEnemySpawner : MonoBehaviour
 
     void InitCoroutine(LobbyDataUpdate_t cb)
     {
-        if (coroutineStart || !ControlUsersStatus())
+        if (!coroutineOver || !ControlUsersStatus())
             return;
 
         Server.Init();
         Client.LeaveCurrentLobby();
         Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.LeaveLobby, EP2PSend.k_EP2PSendReliable);
-        StartCoroutine(SpawnEnemiesAtStart());
-        coroutineStart = true;
+        spawnPos = NearestSpawnPointOutsideView;
+        waveCount = Random.Range(MinLittleSquadSpawn, MaxLittleSquadSpawn) * BigSquadSpawnMultiplier;
+        StartCoroutine(SpawnEnemyWave());
     }
 
     void InitCoroutine(LobbyChatUpdate_t cb)
     {
-        if (coroutineStart || !ControlUsersStatus())
+        if (!coroutineOver || !ControlUsersStatus())
             return;
 
         Server.Init();
         Client.LeaveCurrentLobby();
         Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.LeaveLobby, EP2PSend.k_EP2PSendReliable);
-        StartCoroutine(SpawnEnemiesAtStart());
-        coroutineStart = true;
+        spawnPos = NearestSpawnPointOutsideView;
+        waveCount = Random.Range(MinLittleSquadSpawn, MaxLittleSquadSpawn) * BigSquadSpawnMultiplier;
+        StartCoroutine(SpawnEnemyWave());
     }
 
     bool ControlUsersStatus()

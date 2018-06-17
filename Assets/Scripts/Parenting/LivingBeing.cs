@@ -2,20 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class LivingBeing : MonoBehaviour {
-
-    [SerializeField]
-    private float life;
+public abstract class LivingBeing : MonoBehaviour
+{
+    public float Life;
     public HeadsUpDisplay Stats;
-    public float Life
-    {
-        get
-        {
-            return life;
-        }
-        set
-        {
-            life = value;
-        }
-    }	
+    public abstract void Die();
 }

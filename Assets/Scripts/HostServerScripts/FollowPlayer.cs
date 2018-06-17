@@ -1,23 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using SOPRO;
 public class FollowPlayer : MonoBehaviour
 {
-    Transform Target;
-    public Vector3 Offset;
-    public Vector3 Rotation;
+    public SOListPlayerContainer Players;
+    public ReferenceVector3 Offset;
 
-    void Start()
+    public int CurrentIndex;
+    public void SetFollowLocalPlayer()
     {
-        Target = FindObjectOfType<PlayerController>().transform;   
-        transform.rotation = Quaternion.Euler(Rotation);
+        for (int i = 0; i < Players.Elements.Count; i++)
+        {
+            Player p = Players[i];
+            if (!p.Dead && p.Avatar.UserInfo.SteamID == Client.MyID)
+            {
+                CurrentIndex = i;
+                break;
+            }
+        }
+    }
+    private void Start()
+    {
+        SetFollowLocalPlayer();
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        if (Target != null)
-            transform.position = Target.position + Offset;
+        transform.position = Players[CurrentIndex].transform.position + Offset;
     }
 }
