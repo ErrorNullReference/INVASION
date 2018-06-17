@@ -17,6 +17,8 @@ public class EnemySpawner : ScriptableObject
     public BaseSOEvGameNetworkObject OnEnemyAddEvent;
     public BaseSOEvGameNetworkObject OnEnemyRemoveEvent;
 
+    public SOVariableInt EnemiesCount;
+
     public NavMeshAreaMaskHolder Mask;
 
     private Transform poolRoot;
@@ -25,6 +27,7 @@ public class EnemySpawner : ScriptableObject
     {
         Client.AddCommand(PacketType.EnemyDeath, OnEnemyDeath);
         Client.AddCommand(PacketType.EnemySpawn, InstantiateEnemy);
+        EnemiesCount.Value = 0;
     }
 
     //public GameObject EnemyCreation(GameObject obj, GameObject parent) //TODO: is this needed ? no one calls it
@@ -44,7 +47,7 @@ public class EnemySpawner : ScriptableObject
             poolRoot.name = "Enemies Root";
         }
 
-        int Id = ByteManipulator.ReadInt32(data, 0);
+        int id = ByteManipulator.ReadInt32(data, 0);
         //Debug.Log("received: " + Id);
         float positionX = ByteManipulator.ReadSingle(data, 4);
         float positionY = ByteManipulator.ReadSingle(data, 8);
@@ -55,20 +58,23 @@ public class EnemySpawner : ScriptableObject
 
         bool parented;
         int nullObjsRemovedFromPool;
-        GameObject enemy = pool.DirectGet(poolRoot, out nullObjsRemovedFromPool, out parented);
+        GameObject go = pool.DirectGet(poolRoot, out nullObjsRemovedFromPool, out parented);
 
-        enemy.GetComponent<Enemy>().Pool = pool;
-        GameNetworkObject NObj = enemy.GetComponent<GameNetworkObject>();
-        NObj.SetNetworkId(Id);
+        Enemy enemy = go.GetComponent<Enemy>();
+        enemy.Pool = pool;
+        enemy.NetworkId.SetNetworkId(id);
         //cb.transform.position = position;
         NavMeshHit hit;
         if (NavMesh.SamplePosition(position, out hit, 1f, Mask))
-            enemy.GetComponent<NavMeshAgent>().Warp(hit.position);
+            go.GetComponent<NavMeshAgent>().Warp(hit.position);
         else
             Debug.LogWarning("NavMesh point for enemy spawn not found , souce pos = " + position);
 
-        enemy.SetActive(true);
-        OnEnemyAddEvent.Raise(NObj);
+        go.SetActive(true);
+
+        EnemiesCount.Value++;
+
+        OnEnemyAddEvent.Raise(enemy.NetworkId);
         //if (!activeEnemyList.Contains(enemy.GetComponent<Enemy>()))
         //    enemiesToAdd.Add(enemy.GetComponent<Enemy>());        
     }
@@ -84,6 +90,9 @@ public class EnemySpawner : ScriptableObject
 
         obj.Reset();
         obj.Pool.Recycle(obj.gameObject);
-        OnEnemyRemoveEvent.Raise(obj.GetComponent<GameNetworkObject>());
+
+        EnemiesCount.Value--;
+
+        OnEnemyRemoveEvent.Raise(obj.NetworkId);
     }
 }

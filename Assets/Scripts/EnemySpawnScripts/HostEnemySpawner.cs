@@ -6,61 +6,69 @@ using GENUtility;
 using SOPRO;
 public class HostEnemySpawner : MonoBehaviour
 {
-    public static HostEnemySpawner Instance;
-    public ReferenceVector3 NearestSpawnPointOutsideView;
-    int enemyId;
-    public const int MAX_NUM_ENEMIES = 200;
+    public SOVariableVector3 NearestSpawnPointOutsideView;
+    public SOListVector3Container AllSpawnPointsOutsideView;
+    public ReferenceInt MaxEnemyCount;
+    public SOVariableInt CurrentEnemyCount;
     public NetIdDispenser IdDispenser;
-    int firstWaveCount;
-    public int enemiesCount;
-    private Dictionary<int, Enemy> IdEnemies;
+
+    int waveCount;
     WaitForEndOfFrame waitForFrame;
+    private Vector3 spawnPos;
     bool coroutineStart;
+    bool coroutineOver = true;
     private static readonly BytePacket idAndPos = new BytePacket(16);
     private static readonly byte[] emptyArray = new byte[0];
     // Use this for initialization
     void Start()
     {
-        if (Instance != null)
-        {
-            Destroy(this);
-            return;
-        }
-        else
-            Instance = this;
-        if (!Client.IsHost)
-        {
-            this.enabled = false;
-            return;
-        }
         waitForFrame = new WaitForEndOfFrame();
-        enemiesCount = 0;
-        enemyId = 0;
-        firstWaveCount = UnityEngine.Random.Range(1, 20);
+        waveCount = UnityEngine.Random.Range(1, 20);
 
         SteamCallbackReceiver.ChatUpdateEvent += InitCoroutine;
         SteamCallbackReceiver.LobbyDataUpdateEvent += InitCoroutine;
 
         //InitCoroutine(new LobbyDataUpdate_t());
     }
+    private void Update()
+    {
+        if (coroutineOver && CurrentEnemyCount < 10)
+        {
+            spawnPos = AllSpawnPointsOutsideView[Random.Range(0, AllSpawnPointsOutsideView.Elements.Count)];
+            waveCount = Random.Range(1, 5) * 5;
+            StartCoroutine(SpawnEnemiesAtStart());
+        }
+    }
 
     void OnEnable()
     {
+        if (!Client.IsHost)
+        {
+            this.enabled = false;
+            return;
+        }
+        spawnPos = NearestSpawnPointOutsideView;
+        coroutineOver = true;
         coroutineStart = false;
     }
 
     private IEnumerator SpawnEnemiesAtStart()
     {
-        for (int i = 0; i < firstWaveCount; i++)
+        coroutineOver = false;
+        for (int i = 0; i < waveCount; i++)
         {
             yield return waitForFrame;
-            InstantiateEnemy(NearestSpawnPointOutsideView);
+            InstantiateEnemy(spawnPos);
         }
+        coroutineOver = true;
     }
 
     //sends to clients the command to instantiate an enemy in a given position, or it takes a random position from an array of randomic given positions if none is specified
     public void InstantiateEnemy(Vector3 position)
     {
+        if (CurrentEnemyCount >= MaxEnemyCount)
+            return;
+
         int Id = IdDispenser.GetNewNetId();
 
         idAndPos.CurrentLength = 0;

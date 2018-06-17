@@ -43,32 +43,33 @@ public class ShootsMgr : MonoBehaviour
         UnityEngine.Random.InitState(Time.frameCount);
         for (int i = 0; i < rays.Count; i++)
         {
-            float distance = rays[i].Speed * Time.deltaTime;
-            distance = rays[i].Distance + distance > rays[i].MaxDistance ? rays[i].MaxDistance - rays[i].Distance : distance;
-            rays[i].Distance += distance;
+            RayPlus ray = rays[i];
+            float distance = ray.Speed * Time.deltaTime;
+            distance = ray.Distance + distance > ray.MaxDistance ? ray.MaxDistance - ray.Distance : distance;
+            ray.Distance += distance;
 
             //if (Application.isEditor)
             //  Debug.DrawRay(rays[i].Ray.origin, rays[i].Ray.direction * distance, Color.red, 0.5f);
 
-            if (Physics.Raycast(rays[i].Ray, out raycastHit, distance))
+            if (Physics.Raycast(ray.Ray, out raycastHit, distance))
             {
                 //if (Application.isEditor)
                 //  Debug.Log(raycastHit.collider);
 
-                if (rays[i].ActivateCallbacks)
+                if (ray.ActivateCallbacks)
                 {
                     GameNetworkObject obj = raycastHit.collider.gameObject.GetComponent<GameNetworkObject>();
-                    if (obj != null)
-                        SendHitToHost(obj.NetworkId);
+                    if (obj)
+                        SendHitToHost(obj.NetworkId, ray.Damage, ray.Shooter);
                 }
-                removeRays.Add(rays[i]);
+                removeRays.Add(ray);
             }
-            if (rays[i].Distance >= rays[i].MaxDistance)
+            if (ray.Distance >= ray.MaxDistance)
             {
-                removeRays.Add(rays[i]);
+                removeRays.Add(ray);
             }
 
-            rays[i].Ray.origin += rays[i].Ray.direction * distance;
+            ray.Ray.origin += ray.Ray.direction * distance;
         }
         for (int j = 0; j < removeRays.Count; j++)
         {
@@ -77,10 +78,13 @@ public class ShootsMgr : MonoBehaviour
         removeRays.Clear();
     }
 
-    void SendHitToHost(int id)
+    void SendHitToHost(int id, float damage, ulong shooter)
     {
-        byte[] data = ArrayPool<byte>.Get(sizeof(int));
+        byte[] data = ArrayPool<byte>.Get(16);
+
         ByteManipulator.Write(data, 0, id);
+        ByteManipulator.Write(data, 4, damage);
+        ByteManipulator.Write(data, 8, shooter);
 
         Client.SendPacketToHost(data, 0, data.Length, PacketType.ShootHitServer, Steamworks.EP2PSend.k_EP2PSendReliable);
 
@@ -110,7 +114,7 @@ public class ShootsMgr : MonoBehaviour
 
 public class RayPlus
 {
-    public RayPlus(Vector3 position, Vector3 direction, float distance, float damage, float speed, float maxDistance, bool activateCallbacks = false)
+    public RayPlus(Vector3 position, Vector3 direction, float distance, float damage, float speed, float maxDistance, ulong shooter, bool activateCallbacks = false)
     {
         Ray = new Ray(position, direction);
         Distance = distance;
@@ -118,8 +122,9 @@ public class RayPlus
         Speed = speed;
         MaxDistance = maxDistance;
         ActivateCallbacks = activateCallbacks;
+        Shooter = shooter;
     }
-
+    public ulong Shooter;
     public float Distance;
     public Ray Ray;
     public float Damage;

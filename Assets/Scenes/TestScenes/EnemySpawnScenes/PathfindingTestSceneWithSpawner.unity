@@ -961,7 +961,6 @@ GameObject:
   m_Component:
   - component: {fileID: 769313091}
   - component: {fileID: 769313089}
-  - component: {fileID: 769313094}
   - component: {fileID: 769313090}
   m_Layer: 0
   m_Name: EnemyManager
@@ -981,12 +980,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b38a0a22119ed449bd2d5101fce7c2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NearestSpawnPointOutsideView:
-    UseConstant: 0
-    Variable: {fileID: 11400000, guid: 3c5183fd1e91c904a96b37025af1b757, type: 2}
-    constantValue: {x: 0, y: 0, z: 0}
+  NearestSpawnPointOutsideView: {fileID: 11400000, guid: 3c5183fd1e91c904a96b37025af1b757,
+    type: 2}
+  AllSpawnPointsOutsideView: {fileID: 11400000, guid: 82d6f2f33cfcbe746858c9a674e2a3c3,
+    type: 2}
+  MaxEnemyCount:
+    UseConstant: 1
+    Variable: {fileID: 0}
+    constantValue: 200
+  CurrentEnemyCount: {fileID: 11400000, guid: 680e3e3bfab9c0b49b9e0bb02d964541, type: 2}
   IdDispenser: {fileID: 11400000, guid: 56e47d53dc614774bba72546195db65d, type: 2}
-  enemiesCount: 0
 --- !u!114 &769313090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1023,21 +1026,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &769313094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 769313088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a99a2380ead6a73499daf2bdcfc81a45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NearestPointOutsideView:
-    UseConstant: 0
-    Variable: {fileID: 11400000, guid: 3c5183fd1e91c904a96b37025af1b757, type: 2}
-    constantValue: {x: 0, y: 0, z: 0}
 --- !u!1 &843942214
 GameObject:
   m_ObjectHideFlags: 0

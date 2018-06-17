@@ -85,7 +85,7 @@ public class ShootSystem : MonoBehaviour
         }
         else if (shootingType == ShootingType.Consecutive) // else add the ray in a list
         {
-            ShootsMgr.AddRay(new RayPlus(ray.origin + ray.direction * distance, ray.direction, distance, gun.values.Damage, gun.values.Speed, gun.values.MaxDistance, activateCallbacks));
+            ShootsMgr.AddRay(new RayPlus(ray.origin + ray.direction * distance, ray.direction, distance, gun.values.Damage, gun.values.Speed, gun.values.MaxDistance, (ulong)avatar.UserInfo.SteamID, activateCallbacks));
         }
         //set rotation on identity
         muzzle.transform.localRotation = Quaternion.identity;

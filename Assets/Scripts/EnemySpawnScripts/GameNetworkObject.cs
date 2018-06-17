@@ -16,7 +16,6 @@ public class GameNetworkObject : MonoBehaviour
     public void ResetNetworkId()
     {
         networkObjects.Elements.Remove(this.netId);
-        this.netId = -1;
         Initialized = false;
     }
 }

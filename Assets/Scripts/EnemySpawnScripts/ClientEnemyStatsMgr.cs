@@ -30,7 +30,7 @@ public class ClientEnemyStatsMgr : ScriptableObject
 
         int points = (int)(damage * 10f);
         //if enemy dead give bonus points
-        if (enemy.Destroy)
+        if (enemy.Life <= 0f)
             points += (int)(enemy.Stats.MaxHealth * 10f);
 
         PlayersMgr.Players[(CSteamID)shooter].GetComponent<Player>().TotalPoints += points;
