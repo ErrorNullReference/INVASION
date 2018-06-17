@@ -30,14 +30,6 @@ public class EnemySpawner : ScriptableObject
         EnemiesCount.Value = 0;
     }
 
-    //public GameObject EnemyCreation(GameObject obj, GameObject parent) //TODO: is this needed ? no one calls it
-    //{
-    //    GameObject o = Instantiate(obj, parent.transform);
-    //    //if (OnEnemyAddEvent != null)
-    //    //    OnEnemyAddEvent.Invoke(o.GetComponent<GameNetworkObject>());
-    //    return o;
-    //}
-
     //InstantiateEnemy will be called when command EnemySpawn is received from host
     private void InstantiateEnemy(byte[] data, uint length, CSteamID senderId)
     {
@@ -48,12 +40,13 @@ public class EnemySpawner : ScriptableObject
         }
 
         int id = ByteManipulator.ReadInt32(data, 0);
-        //Debug.Log("received: " + Id);
+
         float positionX = ByteManipulator.ReadSingle(data, 4);
         float positionY = ByteManipulator.ReadSingle(data, 8);
         float positionZ = ByteManipulator.ReadSingle(data, 12);
-        Vector3 position = new Vector3(positionX, positionY, positionZ);
 
+        Vector3 position = new Vector3(positionX, positionY, positionZ);
+        //TODO: spawn system similar to power up where each pool is identified by a byte-int which indicates that specific enemy. This is to avoid spawning different enemies on cllients
         SOPool pool = EnemyPools[UnityEngine.Random.Range(0, EnemyPools.Length)];
 
         bool parented;
@@ -63,7 +56,7 @@ public class EnemySpawner : ScriptableObject
         Enemy enemy = go.GetComponent<Enemy>();
         enemy.Pool = pool;
         enemy.NetworkId.SetNetworkId(id);
-        //cb.transform.position = position;
+
         NavMeshHit hit;
         if (NavMesh.SamplePosition(position, out hit, 1f, Mask))
             go.GetComponent<NavMeshAgent>().Warp(hit.position);
@@ -74,9 +67,7 @@ public class EnemySpawner : ScriptableObject
 
         EnemiesCount.Value++;
 
-        OnEnemyAddEvent.Raise(enemy.NetworkId);
-        //if (!activeEnemyList.Contains(enemy.GetComponent<Enemy>()))
-        //    enemiesToAdd.Add(enemy.GetComponent<Enemy>());        
+        OnEnemyAddEvent.Raise(enemy.NetworkId);  
     }
 
     //OnEnemyDeath will be called when command EnemyDeath is received from host

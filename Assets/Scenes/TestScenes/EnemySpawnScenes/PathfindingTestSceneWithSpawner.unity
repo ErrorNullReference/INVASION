@@ -990,6 +990,26 @@ MonoBehaviour:
     constantValue: 200
   CurrentEnemyCount: {fileID: 11400000, guid: 680e3e3bfab9c0b49b9e0bb02d964541, type: 2}
   IdDispenser: {fileID: 11400000, guid: 56e47d53dc614774bba72546195db65d, type: 2}
+  TimeForLittleSquadSpawn:
+    UseConstant: 1
+    Variable: {fileID: 0}
+    constantValue: 20
+  EnemyCountForBigSquadSpawn:
+    UseConstant: 1
+    Variable: {fileID: 0}
+    constantValue: 15
+  MinLittleSquadSpawn:
+    UseConstant: 1
+    Variable: {fileID: 0}
+    constantValue: 2
+  MaxLittleSquadSpawn:
+    UseConstant: 1
+    Variable: {fileID: 0}
+    constantValue: 5
+  BigSquadSpawnMultiplier:
+    UseConstant: 1
+    Variable: {fileID: 0}
+    constantValue: 4
 --- !u!114 &769313090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9787,10 +9807,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PowUpManager: {fileID: 11400000, guid: 91a7ce736c31c6b43a5ecf97762456d3, type: 2}
-  Players: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
   SpawnPoints: {fileID: 11400000, guid: 82d6f2f33cfcbe746858c9a674e2a3c3, type: 2}
   IdDispenser: {fileID: 11400000, guid: 56e47d53dc614774bba72546195db65d, type: 2}
-  IdealDistanceSpawn: 50
   SpawnTime: 15
 --- !u!4 &1692884748
 Transform:

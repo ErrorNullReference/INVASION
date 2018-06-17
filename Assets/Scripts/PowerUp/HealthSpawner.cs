@@ -8,11 +8,8 @@ using Steamworks;
 using GENUtility;
 public class HealthSpawner : MonoBehaviour
 {
-    public PowerUpsMgr PowUpManager;
-    //public SOListPlayerContainer Players;
     public SOListVector3Container SpawnPoints;
     public NetIdDispenser IdDispenser;
-    public float IdealDistanceSpawn = 10f;
     public float SpawnTime = 10f;
 
     private float timer = 0f;
@@ -28,31 +25,6 @@ public class HealthSpawner : MonoBehaviour
         if (timer > SpawnTime)
         {
             timer = 0f;
-
-            //int length = Players.Elements.Count;
-            //Vector3 Center = default(Vector3);
-            //for (int i = 0; i < length; i++)
-            //{
-            //    Center += Players[i].transform.position;
-            //}
-            //Center /= length;
-
-
-            //length = SpawnPoints.Elements.Count;
-
-            //Vector3 closest = default(Vector3);
-            //float distanceToIdeal = float.MaxValue;
-
-            //for (int i = 0; i < length; i++)
-            //{
-            //    Vector3 current = SpawnPoints[i];
-            //    float currDistance = Mathf.Abs((current - Center).sqrMagnitude - IdealDistanceSpawn);
-            //    if (currDistance < distanceToIdeal)
-            //    {
-            //        distanceToIdeal = currDistance;
-            //        closest = current;
-            //    }
-            //}
 
             Vector3 closest = SpawnPoints[UnityEngine.Random.Range(0, SpawnPoints.Elements.Count)];
 

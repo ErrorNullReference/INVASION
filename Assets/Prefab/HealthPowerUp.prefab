@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 135577056917922198}
   - component: {fileID: 23661752461329146}
   - component: {fileID: 114592951333106626}
-  - component: {fileID: 114098877071326540}
+  - component: {fileID: 114672264496522838}
   m_Layer: 0
   m_Name: HealthPowerUp
   m_TagString: Untagged
@@ -85,21 +85,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1054413260009574}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114098877071326540
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1054413260009574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63f011e3fb209b345a0949efeb5380e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Type: 0
-  Value: 5
-  LifeTime: 30
-  coll: {fileID: 135577056917922198}
 --- !u!114 &114592951333106626
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -112,6 +97,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   networkObjects: {fileID: 11400000, guid: 209e760079e7a28429153a90e96df903, type: 2}
+--- !u!114 &114672264496522838
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1054413260009574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 382e6474c8409334fb29160bfff2b983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: {fileID: 11400000, guid: 72b3de41f8af1364298b8f615d7fdfe6, type: 2}
+  LifeTime: {fileID: 11400000, guid: f400119a9617c3f4ebf9defa1758bd2a, type: 2}
+  coll: {fileID: 135577056917922198}
+  RecoverLifeAmount: {fileID: 11400000, guid: f137b6e2f69c55b4c80fbb7b256d1416, type: 2}
 --- !u!135 &135577056917922198
 SphereCollider:
   m_ObjectHideFlags: 1

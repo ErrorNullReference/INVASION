@@ -22,13 +22,13 @@ public class PowerUpsMgr : ScriptableObject
         for (int i = 0; i < powerUps.Length; i++)
         {
             SOPool p = powerUps[i];
-            pools.Add((byte)p.Prefab.GetComponent<PowerUp>().Type, p);
+            pools.Add((byte)p.Prefab.GetComponent<PowerUp>().Type.Value, p);
         }
     }
-    private void OnValidate()
-    {
-        OnEnable();
-    }
+    //private void OnValidate()
+    //{
+    //    OnEnable();
+    //}
     private void NetSpawnedPowUp(byte[] data, uint length, CSteamID sender)
     {
         Vector3 pos = new Vector3(ByteManipulator.ReadSingle(data, 5), ByteManipulator.ReadSingle(data, 9), ByteManipulator.ReadSingle(data, 13));
@@ -50,7 +50,7 @@ public class PowerUpsMgr : ScriptableObject
         NetObjs.Elements[id].GetComponent<PowerUp>().Recycle();
     }
 
-    public PowerUp GetPowUp(PowerUpType type, int id, Transform parent, Vector3 pos, Quaternion rot)
+    private PowerUp GetPowUp(PowerUpType type, int id, Transform parent, Vector3 pos, Quaternion rot)
     {
         if (!pools.ContainsKey((byte)type))
             return null;

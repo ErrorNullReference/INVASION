@@ -12,10 +12,20 @@ public class HostEnemySpawner : MonoBehaviour
     public SOVariableInt CurrentEnemyCount;
     public NetIdDispenser IdDispenser;
 
+    public ReferenceFloat TimeForLittleSquadSpawn;
+    public ReferenceInt EnemyCountForBigSquadSpawn;
+
+    public ReferenceInt MinLittleSquadSpawn;
+    public ReferenceInt MaxLittleSquadSpawn;
+
+    public ReferenceInt BigSquadSpawnMultiplier;
+
     int waveCount;
     WaitForEndOfFrame waitForFrame;
+    WaitForSeconds waitForSeconds;
     private Vector3 spawnPos;
     bool coroutineOver = true;
+    bool continuousCoroutineStarted;
     private static readonly BytePacket idAndPos = new BytePacket(16);
     private static readonly byte[] emptyArray = new byte[0];
     // Use this for initialization
@@ -30,11 +40,16 @@ public class HostEnemySpawner : MonoBehaviour
     }
     private void Update()
     {
-        if (coroutineOver && CurrentEnemyCount < 10)
+        if (coroutineOver && CurrentEnemyCount < EnemyCountForBigSquadSpawn)
         {
             spawnPos = AllSpawnPointsOutsideView[Random.Range(0, AllSpawnPointsOutsideView.Elements.Count)];
-            waveCount = Random.Range(1, 5) * 5;
-            StartCoroutine(SpawnEnemiesAtStart());
+            waveCount = Random.Range(MinLittleSquadSpawn, MaxLittleSquadSpawn) * BigSquadSpawnMultiplier;
+            StartCoroutine(SpawnEnemyWave());
+        }
+        if (!continuousCoroutineStarted)
+        {
+            continuousCoroutineStarted = true;
+            StartCoroutine(SpawnEnemyContinuous());
         }
     }
 
@@ -45,11 +60,24 @@ public class HostEnemySpawner : MonoBehaviour
             this.enabled = false;
             return;
         }
+        continuousCoroutineStarted = false;
+        waitForSeconds = new WaitForSeconds(TimeForLittleSquadSpawn);
         spawnPos = NearestSpawnPointOutsideView;
-        coroutineOver = true;
+        coroutineOver = true;        
     }
-
-    private IEnumerator SpawnEnemiesAtStart()
+    private IEnumerator SpawnEnemyContinuous()
+    {
+        while (true)
+        {
+            yield return waitForSeconds;
+            int length = Random.Range(MinLittleSquadSpawn, MaxLittleSquadSpawn);
+            for (int i = 0; i < length; i++)
+            {
+                InstantiateEnemy(NearestSpawnPointOutsideView);
+            }
+        }
+    }
+    private IEnumerator SpawnEnemyWave()
     {
         coroutineOver = false;
         for (int i = 0; i < waveCount; i++)
@@ -93,8 +121,8 @@ public class HostEnemySpawner : MonoBehaviour
         Client.LeaveCurrentLobby();
         Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.LeaveLobby, EP2PSend.k_EP2PSendReliable);
         spawnPos = NearestSpawnPointOutsideView;
-        waveCount = Random.Range(1, 5) * 5;
-        StartCoroutine(SpawnEnemiesAtStart());
+        waveCount = Random.Range(MinLittleSquadSpawn, MaxLittleSquadSpawn) * BigSquadSpawnMultiplier;
+        StartCoroutine(SpawnEnemyWave());
     }
 
     void InitCoroutine(LobbyChatUpdate_t cb)
@@ -106,8 +134,8 @@ public class HostEnemySpawner : MonoBehaviour
         Client.LeaveCurrentLobby();
         Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.LeaveLobby, EP2PSend.k_EP2PSendReliable);
         spawnPos = NearestSpawnPointOutsideView;
-        waveCount = Random.Range(1, 5) * 5;
-        StartCoroutine(SpawnEnemiesAtStart());
+        waveCount = Random.Range(MinLittleSquadSpawn, MaxLittleSquadSpawn) * BigSquadSpawnMultiplier;
+        StartCoroutine(SpawnEnemyWave());
     }
 
     bool ControlUsersStatus()
