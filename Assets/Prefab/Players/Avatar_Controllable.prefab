@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 224962401266001036}
   - component: {fileID: 222078704452071290}
   - component: {fileID: 114842189039452322}
-  - component: {fileID: 114891470962775338}
+  - component: {fileID: 114942568693879412}
   m_Layer: 0
   m_Name: Health Bar
   m_TagString: Untagged
@@ -1085,7 +1085,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1248683764693932}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 1.43, z: 0}
+  m_LocalPosition: {x: 218.0626, y: 392.6873, z: -1263.9192}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224484695160501432}
@@ -1595,9 +1595,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ac7ca6cb5d72744ca4cf43ae73006f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataType: 6
-  InputAssetHUD: {fileID: 0}
-  OneTimeUpdate: 0
+  DataContainer: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
+  InputAssetHUD: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
+  dataType: 2
 --- !u!114 &114668044310168862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1622,6 +1622,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Life: 0
   Stats: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
+  TotalPoints: 0
   Dead: 0
   MaxRessTime: 120
   MaxRessDistance: 10
@@ -1772,7 +1773,7 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 0
   m_FillOrigin: 0
---- !u!114 &114891470962775338
+--- !u!114 &114942568693879412
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1780,12 +1781,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1114498853330882}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ac7ca6cb5d72744ca4cf43ae73006f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 42d9e8289503e1340a6accef3bfb00e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataType: 0
-  InputAssetHUD: {fileID: 0}
-  OneTimeUpdate: 0
+  DataContainer: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
+  InputAssetHUD: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
 --- !u!136 &136651011897755702
 CapsuleCollider:
   m_ObjectHideFlags: 1

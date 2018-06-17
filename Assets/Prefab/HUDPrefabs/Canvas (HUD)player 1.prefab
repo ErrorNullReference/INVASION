@@ -28,7 +28,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1767647329380774
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,15 +156,15 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1767647329380774}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ac7ca6cb5d72744ca4cf43ae73006f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dataType: 1
-  InputAssetHUD: {fileID: 0}
+  InputAssetHUD: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
   DataContainer: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
-  OneTimeUpdate: 0
+  OneTimeUpdate: 1
 --- !u!114 &114402073683487104
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -177,9 +177,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataType: 3
-  InputAssetHUD: {fileID: 0}
-  DataContainer: {fileID: 0}
-  OneTimeUpdate: 1
+  InputAssetHUD: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
+  DataContainer: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
+  OneTimeUpdate: 0
 --- !u!114 &114482602230964016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -240,9 +240,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataType: 4
-  InputAssetHUD: {fileID: 0}
-  DataContainer: {fileID: 0}
-  OneTimeUpdate: 1
+  InputAssetHUD: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
+  DataContainer: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
+  OneTimeUpdate: 0
 --- !u!114 &114674831832504996
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -308,7 +308,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Ammo
+  m_Text: 0
 --- !u!114 &114824053620219078
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -320,9 +320,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ac7ca6cb5d72744ca4cf43ae73006f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataType: 1
-  InputAssetHUD: {fileID: 0}
-  DataContainer: {fileID: 0}
+  dataType: 2
+  InputAssetHUD: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
+  DataContainer: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
   OneTimeUpdate: 0
 --- !u!222 &222107866667297534
 CanvasRenderer:
