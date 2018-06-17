@@ -3,7 +3,7 @@ using SOPRO;
 using GENUtility;
 using Steamworks;
 [CreateAssetMenu(menuName = "Network/PowerUpsMgr")]
-public class PowerUpsMgr : FactoryObj<byte>
+public class PowerUpsMgr : Factory<byte>
 {
     public SODictionaryTransformContainer NetObjs;
     public SOBasicEvIntCSteamID PoweuUpPicked;

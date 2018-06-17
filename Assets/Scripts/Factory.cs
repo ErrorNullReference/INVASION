@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using SOPRO;
 [Serializable]
-public abstract class FactoryObj<T> : ScriptableObject
+public abstract class Factory<T> : ScriptableObject
 {
     protected Dictionary<T, SOPool> organizedPools;
 

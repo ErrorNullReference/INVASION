@@ -8,7 +8,7 @@ using UnityEngine.AI;
 using GENUtility;
 using SOPRO;
 [CreateAssetMenu(menuName = "Network/EnemySpawner")]
-public class EnemySpawner : FactoryObj<byte>
+public class EnemySpawner : Factory<byte>
 {
     public SODictionaryTransformContainer netEntities;
     public GameObject PoolRoot;
