@@ -27,7 +27,7 @@ public class OutsideViewPointCalculator : MonoBehaviour
 
     void LateUpdate()
     {
-        NearesPointOutsideView.Value = GetPosition();
+        GetPosition();
     }
 
     void CalculateBounds(Vector3 position)
@@ -67,70 +67,97 @@ public class OutsideViewPointCalculator : MonoBehaviour
         cameraBounds[3] = position + D * magD;
     }
 
-    Vector3 GetPosition()
+    void GetPosition()
     {
+        //if there are no spawn points set default value
         if (!SpawnPoints || SpawnPoints.Elements.Count == 0)
-            return DefaultSpawnPoint;
+        {
+            NearesPointOutsideView.Value = DefaultSpawnPoint;
+            return;
+        }
 
+        //if there are no players set random position
         if (!Players || Players.Elements.Count == 0)
-            return SpawnPoints[Random.Range(0, SpawnPoints.Elements.Count)];
+        {
+            NearesPointOutsideView.Value = SpawnPoints[Random.Range(0, SpawnPoints.Elements.Count)];
+            return;
+        }
 
         PopulateSpawnPointList();
 
-        return GetNearestSpawnPoint();
+        //return GetNearestSpawnPoint();
     }
 
-    Vector3 GetNearestSpawnPoint()
-    {
-        Vector3 pos = Vector3.zero;
+    //Vector3 GetNearestSpawnPoint()
+    //{
+    //    Vector3 pos = Vector3.zero;
 
-        int length = Players.Elements.Count;
-        for (int i = 0; i < length; i++)
-        {
-            pos += Players[i].transform.position;
-        }
-        pos /= length;
+    //    int length = Players.Elements.Count;
+    //    for (int i = 0; i < length; i++)
+    //    {
+    //        pos += Players[i].transform.position;
+    //    }
+    //    pos /= length;
 
-        float min = float.MaxValue;
-        Vector3 best = DefaultSpawnPoint;
+    //    float min = float.MaxValue;
+    //    Vector3 best = DefaultSpawnPoint;
 
-        if (SpawnPointsOutsideView.Elements.Count <= 0)
-            return SpawnPoints[Random.Range(0, SpawnPoints.Elements.Count)];
+    //    if (SpawnPointsOutsideView.Elements.Count <= 0)
+    //        return SpawnPoints[Random.Range(0, SpawnPoints.Elements.Count)];
 
-        for (int i = 0; i < SpawnPointsOutsideView.Elements.Count; i++)
-        {
-            Vector3 spawnP = SpawnPointsOutsideView[i];
-            float magnitude = (pos - spawnP).sqrMagnitude;
-            if (magnitude <= min)
-            {
-                min = magnitude;
-                best = spawnP;
-            }
-        }
+    //    for (int i = 0; i < SpawnPointsOutsideView.Elements.Count; i++)
+    //    {
+    //        Vector3 spawnP = SpawnPointsOutsideView[i];
+    //        float magnitude = (pos - spawnP).sqrMagnitude;
+    //        if (magnitude <= min)
+    //        {
+    //            min = magnitude;
+    //            best = spawnP;
+    //        }
+    //    }
 
-        return best;
-    }
+    //    return best;
+    //}
 
     void PopulateSpawnPointList()
     {
+        //prepares output list
         SpawnPointsOutsideView.Elements.Clear();
 
-        int length = Players.Elements.Count;
-        for (int i = 0; i < length; i++)
+        Vector3 allPlayersCenter = Vector3.zero;
+
+        int pLength = Players.Elements.Count;
+
+        for (int i = 0; i < pLength; i++)
         {
-            Vector3 pPos = Players[i].transform.position + CameraOffset;
+            Vector3 currentPlayerPos = Players[i].transform.position;
+
+            //prepares center of all players
+            allPlayersCenter += currentPlayerPos;
+
+            //prepares player bounds
+            Vector3 pPos = currentPlayerPos + CameraOffset;
             pPos.y = 0;
 
             for (int j = 0; j < playerBounds.Length; j++)
                 playerBounds[i][j] = cameraBounds[j] + pPos;
         }
+        //center of all players
+        allPlayersCenter /= pLength;
 
         bool contained = false;
-        for (int i = 0; i < SpawnPoints.Elements.Count; i++)
+        //prepares to calculate nearest point outside view
+        float min = float.MaxValue;
+        NearesPointOutsideView.Value = DefaultSpawnPoint;
+
+        int spawnLength = SpawnPoints.Elements.Count;
+
+        for (int i = 0; i < spawnLength; i++)
         {
+            //Calculate whetever current point is inside/outside all players view
             Vector3 point = SpawnPoints[i];
             contained = false;
-            for (int j = 0; j < length; j++)
+            for (int j = 0; j < pLength; j++)
             {
                 if (BoundsContains(playerBounds[j], point))
                 {
@@ -139,11 +166,23 @@ public class OutsideViewPointCalculator : MonoBehaviour
                 }
             }
 
+            //if point is outside view add it to the list of outside points and calculate if it is the nearest to all players center
             if (!contained)
             {
                 SpawnPointsOutsideView.Elements.Add(point);
+
+                float magnitude = (allPlayersCenter - point).sqrMagnitude;
+                if (magnitude <= min)
+                {
+                    min = magnitude;
+                    NearesPointOutsideView.Value = point;
+                }
             }
         }
+
+        //if no point is outside view range get random pos
+        if (Mathf.Approximately(min, float.MaxValue))
+            NearesPointOutsideView.Value = SpawnPoints[Random.Range(0, spawnLength)];
     }
 
     bool BoundsContains(Vector3[] bounds, Vector3 point)
