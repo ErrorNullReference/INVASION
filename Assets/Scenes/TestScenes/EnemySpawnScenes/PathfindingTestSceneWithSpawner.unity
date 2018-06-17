@@ -1196,6 +1196,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1a10f50dcf3fdd041be7c95198ea995a, type: 2}
   - {fileID: 2100000, guid: c48d469efac534440a808a50a16b9ddd, type: 2}
   - {fileID: 2100000, guid: a8fc605449023d548a74e771429d45cd, type: 2}
+  PlayerDeath: {fileID: 11400000, guid: bd542e42128d6d144b3fbb19ba5fa04f, type: 2}
 --- !u!4 &925002024
 Transform:
   m_ObjectHideFlags: 0
@@ -9806,7 +9807,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ed297c40381184dbaf62c51442ece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PowUpManager: {fileID: 11400000, guid: 91a7ce736c31c6b43a5ecf97762456d3, type: 2}
   SpawnPoints: {fileID: 11400000, guid: 82d6f2f33cfcbe746858c9a674e2a3c3, type: 2}
   IdDispenser: {fileID: 11400000, guid: 56e47d53dc614774bba72546195db65d, type: 2}
   SpawnTime: 15

@@ -9,7 +9,7 @@ public class Player : LivingBeing
 
     public int TotalPoints = 0;
 
-    public bool Dead; 
+    public bool Dead;
 
     public float MaxRessTime = 120f;
     public float MaxRessDistance = 10f;
@@ -68,9 +68,15 @@ public class Player : LivingBeing
 
             //if no player is near the dead player the death timer will proceed
             timer += Time.deltaTime;
-            if(timer > MaxRessTime)
+            if (timer > MaxRessTime)
             {
-                Destroy(this.gameObject);
+                byte[] data = ArrayPool<byte>.Get(8);
+
+                ByteManipulator.Write(data, 0, (ulong)avatar.UserInfo.SteamID);
+
+                Client.SendPacketToInGameUsers(data, 0, data.Length, PacketType.PlayerDeath, EP2PSend.k_EP2PSendReliable, true);
+
+                ArrayPool<byte>.Recycle(data);
             }
 
             return;
@@ -86,11 +92,11 @@ public class Player : LivingBeing
 
             if (Life > 0f)
             {
-                Client.SendPacketToInGameUsers(packet, 0, packet.Length, PacketType.PlayerStatus, EP2PSend.k_EP2PSendUnreliable, false);
+                Client.SendPacketToInGameUsers(packet, 0, packet.Length, PacketType.PlayerStatus, EP2PSend.k_EP2PSendReliable, false);
             }
             else
             {
-                Client.SendTransformToInGameUsers(packet, this.transform, EP2PSend.k_EP2PSendUnreliable, false);
+                Client.SendTransformToInGameUsers(packet, this.transform, EP2PSend.k_EP2PSendReliable, false);
                 Die();
             }
         }

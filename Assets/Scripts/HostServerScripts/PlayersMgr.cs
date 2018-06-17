@@ -4,12 +4,14 @@ using UnityEngine;
 using Steamworks;
 using System;
 using GENUtility;
-
+using SOPRO;
 public class PlayersMgr : MonoBehaviour
 {
     public SimpleAvatar AvatarTemplate, ControllableAvatarTemplate;
     public Transform SpawnPosition;
     public Material[] Materials;
+
+    public SOEvCSteamID PlayerDeath;
 
     static PlayersMgr instance;
 
@@ -47,6 +49,14 @@ public class PlayersMgr : MonoBehaviour
         Client.AddCommand(PacketType.PlayerDataServer, ManageServerTransform);
         Client.AddCommand(PacketType.PlayerData, ManageTransform);
         Client.AddCommand(PacketType.PlayerStatus, ManagePlayerStatus);
+        Client.AddCommand(PacketType.PlayerDeath, ManagePlayerDeath);
+    }
+    void ManagePlayerDeath(byte[] data, uint length , CSteamID sender)
+    {
+        CSteamID dead = (CSteamID)ByteManipulator.ReadUInt64(data, 0);
+        SimpleAvatar avatar = avatars[dead];
+        PlayerDeath.Raise(dead);
+        avatar.gameObject.SetActive(false);
     }
     void ManagePlayerStatus(byte[] data, uint dataLength, CSteamID sender)
     {

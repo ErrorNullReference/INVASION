@@ -11,6 +11,7 @@ public enum PacketType : byte
     PlayerData,
     PlayerDataServer,
     PlayerStatus,
+    PlayerDeath,
     NetObjTransform,
     NetObjTransformServer,
     Chat,
