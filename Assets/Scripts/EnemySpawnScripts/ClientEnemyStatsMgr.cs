@@ -7,7 +7,7 @@ using GENUtility;
 [CreateAssetMenu(menuName = "Network/EnemyMgr")]
 public class ClientEnemyStatsMgr : ScriptableObject
 {
-
+    public ReferenceFloat PlayerDamagePointsMultiplicator;
     [SerializeField]
     private SODictionaryTransformContainer netEntities;
     public void Init()
@@ -28,10 +28,10 @@ public class ClientEnemyStatsMgr : ScriptableObject
 
         ulong shooter = ByteManipulator.ReadUInt64(data, 8);
 
-        int points = (int)(damage * 10f);
+        int points = (int)(damage * PlayerDamagePointsMultiplicator);
         //if enemy dead give bonus points
         if (enemy.Life <= 0f)
-            points += (int)(enemy.Stats.MaxHealth * 10f);
+            points += (int)(enemy.Stats.MaxHealth * PlayerDamagePointsMultiplicator);
 
         PlayersMgr.Players[(CSteamID)shooter].GetComponent<Player>().TotalPoints += points;
     }

@@ -11,4 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d5839c9a575d084a9dd5f0fb5248a39, type: 3}
   m_Name: New Client Enemy Stats Mgr
   m_EditorClassIdentifier: 
+  PlayerDamagePointsMultiplicator:
+    UseConstant: 1
+    Variable: {fileID: 0}
+    constantValue: 5
   netEntities: {fileID: 11400000, guid: 209e760079e7a28429153a90e96df903, type: 2}
