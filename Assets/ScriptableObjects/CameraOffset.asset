@@ -8,8 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46c65db6a88621c4dbebed9a4ee7fcb9, type: 3}
-  m_Name: HealthSpawnPositions
+  m_Script: {fileID: 11500000, guid: d7e7d2e3718ad9a438ec87a50fabc6da, type: 3}
+  m_Name: CameraOffset
   m_EditorClassIdentifier: 
-  DEBUG_DeveloperDescription: Health Spawn Positions
-  Elements: []
+  DEBUG_DeveloperDescription: 
+  Value: {x: -5, y: 10, z: 5}

@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Steamworks;
 using GENUtility;
-
+using SOPRO;
 public class HostEnemySpawner : MonoBehaviour
 {
     public static HostEnemySpawner Instance;
+    public ReferenceVector3 NearestSpawnPointOutsideView;
     int enemyId;
     public const int MAX_NUM_ENEMIES = 200;
     public NetIdDispenser IdDispenser;
@@ -53,7 +53,7 @@ public class HostEnemySpawner : MonoBehaviour
     {
         for (int i = 0; i < firstWaveCount; i++)
         {
-            InstantiateEnemy(EnemySpawnSystem.GetSpawnPoint());
+            InstantiateEnemy(NearestSpawnPointOutsideView);
             yield return waitForFrame;
         }
     }
@@ -62,9 +62,6 @@ public class HostEnemySpawner : MonoBehaviour
     public void InstantiateEnemy(Vector3 position)
     {
         int Id = IdDispenser.GetNewNetId();
-
-        if (position == Vector3.zero)
-            position = EnemySpawnSystem.GetSpawnPoint();
 
         idAndPos.CurrentLength = 0;
         idAndPos.CurrentSeek = 0;

@@ -1,50 +1,35 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-
+using SOPRO;
 public class EnemySpawnSystem : MonoBehaviour
 {
     public float AngleTreshold;
-    public Transform DefaulSpawnPoint;
-    public Transform[] SpawnPoints;
-    public bool Debug;
-    List<Vector3> notRenderedPositions;
+
+    public ReferenceVector3 DefaultSpawnPoint;
+    public SOListVector3Container SpawnPoints;
+    public SOListPlayerContainer Players;
+    public SOVariableVector3 NearesPointOutsideView;
+    public SOVariableVector3 CameraOffset;
+
+    List<int> notRenderedPositions;
     Vector3[] cameraBounds;
     Vector3[][] playerBounds;
-    Vector3 nearestPoint, cameraOffset;
-    bool nearestUpdated;
-
-    float b;
-
-    static EnemySpawnSystem instance;
 
     void Start()
     {
-        instance = this;
         cameraBounds = new Vector3[4];
         playerBounds = new Vector3[4][];
         for (int i = 0; i < playerBounds.Length; i++)
             playerBounds[i] = new Vector3[4];
-        notRenderedPositions = new List<Vector3>();
-        cameraOffset = Camera.main.GetComponent<FollowPlayer>().Offset;
+        notRenderedPositions = new List<int>();
 
-        CalculateBounds(new Vector3(0, cameraOffset.y, 0));
+        CalculateBounds(new Vector3(0, CameraOffset.Value.y, 0));
     }
 
-    void Update()
+    void LateUpdate()
     {
-        nearestUpdated = false;
-    }
-
-    public static Vector3 GetSpawnPoint()
-    {
-        if (!instance.nearestUpdated)
-        {
-            instance.nearestPoint = instance.GetPosition();
-            instance.nearestUpdated = true;
-        }
-
-        return instance.nearestPoint;
+        int index = GetPositionIndex();
+        NearesPointOutsideView.Value = index >= 0 ? SpawnPoints[index] : DefaultSpawnPoint;
     }
 
     void CalculateBounds(Vector3 position)
@@ -84,35 +69,39 @@ public class EnemySpawnSystem : MonoBehaviour
         cameraBounds[3] = position + D * magD;
     }
 
-    Vector3 GetPosition()
+    int GetPositionIndex()
     {
-        if (SpawnPoints == null || SpawnPoints.Length == 0)
-            return DefaulSpawnPoint != null ? DefaulSpawnPoint.position : Vector3.zero;
-        
-        if (PlayersMgr.Players == null)
-            return DefaulSpawnPoint != null ? DefaulSpawnPoint.position : Vector3.zero;
+        if (!SpawnPoints || SpawnPoints.Elements.Count == 0)
+            return -1;
+
+        if (!Players || Players.Elements.Count == 0)
+            return Random.Range(0, SpawnPoints.Elements.Count);
 
         PopulateSpawnPointList();
 
-        return GetNearestSpawnPoint();
+        return GetNearestSpawnPointIndex();
     }
 
-    Vector3 GetNearestSpawnPoint()
+    int GetNearestSpawnPointIndex()
     {
         Vector3 pos = Vector3.zero;
-        foreach (var p in PlayersMgr.Players.Values)
-            pos += p.transform.position;
-        pos /= PlayersMgr.Players.Count;
+
+        int length = Players.Elements.Count;
+        for (int i = 0; i < length; i++)
+        {
+            pos += Players[i].transform.position;
+        }
+        pos /= length;
 
         float min = float.MaxValue;
         int index = 0;
 
         if (notRenderedPositions.Count <= 0)
-            return DefaulSpawnPoint.position;
+            return Random.Range(0, SpawnPoints.Elements.Count);
 
         for (int i = 0; i < notRenderedPositions.Count; i++)
         {
-            float magnitude = (pos - notRenderedPositions[i]).sqrMagnitude;
+            float magnitude = (pos - SpawnPoints[notRenderedPositions[i]]).sqrMagnitude;
             if (magnitude <= min)
             {
                 min = magnitude;
@@ -127,24 +116,23 @@ public class EnemySpawnSystem : MonoBehaviour
     {
         notRenderedPositions.Clear();
 
-        int index = 0;
-        foreach (var p in PlayersMgr.Players.Values)
+        int length = Players.Elements.Count;
+        for (int i = 0; i < length; i++)
         {
-            Vector3 pPos = p.transform.position + cameraOffset;
+            Vector3 pPos = Players[i].transform.position + CameraOffset;
             pPos.y = 0;
 
-            for (int i = 0; i < playerBounds.Length; i++)
-                playerBounds[index][i] = cameraBounds[i] + pPos;
-            index++;
+            for (int j = 0; j < playerBounds.Length; j++)
+                playerBounds[i][j] = cameraBounds[j] + pPos;
         }
 
         bool contained = false;
-        for (int i = 0; i < SpawnPoints.Length; i++)
+        for (int i = 0; i < SpawnPoints.Elements.Count; i++)
         {
             contained = false;
-            for (int j = 0; j < PlayersMgr.Players.Count; j++)
+            for (int j = 0; j < length; j++)
             {
-                if (BoundsContains(playerBounds[j], SpawnPoints[i].position))
+                if (BoundsContains(playerBounds[j], SpawnPoints[i]))
                 {
                     contained = true;
                     break;
@@ -153,13 +141,13 @@ public class EnemySpawnSystem : MonoBehaviour
 
             if (!contained)
             {
-                if (!notRenderedPositions.Contains(SpawnPoints[i].position))
-                    notRenderedPositions.Add(SpawnPoints[i].position);
+                if (!notRenderedPositions.Contains(i))
+                    notRenderedPositions.Add(i);
             }
             else
             {
-                if (notRenderedPositions.Contains(SpawnPoints[i].position))
-                    notRenderedPositions.Remove(SpawnPoints[i].position);
+                if (notRenderedPositions.Contains(i))
+                    notRenderedPositions.Remove(i);
             }
         }
     }
@@ -186,21 +174,19 @@ public class EnemySpawnSystem : MonoBehaviour
         return b1 == b2 && b2 == b3;
     }
 
+#if UNITY_EDITOR
     void OnDrawGizmos()
     {
-        if (!Debug)
-            return;
-
         if (cameraBounds == null || cameraBounds.Length != 4 || playerBounds == null || playerBounds.Length != 4)
         {
             cameraBounds = new Vector3[4];
             playerBounds = new Vector3[4][];
             for (int i = 0; i < playerBounds.Length; i++)
                 playerBounds[i] = new Vector3[4];
-            notRenderedPositions = new List<Vector3>();
+            notRenderedPositions = new List<int>();
         }
 
-        nearestPoint = GetPosition();
+        LateUpdate();
 
         Gizmos.color = Color.red;
 
@@ -213,14 +199,15 @@ public class EnemySpawnSystem : MonoBehaviour
         }
 
         Gizmos.color = Color.red;
-        for (int i = 0; i < SpawnPoints.Length; i++)
-            Gizmos.DrawSphere(SpawnPoints[i].position, 0.5f);
+        for (int i = 0; i < SpawnPoints.Elements.Count; i++)
+            Gizmos.DrawSphere(SpawnPoints[i], 0.5f);
 
         Gizmos.color = Color.green;
         for (int i = 0; i < notRenderedPositions.Count; i++)
-            Gizmos.DrawSphere(notRenderedPositions[i], 1);
+            Gizmos.DrawSphere(SpawnPoints[notRenderedPositions[i]], 1);
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(nearestPoint, 1.5f);
+        Gizmos.DrawSphere(NearesPointOutsideView, 1.5f);
     }
+#endif
 }

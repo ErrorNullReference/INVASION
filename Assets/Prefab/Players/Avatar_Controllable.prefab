@@ -1529,11 +1529,11 @@ MonoBehaviour:
   WalkSpeed:
     UseConstant: 1
     Variable: {fileID: 0}
-    constantValue: 2
+    constantValue: 15
   RunSpeed:
     UseConstant: 1
     Variable: {fileID: 0}
-    constantValue: 4
+    constantValue: 30
 --- !u!114 &114402471443833716
 MonoBehaviour:
   m_ObjectHideFlags: 1

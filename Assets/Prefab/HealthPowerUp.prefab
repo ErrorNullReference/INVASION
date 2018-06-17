@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   Value: 5
-  LifeTime: 10
+  LifeTime: 30
   coll: {fileID: 135577056917922198}
 --- !u!114 &114592951333106626
 MonoBehaviour:

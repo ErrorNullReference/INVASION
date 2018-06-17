@@ -2,10 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using SOPRO;
 public class HostEnemyDestroyer : MonoBehaviour
 {
-
+    public ReferenceVector3 NearestPointOutsideView;
     public static HostEnemyDestroyer Instance;
     public static List<Enemy> EnemyToRecycle;
     public static List<Enemy> EnemyToRecycleToAdd;
@@ -69,7 +69,7 @@ public class HostEnemyDestroyer : MonoBehaviour
             enemy.randomSpawnTimer -= Time.deltaTime;
             if (enemy.randomSpawnTimer <= 0)
             {
-                HostEnemySpawner.Instance.InstantiateEnemy(Vector3.zero);
+                HostEnemySpawner.Instance.InstantiateEnemy(NearestPointOutsideView);
                 enemy.randomSpawnTimer = UnityEngine.Random.Range(0f, 5.0f);
                 enemy.Recycling = false;
                 EnemyToRecycleToRemove.Add(enemy);

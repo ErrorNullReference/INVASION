@@ -5,7 +5,7 @@ using SOPRO;
 public class FollowPlayer : MonoBehaviour
 {
     public SOListPlayerContainer Players;
-    public Vector3 Offset;
+    public ReferenceVector3 Offset;
 
     public int CurrentIndex;
     public void SetFollowLocalPlayer()
