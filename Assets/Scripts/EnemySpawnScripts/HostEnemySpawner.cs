@@ -53,8 +53,8 @@ public class HostEnemySpawner : MonoBehaviour
     {
         for (int i = 0; i < firstWaveCount; i++)
         {
-            InstantiateEnemy(NearestSpawnPointOutsideView);
             yield return waitForFrame;
+            InstantiateEnemy(NearestSpawnPointOutsideView);
         }
     }
 
