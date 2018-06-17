@@ -8,7 +8,7 @@ public class OutsideViewPointCalculator : MonoBehaviour
     public ReferenceVector3 DefaultSpawnPoint;
     public SOListVector3Container SpawnPoints;
     public SOListPlayerContainer Players;
-    public SOVariableVector3 NearesPointOutsideView;
+    public SOVariableVector3 NearestPointOutsideView;
     public SOListVector3Container SpawnPointsOutsideView;
     public SOVariableVector3 CameraOffset;
 
@@ -72,14 +72,14 @@ public class OutsideViewPointCalculator : MonoBehaviour
         //if there are no spawn points set default value
         if (!SpawnPoints || SpawnPoints.Elements.Count == 0)
         {
-            NearesPointOutsideView.Value = DefaultSpawnPoint;
+            NearestPointOutsideView.Value = DefaultSpawnPoint;
             return;
         }
 
         //if there are no players set random position
         if (!Players || Players.Elements.Count == 0)
         {
-            NearesPointOutsideView.Value = SpawnPoints[Random.Range(0, SpawnPoints.Elements.Count)];
+            NearestPointOutsideView.Value = SpawnPoints[Random.Range(0, SpawnPoints.Elements.Count)];
             return;
         }
 
@@ -148,7 +148,7 @@ public class OutsideViewPointCalculator : MonoBehaviour
         bool contained = false;
         //prepares to calculate nearest point outside view
         float min = float.MaxValue;
-        NearesPointOutsideView.Value = DefaultSpawnPoint;
+        NearestPointOutsideView.Value = DefaultSpawnPoint;
 
         int spawnLength = SpawnPoints.Elements.Count;
 
@@ -175,14 +175,14 @@ public class OutsideViewPointCalculator : MonoBehaviour
                 if (magnitude <= min)
                 {
                     min = magnitude;
-                    NearesPointOutsideView.Value = point;
+                    NearestPointOutsideView.Value = point;
                 }
             }
         }
 
         //if no point is outside view range get random pos
         if (Mathf.Approximately(min, float.MaxValue))
-            NearesPointOutsideView.Value = SpawnPoints[Random.Range(0, spawnLength)];
+            NearestPointOutsideView.Value = SpawnPoints[Random.Range(0, spawnLength)];
     }
 
     bool BoundsContains(Vector3[] bounds, Vector3 point)
@@ -239,7 +239,7 @@ public class OutsideViewPointCalculator : MonoBehaviour
             Gizmos.DrawSphere(SpawnPointsOutsideView[i], 1);
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(NearesPointOutsideView, 1.5f);
+        Gizmos.DrawSphere(NearestPointOutsideView, 1.5f);
     }
 #endif
 }
