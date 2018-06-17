@@ -8,6 +8,7 @@ using System;
 [RequireComponent(typeof(GameNetworkObject))]
 public class Enemy : LivingBeing
 {
+    public SOVariableEnemyType Type;
     [NonSerialized]
     public SOPool Pool;
     private float HUDTimer;
@@ -17,7 +18,7 @@ public class Enemy : LivingBeing
     HUDManager hudManager;
     Image healthImage;
 
-    public GameNetworkObject NetworkId
+    public GameNetworkObject NetObj
     {
         get
         {

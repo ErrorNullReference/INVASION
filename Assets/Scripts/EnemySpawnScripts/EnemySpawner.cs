@@ -8,10 +8,9 @@ using UnityEngine.AI;
 using GENUtility;
 using SOPRO;
 [CreateAssetMenu(menuName = "Network/EnemySpawner")]
-public class EnemySpawner : ScriptableObject
+public class EnemySpawner : FactoryObj<byte>
 {
     public SODictionaryTransformContainer netEntities;
-    public SOPool[] EnemyPools;
     public GameObject PoolRoot;
 
     public BaseSOEvGameNetworkObject OnEnemyAddEvent;
@@ -29,7 +28,10 @@ public class EnemySpawner : ScriptableObject
         Client.AddCommand(PacketType.EnemySpawn, InstantiateEnemy);
         EnemiesCount.Value = 0;
     }
-
+    protected override byte ExtractIdentifier(GameObject obj)
+    {
+        return (byte)obj.GetComponent<Enemy>().Type.Value;
+    }
     //InstantiateEnemy will be called when command EnemySpawn is received from host
     private void InstantiateEnemy(byte[] data, uint length, CSteamID senderId)
     {
@@ -39,15 +41,16 @@ public class EnemySpawner : ScriptableObject
             poolRoot.name = "Enemies Root";
         }
 
-        int id = ByteManipulator.ReadInt32(data, 0);
+        byte type = data[0];
+        int id = ByteManipulator.ReadInt32(data, 1);
 
-        float positionX = ByteManipulator.ReadSingle(data, 4);
-        float positionY = ByteManipulator.ReadSingle(data, 8);
-        float positionZ = ByteManipulator.ReadSingle(data, 12);
+        float positionX = ByteManipulator.ReadSingle(data, 5);
+        float positionY = ByteManipulator.ReadSingle(data, 9);
+        float positionZ = ByteManipulator.ReadSingle(data, 13);
 
         Vector3 position = new Vector3(positionX, positionY, positionZ);
-        //TODO: spawn system similar to power up where each pool is identified by a byte-int which indicates that specific enemy. This is to avoid spawning different enemies on cllients
-        SOPool pool = EnemyPools[UnityEngine.Random.Range(0, EnemyPools.Length)];
+
+        SOPool pool = organizedPools[type];
 
         bool parented;
         int nullObjsRemovedFromPool;
@@ -55,7 +58,7 @@ public class EnemySpawner : ScriptableObject
 
         Enemy enemy = go.GetComponent<Enemy>();
         enemy.Pool = pool;
-        enemy.NetworkId.SetNetworkId(id);
+        enemy.NetObj.SetNetworkId(id);
 
         NavMeshHit hit;
         if (NavMesh.SamplePosition(position, out hit, 1f, Mask))
@@ -67,7 +70,7 @@ public class EnemySpawner : ScriptableObject
 
         EnemiesCount.Value++;
 
-        OnEnemyAddEvent.Raise(enemy.NetworkId);  
+        OnEnemyAddEvent.Raise(enemy.NetObj);  
     }
 
     //OnEnemyDeath will be called when command EnemyDeath is received from host
@@ -84,6 +87,6 @@ public class EnemySpawner : ScriptableObject
 
         EnemiesCount.Value--;
 
-        OnEnemyRemoveEvent.Raise(obj.NetworkId);
+        OnEnemyRemoveEvent.Raise(obj.NetObj);
     }
 }

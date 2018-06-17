@@ -2790,14 +2790,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56526aa3d24924249a4377dc8868880b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 0
+  Life: 0
   Stats: {fileID: 11400000, guid: 44aec9aa07be18c40995d4f898a07706, type: 2}
-  Destroy: 0
-  Recycling: 0
-  randomSpawnTimer: 0
-  Pool: {fileID: 0}
+  Type: {fileID: 11400000, guid: 3b5dad2d0caf02f42b3bcfd23499ef91, type: 2}
   HUDTimerShow: 2
-  networkId: {fileID: 114987240227332286}
 --- !u!114 &114437912616470450
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2863,6 +2859,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dataType: 0
   InputAssetHUD: {fileID: 11400000, guid: 44aec9aa07be18c40995d4f898a07706, type: 2}
+  DataContainer: {fileID: 0}
   OneTimeUpdate: 0
 --- !u!114 &114775358468911806
 MonoBehaviour:

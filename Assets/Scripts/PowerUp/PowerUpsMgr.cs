@@ -1,34 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using SOPRO;
 using GENUtility;
 using Steamworks;
 [CreateAssetMenu(menuName = "Network/PowerUpsMgr")]
-public class PowerUpsMgr : ScriptableObject
+public class PowerUpsMgr : FactoryObj<byte>
 {
     public SODictionaryTransformContainer NetObjs;
     public SOBasicEvIntCSteamID PoweuUpPicked;
-    [SerializeField]
-    private SOPool[] powerUps = new SOPool[0];
 
-    private Dictionary<byte, SOPool> pools = new Dictionary<byte, SOPool>();
-
-    private void OnEnable()
-    {
-        pools.Clear();
-        for (int i = 0; i < powerUps.Length; i++)
-        {
-            SOPool p = powerUps[i];
-            pools.Add((byte)p.Prefab.GetComponent<PowerUp>().Type.Value, p);
-        }
-    }
-    //private void OnValidate()
-    //{
-    //    OnEnable();
-    //}
     private void NetSpawnedPowUp(byte[] data, uint length, CSteamID sender)
     {
         Vector3 pos = new Vector3(ByteManipulator.ReadSingle(data, 5), ByteManipulator.ReadSingle(data, 9), ByteManipulator.ReadSingle(data, 13));
@@ -52,10 +31,10 @@ public class PowerUpsMgr : ScriptableObject
 
     private PowerUp GetPowUp(PowerUpType type, int id, Transform parent, Vector3 pos, Quaternion rot)
     {
-        if (!pools.ContainsKey((byte)type))
+        if (!organizedPools.ContainsKey((byte)type))
             return null;
 
-        SOPool pool = pools[(byte)type];
+        SOPool pool = organizedPools[(byte)type];
 
         int nullObjsRemoved;
         bool parented;
@@ -67,5 +46,9 @@ public class PowerUpsMgr : ScriptableObject
         powUp.GetComponent<GameNetworkObject>().SetNetworkId(id);
 
         return powUp;
+    }
+    protected override byte ExtractIdentifier(GameObject obj)
+    {
+        return (byte)obj.GetComponent<PowerUp>().Type.Value;
     }
 }

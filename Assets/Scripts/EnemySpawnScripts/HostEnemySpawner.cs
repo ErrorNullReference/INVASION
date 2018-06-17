@@ -26,7 +26,7 @@ public class HostEnemySpawner : MonoBehaviour
     private Vector3 spawnPos;
     bool coroutineOver = true;
     bool continuousCoroutineStarted;
-    private static readonly BytePacket idAndPos = new BytePacket(16);
+    private static readonly BytePacket idAndPos = new BytePacket(17);
     private static readonly byte[] emptyArray = new byte[0];
     // Use this for initialization
     void Start()
@@ -63,7 +63,7 @@ public class HostEnemySpawner : MonoBehaviour
         continuousCoroutineStarted = false;
         waitForSeconds = new WaitForSeconds(TimeForLittleSquadSpawn);
         spawnPos = NearestSpawnPointOutsideView;
-        coroutineOver = true;        
+        coroutineOver = true;
     }
     private IEnumerator SpawnEnemyContinuous()
     {
@@ -73,7 +73,7 @@ public class HostEnemySpawner : MonoBehaviour
             int length = Random.Range(MinLittleSquadSpawn, MaxLittleSquadSpawn);
             for (int i = 0; i < length; i++)
             {
-                InstantiateEnemy(NearestSpawnPointOutsideView);
+                InstantiateEnemy(EnemyType.Normal, NearestSpawnPointOutsideView);
             }
         }
     }
@@ -83,13 +83,13 @@ public class HostEnemySpawner : MonoBehaviour
         for (int i = 0; i < waveCount; i++)
         {
             yield return waitForFrame;
-            InstantiateEnemy(spawnPos);
+            InstantiateEnemy(EnemyType.Normal, spawnPos);
         }
         coroutineOver = true;
     }
 
     //sends to clients the command to instantiate an enemy in a given position, or it takes a random position from an array of randomic given positions if none is specified
-    public void InstantiateEnemy(Vector3 position)
+    public void InstantiateEnemy(EnemyType type, Vector3 position)
     {
         if (CurrentEnemyCount >= MaxEnemyCount)
             return;
@@ -99,6 +99,7 @@ public class HostEnemySpawner : MonoBehaviour
         idAndPos.CurrentLength = 0;
         idAndPos.CurrentSeek = 0;
 
+        idAndPos.Write((byte)type);
         idAndPos.Write(Id);
         idAndPos.Write(position.x);
         idAndPos.Write(position.y);

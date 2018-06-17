@@ -64,7 +64,7 @@ public class Client : MonoBehaviour
     /// <summary>
     /// Return true if you are the lobby owner.
     /// </summary>
-    public static bool IsHost { get { return Host == MyID ? true : false; } }
+    public static bool IsHost { get { return Host == MyID; } }
 
     public static CSteamID MyID;
 
