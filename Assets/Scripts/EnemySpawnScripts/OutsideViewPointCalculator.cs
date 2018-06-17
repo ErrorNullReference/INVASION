@@ -23,6 +23,13 @@ public class OutsideViewPointCalculator : MonoBehaviour
             playerBounds[i] = new Vector3[4];
 
         CalculateBounds(new Vector3(0, CameraOffset.Value.y, 0));
+
+        GetPosition();
+    }
+    private void OnEnable()
+    {
+        if (cameraBounds != null)
+            GetPosition();
     }
 
     void LateUpdate()
