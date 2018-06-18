@@ -67,6 +67,7 @@ public class ShootSystemEnemy : MonoBehaviour
         //if it shot someone
         if (Physics.Raycast(ray, out raycastHit, distance))
         {
+            Shooted(raycastHit);
             //this method went call when 
             if (activateCallbacks)
             {
@@ -79,6 +80,14 @@ public class ShootSystemEnemy : MonoBehaviour
         muzzle.transform.localRotation = Quaternion.identity;
 
         gun.Shoot();
+    }
+    void Shooted(RaycastHit hit)
+    {
+        Player p = hit.collider.gameObject.GetComponent<Player>();
+        if (p != null)
+        {
+            p.Life -= gun.values.Damage;
+        }
     }
 
     void SendShootToHost()
