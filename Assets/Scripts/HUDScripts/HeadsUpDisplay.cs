@@ -27,8 +27,8 @@ public class HeadsUpDisplay : ScriptableObject {
 	/// <summary>
 	/// The ammo held.
 	/// </summary>
-	public int AmmoHeld;
-	public int MaxAmmo;
+	public int Energy;
+	public int MaxEnergy;
 	/// <summary>
 	/// The ammo in gun magazine
 	/// </summary>

@@ -7,8 +7,11 @@ public class Player : LivingBeing
     public Collider PlayerCollider;
     [SerializeField]
     private SOListPlayerContainer players;
+    int dropLayer = 11;
+
+    public float Energy;
     private void Start()
-    {
+    {       
         GetComponentInChildren<HUDManager>().InputAssetHUD = Stats;
         PlayerCollider = GetComponentInChildren<Collider>();
         Life = Stats.MaxHealth;
@@ -20,6 +23,20 @@ public class Player : LivingBeing
     private void OnDisable()
     {
         players.Elements.Remove(this);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.layer==dropLayer)
+        {
+            if(collision.gameObject.GetComponent<EnergyDrop>()!=null)
+            {
+                Energy += collision.gameObject.GetComponent<EnergyDrop>().EnergyAmount;
+                if (Energy > Stats.MaxEnergy)
+                    Energy = Stats.MaxEnergy;
+                Destroy(collision.gameObject);
+            }
+        }
     }
     //CHANGED, FOR NOW ONLY ONE CAMERA WILL BE USED.
 

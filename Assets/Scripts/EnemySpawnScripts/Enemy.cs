@@ -16,6 +16,8 @@ public class Enemy : LivingBeing
     private GameNetworkObject networkId;
     HUDManager hudManager;
     Image healthImage;
+    public ulong Killer;
+    public GameObject EnergyPrefab;
 
     public GameNetworkObject NetworkId
     {
@@ -84,6 +86,14 @@ public class Enemy : LivingBeing
         }
     }
 
-
+    public void DropEnergy()
+    {
+        int randomAmount = UnityEngine.Random.Range(1, 6);
+        for (int i = 0; i < randomAmount; i++)
+        {
+            Vector3 pos = new Vector3(transform.position.x + UnityEngine.Random.Range(0f, 1.0f), transform.position.y+0.5f, transform.position.z + UnityEngine.Random.Range(0f, 1.0f));
+            Instantiate(EnergyPrefab, pos, Quaternion.identity);
+        }
+    }
 
 }

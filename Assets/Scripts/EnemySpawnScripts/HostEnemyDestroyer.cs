@@ -57,8 +57,9 @@ public class HostEnemyDestroyer : MonoBehaviour
         {
             if (enemy.Destroy)
             {
-                byte[] d = ArrayPool<byte>.Get(sizeof(int));
+                byte[] d = ArrayPool<byte>.Get(sizeof(int)+sizeof(long));
                 ByteManipulator.Write(d, 0, enemy.NetworkId.NetworkId);
+                ByteManipulator.Write(d, sizeof(int), enemy.Killer);
 
                 Client.SendPacketToInGameUsers(d, 0, d.Length, PacketType.EnemyDeath, Steamworks.EP2PSend.k_EP2PSendReliable);
 

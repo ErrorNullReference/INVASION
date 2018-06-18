@@ -77,8 +77,12 @@ public class EnemySpawner : ScriptableObject
     private void OnEnemyDeath(byte[] data, uint length, CSteamID senderId)
     {
         int Id = ByteManipulator.ReadInt32(data, 0);
+        ulong killerId = (ulong)ByteManipulator.ReadInt64(data, 4);
         Enemy obj = netEntities[Id].GetComponent<Enemy>();
-
+        if(killerId==(ulong)Client.MyID)
+        {
+            obj.DropEnergy();
+        }
         if (!obj)
             throw new NullReferenceException("NetId does not correspond to an enemy");
 
@@ -86,4 +90,6 @@ public class EnemySpawner : ScriptableObject
         obj.Pool.Recycle(obj.gameObject);
         OnEnemyRemoveEvent.Raise(obj.GetComponent<GameNetworkObject>());
     }
+
+    
 }

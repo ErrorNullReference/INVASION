@@ -9,8 +9,13 @@ public class EnemyHUDBar : MonoBehaviour {
 	public float energy;
 //	public float Energy{ get {return energy;} set {energy = value;} }
 	public float maxEnergy;
+    Color color;
+    private void Awake()
+    {
+        color = bar.GetComponent<MeshRenderer>().material.color;
+    }
 
-	void OnCollisionEnter(Collision col){
+    void OnCollisionEnter(Collision col){
 		Bullet playerBullet = col.gameObject.GetComponent<Bullet> ();
 		if (playerBullet != null)
 			energy -= 5;
@@ -23,6 +28,6 @@ public class EnemyHUDBar : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		bar.GetComponent<MeshRenderer>().material.color = healthColorRange.Evaluate (energy / maxEnergy);
+		color = healthColorRange.Evaluate (energy / maxEnergy);
 	}
 }

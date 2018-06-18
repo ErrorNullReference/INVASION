@@ -2797,7 +2797,9 @@ MonoBehaviour:
   randomSpawnTimer: 0
   Pool: {fileID: 0}
   HUDTimerShow: 2
-  networkId: {fileID: 114987240227332286}
+  Killer: 0
+  EnergyPrefab: {fileID: 1347318114730190, guid: 0641556f0b9586e439beff65a1cd37b9,
+    type: 2}
 --- !u!114 &114437912616470450
 MonoBehaviour:
   m_ObjectHideFlags: 1

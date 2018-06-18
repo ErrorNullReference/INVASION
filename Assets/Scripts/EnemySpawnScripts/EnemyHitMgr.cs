@@ -24,17 +24,18 @@ public class EnemyHitMgr : ScriptableObject
         Enemy e = netEntities[id].GetComponent<Enemy>();
         //Debug.Log("hit received");
         e.DecreaseLife();
-        if (CheckLife(e))
+        if (CheckLife(e,sender))
             Client.SendPacketToInGameUsers(data, 0, (int)length, PacketType.ShootHit, EP2PSend.k_EP2PSendReliable, false);
         //send to all but this client a packet with hit command only if e life is not 0 
         //else send enemy death;
     }
 
-    private bool CheckLife(Enemy e)
+    private bool CheckLife(Enemy e, CSteamID sender)
     {
         //will then send status info to players and they'll update their enemies lives
         if (e.Life <= 0)
         {
+            e.Killer = (ulong)sender;
             e.DestroyAndRecycle();
             HostEnemyDestroyer.EnemyToRecycleToAdd.Add(e);
             return false;

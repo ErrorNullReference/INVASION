@@ -15,8 +15,8 @@ MonoBehaviour:
   ClientID: 1
   Health: 10
   MaxHealth: 10
-  AmmoHeld: 0
-  MaxAmmo: 0
+  Energy: 10
+  MaxEnergy: 15
   AmmoMag: 0
   PlayerHealthBarGradient:
     serializedVersion: 2
@@ -49,8 +49,8 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   PlayerAmmoBarGradient:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
+    key0: {r: 0.26657018, g: 0.06596022, b: 0.89705884, a: 1}
+    key1: {r: 0.6771625, g: 0.056444637, b: 0.85294116, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}

@@ -18,7 +18,7 @@ public class HUDManager : MonoBehaviour
     //    LevelXP_amount,
      //   LevelXP_lvlNum,
      //   GunName,
-        AmmoHeld,
+        Energy,
         AmmoMag,
      //   LevelName,
      //   MissionName,
@@ -29,9 +29,11 @@ public class HUDManager : MonoBehaviour
     ;
 
     private LivingBeing livingBeing;
+    private Player player;
     public DisplayDataType dataType;
     public HeadsUpDisplay InputAssetHUD;
     public bool OneTimeUpdate;  //Set to true to disable component.
+    Color fullCircleColor;
     Slider GOSlider;
     Text GOText;
     Image GOImg;
@@ -43,9 +45,15 @@ public class HUDManager : MonoBehaviour
             OneTimeUpdate = !OneTimeUpdate;
         }
         livingBeing=gameObject.GetComponentInParent<LivingBeing>();
+        if(gameObject.GetComponentInParent<Player>()!=null)
+        {
+            player = gameObject.GetComponentInParent<Player>();
+        }
         GOSlider = this.GetComponent<Slider>();
         GOText = this.GetComponent<Text>();
         GOImg = this.GetComponent<Image>();
+        if(gameObject.GetComponent<MeshRenderer>() != null)
+        fullCircleColor = gameObject.GetComponent<MeshRenderer>().material.color;
     }
 
 
@@ -100,17 +108,18 @@ public class HUDManager : MonoBehaviour
                 GOText.text = InputAssetHUD.GunName;
                 break;
 			*/
-            case DisplayDataType.AmmoHeld:
+            case DisplayDataType.Energy:
                 if (GOText != null)
-                    GOText.text = InputAssetHUD.AmmoHeld.ToString();
+                    GOText.text = player.Energy.ToString();
                 else if (GOImg != null)
                 {
-                    GOImg.fillAmount = (float)((float)InputAssetHUD.AmmoHeld / (float)InputAssetHUD.MaxAmmo);
+                    GOImg.color = InputAssetHUD.PlayerAmmoBarGradient.Evaluate(player.Energy / InputAssetHUD.MaxEnergy);
+                    GOImg.fillAmount = (float)((float)player.Energy / (float)InputAssetHUD.MaxEnergy);
                 }
                 else
                 {   //Quad case ( full circle case)
-                    gameObject.GetComponent<MeshRenderer>().material.color =
-                        InputAssetHUD.PlayerAmmoBarGradient.Evaluate(InputAssetHUD.AmmoHeld / InputAssetHUD.MaxAmmo);
+                    fullCircleColor =
+                        InputAssetHUD.PlayerAmmoBarGradient.Evaluate(player.Energy / InputAssetHUD.MaxEnergy);
                 }
                 break;
 
