@@ -32,7 +32,7 @@ public class Player : LivingBeing
 
     private void Start()
     {
-        GetComponentInChildren<HUDManager>().InputAssetHUD = Stats;
+        GetComponentInChildren<HUDHealt>().InputAssetHUD = Stats;
         PlayerCollider = GetComponentInChildren<Collider>();
         Life = Stats.MaxHealth;
         prevLife = Life;

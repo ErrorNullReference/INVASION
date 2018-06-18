@@ -10,6 +10,7 @@ public class Server : MonoBehaviour
     public List<User> InGameUsers;
     public User MyPlayer;
 
+    public static User LocalPlayer { get { return Instance.MyPlayer; } }
     public static List<User> Users { get { return Instance.InGameUsers; } }
 
     public static bool Initialized;

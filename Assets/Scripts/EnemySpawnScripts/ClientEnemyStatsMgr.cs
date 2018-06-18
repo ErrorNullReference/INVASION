@@ -8,6 +8,7 @@ using GENUtility;
 public class ClientEnemyStatsMgr : ScriptableObject
 {
     public ReferenceFloat PlayerDamagePointsMultiplicator;
+    public ReferenceInt PlayerKillPointsMultiplicator;
     [SerializeField]
     private SODictionaryTransformContainer netEntities;
     public void Init()
@@ -31,7 +32,7 @@ public class ClientEnemyStatsMgr : ScriptableObject
         int points = (int)(damage * PlayerDamagePointsMultiplicator);
         //if enemy dead give bonus points
         if (enemy.Life <= 0f)
-            points += (int)(enemy.Stats.MaxHealth * PlayerDamagePointsMultiplicator);
+            points += (int)(enemy.Stats.MaxHealth * PlayerKillPointsMultiplicator);
 
         PlayersMgr.Players[(CSteamID)shooter].GetComponent<Player>().TotalPoints += points;
     }

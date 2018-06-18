@@ -6,113 +6,98 @@ using UnityEngine.UI;
 using System.IO;
 using SOPRO;
 
-public class HUDManager : MonoBehaviour
+//Scripts that can be attached on multiple components for HUD, will display one of the chosen data.
+public enum DisplayDataType
 {
-	//Scripts that can be attached on multiple components for HUD, will display one of the chosen data.
-
-    public enum DisplayDataType
-    {
-        Health,
-      //  Shield,
+    Health,
+    Score,
+    AmmoHeld,
+    AmmoMag,
+    PlayerImg,
+    PlayerName
+    //  Shield,
     //    Armor,
     //    LevelXP_amount,
-     //   LevelXP_lvlNum,
-     //   GunName,
-        Score,
-        AmmoHeld,
-        AmmoMag,
-     //   LevelName,
-     //   MissionName,
-     //   ObjectiveDescription,
-        PlayerImg,
-        PlayerName
-    }
-    ;
+    //   LevelXP_lvlNum,
+    //   GunName,
+    //   LevelName,
+    //   MissionName,
+    //   ObjectiveDescription,
+}
+    
+public class HUDManager : MonoBehaviour
+{
+    public SOListPlayerContainer DataContainer;
+    public HeadsUpDisplay InputAssetHUD;
+
+    [SerializeField]
+    private DisplayDataType dataType;
 
     private LivingBeing livingBeing;
-    public DisplayDataType dataType;
-    public HeadsUpDisplay InputAssetHUD;
-    public SOListPlayerContainer DataContainer;
-    public bool OneTimeUpdate;  //Set to true to disable component.
-    Slider GOSlider;
-    Text GOText;
-    Image GOImg;
+    private Slider GOSlider;
+    private Image GOImg;
+    private Text GOText;
 
     void Awake()
     {
-        if (OneTimeUpdate= true)
-        {
-            OneTimeUpdate = !OneTimeUpdate;
-        }
         livingBeing=gameObject.GetComponentInParent<LivingBeing>();
+        GOText = gameObject.GetComponent<Text>();
         GOSlider = this.GetComponent<Slider>();
-        GOText = this.GetComponent<Text>();
         GOImg = this.GetComponent<Image>();
     }
 
-
-
-    void OnValidate()
-    {   //activates when the editor's inspector is modified. Future Event mngment feature
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if (InputAssetHUD == null)
-        {       //in case of missing HUD input, this throws an error and disables the component(to avoid warning spam)
-           // Debug.LogWarning(gameObject.name + "is missing a HUD Input asset !");
-            this.gameObject.GetComponent<HUDManager>().enabled = false;
-            return;
-        }
-        if (OneTimeUpdate)
-        {
-            this.gameObject.GetComponent<HUDManager>().enabled = false;     //disables the component on second update
-            return;
-        }       
-
         switch (dataType)
         {
-
             case DisplayDataType.Health:
+
                 if (GOSlider != null)       //HUD 2D text subcase
+                {
                     GOSlider.value = livingBeing.Life / InputAssetHUD.MaxHealth;
+                }
                 else if (GOImg != null)
-                {   // sprite subcase
-                    GOImg.color = InputAssetHUD.PlayerHealthBarGradient.Evaluate(livingBeing.Life / InputAssetHUD.MaxHealth);
+                {  
+                    // sprite subcase
+                    GOImg.color      = InputAssetHUD.PlayerHealthBarGradient.Evaluate(livingBeing.Life / InputAssetHUD.MaxHealth);
                     GOImg.fillAmount = (livingBeing.Life / InputAssetHUD.MaxHealth);
                 }
                 else
-                {   //Quad subcase 
+                {   
+                    //Quad subcase 
                     gameObject.GetComponent<MeshRenderer>().material.color = InputAssetHUD.PlayerHealthBarGradient.Evaluate(livingBeing.Life / InputAssetHUD.MaxHealth);
                 }
 
                 break;
 
-       /*     case DisplayDataType.LevelXP_amount:
-                GOSlider.value = InputAssetHUD.LevelXP % 1; //what's the max level? 100?
-                break;
+            /*     case DisplayDataType.LevelXP_amount:
+                     GOSlider.value = InputAssetHUD.LevelXP % 1; //what's the max level? 100?
+                     break;
 
-            case DisplayDataType.LevelXP_lvlNum:
-                GOText.text = (InputAssetHUD.LevelXP - InputAssetHUD.LevelXP % 1).ToString();
-                break;
+                 case DisplayDataType.LevelXP_lvlNum:
+                     GOText.text = (InputAssetHUD.LevelXP - InputAssetHUD.LevelXP % 1).ToString();
+                     break;
 
-            case DisplayDataType.GunName:
-                GOText.text = InputAssetHUD.GunName;
-                break;
-			*/
+                 case DisplayDataType.GunName:
+                     GOText.text = InputAssetHUD.GunName;
+                     break;
+                 */
+
             case DisplayDataType.AmmoHeld:
+
                 if (GOText != null)
+                {
                     GOText.text = InputAssetHUD.AmmoHeld.ToString();
+                }
                 else if (GOImg != null)
                 {
                     GOImg.fillAmount = (float)((float)InputAssetHUD.AmmoHeld / (float)InputAssetHUD.MaxAmmo);
                 }
                 else
-                {   //Quad case ( full circle case)
+                {
+                    //Quad case ( full circle case)
                     gameObject.GetComponent<MeshRenderer>().material.color =
-                        InputAssetHUD.PlayerAmmoBarGradient.Evaluate(InputAssetHUD.AmmoHeld / InputAssetHUD.MaxAmmo);
+                    InputAssetHUD.PlayerAmmoBarGradient.Evaluate(InputAssetHUD.AmmoHeld / InputAssetHUD.MaxAmmo);
                 }
                 break;
 
@@ -135,19 +120,18 @@ public class HUDManager : MonoBehaviour
                         break;
                         */
             case DisplayDataType.PlayerName:
-                if (Server.Users.Count <=0)
-                {
+                if (Server.Users.Count <= 0)
                     GOText.text = "Player Name";
-                }
                 else
                     GOText.text = Server.Users[InputAssetHUD.ClientID].SteamUsername;        //get player current name from server
-                OneTimeUpdate = true;
                 break;
+
             case DisplayDataType.PlayerImg:
+
                 if (Server.Users.Count > 0)
                     GOImg.material.SetTexture("PlayerAvatarImage", Server.Users[InputAssetHUD.ClientID].SteamAvatarImage);
-                OneTimeUpdate = true;
                 break;
+
             case DisplayDataType.Score:
 
                 for (int i = 0; i < DataContainer.Elements.Count; i++)
@@ -157,7 +141,6 @@ public class HUDManager : MonoBehaviour
                         GOText.text = DataContainer.Elements[i].TotalPoints.ToString();
                     }
                 }
-
                 break;
 
             default:                

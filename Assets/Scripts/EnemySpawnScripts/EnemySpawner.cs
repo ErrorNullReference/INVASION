@@ -82,7 +82,6 @@ public class EnemySpawner : Factory<byte>
         if (!obj)
             throw new NullReferenceException("NetId does not correspond to an enemy");
 
-        obj.Reset();
         obj.Pool.Recycle(obj.gameObject);
 
         EnemiesCount.Value--;

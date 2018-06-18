@@ -47,11 +47,6 @@ public class Enemy : LivingBeing
         networkId.ResetNetworkId();
     }
 
-    public void Reset()
-    {
-        Life = Stats.MaxHealth;
-    }
-
     public override void Die()
     {
         if (!Client.IsHost)

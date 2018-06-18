@@ -156,7 +156,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1767647329380774}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ac7ca6cb5d72744ca4cf43ae73006f6, type: 3}
   m_Name: 
@@ -164,7 +164,7 @@ MonoBehaviour:
   dataType: 1
   InputAssetHUD: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
   DataContainer: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
-  OneTimeUpdate: 0
+  OneTimeUpdate: 1
 --- !u!114 &114402073683487104
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -308,7 +308,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Ammo
+  m_Text: 0
 --- !u!114 &114824053620219078
 MonoBehaviour:
   m_ObjectHideFlags: 1
