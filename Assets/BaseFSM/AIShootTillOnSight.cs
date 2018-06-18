@@ -52,7 +52,7 @@ public class AIShootTillOnSight : AIBehaviour
         if(Physics.Raycast(this.muzzle.position, this.transform.forward, out hit, maxViewDistance, layerToShootAt))
         {
             Player hitPlayer = hit.collider.GetComponent<Player>();
-            if (hitPlayer != null)
+            if (hitPlayer && !hitPlayer.Dead)
                 hitPlayer.DecreaseLife(this.damage);
         }
 

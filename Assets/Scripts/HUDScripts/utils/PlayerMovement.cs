@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.R))
         {
-            HUDInput.AmmoHeld -= Mathf.Abs(10 - HUDInput.AmmoMag);
+            //HUDInput.AmmoHeld -= Mathf.Abs(10 - HUDInput.AmmoMag);
             HUDInput.AmmoMag = 10;
 
         }

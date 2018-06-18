@@ -77,6 +77,7 @@ public class EnemySpawner : Factory<byte>
     private void OnEnemyDeath(byte[] data, uint length, CSteamID senderId)
     {
         int Id = ByteManipulator.ReadInt32(data, 0);
+
         Enemy obj = netEntities[Id].GetComponent<Enemy>();
 
         if (!obj)

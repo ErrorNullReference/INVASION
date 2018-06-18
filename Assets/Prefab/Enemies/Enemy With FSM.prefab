@@ -52,7 +52,7 @@ GameObject:
   - component: {fileID: 224511343822331214}
   - component: {fileID: 222091748479241258}
   - component: {fileID: 114867343034431028}
-  - component: {fileID: 114625367153461262}
+  - component: {fileID: 114762180788985250}
   m_Layer: 0
   m_Name: Health Bar
   m_TagString: Untagged
@@ -2795,7 +2795,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56526aa3d24924249a4377dc8868880b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Life: 0
   Stats: {fileID: 11400000, guid: 44aec9aa07be18c40995d4f898a07706, type: 2}
   Type: {fileID: 11400000, guid: 3b5dad2d0caf02f42b3bcfd23499ef91, type: 2}
   HUDTimerShow: 2
@@ -2851,7 +2850,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &114625367153461262
+--- !u!114 &114762180788985250
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2859,13 +2858,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1004596263237968}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ac7ca6cb5d72744ca4cf43ae73006f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 42d9e8289503e1340a6accef3bfb00e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataType: 0
-  InputAssetHUD: {fileID: 11400000, guid: 44aec9aa07be18c40995d4f898a07706, type: 2}
-  DataContainer: {fileID: 0}
-  OneTimeUpdate: 0
+  DataContainer: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
+  InputAssetHUD: {fileID: 0}
 --- !u!114 &114775358468911806
 MonoBehaviour:
   m_ObjectHideFlags: 1

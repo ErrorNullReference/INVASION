@@ -1409,8 +1409,8 @@ MonoBehaviour:
   speedX: {fileID: 11400000, guid: 4c195ab848bc64c4e84dbbce64c4b64f, type: 2}
   shoot: {fileID: 11400000, guid: 577f79ee815855c4aa2b2cf8071b3438, type: 2}
   death: {fileID: 11400000, guid: 9e4985d483722cd4fb7356f661d4cb25, type: 2}
-  RunTreshold: 6
-  movementTreshold: 1
+  RunTreshold: 4
+  movementTreshold: 4
 --- !u!114 &114130298613650360
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1422,7 +1422,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2aec9008d5db564daa34aebf9642616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Life: 0
   Stats: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
   TotalPoints: 0
   Dead: 0
@@ -1518,7 +1517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DataContainer: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
-  InputAssetHUD: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
+  InputAssetHUD: {fileID: 0}
 --- !u!114 &114772623448650526
 MonoBehaviour:
   m_ObjectHideFlags: 1

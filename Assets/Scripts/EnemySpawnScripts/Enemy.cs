@@ -15,7 +15,7 @@ public class Enemy : LivingBeing
     [SerializeField]
     private float HUDTimerShow;
     private GameNetworkObject networkId;
-    HUDManager hudManager;
+    HUDHealt hudManager;
     Image healthImage;
 
     public GameNetworkObject NetObj
@@ -28,7 +28,7 @@ public class Enemy : LivingBeing
 
     private void Start()
     {
-        hudManager = GetComponentInChildren<HUDManager>();
+        hudManager = GetComponentInChildren<HUDHealt>();
         healthImage = hudManager.GetComponent<Image>();
         healthImage.enabled = false;
         hudManager.InputAssetHUD = Stats;
