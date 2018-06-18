@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SerializeMe: 0
   ClientID: 1
-  Health: 10
-  MaxHealth: 10
+  Health: 100
+  MaxHealth: 100
   AmmoHeld: 0
   MaxAmmo: 0
   AmmoMag: 0

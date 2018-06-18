@@ -107,7 +107,6 @@ public class Player : LivingBeing
 
         controller.Die(true);
 
-        Life = 0f;
         timer = 0f;
 
         if (avatar.UserInfo.SteamID == Client.MyID)
@@ -129,6 +128,8 @@ public class Player : LivingBeing
         if (avatar.UserInfo.SteamID == Client.MyID)
             PlayerAliveStatusChanged.Raise(true);
     }
+
+
     //CHANGED, FOR NOW ONLY ONE CAMERA WILL BE USED.
 
     //public Camera[] cameras;

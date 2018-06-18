@@ -60,14 +60,12 @@ public class Enemy : LivingBeing
         ArrayPool<byte>.Recycle(d);
     }
 
-    public void DecreaseLife(float decrease)
+    public override void DecreaseLife(float decrease)
     {
         healthImage.enabled = true;
         HUDTimer = HUDTimerShow;
-        Life -= decrease;
 
-        if (Life <= 0)
-            Die();
+        base.DecreaseLife(decrease);
     }
 
     private void Update()
