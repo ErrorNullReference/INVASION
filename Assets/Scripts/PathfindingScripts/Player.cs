@@ -34,9 +34,9 @@ public class Player : LivingBeing
     {
         GetComponentInChildren<HUDHealt>().InputAssetHUD = Stats;
         PlayerCollider = GetComponentInChildren<Collider>();
-        Life = Stats.MaxHealth;
-        prevLife = Life;
-        Dead = Life <= 0f;
+        life = Stats.MaxHealth;
+        prevLife = life;
+        Dead = life <= 0f;
     }
     private void OnEnable()
     {
@@ -59,8 +59,8 @@ public class Player : LivingBeing
                 Player other = players[i];
                 if (other != this && (this.transform.position - other.transform.position).sqrMagnitude < MaxRessDistance * MaxRessDistance)
                 {
-                    this.Life += RessTimeMultiplier * Time.deltaTime;
-                    if (this.Life >= 1f)
+                    this.life += RessTimeMultiplier * Time.deltaTime;
+                    if (this.life >= 1f)
                         this.Resurrect(Stats.MaxHealth * RessHealthPercentage);
                     return;
                 }
@@ -82,15 +82,15 @@ public class Player : LivingBeing
             return;
         }
 
-        if (!Mathf.Approximately(prevLife, Life))
+        if (!Mathf.Approximately(prevLife, life))
         {
-            Life = Mathf.Min(Life, Stats.MaxHealth);
-            prevLife = Life;
+            life = Mathf.Min(life, Stats.MaxHealth);
+            prevLife = life;
 
             ByteManipulator.Write(packet, 0, (ulong)avatar.UserInfo.SteamID);
-            ByteManipulator.Write(packet, 8, Life);
+            ByteManipulator.Write(packet, 8, life);
 
-            if (Life > 0f)
+            if (life > 0f)
             {
                 Client.SendPacketToInGameUsers(packet, 0, packet.Length, PacketType.PlayerStatus, EP2PSend.k_EP2PSendReliable, false);
             }
@@ -107,6 +107,7 @@ public class Player : LivingBeing
 
         controller.Die(true);
 
+        life = 0f;
         timer = 0f;
 
         if (avatar.UserInfo.SteamID == Client.MyID)
@@ -117,8 +118,8 @@ public class Player : LivingBeing
     /// </summary>
     public void Resurrect(float newLife)
     {
-        Life = Mathf.Min(newLife, Stats.MaxHealth);
-        if (Life <= 0f)
+        life = Mathf.Min(newLife, Stats.MaxHealth);
+        if (life <= 0f)
             return;
 
         Dead = false;

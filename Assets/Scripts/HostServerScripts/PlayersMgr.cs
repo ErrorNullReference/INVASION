@@ -51,7 +51,7 @@ public class PlayersMgr : MonoBehaviour
         Client.AddCommand(PacketType.PlayerStatus, ManagePlayerStatus);
         Client.AddCommand(PacketType.PlayerDeath, ManagePlayerDeath);
     }
-    void ManagePlayerDeath(byte[] data, uint length , CSteamID sender)
+    void ManagePlayerDeath(byte[] data, uint length, CSteamID sender)
     {
         CSteamID dead = (CSteamID)ByteManipulator.ReadUInt64(data, 0);
         SimpleAvatar avatar = avatars[dead];
@@ -115,7 +115,7 @@ public class PlayersMgr : MonoBehaviour
         {
             Player player = avatars[target].GetComponent<Player>();
 
-            player.Life = ByteManipulator.ReadSingle(data, 8);
+            player.SetLife(ByteManipulator.ReadSingle(data, 8));
 
             if (player.Life <= 0f)
             {

@@ -39,7 +39,7 @@ public class Enemy : LivingBeing
     }
     private void OnEnable()
     {
-        Life = Stats.MaxHealth;
+        life = Stats.MaxHealth;
     }
 
     private void OnDisable()
