@@ -8,8 +8,20 @@ public class AIShootTillOnSight : AIBehaviour
     [SerializeField]
     private LayerMaskHolder layerToLookInto;
     [SerializeField]
+    private LayerMaskHolder layerToShootAt;
+    [SerializeField]
     private float maxViewDistance;
+    [SerializeField]
+    private float damage;
 
+    [SerializeField]
+    private float minCooldownBetweenShoots;
+    [SerializeField]
+    private float maxCooldownBetweenShoots;
+    private float currentCooldownBetweenShoots;
+
+    [SerializeField]
+    private Transform muzzle;
     private Transform targetToShot;
 
     public EnemyShootSync shootSync;
@@ -21,19 +33,30 @@ public class AIShootTillOnSight : AIBehaviour
     {
         base.Awake();
         shootSync = this.GetComponent<EnemyShootSync>();
+        ResetShootCooldown();
     }
 
     private void Update()
     {
         this.transform.LookAt(targetToShot.position);
 
-        if(CheckIfStillOnSight())
+        currentCooldownBetweenShoots -= Time.deltaTime;
+
+        if(CheckIfStillOnSight() && currentCooldownBetweenShoots <= 0)
             Shot();
     }
 
     private void Shot()
     {
-        //Debug.Log("BANG BANG");
+        RaycastHit hit;
+        if(Physics.Raycast(this.muzzle.position, this.transform.forward, out hit, maxViewDistance, layerToShootAt))
+        {
+            Player hitPlayer = hit.collider.GetComponent<Player>();
+            if (hitPlayer != null)
+                hitPlayer.DecreaseLife(this.damage);
+        }
+
+        ResetShootCooldown();
         if (shootSync != null)
             shootSync.SendShotCall();
     }
@@ -66,6 +89,12 @@ public class AIShootTillOnSight : AIBehaviour
         }
 
         targetToShot = previousState.Target;
+        ResetShootCooldown();
+    }
+
+    private void ResetShootCooldown()
+    {
+        this.currentCooldownBetweenShoots = UnityEngine.Random.Range(minCooldownBetweenShoots, maxCooldownBetweenShoots);
     }
 
     public override void OnStateExit()

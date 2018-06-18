@@ -2154,7 +2154,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1764905658333020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 138.8341, y: 1.5989833, z: 123.465164}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4511886525233504}
@@ -2751,7 +2751,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 114057339501243828}
   layerToLookInto: {fileID: 11400000, guid: 5ab00fb41531e634694def18c509b702, type: 2}
+  layerToShootAt: {fileID: 11400000, guid: 8c2c15eb5d226ca4bac505332c1810e1, type: 2}
   maxViewDistance: 20
+  damage: 1
+  minCooldownBetweenShoots: 1
+  maxCooldownBetweenShoots: 3
+  muzzle: {fileID: 4309865899282914}
   shootSync: {fileID: 114318863650488276}
   next: {fileID: 114454403185978774}
 --- !u!114 &114226324737965404
