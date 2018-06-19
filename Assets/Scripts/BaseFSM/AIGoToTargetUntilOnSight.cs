@@ -6,7 +6,7 @@ using SOPRO;
 public class AIGoToTargetUntilOnSight : AIBehaviour
 {
     [SerializeField]
-    private SOListPlayerContainer playersAlive;
+    private LayerMaskHolder targetLayerMask;
     [SerializeField]
     private float maxViewDistance;
     [SerializeField]
@@ -22,7 +22,9 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
     private AnimationControllerScript animController;
 
     [SerializeField]
-    private AIBehaviour next;
+    private AIBehaviour targetVisible;
+    [SerializeField]
+    private AIBehaviour targetLost;
 
     protected override void Awake()
     {
@@ -49,7 +51,7 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
         AIVision aIVision = owner.PreviousState as AIVision;
         if (aIVision == null || !aIVision.CurrentTarget)
         {
-            owner.SwitchState(next);
+            owner.SwitchState(targetLost);
             return;
         }
 
@@ -83,16 +85,9 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
 
         Vector3 raycastPositionStart = pos + new Vector3(0f, 0.5f, 0f);
 
-        for (int i = 0; i < playersAlive.Elements.Count; i++)
-        {
-            Player player = playersAlive[i];
-            if (player.transform == target)
-            {
-                if (player.PlayerCollider.Raycast(new Ray(raycastPositionStart, directionToPlayer), out hit, maxViewDistance))
-                    owner.SwitchState(next);
-
-                break;
-            }
-        }
+        if (!target || !target.gameObject.activeSelf)
+            owner.SwitchState(targetLost);
+        else if (Physics.Raycast(raycastPositionStart, directionToPlayer, out hit, maxViewDistance, targetLayerMask) && hit.collider.transform.root == target)
+            owner.SwitchState(targetVisible);
     }
 }

@@ -16,7 +16,7 @@ MonoBehaviour:
   Health: 5000
   MaxHealth: 5000
   Energy: 0
-  MaxEnergy: 0
+  MaxEnergy: 1000
   AmmoMag: 0
   PlayerHealthBarGradient:
     serializedVersion: 2

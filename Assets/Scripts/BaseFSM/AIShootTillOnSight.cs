@@ -6,7 +6,7 @@ using SOPRO;
 public class AIShootTillOnSight : AIBehaviour
 {
     [SerializeField]
-    private SOListPlayerContainer playersAlive;
+    private LayerMaskHolder targetLayerMask;
     [SerializeField]
     private float maxViewDistance;
     [SerializeField]
@@ -20,12 +20,12 @@ public class AIShootTillOnSight : AIBehaviour
 
     [SerializeField]
     private Transform muzzle;
-    private Transform targetToShot;
+    private Player targetToShot;
 
     public EnemyShootSync shootSync;
 
     [SerializeField]
-    private AIBehaviour next;
+    private AIBehaviour targetLost;
 
     protected override void Awake()
     {
@@ -36,52 +36,37 @@ public class AIShootTillOnSight : AIBehaviour
 
     private void Update()
     {
-        this.transform.LookAt(targetToShot.position);
+        this.transform.LookAt(targetToShot.transform.position);
 
         currentCooldownBetweenShoots -= Time.deltaTime;
 
-        if (CheckIfStillOnSight() && currentCooldownBetweenShoots <= 0)
+        if (currentCooldownBetweenShoots <= 0)
             Shot();
     }
 
     private void Shot()
     {
         RaycastHit hit;
-        for (int i = 0; i < playersAlive.Elements.Count; i++)
+        Vector3 currentPos = transform.position;
+        Vector3 dir = (targetToShot.transform.position - currentPos).normalized;
+        Transform shot = null;
+
+
+        if (Physics.Raycast(currentPos + new Vector3(0, 0.5f, 0), dir, out hit, maxViewDistance, targetLayerMask))
+            shot = hit.collider.transform.root;
+
+        if (!shot || shot != targetToShot.transform)
         {
-            Player player = playersAlive[i];
-            if (player.PlayerCollider.Raycast(new Ray(this.muzzle.position, this.transform.forward), out hit, maxViewDistance))
-            {
-                player.DecreaseLife(this.damage);
-                break;
-            }
+            owner.SwitchState(targetLost);
+            return;
         }
+
+        targetToShot.DecreaseLife(this.damage);
+        transform.LookAt(shot, Vector3.up);
 
         ResetShootCooldown();
         if (shootSync != null)
             shootSync.SendShotCall();
-    }
-
-    private bool CheckIfStillOnSight()
-    {
-        RaycastHit hit;
-        bool lostSight = true;
-        for (int i = 0; i < playersAlive.Elements.Count; i++)
-        {
-            Player player = playersAlive[i];
-
-            if (player.transform != targetToShot)
-                continue;
-
-            lostSight = !player.PlayerCollider.Raycast(new Ray(this.transform.position + new Vector3(0, 0.5f, 0), this.transform.forward), out hit, maxViewDistance);
-
-            break;
-        }
-
-        if (lostSight)
-            owner.SwitchState(next);
-
-        return !lostSight;
     }
 
     public override void OnStateEnter()
@@ -89,11 +74,17 @@ public class AIShootTillOnSight : AIBehaviour
         AIGoToTargetUntilOnSight previousState = owner.PreviousState as AIGoToTargetUntilOnSight;
         if (previousState == null)
         {
-            owner.SwitchState(next);
+            owner.SwitchState(targetLost);
             return;
         }
 
-        targetToShot = previousState.Target;
+        targetToShot = previousState.Target.GetComponent<Player>();
+        if (!targetToShot)
+        {
+            owner.SwitchState(targetLost);
+            return;
+        }
+
         ResetShootCooldown();
     }
 

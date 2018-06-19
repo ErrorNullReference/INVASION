@@ -39,8 +39,9 @@ GameObject:
   - component: {fileID: 224774322846628770}
   - component: {fileID: 222185884069751922}
   - component: {fileID: 114155980091168392}
+  - component: {fileID: 114629684813438354}
   m_Layer: 5
-  m_Name: AmmoCount
+  m_Name: EnergyCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -498,6 +499,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4249e624b02fbef4eba673e262e58c45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DataContainer: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
+  InputAssetHUD: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
+--- !u!114 &114629684813438354
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1253291892927556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c0f3b2abc5acd8418b79d231473ad77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   DataContainer: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}

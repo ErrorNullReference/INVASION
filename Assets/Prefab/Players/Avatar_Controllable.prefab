@@ -1540,11 +1540,11 @@ MonoBehaviour:
   WalkSpeed:
     UseConstant: 1
     Variable: {fileID: 0}
-    constantValue: 15
+    constantValue: 10
   RunSpeed:
     UseConstant: 1
     Variable: {fileID: 0}
-    constantValue: 30
+    constantValue: 15
 --- !u!114 &114402471443833716
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1619,6 +1619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Stats: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
   TotalPoints: 0
+  Energy: 0
   Dead: 0
   MaxRessTime: 120
   MaxRessDistance: 10

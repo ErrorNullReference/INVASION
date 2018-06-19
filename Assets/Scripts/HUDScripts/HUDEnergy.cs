@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HUDScore : HUD
+public class HUDEnergy : HUD
 {
-    int prevPoints;
+    int prevEnergy;
     Player player;
     void LateUpdate()
     {
@@ -24,10 +24,10 @@ public class HUDScore : HUD
         if (!player)
             return;
 
-        if (player.TotalPoints != prevPoints)
+        if (player.Energy != prevEnergy)
         {
-            textComponent.text = player.TotalPoints.ToString();
-            prevPoints = player.TotalPoints;
+            textComponent.text = player.Energy.ToString();
+            prevEnergy = player.Energy;
         }
     }
 }

@@ -2750,14 +2750,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 114057339501243828}
-  playersAlive: {fileID: 11400000, guid: 8c3bf4eccc08acb42867bac67e33f9f7, type: 2}
+  targetLayerMask: {fileID: 11400000, guid: 5ab00fb41531e634694def18c509b702, type: 2}
   maxViewDistance: 20
   damage: 1
   minCooldownBetweenShoots: 1
   maxCooldownBetweenShoots: 3
   muzzle: {fileID: 4309865899282914}
   shootSync: {fileID: 114318863650488276}
-  next: {fileID: 114454403185978774}
+  targetLost: {fileID: 114454403185978774}
 --- !u!114 &114226324737965404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2809,11 +2809,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 114057339501243828}
-  playersAlive: {fileID: 11400000, guid: 8c3bf4eccc08acb42867bac67e33f9f7, type: 2}
+  targetLayerMask: {fileID: 11400000, guid: 5ab00fb41531e634694def18c509b702, type: 2}
   maxViewDistance: 10
   fov: 110
   cooldownBeforeRecalculation: 1
-  next: {fileID: 114130182057454510}
+  targetVisible: {fileID: 114130182057454510}
+  targetLost: {fileID: 114454403185978774}
 --- !u!114 &114454403185978774
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2827,7 +2828,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 114057339501243828}
   possibleTargets: {fileID: 11400000, guid: 8c3bf4eccc08acb42867bac67e33f9f7, type: 2}
-  next: {fileID: 114437912616470450}
+  aggroActivated: {fileID: 114437912616470450}
 --- !u!114 &114578491837655658
 MonoBehaviour:
   m_ObjectHideFlags: 1
