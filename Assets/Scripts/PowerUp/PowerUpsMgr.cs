@@ -18,6 +18,22 @@ public class PowerUpsMgr : Factory<byte>
         Client.AddCommand(PacketType.PowerUpSpawn, NetSpawnedPowUp);
         Client.AddCommand(PacketType.PowerUpDespawn, NetDespawnedPowUp);
     }
+    public void SendMsgSpawnPowerUp(PowerUpType type, int id, Vector3 pos, bool sendToSender = true)
+    {
+        byte[] data = ArrayPool<byte>.Get(17);
+
+        data[0] = (byte)type;
+
+        ByteManipulator.Write(data, 1, id);
+
+        ByteManipulator.Write(data, 5, pos.x);
+        ByteManipulator.Write(data, 9, pos.y);
+        ByteManipulator.Write(data, 13, pos.z);
+
+        Client.SendPacketToInGameUsers(data, 0, data.Length, PacketType.PowerUpSpawn, EP2PSend.k_EP2PSendReliable, sendToSender);
+
+        ArrayPool<byte>.Recycle(data);
+    }
     private void NetDespawnedPowUp(byte[] data, uint length, CSteamID sender)
     {
         int id = ByteManipulator.ReadInt32(data, 0);
@@ -29,7 +45,7 @@ public class PowerUpsMgr : Factory<byte>
         NetObjs.Elements[id].GetComponent<PowerUp>().Recycle();
     }
 
-    private PowerUp GetPowUp(PowerUpType type, int id, Transform parent, Vector3 pos, Quaternion rot)
+    public PowerUp GetPowUp(PowerUpType type, int id, Transform parent, Vector3 pos, Quaternion rot)
     {
         if (!organizedPools.ContainsKey((byte)type))
             return null;
@@ -41,9 +57,9 @@ public class PowerUpsMgr : Factory<byte>
         PowerUp powUp = pool.DirectGet(parent, pos, rot, out nullObjsRemoved, out parented).GetComponent<PowerUp>();
         powUp.Pool = pool;
 
-        powUp.gameObject.SetActive(true);
-
         powUp.GetComponent<GameNetworkObject>().SetNetworkId(id);
+
+        powUp.gameObject.SetActive(true);
 
         return powUp;
     }

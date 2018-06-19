@@ -8,8 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f9cb606cbfb2bf46bfa6d19ae92199c, type: 3}
-  m_Name: LifeRecovered
+  m_Script: {fileID: 11500000, guid: e0aef3af986272248862e2ee97777c2e, type: 3}
+  m_Name: EnergyType
   m_EditorClassIdentifier: 
   DEBUG_DeveloperDescription: 
-  Value: 5
+  Value: 1

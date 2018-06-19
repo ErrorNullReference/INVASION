@@ -8,6 +8,7 @@ public class Player : LivingBeing
     public SimpleAvatar Avatar { get { return avatar; } }
 
     public int TotalPoints = 0;
+    public int Energy;
 
     public bool Dead;
 
@@ -17,10 +18,15 @@ public class Player : LivingBeing
     public float RessHealthPercentage = 0.5f;
 
     public SOEvBool PlayerAliveStatusChanged;
-    [HideInInspector]
-    public Collider PlayerCollider;
+
+    public Collider PlayerCollider { get { return playerCollider; } }
+
     [SerializeField]
-    private SOListPlayerContainer players;
+    private Collider playerCollider;
+    [SerializeField]
+    private SOListPlayerContainer playersAlive;
+    [SerializeField]
+    private SOListPlayerContainer allPlayers;
     [SerializeField]
     private SimpleAvatar avatar;
     [SerializeField]
@@ -30,21 +36,36 @@ public class Player : LivingBeing
 
     private float prevLife;
 
+    private void Awake()
+    {
+        for (int i = playersAlive.Elements.Count - 1; i >= 0; i--)
+        {
+            if (!playersAlive[i])
+                playersAlive.Elements.RemoveAt(i);
+        }
+        for (int i = allPlayers.Elements.Count - 1; i >= 0; i--)
+        {
+            if (!allPlayers[i])
+                allPlayers.Elements.RemoveAt(i);
+        }
+    }
     private void Start()
     {
         GetComponentInChildren<HUDHealt>().InputAssetHUD = Stats;
-        PlayerCollider = GetComponentInChildren<Collider>();
         life = Stats.MaxHealth;
         prevLife = life;
         Dead = life <= 0f;
+
+        if (!Dead)
+            playersAlive.Elements.Add(this);
     }
     private void OnEnable()
     {
-        players.Elements.Add(this);
+        allPlayers.Elements.Add(this);
     }
     private void OnDisable()
     {
-        players.Elements.Remove(this);
+        allPlayers.Elements.Remove(this);
     }
     protected void LateUpdate()
     {
@@ -53,11 +74,13 @@ public class Player : LivingBeing
 
         if (Dead)
         {
-            int length = players.Elements.Count;
+            int length = playersAlive.Elements.Count;
+            Transform transf = transform;
+
             for (int i = 0; i < length; i++)
             {
-                Player other = players[i];
-                if (other != this && (this.transform.position - other.transform.position).sqrMagnitude < MaxRessDistance * MaxRessDistance)
+                Player other = playersAlive[i];
+                if (other != this && (transf.position - other.transform.position).sqrMagnitude < MaxRessDistance * MaxRessDistance)
                 {
                     this.life += RessTimeMultiplier * Time.deltaTime;
                     if (this.life >= 1f)
@@ -96,8 +119,8 @@ public class Player : LivingBeing
             }
             else
             {
-                Client.SendTransformToInGameUsers(packet, this.transform, EP2PSend.k_EP2PSendReliable, false);
                 Die();
+                Client.SendTransformToInGameUsers(packet, this.transform, EP2PSend.k_EP2PSendReliable, false);
             }
         }
     }
@@ -110,12 +133,11 @@ public class Player : LivingBeing
         life = 0f;
         timer = 0f;
 
+        playersAlive.Elements.Remove(this);
+
         if (avatar.UserInfo.SteamID == Client.MyID)
             PlayerAliveStatusChanged.Raise(false);
     }
-    /// <summary>
-    /// Requires Life value to be already setted
-    /// </summary>
     public void Resurrect(float newLife)
     {
         life = Mathf.Min(newLife, Stats.MaxHealth);
@@ -126,46 +148,9 @@ public class Player : LivingBeing
 
         controller.Die(false);
 
+        playersAlive.Elements.Add(this);
+
         if (avatar.UserInfo.SteamID == Client.MyID)
             PlayerAliveStatusChanged.Raise(true);
     }
-
-
-    //CHANGED, FOR NOW ONLY ONE CAMERA WILL BE USED.
-
-    //public Camera[] cameras;
-    //private int currentCameraIndex;
-
-    //void Start()
-    //{
-    //    currentCameraIndex = 0;
-    //    for (int i = 0; i < cameras.Length; i++)
-    //    {
-    //        cameras[i].gameObject.SetActive(false);
-    //    }
-    //    if (cameras.Length > 0)
-    //    {
-    //        cameras[0].gameObject.SetActive(true);
-    //    }
-    //}
-
-    //void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.R))
-    //    {
-    //        currentCameraIndex++;
-
-    //        if (currentCameraIndex < cameras.Length)
-    //        {
-    //            cameras[currentCameraIndex - 1].gameObject.SetActive(false);
-    //            cameras[currentCameraIndex].gameObject.SetActive(true);
-    //        }
-    //        else
-    //        {
-    //            cameras[currentCameraIndex - 1].gameObject.SetActive(false);
-    //            currentCameraIndex = 0;
-    //            cameras[currentCameraIndex].gameObject.SetActive(true);
-    //        }
-    //    }
-    //}
 }

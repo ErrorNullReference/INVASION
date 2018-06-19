@@ -8,8 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eb86e2078f5cd646ac44f1410dea195, type: 3}
-  m_Name: PlayerContainer
+  m_Script: {fileID: 11500000, guid: 50aa3f5a569f83140a6a26197107dd2f, type: 3}
+  m_Name: EnergyAmount
   m_EditorClassIdentifier: 
-  DEBUG_DeveloperDescription: Container of all active players in scene
-  Elements: []
+  DEBUG_DeveloperDescription: 
+  Value: 5

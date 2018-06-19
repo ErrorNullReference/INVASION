@@ -9,34 +9,34 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1054413260009574}
+  m_RootGameObject: {fileID: 1945599617574932}
   m_IsPrefabParent: 1
---- !u!1 &1054413260009574
+--- !u!1 &1945599617574932
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4070633955312000}
-  - component: {fileID: 33838739156393794}
-  - component: {fileID: 135577056917922198}
-  - component: {fileID: 23661752461329146}
-  - component: {fileID: 114592951333106626}
-  - component: {fileID: 114672264496522838}
-  m_Layer: 0
-  m_Name: HealthPowerUp
+  - component: {fileID: 4149137676130208}
+  - component: {fileID: 33342988230388058}
+  - component: {fileID: 135061291997267352}
+  - component: {fileID: 23402674849914866}
+  - component: {fileID: 114768739026005998}
+  - component: {fileID: 114500267108955366}
+  m_Layer: 12
+  m_Name: EnergyPowerUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4070633955312000
+--- !u!4 &4149137676130208
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1054413260009574}
+  m_GameObject: {fileID: 1945599617574932}
   m_LocalRotation: {x: 0.052335896, y: -0, z: -0, w: 0.9986295}
   m_LocalPosition: {x: 11.5, y: 1.25, z: 10.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -44,12 +44,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23661752461329146
+--- !u!23 &23402674849914866
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1054413260009574}
+  m_GameObject: {fileID: 1945599617574932}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -58,7 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 5ae7b4f242d77a84ebc231af071f8fb2, type: 2}
+  - {fileID: 2100000, guid: 07b0e162877405141a28c4e3a835ed4c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78,47 +78,47 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33838739156393794
+--- !u!33 &33342988230388058
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1054413260009574}
+  m_GameObject: {fileID: 1945599617574932}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114592951333106626
+--- !u!114 &114500267108955366
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1054413260009574}
+  m_GameObject: {fileID: 1945599617574932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c324998d7cf74634bba857c63819db7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: {fileID: 11400000, guid: 355b32b361da55d429ec8cb49b76e4c5, type: 2}
+  LifeTime: {fileID: 11400000, guid: 0a423b2007476ba4b8ccf2e5341975b7, type: 2}
+  SelfLayer: {fileID: 11400000, guid: e3e4d4fd5d823b84d8b30737e19d2938, type: 2}
+  coll: {fileID: 135061291997267352}
+  EnergyAmount: {fileID: 11400000, guid: de8e96f65f84cc646b7157aa50561584, type: 2}
+--- !u!114 &114768739026005998
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1945599617574932}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7012d827424c321428681592efbc37ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   networkObjects: {fileID: 11400000, guid: 209e760079e7a28429153a90e96df903, type: 2}
---- !u!114 &114672264496522838
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1054413260009574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 382e6474c8409334fb29160bfff2b983, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Type: {fileID: 11400000, guid: 72b3de41f8af1364298b8f615d7fdfe6, type: 2}
-  LifeTime: {fileID: 11400000, guid: f400119a9617c3f4ebf9defa1758bd2a, type: 2}
-  SelfLayer: {fileID: 11400000, guid: e3e4d4fd5d823b84d8b30737e19d2938, type: 2}
-  coll: {fileID: 135577056917922198}
-  RecoverLifeAmount: {fileID: 11400000, guid: f137b6e2f69c55b4c80fbb7b256d1416, type: 2}
---- !u!135 &135577056917922198
+--- !u!135 &135061291997267352
 SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1054413260009574}
+  m_GameObject: {fileID: 1945599617574932}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1

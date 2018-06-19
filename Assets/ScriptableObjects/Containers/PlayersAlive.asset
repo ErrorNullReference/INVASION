@@ -8,8 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0aef3af986272248862e2ee97777c2e, type: 3}
-  m_Name: Type
+  m_Script: {fileID: 11500000, guid: 9eb86e2078f5cd646ac44f1410dea195, type: 3}
+  m_Name: PlayersAlive
   m_EditorClassIdentifier: 
-  DEBUG_DeveloperDescription: 
-  Value: 0
+  DEBUG_DeveloperDescription: List of all players alive in game
+  Elements: []

@@ -6,9 +6,7 @@ using SOPRO;
 public class AIShootTillOnSight : AIBehaviour
 {
     [SerializeField]
-    private LayerMaskHolder layerToLookInto;
-    [SerializeField]
-    private LayerMaskHolder layerToShootAt;
+    private SOListPlayerContainer playersAlive;
     [SerializeField]
     private float maxViewDistance;
     [SerializeField]
@@ -42,18 +40,21 @@ public class AIShootTillOnSight : AIBehaviour
 
         currentCooldownBetweenShoots -= Time.deltaTime;
 
-        if(CheckIfStillOnSight() && currentCooldownBetweenShoots <= 0)
+        if (CheckIfStillOnSight() && currentCooldownBetweenShoots <= 0)
             Shot();
     }
 
     private void Shot()
     {
         RaycastHit hit;
-        if(Physics.Raycast(this.muzzle.position, this.transform.forward, out hit, maxViewDistance, layerToShootAt))
+        for (int i = 0; i < playersAlive.Elements.Count; i++)
         {
-            Player hitPlayer = hit.collider.GetComponent<Player>();
-            if (hitPlayer && !hitPlayer.Dead)
-                hitPlayer.DecreaseLife(this.damage);
+            Player player = playersAlive[i];
+            if (player.PlayerCollider.Raycast(new Ray(this.muzzle.position, this.transform.forward), out hit, maxViewDistance))
+            {
+                player.DecreaseLife(this.damage);
+                break;
+            }
         }
 
         ResetShootCooldown();
@@ -64,19 +65,23 @@ public class AIShootTillOnSight : AIBehaviour
     private bool CheckIfStillOnSight()
     {
         RaycastHit hit;
-        if (!Physics.Raycast(this.transform.position + new Vector3(0, 0.5f, 0), this.transform.forward, out hit, maxViewDistance, layerToLookInto))
+        bool lostSight = true;
+        for (int i = 0; i < playersAlive.Elements.Count; i++)
         {
-            owner.SwitchState(next);
-            return false;
+            Player player = playersAlive[i];
+
+            if (player.transform != targetToShot)
+                continue;
+
+            lostSight = !player.PlayerCollider.Raycast(new Ray(this.transform.position + new Vector3(0, 0.5f, 0), this.transform.forward), out hit, maxViewDistance);
+
+            break;
         }
 
-        if(hit.collider.transform == targetToShot)
-            return true;
-        else
-        {
+        if (lostSight)
             owner.SwitchState(next);
-            return false;
-        }
+
+        return !lostSight;
     }
 
     public override void OnStateEnter()

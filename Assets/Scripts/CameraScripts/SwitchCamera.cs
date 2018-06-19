@@ -10,7 +10,7 @@ public class SwitchCamera : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(SwitchPlayer) || Players[Follow.CurrentIndex].Dead)
+        if (Players.Elements.Count != 0 && Input.GetKeyDown(SwitchPlayer) || Players[Follow.CurrentIndex].Dead)
         {
             int index = Follow.CurrentIndex;
             int length = Players.Elements.Count;

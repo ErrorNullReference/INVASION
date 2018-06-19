@@ -9,6 +9,9 @@ public abstract class PowerUp : MonoBehaviour
     public SOVariablePowerUpType Type;
 
     public SOVariableFloat LifeTime;
+
+    public LayerHolder SelfLayer;
+
     [NonSerialized]
     public SOPool Pool;
 
@@ -18,23 +21,32 @@ public abstract class PowerUp : MonoBehaviour
 
     private float timer;
 
+    public void Recycle()
+    {
+        Pool.Recycle(this.gameObject);
+        netObj.ResetNetworkId();
+    }
+
     protected virtual void OnEnable()
     {
+        if (!netObj)
+            netObj = GetComponent<GameNetworkObject>();
+
+        if (gameObject.layer != SelfLayer)
+            gameObject.layer = SelfLayer;
+
         if (!Client.IsHost)
         {
             coll.enabled = false;
             this.enabled = false;
             return;
         }
+
         coll.isTrigger = true;
         coll.enabled = true;
 
-        if (!netObj)
-            netObj = GetComponent<GameNetworkObject>();
-
         timer = 0f;
     }
-
     protected virtual void Update()
     {
         timer += Time.deltaTime;
@@ -52,6 +64,17 @@ public abstract class PowerUp : MonoBehaviour
     /// <param name="collided">player collided</param>
     /// <returns>true to despawn power up, false to not despawn power up</returns>
     protected abstract bool OnTriggerActive(Collider collision, Player collided);
+    protected void Recycle(CSteamID picker, bool picked)
+    {
+        byte[] data = ArrayPool<byte>.Get(picked ? 12 : 4);
+        ByteManipulator.Write(data, 0, netObj.NetworkId);
+        if (picked)
+            ByteManipulator.Write(data, 4, picker.m_SteamID);
+
+        Client.SendPacketToInGameUsers(data, 0, data.Length, PacketType.PowerUpDespawn, EP2PSend.k_EP2PSendUnreliable, true);
+
+        ArrayPool<byte>.Recycle(data);
+    }
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -64,21 +87,5 @@ public abstract class PowerUp : MonoBehaviour
 
         if (OnTriggerActive(collision, p))
             Recycle(p.Avatar.UserInfo.SteamID, true);
-    }
-    public void Recycle()
-    {
-        Pool.Recycle(this.gameObject);
-        netObj.ResetNetworkId();
-    }
-    protected void Recycle(CSteamID picker, bool picked)
-    {
-        byte[] data = ArrayPool<byte>.Get(picked ? 12 : 4);
-        ByteManipulator.Write(data, 0, netObj.NetworkId);
-        if (picked)
-            ByteManipulator.Write(data, 4, picker.m_SteamID);
-
-        Client.SendPacketToInGameUsers(data, 0, data.Length, PacketType.PowerUpDespawn, EP2PSend.k_EP2PSendUnreliable, true);
-
-        ArrayPool<byte>.Recycle(data);
     }
 }

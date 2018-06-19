@@ -1,6 +1,4 @@
-﻿
-
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using SOPRO;
@@ -8,7 +6,7 @@ using SOPRO;
 public class AIGoToTargetUntilOnSight : AIBehaviour
 {
     [SerializeField]
-    private LayerMaskHolder layerToLookInto;
+    private SOListPlayerContainer playersAlive;
     [SerializeField]
     private float maxViewDistance;
     [SerializeField]
@@ -76,7 +74,7 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
         if (distanceToPlayer > maxViewDistance)
             return;
 
-        Vector3 directionToPlayer = targetPos - pos;
+        Vector3 directionToPlayer = (targetPos - pos).normalized;
         float angleToPlayer = Vector3.Angle(this.transform.forward, directionToPlayer);
         if (angleToPlayer > fov * 0.5f)
             return;
@@ -84,14 +82,17 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
         RaycastHit hit;
 
         Vector3 raycastPositionStart = pos + new Vector3(0f, 0.5f, 0f);
-        if (Physics.Raycast(raycastPositionStart, directionToPlayer, out hit, maxViewDistance, layerToLookInto))
+
+        for (int i = 0; i < playersAlive.Elements.Count; i++)
         {
-            if (hit.collider.transform == target)
+            Player player = playersAlive[i];
+            if (player.transform == target)
             {
-                //Debug.Log("TARGET ON SIGHT!");
-                owner.SwitchState(next);
+                if (player.PlayerCollider.Raycast(new Ray(raycastPositionStart, directionToPlayer), out hit, maxViewDistance))
+                    owner.SwitchState(next);
+
+                break;
             }
         }
     }
-
 }

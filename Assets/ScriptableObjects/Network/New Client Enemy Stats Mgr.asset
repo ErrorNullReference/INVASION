@@ -19,4 +19,6 @@ MonoBehaviour:
     UseConstant: 1
     Variable: {fileID: 0}
     constantValue: 10
+  dispenser: {fileID: 11400000, guid: 56e47d53dc614774bba72546195db65d, type: 2}
+  powUpMgr: {fileID: 11400000, guid: 91a7ce736c31c6b43a5ecf97762456d3, type: 2}
   netEntities: {fileID: 11400000, guid: 209e760079e7a28429153a90e96df903, type: 2}

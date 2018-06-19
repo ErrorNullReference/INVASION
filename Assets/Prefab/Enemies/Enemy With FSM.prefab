@@ -2750,8 +2750,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 114057339501243828}
-  layerToLookInto: {fileID: 11400000, guid: 5ab00fb41531e634694def18c509b702, type: 2}
-  layerToShootAt: {fileID: 11400000, guid: 8c2c15eb5d226ca4bac505332c1810e1, type: 2}
+  playersAlive: {fileID: 11400000, guid: 8c3bf4eccc08acb42867bac67e33f9f7, type: 2}
   maxViewDistance: 20
   damage: 1
   minCooldownBetweenShoots: 1
@@ -2810,7 +2809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 114057339501243828}
-  layerToLookInto: {fileID: 11400000, guid: 5ab00fb41531e634694def18c509b702, type: 2}
+  playersAlive: {fileID: 11400000, guid: 8c3bf4eccc08acb42867bac67e33f9f7, type: 2}
   maxViewDistance: 10
   fov: 110
   cooldownBeforeRecalculation: 1
@@ -2827,7 +2826,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 114057339501243828}
-  possibleTargets: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
+  possibleTargets: {fileID: 11400000, guid: 8c3bf4eccc08acb42867bac67e33f9f7, type: 2}
   next: {fileID: 114437912616470450}
 --- !u!114 &114578491837655658
 MonoBehaviour:

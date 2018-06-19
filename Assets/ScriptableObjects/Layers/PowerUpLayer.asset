@@ -8,7 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1173331668, guid: 7d6b284e18a06314ea7b65d1fe4236f6, type: 3}
-  m_Name: EnemyPool
+  m_Script: {fileID: -295101368, guid: 7d6b284e18a06314ea7b65d1fe4236f6, type: 3}
+  m_Name: PowerUpLayer
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 1764905658333020, guid: fc59f6594bd929b499b3b920e4ef2f1d, type: 2}
+  layerName: PowerUp
+  layerIndex: 12

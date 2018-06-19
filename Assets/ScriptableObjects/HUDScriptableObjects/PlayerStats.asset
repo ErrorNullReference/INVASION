@@ -13,10 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SerializeMe: 0
   ClientID: 1
-  Health: 100
-  MaxHealth: 100
-  AmmoHeld: 0
-  MaxAmmo: 0
+  Health: 5000
+  MaxHealth: 5000
+  Energy: 0
+  MaxEnergy: 0
   AmmoMag: 0
   PlayerHealthBarGradient:
     serializedVersion: 2
