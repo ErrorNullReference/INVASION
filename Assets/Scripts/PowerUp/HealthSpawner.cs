@@ -29,7 +29,7 @@ public class HealthSpawner : MonoBehaviour
 
             Vector3 closest = SpawnPoints[UnityEngine.Random.Range(0, SpawnPoints.Elements.Count)];
 
-            Manager.SendMsgSpawnPowerUp(PowerUpType.Health, IdDispenser.GetNewNetId(), closest, true);
+            Manager.SendMsgSpawnPowerUp(PowerUpType.Health, IdDispenser.GetNewNetId(), closest, null, true);
         }
     }
 }

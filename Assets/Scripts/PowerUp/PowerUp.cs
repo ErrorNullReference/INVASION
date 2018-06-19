@@ -26,7 +26,7 @@ public abstract class PowerUp : MonoBehaviour
         Pool.Recycle(this.gameObject);
         netObj.ResetNetworkId();
     }
-
+    public abstract void ProcessAdditionalData(byte[] data, int startIndex, int length);
     protected virtual void OnEnable()
     {
         if (!netObj)

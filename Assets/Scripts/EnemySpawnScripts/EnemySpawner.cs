@@ -54,7 +54,7 @@ public class EnemySpawner : Factory<byte>
 
         bool parented;
         int nullObjsRemovedFromPool;
-        GameObject go = pool.DirectGet(poolRoot, out nullObjsRemovedFromPool, out parented);
+        GameObject go = pool.DirectGet(poolRoot, position, Quaternion.identity, out nullObjsRemovedFromPool, out parented);
 
         Enemy enemy = go.GetComponent<Enemy>();
         enemy.Pool = pool;
@@ -70,7 +70,7 @@ public class EnemySpawner : Factory<byte>
 
         EnemiesCount.Value++;
 
-        OnEnemyAddEvent.Raise(enemy.NetObj);  
+        OnEnemyAddEvent.Raise(enemy.NetObj);
     }
 
     //OnEnemyDeath will be called when command EnemyDeath is received from host

@@ -11,7 +11,7 @@ public class AnimationControllerScript : MonoBehaviour
 
     public float SpeedForward
     {
-        get { return anim.GetFloat((int)AnimSpeed); }
+        get { return anim.GetFloat(AnimSpeed); }
     }
     private void Awake()
     {
@@ -20,8 +20,8 @@ public class AnimationControllerScript : MonoBehaviour
 
     public void Animation(float forward, float right)
     {
-        anim.SetFloat((int)speed, forward);
-        anim.SetFloat((int)LeftSpeed, right);
+        anim.SetFloat(speed, forward);
+        anim.SetFloat(LeftSpeed, right);
     }
 }
 

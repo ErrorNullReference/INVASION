@@ -50,11 +50,14 @@ public class ClientEnemyStatsMgr : ScriptableObject
                 Vector3 position = enemy.transform.position;
 
                 int netId = dispenser.GetNewNetId();
-                //TODO: already recycled power ups (for now noticed only with energy) will respawn at its old location
-                powUpMgr.SendMsgSpawnPowerUp(PowerUpType.Energy, netId, position, false);
 
-                EnergyPowUp powUp = powUpMgr.GetPowUp(PowerUpType.Energy, netId, null, position, Quaternion.identity) as EnergyPowUp;
-                powUp.Owner = shooter;
+                byte[] addData = ArrayPool<byte>.Get(8);
+
+                ByteManipulator.Write(addData, 0, shooter);
+
+                powUpMgr.SendMsgSpawnPowerUp(PowerUpType.Energy, netId, position, addData, true);
+
+                ArrayPool<byte>.Recycle(addData);
             }
         }
 

@@ -19,31 +19,19 @@
             Calculated property hash at load time
             </summary>
         </member>
-        <member name="M:SOPRO.AnimatorPropertyHolder.op_Implicit(SOPRO.AnimatorPropertyHolder)~System.Int32">
+        <member name="T:SOPRO.UtilityExtensions">
             <summary>
-            Converts to calculated property hash value
-            </summary>
-            <param name="prop">property to convert</param>
-        </member>
-        <member name="M:SOPRO.AnimatorPropertyHolder.op_Implicit(SOPRO.AnimatorPropertyHolder)~System.String">
-            <summary>
-            Converts to property name value
-            </summary>
-            <param name="prop">property to convert</param>
-        </member>
-        <member name="T:SOPRO.AnimatorUtility">
-            <summary>
-            Utility class for Unity animator
+            Utility class for Unity
             </summary>
         </member>
-        <member name="M:SOPRO.AnimatorUtility.SetTrigger(UnityEngine.Animator,SOPRO.AnimatorPropertyHolder)">
+        <member name="M:SOPRO.UtilityExtensions.SetTrigger(UnityEngine.Animator,SOPRO.AnimatorPropertyHolder)">
             <summary>
             Sets an animator trigger
             </summary>
             <param name="animator">animator</param>
             <param name="property">trigger property</param>
         </member>
-        <member name="M:SOPRO.AnimatorUtility.SetBoolean(UnityEngine.Animator,SOPRO.AnimatorPropertyHolder,System.Boolean)">
+        <member name="M:SOPRO.UtilityExtensions.SetBool(UnityEngine.Animator,SOPRO.AnimatorPropertyHolder,System.Boolean)">
             <summary>
             Sets an animator boolean value
             </summary>
@@ -51,7 +39,15 @@
             <param name="property">boolean property</param>
             <param name="value">value to set</param>
         </member>
-        <member name="M:SOPRO.AnimatorUtility.SetFloat(UnityEngine.Animator,SOPRO.AnimatorPropertyHolder,System.Single)">
+        <member name="M:SOPRO.UtilityExtensions.GetBool(UnityEngine.Animator,SOPRO.AnimatorPropertyHolder)">
+            <summary>
+            Gets an animator boolean value
+            </summary>
+            <param name="animator">animator</param>
+            <param name="property">boolean property</param>
+            <returns>value</returns>
+        </member>
+        <member name="M:SOPRO.UtilityExtensions.SetFloat(UnityEngine.Animator,SOPRO.AnimatorPropertyHolder,System.Single)">
             <summary>
             Sets an animator float value
             </summary>
@@ -59,13 +55,29 @@
             <param name="property">float property</param>
             <param name="value">value to set</param>
         </member>
-        <member name="M:SOPRO.AnimatorUtility.SetInteger(UnityEngine.Animator,SOPRO.AnimatorPropertyHolder,System.Int32)">
+        <member name="M:SOPRO.UtilityExtensions.GetFloat(UnityEngine.Animator,SOPRO.AnimatorPropertyHolder)">
+            <summary>
+            Gets an animator float value
+            </summary>
+            <param name="animator">animator</param>
+            <param name="property">float property</param>
+            <returns>value</returns>
+        </member>
+        <member name="M:SOPRO.UtilityExtensions.SetInteger(UnityEngine.Animator,SOPRO.AnimatorPropertyHolder,System.Int32)">
             <summary>
             Sets an animator integer value
             </summary>
             <param name="animator">animator</param>
             <param name="property">integer property</param>
             <param name="value">value to set</param>
+        </member>
+        <member name="M:SOPRO.UtilityExtensions.GetInteger(UnityEngine.Animator,SOPRO.AnimatorPropertyHolder)">
+            <summary>
+            Gets an animator integer value
+            </summary>
+            <param name="animator">animator</param>
+            <param name="property">integer property</param>
+            <returns>value</returns>
         </member>
         <member name="T:SOPRO.LayerHolder">
             <summary>

@@ -36,8 +36,8 @@ public class PlayerAnimatorController : MonoBehaviour
         else
             ExtrapolateDirectionWithoutInputs();
 
-        animator.SetFloat((int)speedX, dir.x);
-        animator.SetFloat((int)speedZ, dir.z);
+        animator.SetFloat(speedX, dir.x);
+        animator.SetFloat(speedZ, dir.z);
     }
 
     private const string horizontal = "Horizontal";
@@ -82,11 +82,11 @@ public class PlayerAnimatorController : MonoBehaviour
 
     public void Shoot()
     {
-        animator.SetTrigger((int)shoot);
+        animator.SetTrigger(shoot);
     }
 
     public void Die(bool isDead)
     {
-        animator.SetBool((int)death, isDead);
+        animator.SetBool(death, isDead);
     }
 }

@@ -31,6 +31,12 @@ public class HostEnemySpawner : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (!Client.IsHost)
+        {
+            this.enabled = false;
+            return;
+        }
+
         waitForFrame = new WaitForEndOfFrame();
 
         SteamCallbackReceiver.ChatUpdateEvent += InitCoroutine;

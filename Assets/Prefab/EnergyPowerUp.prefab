@@ -101,6 +101,10 @@ MonoBehaviour:
   SelfLayer: {fileID: 11400000, guid: e3e4d4fd5d823b84d8b30737e19d2938, type: 2}
   coll: {fileID: 135061291997267352}
   EnergyAmount: {fileID: 11400000, guid: de8e96f65f84cc646b7157aa50561584, type: 2}
+  PickableFromClient: {fileID: 2100000, guid: 07b0e162877405141a28c4e3a835ed4c, type: 2}
+  NonPickableFromClient: {fileID: 2100000, guid: 1a10f50dcf3fdd041be7c95198ea995a,
+    type: 2}
+  Renderer: {fileID: 23402674849914866}
 --- !u!114 &114768739026005998
 MonoBehaviour:
   m_ObjectHideFlags: 1

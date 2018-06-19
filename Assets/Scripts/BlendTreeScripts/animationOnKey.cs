@@ -25,24 +25,24 @@ public class animationOnKey : MonoBehaviour
 		if (Input.GetKey(triggerKey))
 		{
 			if (setTrigger)
-				animator.SetTrigger((int)paramName);
+				animator.SetTrigger(paramName);
 		}
 
 
 		if (setBoolOnlyWhenPressed)
 		{
 			if (Input.GetKey(triggerKey))
-				animator.SetBool((int)paramName, newBoolVal);
+				animator.SetBool(paramName, newBoolVal);
 			else
-				animator.SetBool((int)paramName, !newBoolVal);
+				animator.SetBool(paramName, !newBoolVal);
 		}
 
 		if (setBoolPressOneTime)
 		{
 			if (Input.GetKeyDown(triggerKey))
-				animator.SetBool((int)paramName, newBoolVal);
+				animator.SetBool(paramName, newBoolVal);
 			else
-				animator.SetBool((int)paramName, !newBoolVal);
+				animator.SetBool(paramName, !newBoolVal);
 		}
 
 	}

@@ -2751,7 +2751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 114057339501243828}
   targetLayerMask: {fileID: 11400000, guid: 5ab00fb41531e634694def18c509b702, type: 2}
-  maxViewDistance: 20
+  maxViewDistance: 15
   damage: 1
   minCooldownBetweenShoots: 1
   maxCooldownBetweenShoots: 3

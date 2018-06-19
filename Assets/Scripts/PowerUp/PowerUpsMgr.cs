@@ -11,16 +11,18 @@ public class PowerUpsMgr : Factory<byte>
     private void NetSpawnedPowUp(byte[] data, uint length, CSteamID sender)
     {
         Vector3 pos = new Vector3(ByteManipulator.ReadSingle(data, 5), ByteManipulator.ReadSingle(data, 9), ByteManipulator.ReadSingle(data, 13));
-        GetPowUp((PowerUpType)data[0], ByteManipulator.ReadInt32(data, 1), null, pos, Quaternion.identity);
+        GetPowUp((PowerUpType)data[0], ByteManipulator.ReadInt32(data, 1), null, pos, Quaternion.identity, data, 17, (int)length - 17);
     }
     public void Init()
     {
         Client.AddCommand(PacketType.PowerUpSpawn, NetSpawnedPowUp);
         Client.AddCommand(PacketType.PowerUpDespawn, NetDespawnedPowUp);
     }
-    public void SendMsgSpawnPowerUp(PowerUpType type, int id, Vector3 pos, bool sendToSender = true)
+    public void SendMsgSpawnPowerUp(PowerUpType type, int id, Vector3 pos, byte[] additionalData = null, bool sendToSender = true)
     {
-        byte[] data = ArrayPool<byte>.Get(17);
+        int addLength = additionalData == null ? 0 : additionalData.Length;
+
+        byte[] data = ArrayPool<byte>.Get(17 + addLength);
 
         data[0] = (byte)type;
 
@@ -29,6 +31,9 @@ public class PowerUpsMgr : Factory<byte>
         ByteManipulator.Write(data, 5, pos.x);
         ByteManipulator.Write(data, 9, pos.y);
         ByteManipulator.Write(data, 13, pos.z);
+
+        if (addLength > 0)
+            ByteManipulator.Write(additionalData, 0, data, 17, addLength);
 
         Client.SendPacketToInGameUsers(data, 0, data.Length, PacketType.PowerUpSpawn, EP2PSend.k_EP2PSendReliable, sendToSender);
 
@@ -45,7 +50,7 @@ public class PowerUpsMgr : Factory<byte>
         NetObjs.Elements[id].GetComponent<PowerUp>().Recycle();
     }
 
-    public PowerUp GetPowUp(PowerUpType type, int id, Transform parent, Vector3 pos, Quaternion rot)
+    public PowerUp GetPowUp(PowerUpType type, int id, Transform parent, Vector3 pos, Quaternion rot, byte[] additionalData, int startIndex, int length)
     {
         if (!organizedPools.ContainsKey((byte)type))
             return null;
@@ -58,6 +63,8 @@ public class PowerUpsMgr : Factory<byte>
         powUp.Pool = pool;
 
         powUp.GetComponent<GameNetworkObject>().SetNetworkId(id);
+
+        powUp.ProcessAdditionalData(additionalData, startIndex, length);
 
         powUp.gameObject.SetActive(true);
 

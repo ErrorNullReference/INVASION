@@ -25,13 +25,13 @@ public class EnemyController : MonoBehaviour
         {
             if (Chase)
             {
-                animator.SetBool((int)chase, true);
+                animator.SetBool(chase, true);
                 oldChase = Chase;
 
             }
             else if (!Chase)
             {
-                animator.SetBool((int)chase, false);
+                animator.SetBool(chase, false);
                 oldChase = Chase;
 
             }

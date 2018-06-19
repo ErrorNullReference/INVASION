@@ -31,7 +31,7 @@ public class simplePlayerControllerAnimator : MonoBehaviour
             slowModifierVal = 0.5f;*/
 
 		if (sendTranslateParam && z != 0)
-			animator.SetFloat((int)paramNameTranslate, z * slowModifierVal);
+			animator.SetFloat(paramNameTranslate, z * slowModifierVal);
 		//Debug.Log("Horizontal " + x);
 	}
 
