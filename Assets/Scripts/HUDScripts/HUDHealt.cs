@@ -21,18 +21,18 @@ public class HUDHealt : HUD
         if (GOSlider != null)     
         {
             //HUD 2D text subcase
-            GOSlider.value = livingBeing.Life / InputAssetHUD.MaxHealth;
+            GOSlider.value = livingBeing.Life * InputAssetHUD.InverseMaxHealth;
         }
         else if (GOImg != null)
         {
             // Sprite subcase
-            GOImg.color = InputAssetHUD.PlayerHealthBarGradient.Evaluate(livingBeing.Life / InputAssetHUD.MaxHealth);
-            GOImg.fillAmount = (livingBeing.Life / InputAssetHUD.MaxHealth);
+            GOImg.color = InputAssetHUD.PlayerHealthBarGradient.Evaluate(livingBeing.Life * InputAssetHUD.InverseMaxHealth);
+            GOImg.fillAmount = (livingBeing.Life * InputAssetHUD.InverseMaxHealth);
         }
         else
         {
             //Quad subcase 
-            gameObject.GetComponent<MeshRenderer>().material.color = InputAssetHUD.PlayerHealthBarGradient.Evaluate(livingBeing.Life / InputAssetHUD.MaxHealth);
+            gameObject.GetComponent<MeshRenderer>().material.color = InputAssetHUD.PlayerHealthBarGradient.Evaluate(livingBeing.Life * InputAssetHUD.InverseMaxHealth);
         }
 
     }

@@ -37,13 +37,13 @@ public class PlayerMovement : MonoBehaviour
         } 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (HUDInput.AmmoMag > 0)
-                HUDInput.AmmoMag--;
+            //if (HUDInput.AmmoMag > 0)
+            //    HUDInput.AmmoMag--;
         }
         if (Input.GetKey(KeyCode.R))
         {
             //HUDInput.AmmoHeld -= Mathf.Abs(10 - HUDInput.AmmoMag);
-            HUDInput.AmmoMag = 10;
+            //HUDInput.AmmoMag = 10;
 
         }
     }

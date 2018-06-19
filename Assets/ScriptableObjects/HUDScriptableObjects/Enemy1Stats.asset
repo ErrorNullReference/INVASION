@@ -11,15 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3da4655830f72c441be1a076198986db, type: 3}
   m_Name: Enemy1Stats
   m_EditorClassIdentifier: 
-  SerializeMe: 0
-  ClientID: 3
-  Health: 5
-  MaxHealth: 5
-  LevelXP: 0
-  GunName: rifle
-  AmmoHeld: 100
-  MaxAmmo: 999
-  AmmoMag: 0
+  maxHealth: 5
+  inverseMaxHealth: 0.2
+  maxEnergy: 0
+  inverseMaxEnergy: 0
   PlayerHealthBarGradient:
     serializedVersion: 2
     key0: {r: 0.5661765, g: 0, b: 0, a: 1}
@@ -78,4 +73,3 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  filename: Client Game Info

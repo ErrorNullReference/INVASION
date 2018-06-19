@@ -55,6 +55,7 @@ public class Player : LivingBeing
         life = Stats.MaxHealth;
         prevLife = life;
         Dead = life <= 0f;
+        Energy = 0;
 
         if (!Dead)
             playersAlive.Elements.Add(this);
@@ -72,6 +73,7 @@ public class Player : LivingBeing
         if (!Client.IsHost)
             return;
 
+        //Death logic
         if (Dead)
         {
             int length = playersAlive.Elements.Count;
@@ -82,8 +84,8 @@ public class Player : LivingBeing
                 Player other = playersAlive[i];
                 if (other != this && (transf.position - other.transform.position).sqrMagnitude < MaxRessDistance * MaxRessDistance)
                 {
-                    this.life += RessTimeMultiplier * Time.deltaTime;
-                    if (this.life >= 1f)
+                    this.life += RessTimeMultiplier * Stats.MaxHealth * Time.deltaTime;
+                    if (this.life >= Stats.MaxHealth)
                         this.Resurrect(Stats.MaxHealth * RessHealthPercentage);
                     return;
                 }
@@ -104,6 +106,9 @@ public class Player : LivingBeing
 
             return;
         }
+
+        //Alive logic
+        Energy = Mathf.Min(Energy, Stats.MaxEnergy);
 
         if (!Mathf.Approximately(prevLife, life))
         {
