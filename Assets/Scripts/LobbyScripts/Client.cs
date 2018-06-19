@@ -23,6 +23,8 @@ public enum PacketType : byte
     RequestAvatarSelection,
     AnswerAvatarSelection,
     EnterGame,
+    GameEntered,
+    GameStart,
     LatencyServer,
     Latency,
     Shoot,
@@ -54,6 +56,7 @@ public class Client : MonoBehaviour
     public BaseSOEvVoid OnLobbyInitializationEvent;
     public BaseSOEvVoid OnLobbyLeaveEvent;
     public BaseSOEvVoid OnClientInitialized;
+    public BaseSOEvVoid OnGameEntered;
     public BaseSOEvCSteamID OnUserEnter;
     public BaseSOEvCSteamID OnUserLeave;
 
@@ -99,6 +102,8 @@ public class Client : MonoBehaviour
     [SerializeField]
     private Lobby lobby;
 
+    private int clientEnteredGameCount;
+
     BytePacket Packet;
 
     static Client instance;
@@ -117,7 +122,7 @@ public class Client : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-
+        clientEnteredGameCount = 0;
         //DontDestroyOnLoad(this.gameObject);
 
         SteamCallbackReceiver.Init();
@@ -137,6 +142,7 @@ public class Client : MonoBehaviour
 
         Commands = new Command[Enum.GetNames(typeof(PacketType)).Length];
         AddCommands(PacketType.Latency, LatencyResponse);
+        AddCommands(PacketType.GameEntered, GameEntered);
 
         StartCoroutine(LatencyTest());
 
@@ -145,7 +151,16 @@ public class Client : MonoBehaviour
         if (OnClientInitialized)
             OnClientInitialized.Raise();
     }
+    void GameEntered(byte[] data, uint length , CSteamID sender)
+    {
+        if (sender == MyID)
+            OnGameEntered.Raise();
 
+        clientEnteredGameCount++;
+        //TODO: start game here, also need to manage players that quit and endgame
+        if (Client.IsHost && clientEnteredGameCount == Users.Count)
+            Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.GameStart, EP2PSend.k_EP2PSendReliable, true);
+    }
     IEnumerator LatencyTest()
     {
         while (true)

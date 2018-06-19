@@ -6,7 +6,6 @@ using GENUtility;
 [CreateAssetMenu(menuName = "VOCASY/DataTransports/Steam", fileName = "Steam Transport")]
 public class SteamTransport : Transport
 {
-    //TODO: gestire il cambio di scena (mantenere/ricreare voice chat entities) o aspettare che client implementi eventi piu utili e specifici
     public const int MaxAudioPacketSize = 1200;
     public override int MaxDataLength { get { return MaxAudioPacketSize - Transport.FirstPacketByteAvailable - Client.HeaderLength; } }
     private readonly byte[] boolean = new byte[sizeof(bool)];

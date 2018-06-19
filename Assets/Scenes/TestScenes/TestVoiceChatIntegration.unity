@@ -4720,6 +4720,7 @@ MonoBehaviour:
   OnLobbyLeaveEvent: {fileID: 11400000, guid: f4f482df599e6e341b91d8cd107b00cc, type: 2}
   OnClientInitialized: {fileID: 11400000, guid: e5d15a0d472650044be5d9e3b71ab4da,
     type: 2}
+  OnGameEntered: {fileID: 11400000, guid: 9b72d57c9e4ed29488fbe94dceea168e, type: 2}
   OnUserEnter: {fileID: 11400000, guid: 115c3444f1483b442a45e59cb4d1ca1a, type: 2}
   OnUserLeave: {fileID: 11400000, guid: 44b1672e48fb21742ac29ed3109c3a9e, type: 2}
   NumOfPlayers: 4
@@ -5150,7 +5151,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartButton: {fileID: 2012763594}
-  EnteredGame: {fileID: 11400000, guid: 9b72d57c9e4ed29488fbe94dceea168e, type: 2}
   GameSceneId: 2
 --- !u!114 &2012763594
 MonoBehaviour:
