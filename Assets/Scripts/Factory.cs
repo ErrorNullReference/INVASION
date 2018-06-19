@@ -29,7 +29,7 @@ public abstract class Factory<T> : ScriptableObject
             T identifier = ExtractIdentifier(pool.Prefab);
 
             if (organizedPools.ContainsKey(identifier))
-                throw new ArgumentException("Impossible to initialize FactoryObj, 1 or more objects are classified by the same identifier (" + identifier + ")", "pools");
+                throw new ArgumentException("Impossible to initialize FactoryObj, 1 or more objects are classified by the same identifier (" + identifier + "). Conflict between " + pool.name + " and " + organizedPools[identifier].name, "pools");
 
             organizedPools.Add(identifier, pool);
         }

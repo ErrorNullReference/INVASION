@@ -13,9 +13,6 @@ public class EnemySpawner : Factory<byte>
     public SODictionaryTransformContainer netEntities;
     public GameObject PoolRoot;
 
-    public BaseSOEvGameNetworkObject OnEnemyAddEvent;
-    public BaseSOEvGameNetworkObject OnEnemyRemoveEvent;
-
     public SOVariableInt EnemiesCount;
 
     public NavMeshAreaMaskHolder Mask;
@@ -63,14 +60,10 @@ public class EnemySpawner : Factory<byte>
         NavMeshHit hit;
         if (NavMesh.SamplePosition(position, out hit, 1f, Mask))
             go.GetComponent<NavMeshAgent>().Warp(hit.position);
-        else
-            Debug.LogWarning("NavMesh point for enemy spawn not found , souce pos = " + position);
 
         go.SetActive(true);
 
         EnemiesCount.Value++;
-
-        OnEnemyAddEvent.Raise(enemy.NetObj);
     }
 
     //OnEnemyDeath will be called when command EnemyDeath is received from host
@@ -86,7 +79,5 @@ public class EnemySpawner : Factory<byte>
         obj.Pool.Recycle(obj.gameObject);
 
         EnemiesCount.Value--;
-
-        OnEnemyRemoveEvent.Raise(obj.NetObj);
     }
 }
