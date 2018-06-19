@@ -57,6 +57,7 @@ public class Client : MonoBehaviour
     public BaseSOEvVoid OnLobbyLeaveEvent;
     public BaseSOEvVoid OnClientInitialized;
     public BaseSOEvVoid OnGameEntered;
+    public BaseSOEvVoid OnGameStarted;
     public BaseSOEvCSteamID OnUserEnter;
     public BaseSOEvCSteamID OnUserLeave;
 
@@ -143,6 +144,7 @@ public class Client : MonoBehaviour
         Commands = new Command[Enum.GetNames(typeof(PacketType)).Length];
         AddCommands(PacketType.Latency, LatencyResponse);
         AddCommands(PacketType.GameEntered, GameEntered);
+        AddCommands(PacketType.GameStart, (dt, l, s) => OnGameStarted.Raise());
 
         StartCoroutine(LatencyTest());
 
@@ -151,7 +153,7 @@ public class Client : MonoBehaviour
         if (OnClientInitialized)
             OnClientInitialized.Raise();
     }
-    void GameEntered(byte[] data, uint length , CSteamID sender)
+    void GameEntered(byte[] data, uint length, CSteamID sender)
     {
         if (sender == MyID)
             OnGameEntered.Raise();
@@ -183,9 +185,9 @@ public class Client : MonoBehaviour
 
     void P2PStatus(P2PSessionConnectFail_t cb)
     {
-        #if UNITY_EDITOR
-                Debug.Log(cb.m_eP2PSessionError);
-        #endif
+#if UNITY_EDITOR
+        Debug.Log(cb.m_eP2PSessionError);
+#endif
     }
 
     void AddCommands(PacketType commandType, Command command)

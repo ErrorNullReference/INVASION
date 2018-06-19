@@ -4721,6 +4721,7 @@ MonoBehaviour:
   OnClientInitialized: {fileID: 11400000, guid: e5d15a0d472650044be5d9e3b71ab4da,
     type: 2}
   OnGameEntered: {fileID: 11400000, guid: 9b72d57c9e4ed29488fbe94dceea168e, type: 2}
+  OnGameStarted: {fileID: 11400000, guid: 3df149ad818d9004e91a80482fd559e5, type: 2}
   OnUserEnter: {fileID: 11400000, guid: 115c3444f1483b442a45e59cb4d1ca1a, type: 2}
   OnUserLeave: {fileID: 11400000, guid: 44b1672e48fb21742ac29ed3109c3a9e, type: 2}
   NumOfPlayers: 4
@@ -4887,29 +4888,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+    m_TypeName: SOPRO.UnEvVoid, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &1797814819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1797814809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf79fc64ef9daf048883fab9b4638036, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 9b72d57c9e4ed29488fbe94dceea168e, type: 2}
+  Actions:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: b90721fe7aa9d8542b0aa20c4647457f, type: 2}
+        m_MethodName: CreateSpeakers
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 11400000, guid: 1c534515a0b8c7242a428928d8a7daa3, type: 2}
-        m_MethodName: Init
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: b97deca93d0d4ff42b5c78a4697d19bd, type: 2}
-        m_MethodName: RegisterTransformCommand
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: 836f69d39ba879742ba153dddf36d1e4, type: 2}
         m_MethodName: Init
         m_Mode: 1
         m_Arguments:
@@ -4931,25 +4938,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: SOPRO.UnEvVoid, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
---- !u!114 &1797814819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1797814809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf79fc64ef9daf048883fab9b4638036, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 9b72d57c9e4ed29488fbe94dceea168e, type: 2}
-  Actions:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: b90721fe7aa9d8542b0aa20c4647457f, type: 2}
-        m_MethodName: CreateSpeakers
+      - m_Target: {fileID: 11400000, guid: 836f69d39ba879742ba153dddf36d1e4, type: 2}
+        m_MethodName: Init
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: b97deca93d0d4ff42b5c78a4697d19bd, type: 2}
+        m_MethodName: RegisterTransformCommand
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

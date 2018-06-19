@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Steamworks;
-using System;
 using GENUtility;
 using SOPRO;
 public class PlayersMgr : MonoBehaviour
@@ -18,20 +16,8 @@ public class PlayersMgr : MonoBehaviour
     Dictionary<CSteamID, SimpleAvatar> avatars;
 
     public static Dictionary<CSteamID, SimpleAvatar> Players { get { return instance != null ? instance.avatars : null; } }
-
-    // Use this for initialization
-    void Start()
+    public void Init()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-
         avatars = new Dictionary<CSteamID, SimpleAvatar>();
         for (int i = 0; i < Client.Users.Count; i++)
         {
@@ -50,6 +36,19 @@ public class PlayersMgr : MonoBehaviour
         Client.AddCommand(PacketType.PlayerData, ManageTransform);
         Client.AddCommand(PacketType.PlayerStatus, ManagePlayerStatus);
         Client.AddCommand(PacketType.PlayerDeath, ManagePlayerDeath);
+    }
+    // Use this for initialization
+    void Start()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+            return;
+        }
     }
     void ManagePlayerDeath(byte[] data, uint length, CSteamID sender)
     {
