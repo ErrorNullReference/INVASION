@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SOPRO;
+using System;
 public class FollowPlayer : MonoBehaviour
 {
     public SOListPlayerContainer Players;
     public ReferenceVector3 Offset;
 
-    public int CurrentIndex;
+    [NonSerialized]
+    public int CurrentIndex = -1;
     public void SetFollowLocalPlayer()
     {
         for (int i = 0; i < Players.Elements.Count; i++)
@@ -28,6 +30,7 @@ public class FollowPlayer : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        transform.position = Players[CurrentIndex].transform.position + Offset;
+        if (CurrentIndex >= 0)
+            transform.position = Players[CurrentIndex].transform.position + Offset;
     }
 }

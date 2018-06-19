@@ -55,7 +55,7 @@ public class ShootSystem : MonoBehaviour
         }*/
 
         Shoot(true);
-        SendShootToHost();
+        SendShootToAll();
     }
 
     public void Shoot(bool activateCallbacks = false)
@@ -80,7 +80,7 @@ public class ShootSystem : MonoBehaviour
             {
                 GameNetworkObject obj = raycastHit.collider.gameObject.GetComponent<GameNetworkObject>();
                 if (obj != null)
-                    SendHitToHost(obj.NetworkId, gun.values.Damage);
+                    SendHitMessage(obj.NetworkId, gun.values.Damage);
             }
         }
         else if (shootingType == ShootingType.Consecutive) // else add the ray in a list
@@ -93,19 +93,19 @@ public class ShootSystem : MonoBehaviour
         gun.Shoot();
     }
 
-    void SendShootToHost()
+    void SendShootToAll()
     {
-        Client.SendPacketToHost(emptyArray, 0, 0, PacketType.ShootServer, Steamworks.EP2PSend.k_EP2PSendReliable);
+        Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.PlayerShoot, Steamworks.EP2PSend.k_EP2PSendReliable, false);
     }
 
-    void SendHitToHost(int id, float damage)
+    void SendHitMessage(int id, float damage)
     {
         byte[] data = ArrayPool<byte>.Get(16);
         ByteManipulator.Write(data, 0, id);
         ByteManipulator.Write(data, 4, damage);
         ByteManipulator.Write(data, 8, (ulong)avatar.UserInfo.SteamID);
 
-        Client.SendPacketToInGameUsers(data, 0, data.Length, PacketType.ShootHitServer, Steamworks.EP2PSend.k_EP2PSendReliable);
+        Client.SendPacketToInGameUsers(data, 0, data.Length, PacketType.ShootHit, Steamworks.EP2PSend.k_EP2PSendReliable, true);
 
         ArrayPool<byte>.Recycle(data);
         //Debug.Log("hit");

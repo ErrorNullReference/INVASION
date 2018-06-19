@@ -10,8 +10,9 @@ public abstract class LivingBeing : MonoBehaviour
     public abstract void Die();
     public virtual void DecreaseLife(float decreaseAmount)
     {
+        float prev = this.life;
         this.life -= decreaseAmount;
-        if (life <= 0)
+        if (prev > 0f && life <= 0)
             Die();
     }
     public virtual void SetLife(float life)

@@ -23,7 +23,6 @@ public class StartGameMgr : MonoBehaviour
 
     void OnDestroy()
     {
-        Client.AddCommand(PacketType.EnterGame, null);
         SteamCallbackReceiver.LobbyDataUpdateEvent -= UpdateStartState;
         SteamCallbackReceiver.ChatUpdateEvent -= UserLeftControl;
     }
@@ -74,7 +73,7 @@ public class StartGameMgr : MonoBehaviour
     void SetInGame(Scene s, LoadSceneMode ls)
     {
         SteamMatchmaking.SetLobbyMemberData(Client.Lobby.LobbyID, "InGame", "1");
-        Client.SendPacketToHost(emptyArray, 0, 0, PacketType.GameEntered, EP2PSend.k_EP2PSendReliable);
+        Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.GameEntered, EP2PSend.k_EP2PSendReliable, true);
     }
 
     void SetStartButtonState()

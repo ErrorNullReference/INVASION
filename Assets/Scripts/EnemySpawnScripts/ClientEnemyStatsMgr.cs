@@ -19,9 +19,7 @@ public class ClientEnemyStatsMgr : ScriptableObject
     {
         Client.AddCommand(PacketType.ShootHit, ManageEnemyHit);
 
-        Client.AddCommand(PacketType.ShootCall, ShootCall);
-
-        Client.AddCommand(PacketType.ShootHitServer, OnNetObjHit);
+        //Client.AddCommand(PacketType.EnemyShoot, ShootCall);
     }
 
     private void ManageEnemyHit(byte[] data, uint length, CSteamID sender)
@@ -63,13 +61,9 @@ public class ClientEnemyStatsMgr : ScriptableObject
 
         PlayersMgr.Players[(CSteamID)shooter].GetComponent<Player>().TotalPoints += points; //TODO: rimuovere questo getcomponent
     }
-    private void OnNetObjHit(byte[] data, uint length, CSteamID sender)
-    {
-        Client.SendPacketToInGameUsers(data, 0, (int)length, PacketType.ShootHit, EP2PSend.k_EP2PSendReliable, true);
-    }
-    private void ShootCall(byte[] data, uint length, CSteamID sender)
-    {
-        int id = ByteManipulator.ReadInt32(data, 0);
-        netEntities[id].GetComponent<EnemyShootSync>().ReceiveShotCall();
-    }
+   //private void ShootCall(byte[] data, uint length, CSteamID sender)
+   //{
+   //    int id = ByteManipulator.ReadInt32(data, 0);
+   //    netEntities[id].GetComponent<EnemyShootSync>().ReceiveShotCall();
+   //}
 }

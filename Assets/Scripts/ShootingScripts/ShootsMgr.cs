@@ -29,8 +29,8 @@ public class ShootsMgr : MonoBehaviour
         rays = new List<RayPlus>();
         removeRays = new List<RayPlus>();
 
-        Client.AddCommand(PacketType.Shoot, ReceiveShoot);
-        Client.AddCommand(PacketType.ShootServer, ReceiveShootServer);
+        Client.AddCommand(PacketType.PlayerShoot, ReceiveShoot);
+        //Client.AddCommand(PacketType.ShootServer, ReceiveShootServer);
     }
 
     void Update()
@@ -80,17 +80,17 @@ public class ShootsMgr : MonoBehaviour
 
     void SendHitToHost(int id, float damage, ulong shooter)
     {
-        byte[] data = ArrayPool<byte>.Get(16);
+        //byte[] data = ArrayPool<byte>.Get(16);
 
-        ByteManipulator.Write(data, 0, id);
-        ByteManipulator.Write(data, 4, damage);
-        ByteManipulator.Write(data, 8, shooter);
+        //ByteManipulator.Write(data, 0, id);
+        //ByteManipulator.Write(data, 4, damage);
+        //ByteManipulator.Write(data, 8, shooter);
 
-        Client.SendPacketToHost(data, 0, data.Length, PacketType.ShootHitServer, Steamworks.EP2PSend.k_EP2PSendReliable);
+        //Client.SendPacketToHost(data, 0, data.Length, PacketType.ShootHitServer, Steamworks.EP2PSend.k_EP2PSendReliable);
 
-        ArrayPool<byte>.Recycle(data);
+        //ArrayPool<byte>.Recycle(data);
 
-        Debug.Log("hit");
+        //Debug.Log("hit");
     }
 
     void ReceiveShoot(byte[] data, uint lenght, CSteamID sender)
@@ -99,15 +99,16 @@ public class ShootsMgr : MonoBehaviour
             PlayersMgr.Players[sender].Shoot(false);
     }
 
-    void ReceiveShootServer(byte[] data, uint lenght, CSteamID sender)
-    {
-        Client.SendPacketToInGameUsers(data, 0, (int)lenght, PacketType.Shoot, sender, EP2PSend.k_EP2PSendReliable, false);
-        if (sender != Client.MyID)
-            PlayersMgr.Players[sender].Shoot(false);
-    }
+    //void ReceiveShootServer(byte[] data, uint lenght, CSteamID sender)
+    //{
+    //    Client.SendPacketToInGameUsers(data, 0, (int)lenght, PacketType.Shoot, sender, EP2PSend.k_EP2PSendReliable, false);
+    //    if (sender != Client.MyID)
+    //        PlayersMgr.Players[sender].Shoot(false);
+    //}
 
     public static void AddRay(RayPlus ray)
     {
+        Debug.Log("Added ray to shootmanager");
         Instance.rays.Add(ray);
     }
 }

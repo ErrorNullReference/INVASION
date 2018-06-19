@@ -27,11 +27,9 @@ public enum PacketType : byte
     GameStart,
     LatencyServer,
     Latency,
-    Shoot,
-    ShootServer,
+    PlayerShoot,
     ShootHit,
-    ShootHitServer,
-    ShootCall,
+    EnemyShoot,
     PowerUpSpawn,
     PowerUpDespawn,
 }
