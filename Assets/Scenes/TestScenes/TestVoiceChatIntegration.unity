@@ -4685,6 +4685,7 @@ GameObject:
   - component: {fileID: 1797814815}
   - component: {fileID: 1797814814}
   - component: {fileID: 1797814818}
+  - component: {fileID: 1797814819}
   m_Layer: 0
   m_Name: SteamManager
   m_TagString: Untagged
@@ -4931,6 +4932,34 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: SOPRO.UnEvVoid, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+--- !u!114 &1797814819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1797814809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf79fc64ef9daf048883fab9b4638036, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 9b72d57c9e4ed29488fbe94dceea168e, type: 2}
+  Actions:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: b90721fe7aa9d8542b0aa20c4647457f, type: 2}
+        m_MethodName: CreateSpeakers
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: SOPRO.UnEvVoid, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1 &1817777687
 GameObject:
   m_ObjectHideFlags: 0
@@ -5121,6 +5150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartButton: {fileID: 2012763594}
+  EnteredGame: {fileID: 11400000, guid: 9b72d57c9e4ed29488fbe94dceea168e, type: 2}
+  GameSceneId: 2
 --- !u!114 &2012763594
 MonoBehaviour:
   m_ObjectHideFlags: 0

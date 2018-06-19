@@ -9,14 +9,6 @@ public class VoiceChatSpawner : ScriptableObject
     public SOPool SpeakerPool;
     public Workflow Workflow;
 
-    public void DisableAndStoreSpeakers()
-    {
-        throw new System.NotImplementedException();
-    }
-    public void RestoreAndEnableSpeakers()
-    {
-        throw new System.NotImplementedException();
-    }
     public void RemoveLocalSpeaker()
     {
         VoiceHandler handler = Workflow.GetTrackedHandlerById(Client.MyID.m_SteamID);

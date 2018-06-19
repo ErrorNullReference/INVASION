@@ -38,15 +38,10 @@ public class HostEnemySpawner : MonoBehaviour
         }
 
         waitForFrame = new WaitForEndOfFrame();
-
-        SteamCallbackReceiver.ChatUpdateEvent += InitCoroutine;
-        SteamCallbackReceiver.LobbyDataUpdateEvent += InitCoroutine;
-
-        //InitCoroutine(new LobbyDataUpdate_t());
     }
     private void Update()
     {
-        if (coroutineOver && CurrentEnemyCount < EnemyCountForBigSquadSpawn)
+        if (AllSpawnPointsOutsideView.Elements.Count > 0 && coroutineOver && CurrentEnemyCount < EnemyCountForBigSquadSpawn)
         {
             spawnPos = AllSpawnPointsOutsideView[Random.Range(0, AllSpawnPointsOutsideView.Elements.Count)];
             waveCount = Random.Range(MinLittleSquadSpawn, MaxLittleSquadSpawn) * BigSquadSpawnMultiplier;
@@ -118,33 +113,6 @@ public class HostEnemySpawner : MonoBehaviour
     //this won't be in this cass, is just for testing
     //will be managed differently: client will send data when enemy is hit, host will decrease life and send datas back for clients to update enemies lives
     //TO DELETE
-
-    void InitCoroutine(LobbyDataUpdate_t cb)
-    {
-        if (!coroutineOver || !ControlUsersStatus())
-            return;
-
-        Server.Init();
-        Client.LeaveCurrentLobby();
-        Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.LeaveLobby, EP2PSend.k_EP2PSendReliable);
-        spawnPos = NearestSpawnPointOutsideView;
-        waveCount = Random.Range(MinLittleSquadSpawn, MaxLittleSquadSpawn) * BigSquadSpawnMultiplier;
-        StartCoroutine(SpawnEnemyWave());
-    }
-
-    void InitCoroutine(LobbyChatUpdate_t cb)
-    {
-        if (!coroutineOver || !ControlUsersStatus())
-            return;
-
-        Server.Init();
-        Client.LeaveCurrentLobby();
-        Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.LeaveLobby, EP2PSend.k_EP2PSendReliable);
-        spawnPos = NearestSpawnPointOutsideView;
-        waveCount = Random.Range(MinLittleSquadSpawn, MaxLittleSquadSpawn) * BigSquadSpawnMultiplier;
-        StartCoroutine(SpawnEnemyWave());
-    }
-
     bool ControlUsersStatus()
     {
         int inGameCount = 0;

@@ -4,14 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using Steamworks;
 using UnityEngine.SceneManagement;
-
+using SOPRO;
 public class StartGameMgr : MonoBehaviour
 {
+    private static readonly byte[] emptyArray = new byte[0];
     public Button StartButton;
+    public SOEvVoid EnteredGame;
+    public int GameSceneId = 2;
     List<CSteamID> readyUsers;
 
-    void Start()
+    void Awake()
     {
+        Client.AddCommand(PacketType.EnterGame, ControlStart);
         readyUsers = new List<CSteamID>();
 
         SteamCallbackReceiver.LobbyDataUpdateEvent += UpdateStartState;
@@ -20,6 +24,7 @@ public class StartGameMgr : MonoBehaviour
 
     void OnDestroy()
     {
+        Client.AddCommand(PacketType.EnterGame, null);
         SteamCallbackReceiver.LobbyDataUpdateEvent -= UpdateStartState;
         SteamCallbackReceiver.ChatUpdateEvent -= UserLeftControl;
     }
@@ -45,7 +50,9 @@ public class StartGameMgr : MonoBehaviour
             }
         }
         SetStartButtonState();
-        ControlStart();
+
+        if (Client.IsHost && readyUsers.Count == Client.Users.Count)
+            Client.SendPacketToLobby(emptyArray, 0, 0, PacketType.EnterGame, EP2PSend.k_EP2PSendReliable, true);
     }
 
     void UserLeftControl(LobbyChatUpdate_t cb)
@@ -53,23 +60,22 @@ public class StartGameMgr : MonoBehaviour
         if ((EChatMemberStateChange)cb.m_rgfChatMemberStateChange == EChatMemberStateChange.k_EChatMemberStateChangeLeft || (EChatMemberStateChange)cb.m_rgfChatMemberStateChange == EChatMemberStateChange.k_EChatMemberStateChangeDisconnected)
         {
             if (readyUsers.Contains((CSteamID)cb.m_ulSteamIDUserChanged))
-                readyUsers.Remove((CSteamID)cb.m_ulSteamIDUserChanged);    
+                readyUsers.Remove((CSteamID)cb.m_ulSteamIDUserChanged);
         }
     }
 
-    void ControlStart()
+    void ControlStart(byte[] data, uint length, CSteamID sender)
     {
-        if (readyUsers.Count == Client.Users.Count)
-        {
-            SceneManager.sceneLoaded += SetInGame;
-            SceneManager.LoadScene(2);
-        }
+        SceneManager.sceneLoaded += SetInGame;
+        Server.Init();
+        Client.LeaveCurrentLobby();
+        SceneManager.LoadScene(GameSceneId);
     }
 
     void SetInGame(Scene s, LoadSceneMode ls)
     {
-        Server.Init();
         SteamMatchmaking.SetLobbyMemberData(Client.Lobby.LobbyID, "InGame", "1");
+        EnteredGame.Raise();
     }
 
     void SetStartButtonState()

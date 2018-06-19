@@ -22,7 +22,7 @@ public enum PacketType : byte
     EnemySpawn,
     RequestAvatarSelection,
     AnswerAvatarSelection,
-    LeaveLobby,
+    EnterGame,
     LatencyServer,
     Latency,
     Shoot,
@@ -136,7 +136,6 @@ public class Client : MonoBehaviour
         Packet = new BytePacket(4096);
 
         Commands = new Command[Enum.GetNames(typeof(PacketType)).Length];
-        AddCommands(PacketType.LeaveLobby, LeaveLobbyCommand);
         AddCommands(PacketType.Latency, LatencyResponse);
 
         StartCoroutine(LatencyTest());
@@ -259,11 +258,6 @@ public class Client : MonoBehaviour
         lobby.Reset();
         if (OnLobbyLeaveEvent)
             OnLobbyLeaveEvent.Raise();
-    }
-
-    void LeaveLobbyCommand(byte[] data, uint dataLenght, CSteamID sender)
-    {
-        LeaveLobby();
     }
 
     void ResetClientInstance()
