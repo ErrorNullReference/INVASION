@@ -28,6 +28,9 @@ public class Brain : MonoBehaviour
 
     public void SwitchState(AIBehaviour next)
     {
+        if (disableIfClient && !Client.IsHost)
+            return;
+
         previousState = this.currentState;
 
         if (previousState)
