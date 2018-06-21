@@ -11,11 +11,15 @@ public class StartGameMgr : MonoBehaviour
     public Button StartButton;
     public int GameSceneId = 2;
     List<CSteamID> readyUsers;
+    List<CSteamID> confirmedUsers;
 
     void Awake()
     {
-        Client.AddCommand(PacketType.EnterGame, ControlStart);
+        Client.AddCommand(PacketType.ReceivedEnterGame, ReceivedEnterGameConfirmation);
+        Client.AddCommand(PacketType.EnterGame, PrepareGameStart);
+        Client.AddCommand(PacketType.ConfirmEnterGame, ControlStart);
         readyUsers = new List<CSteamID>();
+
 
         SteamCallbackReceiver.LobbyDataUpdateEvent += UpdateStartState;
         SteamCallbackReceiver.ChatUpdateEvent += UserLeftControl;
@@ -26,7 +30,16 @@ public class StartGameMgr : MonoBehaviour
         SteamCallbackReceiver.LobbyDataUpdateEvent -= UpdateStartState;
         SteamCallbackReceiver.ChatUpdateEvent -= UserLeftControl;
     }
-
+    void ReceivedEnterGameConfirmation(byte[] data, uint length, CSteamID sender)
+    {
+        if (!Client.IsHost)
+            return;
+        confirmedUsers.Add(sender);
+        if(confirmedUsers.Count == readyUsers.Count)
+        {
+            Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.ConfirmEnterGame, EP2PSend.k_EP2PSendReliable, true);
+        }
+    }
     void UpdateStartState(LobbyDataUpdate_t cb)
     {
         readyUsers.Clear();
@@ -62,10 +75,16 @@ public class StartGameMgr : MonoBehaviour
         }
     }
 
+    void PrepareGameStart(byte[] data, uint length, CSteamID sender)
+    {
+        confirmedUsers = new List<CSteamID>();
+        Server.Init();
+        Client.SendPacketToHost(emptyArray, 0, 0, PacketType.ReceivedEnterGame, EP2PSend.k_EP2PSendReliable);
+    }
+
     void ControlStart(byte[] data, uint length, CSteamID sender)
     {
         SceneManager.sceneLoaded += SetInGame;
-        Server.Init();
         Client.LeaveCurrentLobby();
         SceneManager.LoadScene(GameSceneId);
     }

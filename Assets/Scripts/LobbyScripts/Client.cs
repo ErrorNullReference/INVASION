@@ -23,6 +23,8 @@ public enum PacketType : byte
     RequestAvatarSelection,
     AnswerAvatarSelection,
     EnterGame,
+    ReceivedEnterGame,
+    ConfirmEnterGame,
     GameEntered,
     GameStart,
     LatencyServer,
@@ -310,7 +312,7 @@ public class Client : MonoBehaviour
         {
             if (lobby.GetUserFromID((CSteamID)cb.m_ulSteamIDUserChanged) == null)
             {
-                Users.Add(new User((CSteamID)cb.m_ulSteamIDUserChanged));
+                lobby.Users.Add(new User((CSteamID)cb.m_ulSteamIDUserChanged));
                 if (OnUserEnter)
                     OnUserEnter.Raise((CSteamID)cb.m_ulSteamIDUserChanged);
             }
@@ -321,7 +323,7 @@ public class Client : MonoBehaviour
             {
                 if (Users[i].SteamID == (CSteamID)cb.m_ulSteamIDUserChanged)
                 {
-                    Users.Remove(Users[i]);
+                    lobby.Users.Remove(Users[i]);
                     if (OnUserLeave)
                         OnUserLeave.Raise((CSteamID)cb.m_ulSteamIDUserChanged);
                     return;
