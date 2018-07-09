@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 114284937430153682}
   - component: {fileID: 114741821120968036}
   m_Layer: 8
-  m_Name: Avatar_Controllable
+  m_Name: Avatar_Test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
