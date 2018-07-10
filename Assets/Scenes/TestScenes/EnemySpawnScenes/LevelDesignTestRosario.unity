@@ -1707,8 +1707,8 @@ Camera:
   m_GameObject: {fileID: 1735348482}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -1741,13 +1741,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1735348482}
-  m_LocalRotation: {x: 0.17670354, y: 0.8194912, z: -0.42660013, w: 0.33944437}
+  m_LocalRotation: {x: 0.21632095, y: 0.78272724, z: -0.43387276, w: 0.3902533}
   m_LocalPosition: {x: 12.919603, y: -61.387306, z: -0.53186}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1458440377}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 55, y: 135, z: 0}
+  m_LocalEulerAnglesHint: {x: 58, y: 127, z: 0}
 --- !u!114 &1735348487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1965,15 +1965,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4381474106438740, guid: 504be5db83b57664cb6d2119deb57bad, type: 2}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4381474106438740, guid: 504be5db83b57664cb6d2119deb57bad, type: 2}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4381474106438740, guid: 504be5db83b57664cb6d2119deb57bad, type: 2}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4381474106438740, guid: 504be5db83b57664cb6d2119deb57bad, type: 2}
       propertyPath: m_LocalRotation.w
@@ -2388,6 +2388,14 @@ Prefab:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 8fd30f027fba18e498c96d0e09f89305, type: 2}
+    - target: {fileID: 4381474106438740, guid: 504be5db83b57664cb6d2119deb57bad, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4692009349798322, guid: 504be5db83b57664cb6d2119deb57bad, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 504be5db83b57664cb6d2119deb57bad, type: 2}
   m_IsPrefabParent: 0
