@@ -5,6 +5,14 @@ using Steamworks;
 
 public class AvatarsMgr : MonoBehaviour
 {
+    [SerializeField]
+    private SelectableAvatar SelectableAvatarTemplate;
+    [SerializeField]
+    private Texture[] AvatarsTextures;
+    [SerializeField]
+    [Range(0, 1)]
+    private float posY;
+    [HideInInspector]
     public SelectableAvatar[] Avatars;
 
     void Start()
@@ -14,6 +22,15 @@ public class AvatarsMgr : MonoBehaviour
 
         Client.AddCommand(PacketType.RequestAvatarSelection, ControlAvatarDisponibility);
         Client.AddCommand(PacketType.AnswerAvatarSelection, SetAvatar);
+
+        Avatars = new SelectableAvatar[4];
+        for (int i = 0; i < 4; i++)
+        {
+            Avatars[i] = Instantiate(SelectableAvatarTemplate, this.transform);
+            Avatars[i].avatarID = i;
+            Avatars[i].modelImage.texture = AvatarsTextures[i];
+            Avatars[i].transform.position = new Vector3(Screen.width / 8f * (2 * i + 1), Screen.height * posY, 0);
+        }
     }
 
     void OnEnable()
@@ -40,7 +57,11 @@ public class AvatarsMgr : MonoBehaviour
     void UpdateUsers()
     {
         for (int j = 0; j < Avatars.Length; j++)
+        {
+            if (Avatars[j] == null)
+                return;
             Avatars[j].Reset();
+        }
 
         if (Client.Users == null)
             return;
