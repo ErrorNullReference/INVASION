@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SOPRO;
+using Steamworks;
+
 public class AIAggroPlayers : AIVision
 {
     [SerializeField]
@@ -22,5 +24,32 @@ public class AIAggroPlayers : AIVision
 
     public override void OnStateExit()
     {
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        Client.instance.OnUserDisconnected += RemovePlayer;
+    }
+
+    void RemovePlayer(CSteamID id)
+    {
+        if (possibleTargets.Elements == null)
+            return;
+
+        for (int i = 0; i < possibleTargets.Elements.Count; i++)
+        {
+            if (possibleTargets.Elements[i].Avatar.UserInfo.SteamID == id)
+            {
+                possibleTargets.Elements.RemoveAt(i);
+                return;
+            }
+        }
+    }
+
+    void OnDestroy()
+    {
+        Client.instance.OnUserDisconnected -= RemovePlayer;
     }
 }

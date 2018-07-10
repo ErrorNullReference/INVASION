@@ -11,6 +11,7 @@ public class Server : MonoBehaviour
     public User MyPlayer;
 
     public static User LocalPlayer { get { return Instance.MyPlayer; } }
+
     public static List<User> Users { get { return Instance.InGameUsers; } }
 
     public static bool Initialized;
@@ -36,6 +37,7 @@ public class Server : MonoBehaviour
 
         Host = Client.Host;
         Client.AddCommand(PacketType.LatencyServer, LatencyResponse);
+        Client.instance.OnUserDisconnected += RemoveUser;
     }
 
     void ResetServerinstance()
@@ -62,5 +64,24 @@ public class Server : MonoBehaviour
     void LatencyResponse(byte[] data, uint lenght, CSteamID id)
     {
         Client.SendPacket(emptyArray, 0, 0, PacketType.Latency, Client.MyID, id, EP2PSend.k_EP2PSendReliable);
+    }
+
+    void RemoveUser(CSteamID id)
+    {
+        if (InGameUsers == null)
+            return;
+
+        for (int i = 0; i < InGameUsers.Count; i++)
+        {
+            if (InGameUsers[i].SteamID == id)
+            {
+                InGameUsers.RemoveAt(i);
+            }
+        }
+    }
+
+    void OnDestroy()
+    {
+        Client.instance.OnUserDisconnected -= RemoveUser;
     }
 }

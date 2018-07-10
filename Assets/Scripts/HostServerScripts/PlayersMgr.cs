@@ -3,6 +3,7 @@ using UnityEngine;
 using Steamworks;
 using GENUtility;
 using SOPRO;
+
 public class PlayersMgr : MonoBehaviour
 {
     public SimpleAvatar AvatarTemplate, ControllableAvatarTemplate;
@@ -16,6 +17,7 @@ public class PlayersMgr : MonoBehaviour
     Dictionary<CSteamID, SimpleAvatar> avatars;
 
     public static Dictionary<CSteamID, SimpleAvatar> Players { get { return instance != null ? instance.avatars : null; } }
+
     public void Init()
     {
         avatars = new Dictionary<CSteamID, SimpleAvatar>();
@@ -37,6 +39,8 @@ public class PlayersMgr : MonoBehaviour
         Client.AddCommand(PacketType.PlayerData, ManageTransform);
         Client.AddCommand(PacketType.PlayerStatus, ManagePlayerStatus);
         Client.AddCommand(PacketType.PlayerDeath, ManagePlayerDeath);
+
+        Client.instance.OnUserDisconnected += PlayerDisconnected;
     }
     // Use this for initialization
     void Start()
@@ -51,6 +55,7 @@ public class PlayersMgr : MonoBehaviour
             return;
         }
     }
+
     void ManagePlayerDeath(byte[] data, uint length, CSteamID sender)
     {
         CSteamID dead = (CSteamID)ByteManipulator.ReadUInt64(data, 0);
@@ -58,6 +63,7 @@ public class PlayersMgr : MonoBehaviour
         PlayerDeath.Raise(dead);
         avatar.gameObject.SetActive(false);
     }
+
     void ManagePlayerStatus(byte[] data, uint dataLength, CSteamID sender)
     {
         SetHealth(data);
@@ -107,6 +113,7 @@ public class PlayersMgr : MonoBehaviour
         else
             avatar.SetTransform(pos, rot);
     }
+
     private bool SetHealth(byte[] data)
     {
         CSteamID target = (CSteamID)ByteManipulator.ReadUInt64(data, 0);
@@ -129,5 +136,23 @@ public class PlayersMgr : MonoBehaviour
         }
 
         return false;
+    }
+
+    void PlayerDisconnected(CSteamID id)
+    {
+        if (avatars == null)
+            return;
+
+        SimpleAvatar avatar = avatars[id];
+        if (avatar == null)
+            return;
+
+        Destroy(avatar.gameObject);
+        avatars.Remove(id);
+    }
+
+    void OnDestroy()
+    {
+        Client.instance.OnUserDisconnected -= PlayerDisconnected;
     }
 }

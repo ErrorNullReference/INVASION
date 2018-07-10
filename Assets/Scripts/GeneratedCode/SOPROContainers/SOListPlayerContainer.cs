@@ -1,36 +1,42 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace SOPRO
 {
-	/// <summary>
+    /// <summary>
     /// A class used to represent a shared container of objects
     /// </summary>
     [Serializable]
-	[CreateAssetMenu(fileName = "Container", menuName = "SOPRO/Containers/SOListPlayerContainer")]
+    [CreateAssetMenu(fileName = "Container", menuName = "SOPRO/Containers/SOListPlayerContainer")]
     public class SOListPlayerContainer : ScriptableObject
     {
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         /// <summary>
         /// Description of the container, available only in UNITY_EDITOR
         /// </summary>
         [Multiline]
-		[SerializeField]
+        [SerializeField]
         private string DEBUG_DeveloperDescription = "";
-#endif
+        #endif
         /// <summary>
         /// List of elements stored
         /// </summary>
         public List<Player> Elements = new List<Player>();
-		        /// <summary>
+
+        /// <summary>
         /// Get/Set element at the given index
         /// </summary>
         /// <param name="i">index</param>
         /// <returns>value stored</returns>
-        public Player this[int i]
+        public Player this [int i]
         {
-            get { return Elements[i]; }
-            set { Elements[i] = value; }
+            get { return i >= 0 && i < Elements.Count ? Elements[i] : null; }
+            set
+            {
+                if (i >= 0 && i < Elements.Count)
+                    Elements[i] = value;
+            }
         }
-		    }
+    }
 }

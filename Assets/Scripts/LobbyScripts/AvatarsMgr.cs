@@ -14,6 +14,7 @@ public class AvatarsMgr : MonoBehaviour
     private float posY;
     [HideInInspector]
     public SelectableAvatar[] Avatars;
+    float time, timer;
 
     void Start()
     {
@@ -31,10 +32,13 @@ public class AvatarsMgr : MonoBehaviour
             Avatars[i].modelImage.texture = AvatarsTextures[i];
             Avatars[i].transform.position = new Vector3(Screen.width / 8f * (2 * i + 1), Screen.height * posY, 0);
         }
+
+        timer = 1;
     }
 
     void OnEnable()
     {
+        time = timer;
         UpdateUsers();
     }
 
@@ -52,6 +56,16 @@ public class AvatarsMgr : MonoBehaviour
     void UpdateUsersID(LobbyDataUpdate_t cb)
     {
         UpdateUsers();
+    }
+
+    void Update()
+    {
+        time -= Time.deltaTime;
+        if (time <= 0)
+        {
+            UpdateUsers();
+            time = timer;
+        }
     }
 
     void UpdateUsers()
