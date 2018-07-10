@@ -58,7 +58,8 @@ public class Client : MonoBehaviour
     public BaseSOEvVoid OnGameStarted;
     public BaseSOEvCSteamID OnUserEnter;
     public BaseSOEvCSteamID OnUserLeave;
-    public Action<CSteamID> OnUserDisconnected;
+    public static Action<CSteamID> OnUserDisconnected;
+    public static Action OnGameEnd;
 
     //public static event ClientStatus OnLobbyInitializationEvent;
     //public static event ClientStatus OnLobbyLeaveEvent;

@@ -34,7 +34,7 @@ public class AIShootTillOnSight : AIBehaviour
         shootSync = this.GetComponent<EnemyShootSync>();
         ResetShootCooldown();
 
-        Client.instance.OnUserDisconnected += (id) =>
+        Client.OnUserDisconnected += (id) =>
         {
             targetToShot = null;
         };

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Steamworks;
 
 namespace SOPRO
 {
@@ -24,6 +25,16 @@ namespace SOPRO
         /// </summary>
         public List<Player> Elements = new List<Player>();
 
+        void OnEnable()
+        {
+            Client.OnUserDisconnected += Remove;
+        }
+
+        void OnDisable()
+        {
+            Client.OnUserDisconnected -= Remove;
+        }
+
         /// <summary>
         /// Get/Set element at the given index
         /// </summary>
@@ -36,6 +47,21 @@ namespace SOPRO
             {
                 if (i >= 0 && i < Elements.Count)
                     Elements[i] = value;
+            }
+        }
+
+        void Remove(CSteamID id)
+        {
+            if (Elements == null)
+                return;
+
+            for (int i = 0; i < Elements.Count; i++)
+            {
+                if (Elements[i].Avatar.UserInfo.SteamID == id)
+                {
+                    Elements.RemoveAt(i);
+                    return;
+                }
             }
         }
     }

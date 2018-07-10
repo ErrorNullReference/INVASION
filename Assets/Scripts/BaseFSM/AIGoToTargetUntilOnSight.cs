@@ -35,7 +35,7 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
         agent = this.GetComponent<NavMeshAgent>();
         animController = this.GetComponent<AnimationControllerScript>();
 
-        Client.instance.OnUserDisconnected += (id) =>
+        Client.OnUserDisconnected += (id) =>
         {
             target = null;
         };

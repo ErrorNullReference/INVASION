@@ -37,7 +37,8 @@ public class Server : MonoBehaviour
 
         Host = Client.Host;
         Client.AddCommand(PacketType.LatencyServer, LatencyResponse);
-        Client.instance.OnUserDisconnected += RemoveUser;
+        Client.OnUserDisconnected += RemoveUser;
+        Client.OnGameEnd += ResetServerinstance;
     }
 
     void ResetServerinstance()
@@ -82,6 +83,7 @@ public class Server : MonoBehaviour
 
     void OnDestroy()
     {
-        Client.instance.OnUserDisconnected -= RemoveUser;
+        Client.OnUserDisconnected -= RemoveUser;
+        Client.OnGameEnd -= ResetServerinstance;
     }
 }

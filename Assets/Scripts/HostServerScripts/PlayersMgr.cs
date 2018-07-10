@@ -40,7 +40,7 @@ public class PlayersMgr : MonoBehaviour
         Client.AddCommand(PacketType.PlayerStatus, ManagePlayerStatus);
         Client.AddCommand(PacketType.PlayerDeath, ManagePlayerDeath);
 
-        Client.instance.OnUserDisconnected += PlayerDisconnected;
+        Client.OnUserDisconnected += PlayerDisconnected;
     }
     // Use this for initialization
     void Start()
@@ -153,6 +153,6 @@ public class PlayersMgr : MonoBehaviour
 
     void OnDestroy()
     {
-        Client.instance.OnUserDisconnected -= PlayerDisconnected;
+        Client.OnUserDisconnected -= PlayerDisconnected;
     }
 }

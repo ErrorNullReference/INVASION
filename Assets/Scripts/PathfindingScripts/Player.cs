@@ -2,9 +2,11 @@
 using Steamworks;
 using SOPRO;
 using GENUtility;
+
 public class Player : LivingBeing
 {
     private static readonly byte[] packet = new byte[12];
+
     public SimpleAvatar Avatar { get { return avatar; } }
 
     public int TotalPoints = 0;
@@ -49,6 +51,7 @@ public class Player : LivingBeing
                 allPlayers.Elements.RemoveAt(i);
         }
     }
+
     private void Start()
     {
         GetComponentInChildren<HUDHealt>().InputAssetHUD = Stats;
@@ -60,14 +63,17 @@ public class Player : LivingBeing
         if (!Dead)
             playersAlive.Elements.Add(this);
     }
+
     private void OnEnable()
     {
         allPlayers.Elements.Add(this);
     }
+
     private void OnDisable()
     {
         allPlayers.Elements.Remove(this);
     }
+
     protected void LateUpdate()
     {
         if (!Client.IsHost)
@@ -118,17 +124,15 @@ public class Player : LivingBeing
             ByteManipulator.Write(packet, 0, (ulong)avatar.UserInfo.SteamID);
             ByteManipulator.Write(packet, 8, life);
 
-            if (life > 0f)
-            {
-                Client.SendPacketToInGameUsers(packet, 0, packet.Length, PacketType.PlayerStatus, EP2PSend.k_EP2PSendReliable, false);
-            }
-            else
+            Client.SendPacketToInGameUsers(packet, 0, packet.Length, PacketType.PlayerStatus, EP2PSend.k_EP2PSendReliable, false);
+            if (life <= 0f)
             {
                 Die();
                 Client.SendTransformToInGameUsers(packet, this.transform, EP2PSend.k_EP2PSendReliable, false);
             }
         }
     }
+
     public override void Die()
     {
         Dead = true;
@@ -142,7 +146,12 @@ public class Player : LivingBeing
 
         if (avatar.UserInfo.SteamID == Client.MyID)
             PlayerAliveStatusChanged.Raise(false);
+
+        ByteManipulator.Write(packet, 0, (ulong)avatar.UserInfo.SteamID);
+        ByteManipulator.Write(packet, 8, life);
+        Client.SendPacketToInGameUsers(packet, 0, packet.Length, PacketType.PlayerStatus, EP2PSend.k_EP2PSendReliable, false);
     }
+
     public void Resurrect(float newLife)
     {
         life = Mathf.Min(newLife, Stats.MaxHealth);
