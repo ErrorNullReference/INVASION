@@ -39,6 +39,6 @@ public class GameEnder : MonoBehaviour
 
     public void LoadGameStart()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
     }
 }

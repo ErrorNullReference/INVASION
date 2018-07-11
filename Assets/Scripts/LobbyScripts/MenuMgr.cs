@@ -39,6 +39,7 @@ public class MenuMgr : MonoBehaviour
     void OnDestroy()
     {
         SteamCallbackReceiver.LobbyEnterEvent -= ChangeLobbyState;
+        SteamCallbackReceiver.LobbyCreateEvent -= ChangeLobbyState;
     }
 
     public void OpenFriendList()
