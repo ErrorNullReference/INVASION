@@ -10,7 +10,7 @@ public class GameEnder : MonoBehaviour
     private SOListPlayerContainer Players, ActivePlayers;
     [SerializeField]
     private Transform EndGamePanel;
-    bool gameEnd;
+    bool gameEnd, startControl;
 
     void Enable()
     {
@@ -19,6 +19,15 @@ public class GameEnder : MonoBehaviour
 
     void Update()
     {
+        if (!startControl)
+        {
+            if (Players.Elements.Count != 0 && ActivePlayers.Elements.Count != 0)
+            {
+                startControl = true;
+            }
+            return;
+        }
+
         if (!gameEnd && Players.Elements.Count != 0 && ActivePlayers.Elements.Count == 0)
         {
             gameEnd = true;
