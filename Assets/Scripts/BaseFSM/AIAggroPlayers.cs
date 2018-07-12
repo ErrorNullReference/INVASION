@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SOPRO;
+using Steamworks;
+
 public class AIAggroPlayers : AIVision
 {
     [SerializeField]

@@ -16,7 +16,10 @@ public class User
     Callback<AvatarImageLoaded_t> callAvatar;
     Callback<PersonaStateChange_t> personaState;
 
-    public User(CSteamID id)
+    int disconnectionTime;
+    float timer;
+
+    public User(CSteamID id, int disconnectionTime = 10)
     {
         AvatarID = -1;
         SteamID = id;
@@ -25,6 +28,9 @@ public class User
             LoadName();
         else
             DownloadAvatar();
+
+        this.disconnectionTime = disconnectionTime;
+        timer = disconnectionTime;
     }
 
     void LoadName()
@@ -108,5 +114,18 @@ public class User
         Texture2D tex = GetUserAvatar(cb.m_steamID);
         if (tex != null)
             SteamAvatarImage = tex;
+    }
+
+    public bool Update()
+    {
+        timer -= Time.deltaTime;
+        if (timer <= 0)
+            return false;
+        return true;
+    }
+
+    public void ResetDisconnectionTimer()
+    {
+        timer = disconnectionTime;
     }
 }

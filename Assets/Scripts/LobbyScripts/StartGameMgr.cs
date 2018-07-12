@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Steamworks;
 using UnityEngine.SceneManagement;
 using SOPRO;
+
 public class StartGameMgr : MonoBehaviour
 {
     private static readonly byte[] emptyArray = new byte[0];
@@ -30,16 +31,18 @@ public class StartGameMgr : MonoBehaviour
         SteamCallbackReceiver.LobbyDataUpdateEvent -= UpdateStartState;
         SteamCallbackReceiver.ChatUpdateEvent -= UserLeftControl;
     }
+
     void ReceivedEnterGameConfirmation(byte[] data, uint length, CSteamID sender)
     {
         if (!Client.IsHost)
             return;
         confirmedUsers.Add(sender);
-        if(confirmedUsers.Count == readyUsers.Count)
+        if (confirmedUsers.Count == readyUsers.Count)
         {
             Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.ConfirmEnterGame, EP2PSend.k_EP2PSendReliable, true);
         }
     }
+
     void UpdateStartState(LobbyDataUpdate_t cb)
     {
         readyUsers.Clear();
@@ -86,7 +89,7 @@ public class StartGameMgr : MonoBehaviour
     {
         SceneManager.sceneLoaded += SetInGame;
         Client.LeaveCurrentLobby();
-        SceneManager.LoadScene(GameSceneId);
+        SceneManager.LoadSceneAsync(GameSceneId);
     }
 
     void SetInGame(Scene s, LoadSceneMode ls)

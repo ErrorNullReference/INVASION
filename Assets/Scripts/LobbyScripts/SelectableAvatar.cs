@@ -8,7 +8,7 @@ public class SelectableAvatar : MonoBehaviour
 {
     public int avatarID;
     public Button Button, AddButton;
-    public RawImage avatarImage;
+    public RawImage avatarImage, modelImage;
     [HideInInspector]
     public User Owner;
     [SerializeField]
@@ -48,7 +48,7 @@ public class SelectableAvatar : MonoBehaviour
         byte[] d = ArrayPool<byte>.Get(1);
         d[0] = (byte)avatarID;
 
-        Client.SendPacketToHost(d,0,1, PacketType.RequestAvatarSelection, EP2PSend.k_EP2PSendReliable);
+        Client.SendPacketToHost(d, 0, 1, PacketType.RequestAvatarSelection, EP2PSend.k_EP2PSendReliable);
 
         ArrayPool<byte>.Recycle(d);
     }
@@ -65,7 +65,8 @@ public class SelectableAvatar : MonoBehaviour
     {
         if (tex != null)
             avatarImage.texture = tex;
-        else avatarImage.texture = DefaultTexture; 
+        else
+            avatarImage.texture = DefaultTexture; 
     }
 
     public void Reset()

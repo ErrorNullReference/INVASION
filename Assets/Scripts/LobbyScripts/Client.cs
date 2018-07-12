@@ -5,6 +5,7 @@ using Steamworks;
 using System;
 using GENUtility;
 using SOPRO;
+
 public enum PacketType : byte
 {
     Test = 0,
@@ -34,6 +35,7 @@ public enum PacketType : byte
     EnemyShoot,
     PowerUpSpawn,
     PowerUpDespawn,
+    Alive
 }
 
 public enum PacketOffset
@@ -49,10 +51,6 @@ public class Client : MonoBehaviour
 
     public static Lobby Lobby;
 
-    //public delegate void ClientStatus();
-
-    //public delegate void UserStatus(CSteamID ID);
-
     public BaseSOEvVoid OnLobbyInitializationEvent;
     public BaseSOEvVoid OnLobbyLeaveEvent;
     public BaseSOEvVoid OnClientInitialized;
@@ -60,6 +58,8 @@ public class Client : MonoBehaviour
     public BaseSOEvVoid OnGameStarted;
     public BaseSOEvCSteamID OnUserEnter;
     public BaseSOEvCSteamID OnUserLeave;
+    public static Action<CSteamID> OnUserDisconnected;
+    public static Action OnGameEnd;
 
     //public static event ClientStatus OnLobbyInitializationEvent;
     //public static event ClientStatus OnLobbyLeaveEvent;
@@ -92,7 +92,7 @@ public class Client : MonoBehaviour
         }
     }
 
-    public delegate void Command(byte[] data, uint dataLength, CSteamID sender);
+    public delegate void Command(byte[] data,uint dataLength,CSteamID sender);
 
     public static Command[] Commands;
 
@@ -107,11 +107,11 @@ public class Client : MonoBehaviour
 
     BytePacket Packet;
 
-    static Client instance;
+    public static Client instance;
 
     public static float Latency;
     float latencyTimer;
-    WaitForSeconds waitForSeconds;
+    WaitForSeconds waitForSeconds, waitForSecondsAlive;
 
     // Use this for initialization
     void Start()
@@ -124,7 +124,6 @@ public class Client : MonoBehaviour
             return;
         }
         clientEnteredGameCount = 0;
-        //DontDestroyOnLoad(this.gameObject);
 
         SteamCallbackReceiver.Init();
 
@@ -146,13 +145,16 @@ public class Client : MonoBehaviour
         AddCommands(PacketType.GameEntered, GameEntered);
         AddCommands(PacketType.GameStart, (dt, l, s) => OnGameStarted.Raise());
 
-        StartCoroutine(LatencyTest());
-
         waitForSeconds = new WaitForSeconds(0.1f);
+        waitForSecondsAlive = new WaitForSeconds(0.5f);
+
+        StartCoroutine(LatencyTest());
+        StartCoroutine(SendAlive());
 
         if (OnClientInitialized)
             OnClientInitialized.Raise();
     }
+
     void GameEntered(byte[] data, uint length, CSteamID sender)
     {
         if (sender == MyID)
@@ -163,6 +165,7 @@ public class Client : MonoBehaviour
         if (Client.IsHost && clientEnteredGameCount == Users.Count)
             Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.GameStart, EP2PSend.k_EP2PSendReliable, true);
     }
+
     IEnumerator LatencyTest()
     {
         while (true)
@@ -211,7 +214,39 @@ public class Client : MonoBehaviour
         while (SteamNetworking.IsP2PPacketAvailable(out dataLenght))
             Receive(dataLenght);
 
+        UpdateUsersTimers();
+
         SetOwner();
+    }
+
+    IEnumerator SendAlive()
+    {
+        while (true)
+        {
+            Client.SendPacketToHost(emptyArray, 0, 0, PacketType.Alive, EP2PSend.k_EP2PSendUnreliable);
+            yield return waitForSecondsAlive;
+        }
+    }
+
+    void UpdateUsersTimers()
+    {
+        if (Users == null)
+            return;
+        
+        for (int i = 0; i < Users.Count; i++)
+        {
+            if (Users[i].SteamID != MyID)
+            {
+                if (!Users[i].Update())
+                {
+                    #if UNITY_EDITOR
+                    Debug.Log("user disconnected");
+                    #endif
+                    if (OnUserDisconnected != null)
+                        OnUserDisconnected.Invoke(Users[i].SteamID);
+                }
+            }
+        }
     }
 
     void SetOwner()
@@ -261,7 +296,6 @@ public class Client : MonoBehaviour
 
     void OnDestroy()
     {
-
         SteamCallbackReceiver.LobbyEnterEvent -= EnterLobby;
         SteamCallbackReceiver.ChatUpdateEvent -= UpdateUsers;
     }
@@ -354,6 +388,10 @@ public class Client : MonoBehaviour
         int finalLength = (int)lenght - HeaderLength;
 
         ByteManipulator.Write<byte>(receiver, HeaderLength, receiver, 0, finalLength);
+
+        User u = GetUser(packetSender);
+        if (u != null)
+            u.ResetDisconnectionTimer();
 
         InvokeCommand(command, receiver, (uint)finalLength, packetSender);
 
@@ -693,5 +731,18 @@ public class Client : MonoBehaviour
     void OnGUI()
     {
         GUILayout.Label("Latency " + Latency.ToString());
+    }
+
+    User GetUser(CSteamID userID)
+    {
+        if (Users == null)
+            return null;
+
+        for (int i = 0; i < Users.Count; i++)
+        {
+            if (Users[i].SteamID == userID)
+                return Users[i];
+        }
+        return null;
     }
 }

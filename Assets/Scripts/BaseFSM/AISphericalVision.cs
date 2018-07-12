@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using SOPRO;
+
 public abstract class AIVision : AIBehaviour
 {
     protected Transform currentTarget;
+
     public Transform CurrentTarget { get { return currentTarget; } }
 }
 

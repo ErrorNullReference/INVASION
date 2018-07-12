@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SOPRO;
+
 public class AIShootTillOnSight : AIBehaviour
 {
     [SerializeField]
@@ -32,11 +33,17 @@ public class AIShootTillOnSight : AIBehaviour
         base.Awake();
         shootSync = this.GetComponent<EnemyShootSync>();
         ResetShootCooldown();
+
+        Client.OnUserDisconnected += (id) =>
+        {
+            targetToShot = null;
+        };
     }
 
     private void Update()
     {
-        this.transform.LookAt(targetToShot.transform.position);
+        if (targetToShot != null)
+            this.transform.LookAt(targetToShot.transform.position);
 
         currentCooldownBetweenShoots -= Time.deltaTime;
 
@@ -46,6 +53,12 @@ public class AIShootTillOnSight : AIBehaviour
 
     private void Shot()
     {
+        if (targetToShot == null)
+        {
+            owner.SwitchState(targetLost);
+            return;
+        }
+
         RaycastHit hit;
         Vector3 currentPos = transform.position;
         Vector3 dir = (targetToShot.transform.position - currentPos).normalized;
