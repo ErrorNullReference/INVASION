@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using SOPRO;
+
 public class OutsideViewPointCalculator : MonoBehaviour
 {
     public float AngleTreshold;
@@ -11,6 +12,7 @@ public class OutsideViewPointCalculator : MonoBehaviour
     public SOVariableVector3 NearestPointOutsideView;
     public SOListVector3Container SpawnPointsOutsideView;
     public SOVariableVector3 CameraOffset;
+    public bool DrawGizmos;
 
     Vector3[] cameraBounds;
     Vector3[][] playerBounds;
@@ -26,6 +28,7 @@ public class OutsideViewPointCalculator : MonoBehaviour
 
         GetPosition();
     }
+
     private void OnEnable()
     {
         if (cameraBounds != null)
@@ -214,9 +217,12 @@ public class OutsideViewPointCalculator : MonoBehaviour
         return b1 == b2 && b2 == b3;
     }
 
-#if UNITY_EDITOR
+    #if UNITY_EDITOR
     void OnDrawGizmos()
     {
+        if (!DrawGizmos)
+            return;
+
         if (cameraBounds == null || cameraBounds.Length != 4 || playerBounds == null || playerBounds.Length != 4)
         {
             cameraBounds = new Vector3[4];
@@ -248,5 +254,5 @@ public class OutsideViewPointCalculator : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(NearestPointOutsideView, 1.5f);
     }
-#endif
+    #endif
 }
