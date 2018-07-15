@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SOPRO;
+
 public class AnimationControllerScript : MonoBehaviour
 {
     public AnimatorPropertyHolder AnimSpeed;
@@ -13,6 +14,7 @@ public class AnimationControllerScript : MonoBehaviour
     {
         get { return anim.GetFloat(AnimSpeed); }
     }
+
     private void Awake()
     {
         anim = GetComponent<Animator>();

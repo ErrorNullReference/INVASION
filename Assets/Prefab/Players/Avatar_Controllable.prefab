@@ -1111,7 +1111,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1248683764693932}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 3.82}
+  m_LocalPosition: {x: -34.266243, y: 36.708523, z: 45.17475}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224484695160501432}
@@ -1569,11 +1569,11 @@ MonoBehaviour:
   WalkSpeed:
     UseConstant: 1
     Variable: {fileID: 0}
-    constantValue: 10
+    constantValue: 5
   RunSpeed:
     UseConstant: 1
     Variable: {fileID: 0}
-    constantValue: 15
+    constantValue: 10
 --- !u!114 &114402471443833716
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1755,13 +1755,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d1cb89f792d894c961e58756283e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseInputs: 0
+  UseInputs: 1
   speedZ: {fileID: 11400000, guid: 23d50b1dcf3aed748bfde9a704ad84a8, type: 2}
   speedX: {fileID: 11400000, guid: 4c195ab848bc64c4e84dbbce64c4b64f, type: 2}
   shoot: {fileID: 11400000, guid: 577f79ee815855c4aa2b2cf8071b3438, type: 2}
   death: {fileID: 11400000, guid: 9e4985d483722cd4fb7356f661d4cb25, type: 2}
-  RunTreshold: 4
-  movementTreshold: 4
+  RunTreshold: 0
+  movementTreshold: 0
 --- !u!114 &114842189039452322
 MonoBehaviour:
   m_ObjectHideFlags: 1
