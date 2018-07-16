@@ -6,6 +6,8 @@ using GENUtility;
 
 public class NetObjTransformSync : MonoBehaviour
 {
+    public float AcceptanceTreshold;
+
     private static readonly BytePacket payload = new BytePacket((sizeof(float) * 7) + sizeof(int));
     private WaitForSeconds waitForSecond;
 
@@ -81,6 +83,9 @@ public class NetObjTransformSync : MonoBehaviour
                 frac = 1;
             myTransform.position = Vector3.Lerp(startPos, endPos, frac);
             myTransform.rotation = Quaternion.Slerp(startRot, endRot, frac);
+
+            if (Mathf.Approximately(frac, 1))
+                animController.Animation(0, 0);
             return;
         }
 
@@ -94,7 +99,8 @@ public class NetObjTransformSync : MonoBehaviour
         startRot = myTransform.rotation;
         interpolationTime = prediction.Predict(pos, rot, out endPos, out endRot, out speed);
         Vector3 normalizedSpeed = speed.normalized;
-        animController.Animation(normalizedSpeed.x, normalizedSpeed.z);
+        if ((startPos - endPos).magnitude >= AcceptanceTreshold)
+            animController.Animation(normalizedSpeed.x, normalizedSpeed.z);
         time = 0;
     }
 }
