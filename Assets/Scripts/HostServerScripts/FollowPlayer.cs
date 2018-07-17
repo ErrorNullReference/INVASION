@@ -12,8 +12,9 @@ public class FollowPlayer : MonoBehaviour
     public bool Debug;
 
     [NonSerialized]
-    public CSteamID CurrentIndex = -1;
-    private int index;
+    public CSteamID CurrentID;
+    [NonSerialized]
+    public int CurrentIndex;
 
     public void SetFollowLocalPlayer()
     {
@@ -24,14 +25,14 @@ public class FollowPlayer : MonoBehaviour
                 Player p = Players[i];
                 if (!p.Dead && p.Avatar.UserInfo.SteamID == Client.MyID)
                 {
-                    CurrentIndex = Client.MyID;
+                    CurrentID = Client.MyID;
                     break;
                 }
             }
         }
         else
         {
-            index = 0;
+            CurrentIndex = 0;
         }
     }
 
@@ -43,23 +44,19 @@ public class FollowPlayer : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if (Debug)
-        {
-            transform.position = Players[index].transform.position + Offset;
-        }
-        else
-        {
-            int i = GetIndex();
-            if (i != -1)
-                transform.position = Players[i].transform.position + Offset;
-        }
+        CurrentIndex = GetIndex();
+        if (CurrentIndex != -1)
+            transform.position = Players[CurrentIndex].transform.position + Offset;
     }
 
     int GetIndex()
     {
+        if (Debug)
+            return 0;
+
         for (int i = 0; i < Players.Elements.Count; i++)
         {
-            if (Players.Elements[i].Avatar.UserInfo.SteamID == CurrentIndex)
+            if (Players.Elements[i].Avatar.UserInfo.SteamID == CurrentID)
                 return i;
         }
         return -1;
