@@ -40,5 +40,7 @@ public class GameEnder : MonoBehaviour
     public void LoadGameStart()
     {
         UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
+        if (Client.OnGameEnd != null)
+            Client.OnGameEnd.Invoke();
     }
 }
