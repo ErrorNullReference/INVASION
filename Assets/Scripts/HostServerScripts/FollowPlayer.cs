@@ -41,7 +41,7 @@ public class FollowPlayer : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if (CurrentIndex >= 0)
+        if (CurrentIndex >= 0 && CurrentIndex < Players.Elements.Count)
             transform.position = Players[CurrentIndex].transform.position + Offset;
     }
 }
