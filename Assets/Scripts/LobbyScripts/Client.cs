@@ -175,10 +175,10 @@ public class Client : MonoBehaviour
 
     void ReceiveDisconnection(byte[] data, uint length, CSteamID sender)
     {
+        Users.Remove(GetUser(sender));
         if (OnUserDisconnected != null)
             OnUserDisconnected.Invoke(sender);
     }
-
 
     void GameEntered(byte[] data, uint length, CSteamID sender)
     {
@@ -324,6 +324,7 @@ public class Client : MonoBehaviour
         SteamCallbackReceiver.LobbyEnterEvent -= EnterLobby;
         SteamCallbackReceiver.ChatUpdateEvent -= UpdateUsers;
         OnUserDisconnected -= Disconnect;
+        OnGameEnd -= SendDisconnection;
     }
 
     /// <summary>
