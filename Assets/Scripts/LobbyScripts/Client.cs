@@ -150,9 +150,19 @@ public class Client : MonoBehaviour
 
         StartCoroutine(LatencyTest());
         StartCoroutine(SendAlive());
+        OnUserDisconnected += Disconnect;
 
         if (OnClientInitialized)
             OnClientInitialized.Raise();
+    }
+
+    void Disconnect(CSteamID id)
+    {
+        if (id == Host)
+        {
+            OnGameEnd.Invoke();
+            UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
+        }
     }
 
     void GameEntered(byte[] data, uint length, CSteamID sender)
@@ -232,10 +242,10 @@ public class Client : MonoBehaviour
     {
         if (Users == null)
             return;
-        
-        for (int i = 0; i < Users.Count; i++)
+
+        for (int i = Users.Count - 1; i >= 0; i--)
         {
-            if (Users[i].SteamID != MyID)
+            if (Users[i] != null && Users[i].SteamID != MyID)
             {
                 if (!Users[i].Update())
                 {
@@ -298,6 +308,7 @@ public class Client : MonoBehaviour
     {
         SteamCallbackReceiver.LobbyEnterEvent -= EnterLobby;
         SteamCallbackReceiver.ChatUpdateEvent -= UpdateUsers;
+        OnUserDisconnected -= Disconnect;
     }
 
     /// <summary>

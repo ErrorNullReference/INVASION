@@ -35,7 +35,8 @@ public class SimpleAvatar : MonoBehaviour
         startPos = transform.position;
         startRot = transform.rotation;
 
-        interpolationTime = predition.Predict(position, rotation, out endPos, out endRot, out speed);
+        if (predition != null)
+            interpolationTime = predition.Predict(position, rotation, out endPos, out endRot, out speed);
         time = 0;
 
         updateTransform = true;
