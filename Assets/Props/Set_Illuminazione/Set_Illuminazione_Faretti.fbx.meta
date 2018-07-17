@@ -1,0 +1,160 @@
+fileFormatVersion: 2
+guid: d363f85210173f54c9c2a324cd8d105b
+timeCreated: 1531228523
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Faretto01_Rotate
+    100002: Faretto02_Rotate01
+    100004: Faretto02_Rotate02
+    100006: Faretto03_Luce1_Rotate01
+    100008: Faretto03_Luce1_Rotate02
+    100010: Faretto03_Luce2_Rotate01
+    100012: Faretto03_Luce2_Rotate02
+    100014: Illuminazione_Faretto01
+    100016: Illuminazione_Faretto02
+    100018: Illuminazione_Faretto03
+    100020: Illuminazione_Muro01
+    100022: Illuminazione_Muro02
+    100024: Illuminazione_Soffitto
+    100026: //RootNode
+    400000: Faretto01_Rotate
+    400002: Faretto02_Rotate01
+    400004: Faretto02_Rotate02
+    400006: Faretto03_Luce1_Rotate01
+    400008: Faretto03_Luce1_Rotate02
+    400010: Faretto03_Luce2_Rotate01
+    400012: Faretto03_Luce2_Rotate02
+    400014: Illuminazione_Faretto01
+    400016: Illuminazione_Faretto02
+    400018: Illuminazione_Faretto03
+    400020: Illuminazione_Muro01
+    400022: Illuminazione_Muro02
+    400024: Illuminazione_Soffitto
+    400026: //RootNode
+    2100000: lambert2
+    2100002: lambert5
+    2100004: lambert4
+    2100006: lambert3
+    2100008: lambert6
+    2100010: lambert7
+    2300000: Faretto01_Rotate
+    2300002: Faretto02_Rotate01
+    2300004: Faretto02_Rotate02
+    2300006: Faretto03_Luce1_Rotate01
+    2300008: Faretto03_Luce1_Rotate02
+    2300010: Faretto03_Luce2_Rotate01
+    2300012: Faretto03_Luce2_Rotate02
+    2300014: Illuminazione_Faretto01
+    2300016: Illuminazione_Faretto02
+    2300018: Illuminazione_Faretto03
+    2300020: Illuminazione_Muro01
+    2300022: Illuminazione_Muro02
+    2300024: Illuminazione_Soffitto
+    3300000: Faretto01_Rotate
+    3300002: Faretto02_Rotate01
+    3300004: Faretto02_Rotate02
+    3300006: Faretto03_Luce1_Rotate01
+    3300008: Faretto03_Luce1_Rotate02
+    3300010: Faretto03_Luce2_Rotate01
+    3300012: Faretto03_Luce2_Rotate02
+    3300014: Illuminazione_Faretto01
+    3300016: Illuminazione_Faretto02
+    3300018: Illuminazione_Faretto03
+    3300020: Illuminazione_Muro01
+    3300022: Illuminazione_Muro02
+    3300024: Illuminazione_Soffitto
+    4300000: Illuminazione_Faretto03
+    4300002: Faretto03_Luce1_Rotate01
+    4300004: Faretto03_Luce1_Rotate02
+    4300006: Faretto03_Luce2_Rotate01
+    4300008: Faretto03_Luce2_Rotate02
+    4300010: Illuminazione_Faretto02
+    4300012: Faretto02_Rotate01
+    4300014: Faretto02_Rotate02
+    4300016: Illuminazione_Faretto01
+    4300018: Faretto01_Rotate
+    4300020: Illuminazione_Muro02
+    4300022: Illuminazione_Muro01
+    4300024: Illuminazione_Soffitto
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
