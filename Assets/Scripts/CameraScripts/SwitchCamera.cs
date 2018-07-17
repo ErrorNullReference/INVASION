@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SOPRO;
+
 public class SwitchCamera : MonoBehaviour
 {
     public SOListPlayerContainer Players;
@@ -28,10 +29,12 @@ public class SwitchCamera : MonoBehaviour
             }
         }
     }
+
     public void IsInactive(bool isInactive)
     {
         this.enabled = !isInactive;
     }
+
     private void OnDisable()
     {
         Follow.SetFollowLocalPlayer();

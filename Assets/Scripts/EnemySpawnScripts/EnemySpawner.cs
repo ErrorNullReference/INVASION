@@ -7,6 +7,7 @@ using Steamworks;
 using UnityEngine.AI;
 using GENUtility;
 using SOPRO;
+
 [CreateAssetMenu(menuName = "Network/EnemySpawner")]
 public class EnemySpawner : Factory<byte>
 {
@@ -17,6 +18,7 @@ public class EnemySpawner : Factory<byte>
 
     public NavMeshAreaMaskHolder Mask;
 
+
     private Transform poolRoot;
 
     public void Init()
@@ -25,6 +27,7 @@ public class EnemySpawner : Factory<byte>
         Client.AddCommand(PacketType.EnemySpawn, InstantiateEnemy);
         EnemiesCount.Value = 0;
     }
+
     protected override byte ExtractIdentifier(GameObject obj)
     {
         return (byte)obj.GetComponent<Enemy>().Type.Value;

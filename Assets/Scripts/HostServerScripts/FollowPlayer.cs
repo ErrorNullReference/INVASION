@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SOPRO;
 using System;
+using Steamworks;
 
 public class FollowPlayer : MonoBehaviour
 {
@@ -11,7 +12,9 @@ public class FollowPlayer : MonoBehaviour
     public bool Debug;
 
     [NonSerialized]
-    public int CurrentIndex = -1;
+    public CSteamID CurrentID;
+    [NonSerialized]
+    public int CurrentIndex;
 
     public void SetFollowLocalPlayer()
     {
@@ -22,7 +25,7 @@ public class FollowPlayer : MonoBehaviour
                 Player p = Players[i];
                 if (!p.Dead && p.Avatar.UserInfo.SteamID == Client.MyID)
                 {
-                    CurrentIndex = i;
+                    CurrentID = Client.MyID;
                     break;
                 }
             }
@@ -40,8 +43,24 @@ public class FollowPlayer : MonoBehaviour
 
     // Update is called once per frame
     void LateUpdate()
-    {
-        if (CurrentIndex >= 0 && CurrentIndex < Players.Elements.Count)
+    {        
+
+        CurrentIndex = GetIndex();
+        if (CurrentIndex != -1)
+
             transform.position = Players[CurrentIndex].transform.position + Offset;
+    }
+
+    int GetIndex()
+    {
+        if (Debug)
+            return 0;
+
+        for (int i = 0; i < Players.Elements.Count; i++)
+        {
+            if (Players.Elements[i].Avatar.UserInfo.SteamID == CurrentID)
+                return i;
+        }
+        return -1;
     }
 }
