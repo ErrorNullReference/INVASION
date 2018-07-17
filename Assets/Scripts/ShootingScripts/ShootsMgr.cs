@@ -108,7 +108,7 @@ public class ShootsMgr : MonoBehaviour
 
     public static void AddRay(RayPlus ray)
     {
-        Debug.Log("Added ray to shootmanager");
+        //Debug.Log("Added ray to shootmanager");
         Instance.rays.Add(ray);
     }
 }
@@ -125,6 +125,7 @@ public class RayPlus
         ActivateCallbacks = activateCallbacks;
         Shooter = shooter;
     }
+
     public ulong Shooter;
     public float Distance;
     public Ray Ray;

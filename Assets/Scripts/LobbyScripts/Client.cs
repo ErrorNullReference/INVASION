@@ -144,6 +144,7 @@ public class Client : MonoBehaviour
         Commands = new Command[Enum.GetNames(typeof(PacketType)).Length];
         AddCommands(PacketType.Latency, LatencyResponse);
         AddCommands(PacketType.GameEntered, GameEntered);
+        AddCommands(PacketType.ExitGame, ReceiveDisconnection);
         AddCommands(PacketType.GameStart, (dt, l, s) => OnGameStarted.Raise());
 
         waitForSeconds = new WaitForSeconds(0.1f);
@@ -170,11 +171,14 @@ public class Client : MonoBehaviour
 
     void SendDisconnection()
     {
-        Client.SendPacketToInGameUsers(new byte[0], 0, 0, PacketType.ExitGame, EP2PSend.k_EP2PSendReliable, false);
+        Client.SendPacketToHost(new byte[0], 0, 0, PacketType.ExitGame, EP2PSend.k_EP2PSendReliable);
     }
 
     void ReceiveDisconnection(byte[] data, uint length, CSteamID sender)
     {
+        if (IsHost)
+            Client.SendPacketToInGameUsers(new byte[0], 0, 0, PacketType.ExitGame, sender, EP2PSend.k_EP2PSendReliable, false);
+
         Users.Remove(GetUser(sender));
         if (OnUserDisconnected != null)
             OnUserDisconnected.Invoke(sender);

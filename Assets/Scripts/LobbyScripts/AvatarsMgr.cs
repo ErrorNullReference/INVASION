@@ -86,7 +86,7 @@ public class AvatarsMgr : MonoBehaviour
 
     void UpdateUsers()
     {
-        if (Client.Users == null)
+        if (Client.Users == null || notActivatedAvatars == null)
             return;
 
         notActivatedAvatars.Clear();
