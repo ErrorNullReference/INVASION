@@ -1077,7 +1077,6 @@ GameObject:
   - component: {fileID: 769313091}
   - component: {fileID: 769313089}
   - component: {fileID: 769313090}
-  - component: {fileID: 769313092}
   m_Layer: 0
   m_Name: EnemyManager
   m_TagString: Untagged
@@ -1144,46 +1143,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &769313092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 769313088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd6896d7b923189479f21f14cdb8a7a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  curve:
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  WavesCount: 10
-  EnemyCountMultiplier: 10
-  EnemySpawnInterval: 0.5
-  WaveStartInterval: 0
-  CurveReadDuration: 100
-  MaxNumEnemySimultaneously: 200
-  CurrentEnemyCount: {fileID: 11400000, guid: 680e3e3bfab9c0b49b9e0bb02d964541, type: 2}
-  timeWaveInterval: 0
-  timeEnemyInterval: 0
-  timeFromStartSpawning: 0
-  currentWaveEnemyCount: 0
-  currentWaveIndex: 0
-  enemySpawnedCount: 0
-  waveSpawning: 0
 --- !u!1 &843942214
 GameObject:
   m_ObjectHideFlags: 0
@@ -2843,7 +2802,7 @@ MonoBehaviour:
   currentWaveEnemyCount: 0
   currentWaveIndex: 0
   enemySpawnedCount: 0
-  waveSpawning: 0
+  waveSpawning: 1
 --- !u!1 &2001413793
 GameObject:
   m_ObjectHideFlags: 0
