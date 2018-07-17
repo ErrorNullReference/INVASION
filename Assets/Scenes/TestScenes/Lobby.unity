@@ -576,7 +576,13 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed by
+    Humanoid clips.\n\tTransform 'Mutant:Hips'\n\tTransform 'Mutant:LeftToeBase'\n\tTransform
+    'Mutant:LeftLeg'\n\tTransform 'Mutant:RightToeBase'\n\tTransform 'Mutant:RightHandIndex3'\n\tTransform
+    'Mutant:RightHandThumb2'\n\tTransform 'Mutant:RightForeArm'\n\tTransform 'Mutant:LeftUpLeg'\n\tTransform
+    'Mutant:RightShoulder'\n\tTransform 'Mutant:RightHand'\n\tand more ...\n\tFrom
+    animation clip 'Idle'\n\tFrom animation clip 'Idle Aiming'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &225918748
@@ -944,7 +950,13 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed by
+    Humanoid clips.\n\tTransform 'Mutant:Hips'\n\tTransform 'Mutant:LeftToeBase'\n\tTransform
+    'Mutant:LeftLeg'\n\tTransform 'Mutant:RightToeBase'\n\tTransform 'Mutant:RightHandIndex3'\n\tTransform
+    'Mutant:RightHandThumb2'\n\tTransform 'Mutant:RightForeArm'\n\tTransform 'Mutant:LeftUpLeg'\n\tTransform
+    'Mutant:RightShoulder'\n\tTransform 'Mutant:RightHand'\n\tand more ...\n\tFrom
+    animation clip 'Idle'\n\tFrom animation clip 'Idle Aiming'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &406137397
@@ -1687,7 +1699,13 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed by
+    Humanoid clips.\n\tTransform 'Mutant:Hips'\n\tTransform 'Mutant:LeftToeBase'\n\tTransform
+    'Mutant:LeftLeg'\n\tTransform 'Mutant:RightToeBase'\n\tTransform 'Mutant:RightHandIndex3'\n\tTransform
+    'Mutant:RightHandThumb2'\n\tTransform 'Mutant:RightForeArm'\n\tTransform 'Mutant:LeftUpLeg'\n\tTransform
+    'Mutant:RightShoulder'\n\tTransform 'Mutant:RightHand'\n\tand more ...\n\tFrom
+    animation clip 'Idle'\n\tFrom animation clip 'Idle Aiming'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &783924136
@@ -2441,7 +2459,13 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed by
+    Humanoid clips.\n\tTransform 'Mutant:Hips'\n\tTransform 'Mutant:LeftToeBase'\n\tTransform
+    'Mutant:LeftLeg'\n\tTransform 'Mutant:RightToeBase'\n\tTransform 'Mutant:RightHandIndex3'\n\tTransform
+    'Mutant:RightHandThumb2'\n\tTransform 'Mutant:RightForeArm'\n\tTransform 'Mutant:LeftUpLeg'\n\tTransform
+    'Mutant:RightShoulder'\n\tTransform 'Mutant:RightHand'\n\tand more ...\n\tFrom
+    animation clip 'Idle'\n\tFrom animation clip 'Idle Aiming'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1259186616
