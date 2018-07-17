@@ -10,6 +10,8 @@ public class AvatarsMgr : MonoBehaviour
     [SerializeField]
     private Texture[] AvatarsTextures;
     [SerializeField]
+    private Animator[] AvatarsAnim;
+    [SerializeField]
     [Range(0, 1)]
     private float posY;
     [HideInInspector]
@@ -67,6 +69,18 @@ public class AvatarsMgr : MonoBehaviour
         {
             UpdateUsers();
             time = timer;
+        }
+        for (int i = 0; i < Avatars.Length; i++)
+        {
+            if (Avatars[i].Owner == null)
+            {
+                AvatarsAnim[i].SetBool("Selected", false);
+            }
+            else
+            {
+                AvatarsAnim[i].SetBool("Selected", true);
+
+            }
         }
     }
 
