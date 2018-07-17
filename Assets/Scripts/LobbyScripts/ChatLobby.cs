@@ -5,6 +5,7 @@ using Steamworks;
 using System.Text;
 using UnityEngine.UI;
 using GENUtility;
+
 public class ChatLobby : MonoBehaviour
 {
     public Text Text;

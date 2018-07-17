@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 dir;
         if (camera != null)
-            dir = camera.transform.forward * v + camera.transform.right * h;
+            dir = GetCameraDirectionPerAxes(camera, h, v);
         else
             dir = Vector3.forward * v + Vector3.right * h;
         dir.y = 0;
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
 
     void Move(Vector3 direction, bool run)
     {
-        //body.velocity = direction;
+        //body.velocity = Vector3.zero;
         //body.angularDrag = 0;
         //body.angularVelocity = Vector3.zero;
        
@@ -63,5 +63,13 @@ public class PlayerController : MonoBehaviour
         }
         else
             transform.rotation = Quaternion.identity;
+    }
+
+    Vector3 GetCameraDirectionPerAxes(Camera camera, float horizontal, float vertical)
+    {
+        Quaternion rotation = Quaternion.Euler(new Vector3(0, camera.transform.eulerAngles.y, 0));
+        Vector3 forward = rotation * new Vector3(0, 0, 1);
+        Vector3 right = rotation * new Vector3(1, 0, 0);
+        return forward * vertical + right * horizontal;
     }
 }

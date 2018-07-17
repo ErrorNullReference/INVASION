@@ -27,7 +27,7 @@ public class User
         if (SteamUsername == "" || SteamUsername == "[unknown]")
             LoadName();
         else
-            DownloadAvatar();
+            DownloadAvatar(SteamID);
 
         this.disconnectionTime = disconnectionTime;
         timer = disconnectionTime;
@@ -43,12 +43,12 @@ public class User
                     if (SteamUsername == "" || SteamUsername == "[unknown]")
                         LoadName();
                     else
-                        DownloadAvatar();
+                        DownloadAvatar(SteamID);
                 }
             });
     }
 
-    void DownloadAvatar()
+    void DownloadAvatar(CSteamID SteamID)
     {
         Texture2D tex = GetUserAvatar(SteamID);
         if (tex != null)
@@ -64,7 +64,8 @@ public class User
                 callAvatar = Callback<AvatarImageLoaded_t>.Create((cb) =>
                     {
                         if (id == cb.m_steamID)
-                            AvatarLoaded(cb);
+                            DownloadAvatar(cb.m_steamID);
+                        //AvatarLoaded
                     });
                 return SteamAvatarImage;
             case 0:
@@ -73,7 +74,8 @@ public class User
                     callPersona = Callback<PersonaStateChange_t>.Create((cb) =>
                         {
                             if (id == (CSteamID)cb.m_ulSteamID)
-                                PersonaStateChangeRequest(cb);
+                                DownloadAvatar((CSteamID)cb.m_ulSteamID);
+                            //PersonaStateChangeRequest
                         });
                     return SteamAvatarImage;
                 }
@@ -102,7 +104,7 @@ public class User
         return null;
     }
 
-    void PersonaStateChangeRequest(PersonaStateChange_t cb)
+    /*void PersonaStateChangeRequest(PersonaStateChange_t cb)
     {
         Texture2D tex = GetUserAvatar((CSteamID)cb.m_ulSteamID);
         if (tex != null)
@@ -114,7 +116,7 @@ public class User
         Texture2D tex = GetUserAvatar(cb.m_steamID);
         if (tex != null)
             SteamAvatarImage = tex;
-    }
+    }*/
 
     public bool Update()
     {

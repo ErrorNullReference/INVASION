@@ -4,6 +4,7 @@ using UnityEngine;
 using Steamworks;
 using GENUtility;
 using SOPRO;
+
 public class HostEnemySpawner : MonoBehaviour
 {
     public SOVariableVector3 NearestSpawnPointOutsideView;
@@ -11,8 +12,9 @@ public class HostEnemySpawner : MonoBehaviour
     public ReferenceInt MaxEnemyCount;
     public SOVariableInt CurrentEnemyCount;
     public NetIdDispenser IdDispenser;
+    public EnemySpawnGraph EnemySpawnGraph;
 
-    public ReferenceFloat TimeForLittleSquadSpawn;
+    /*public ReferenceFloat TimeForLittleSquadSpawn;
     public ReferenceInt EnemyCountForBigSquadSpawn;
 
     public ReferenceInt MinLittleSquadSpawn;
@@ -23,9 +25,10 @@ public class HostEnemySpawner : MonoBehaviour
     int waveCount;
     WaitForEndOfFrame waitForFrame;
     WaitForSeconds waitForSeconds;
-    private Vector3 spawnPos;
     bool coroutineOver = true;
-    bool continuousCoroutineStarted;
+    bool continuousCoroutineStarted;*/
+    private int NumEnemiesToSpawn;
+    private Vector3 spawnPos;
     private static readonly BytePacket idAndPos = new BytePacket(17);
     private static readonly byte[] emptyArray = new byte[0];
     // Use this for initialization
@@ -37,11 +40,12 @@ public class HostEnemySpawner : MonoBehaviour
             return;
         }
 
-        waitForFrame = new WaitForEndOfFrame();
+        //waitForFrame = new WaitForEndOfFrame();
     }
+
     private void Update()
     {
-        if (AllSpawnPointsOutsideView.Elements.Count > 0 && coroutineOver && CurrentEnemyCount < EnemyCountForBigSquadSpawn)
+        /*if (AllSpawnPointsOutsideView.Elements.Count > 0 && coroutineOver && CurrentEnemyCount < EnemyCountForBigSquadSpawn)
         {
             spawnPos = AllSpawnPointsOutsideView[Random.Range(0, AllSpawnPointsOutsideView.Elements.Count)];
             waveCount = Random.Range(MinLittleSquadSpawn, MaxLittleSquadSpawn) * BigSquadSpawnMultiplier;
@@ -51,6 +55,12 @@ public class HostEnemySpawner : MonoBehaviour
         {
             continuousCoroutineStarted = true;
             StartCoroutine(SpawnEnemyContinuous());
+        }*/
+
+        if (EnemySpawnGraph.GetSpawn(out NumEnemiesToSpawn, Time.deltaTime))
+        {
+            for (int i = 0; i < NumEnemiesToSpawn; i++)
+                InstantiateEnemy(EnemyType.Normal, AllSpawnPointsOutsideView.Elements[Random.Range(0, AllSpawnPointsOutsideView.Elements.Count)]);
         }
     }
 
@@ -61,12 +71,13 @@ public class HostEnemySpawner : MonoBehaviour
             this.enabled = false;
             return;
         }
-        continuousCoroutineStarted = false;
-        waitForSeconds = new WaitForSeconds(TimeForLittleSquadSpawn);
         spawnPos = NearestSpawnPointOutsideView;
-        coroutineOver = true;
+        //continuousCoroutineStarted = false;
+        //waitForSeconds = new WaitForSeconds(TimeForLittleSquadSpawn);
+        //coroutineOver = true;
     }
-    private IEnumerator SpawnEnemyContinuous()
+
+    /*private IEnumerator SpawnEnemyContinuous()
     {
         while (true)
         {
@@ -77,8 +88,9 @@ public class HostEnemySpawner : MonoBehaviour
                 InstantiateEnemy(EnemyType.Normal, NearestSpawnPointOutsideView);
             }
         }
-    }
-    private IEnumerator SpawnEnemyWave()
+    }*/
+
+    /*private IEnumerator SpawnEnemyWave()
     {
         coroutineOver = false;
         for (int i = 0; i < waveCount; i++)
@@ -87,7 +99,7 @@ public class HostEnemySpawner : MonoBehaviour
             InstantiateEnemy(EnemyType.Normal, spawnPos);
         }
         coroutineOver = true;
-    }
+    }*/
 
     //sends to clients the command to instantiate an enemy in a given position, or it takes a random position from an array of randomic given positions if none is specified
     public void InstantiateEnemy(EnemyType type, Vector3 position)

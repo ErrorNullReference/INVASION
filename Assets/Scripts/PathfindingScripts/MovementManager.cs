@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using System.Collections;
 using SOPRO;
 using GENUtility;
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class MovementManager : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class MovementManager : MonoBehaviour
     private Quaternion oldQuatenion;
     private Quaternion nextQuaternion;
     private AnimationControllerScript animController;
+
     private delegate void NetworkState();
 
     private NetworkState networkState;

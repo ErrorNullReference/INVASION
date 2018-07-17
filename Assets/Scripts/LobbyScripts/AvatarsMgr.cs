@@ -17,6 +17,7 @@ public class AvatarsMgr : MonoBehaviour
     [HideInInspector]
     public SelectableAvatar[] Avatars;
     float time, timer;
+    List<int> notActivatedAvatars;
 
     void Start()
     {
@@ -36,6 +37,7 @@ public class AvatarsMgr : MonoBehaviour
         }
 
         timer = 1;
+        notActivatedAvatars = new List<int>(Avatars.Length);
     }
 
     void OnEnable()
@@ -84,16 +86,13 @@ public class AvatarsMgr : MonoBehaviour
 
     void UpdateUsers()
     {
-        for (int j = 0; j < Avatars.Length; j++)
-        {
-            if (Avatars[j] == null)
-                return;
-            Avatars[j].Reset();
-        }
-
         if (Client.Users == null)
             return;
 
+        notActivatedAvatars.Clear();
+        for (int i = 0; i < Avatars.Length; i++)
+            notActivatedAvatars.Add(i);
+        
         for (int i = 0; i < Client.Users.Count; i++)
         {
             string data = SteamMatchmaking.GetLobbyMemberData(Client.Lobby.LobbyID, Client.Users[i].SteamID, "AvatarID");
@@ -110,9 +109,17 @@ public class AvatarsMgr : MonoBehaviour
                     {
                         Avatars[j].UpdateOwner(Client.Users[i]);
                         Avatars[j].Button.interactable = false;
+                        notActivatedAvatars.Remove(j);
                     }
                 }
             }
+        }
+
+        for (int j = 0; j < notActivatedAvatars.Count; j++)
+        {
+            if (Avatars[notActivatedAvatars[j]] == null)
+                return;
+            Avatars[notActivatedAvatars[j]].Reset();
         }
     }
 

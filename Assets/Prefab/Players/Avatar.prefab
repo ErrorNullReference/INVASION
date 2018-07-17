@@ -511,6 +511,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1666741876919992
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4066226842528844}
+  m_Layer: 8
+  m_Name: GunMuzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1686041756666314
 GameObject:
   m_ObjectHideFlags: 1
@@ -750,6 +765,19 @@ Transform:
   m_Father: {fileID: 4977274655482752}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4066226842528844
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1666741876919992}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.412, z: 1.18}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4338408151897892}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4081156095234328
 Transform:
   m_ObjectHideFlags: 1
@@ -882,10 +910,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1359835376740600}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 210.4763, y: 393.7262, z: -1263.8085}
+  m_LocalPosition: {x: -36.083195, y: 37.037834, z: 42.116325}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224135848765037470}
+  - {fileID: 4066226842528844}
   - {fileID: 4470841798891756}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -984,7 +1013,7 @@ Transform:
   - {fileID: 4725612573001568}
   - {fileID: 4868645058820120}
   m_Father: {fileID: 4338408151897892}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4492510705208438
 Transform:
@@ -1410,7 +1439,7 @@ MonoBehaviour:
   shoot: {fileID: 11400000, guid: 577f79ee815855c4aa2b2cf8071b3438, type: 2}
   death: {fileID: 11400000, guid: 9e4985d483722cd4fb7356f661d4cb25, type: 2}
   RunTreshold: 4
-  movementTreshold: 4
+  movementTreshold: 1
 --- !u!114 &114130298613650360
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1424,6 +1453,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Stats: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
   TotalPoints: 0
+  Energy: 0
   Dead: 0
   MaxRessTime: 120
   MaxRessDistance: 10
@@ -1491,7 +1521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PrefabPool: {fileID: 11400000, guid: fea32aa680d513745a7e7a0283f9d5ee, type: 2}
   values: {fileID: 11400000, guid: e4305df8f3337154a93e1a7800ccb8fc, type: 2}
-  Muzzle: {fileID: 4454689321706160}
+  Muzzle: {fileID: 4066226842528844}
   AmmoReady: 0
   AmmoInMagazine: 0
   MaxAmmoStored: 0
