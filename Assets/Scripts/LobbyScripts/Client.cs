@@ -24,6 +24,7 @@ public enum PacketType : byte
     RequestAvatarSelection,
     AnswerAvatarSelection,
     EnterGame,
+    ExitGame,
     ReceivedEnterGame,
     ConfirmEnterGame,
     GameEntered,
@@ -151,6 +152,7 @@ public class Client : MonoBehaviour
         StartCoroutine(LatencyTest());
         StartCoroutine(SendAlive());
         OnUserDisconnected += Disconnect;
+        OnGameEnd += SendDisconnection;
 
         if (OnClientInitialized)
             OnClientInitialized.Raise();
@@ -160,10 +162,23 @@ public class Client : MonoBehaviour
     {
         if (id == Host)
         {
-            OnGameEnd.Invoke();
+            if (OnGameEnd != null)
+                OnGameEnd.Invoke();
             UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
         }
     }
+
+    void SendDisconnection()
+    {
+        Client.SendPacketToInGameUsers(new byte[0], 0, 0, PacketType.ExitGame, EP2PSend.k_EP2PSendReliable, false);
+    }
+
+    void ReceiveDisconnection(byte[] data, uint length, CSteamID sender)
+    {
+        if (OnUserDisconnected != null)
+            OnUserDisconnected.Invoke(sender);
+    }
+
 
     void GameEntered(byte[] data, uint length, CSteamID sender)
     {
