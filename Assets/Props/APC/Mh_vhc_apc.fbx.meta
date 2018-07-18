@@ -1,0 +1,192 @@
+fileFormatVersion: 2
+guid: 8fe5306e80223ae41a592b8122eb21ed
+timeCreated: 1531922706
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: apc_cannon
+    100002: apc_frontWheels
+    100004: apc_mainBody
+    100006: apc_suspension
+    100008: apc_suspension1
+    100010: apc_suspension2
+    100012: apc_suspension3
+    100014: apc_suspension4
+    100016: apc_suspension5
+    100018: apc_suspension6
+    100020: apc_suspension7
+    100022: apc_suspensions
+    100024: apc_turret
+    100026: apc_wheel
+    100028: apc_wheel1
+    100030: apc_wheel2
+    100032: apc_wheel3
+    100034: apc_wheel4
+    100036: apc_wheel5
+    100038: apc_wheel6
+    100040: apc_wheel7
+    100042: apc_wheels
+    100044: //RootNode
+    400000: apc_cannon
+    400002: apc_frontWheels
+    400004: apc_mainBody
+    400006: apc_suspension
+    400008: apc_suspension1
+    400010: apc_suspension2
+    400012: apc_suspension3
+    400014: apc_suspension4
+    400016: apc_suspension5
+    400018: apc_suspension6
+    400020: apc_suspension7
+    400022: apc_suspensions
+    400024: apc_turret
+    400026: apc_wheel
+    400028: apc_wheel1
+    400030: apc_wheel2
+    400032: apc_wheel3
+    400034: apc_wheel4
+    400036: apc_wheel5
+    400038: apc_wheel6
+    400040: apc_wheel7
+    400042: apc_wheels
+    400044: //RootNode
+    2100000: MAT_vhc_apc
+    2100002: MAT_vhc_apc_alpha
+    2300000: apc_cannon
+    2300002: apc_mainBody
+    2300004: apc_suspension
+    2300006: apc_suspension1
+    2300008: apc_suspension2
+    2300010: apc_suspension3
+    2300012: apc_suspension4
+    2300014: apc_suspension5
+    2300016: apc_suspension6
+    2300018: apc_suspension7
+    2300020: apc_turret
+    2300022: apc_wheel
+    2300024: apc_wheel1
+    2300026: apc_wheel2
+    2300028: apc_wheel3
+    2300030: apc_wheel4
+    2300032: apc_wheel5
+    2300034: apc_wheel6
+    2300036: apc_wheel7
+    3300000: apc_cannon
+    3300002: apc_mainBody
+    3300004: apc_suspension
+    3300006: apc_suspension1
+    3300008: apc_suspension2
+    3300010: apc_suspension3
+    3300012: apc_suspension4
+    3300014: apc_suspension5
+    3300016: apc_suspension6
+    3300018: apc_suspension7
+    3300020: apc_turret
+    3300022: apc_wheel
+    3300024: apc_wheel1
+    3300026: apc_wheel2
+    3300028: apc_wheel3
+    3300030: apc_wheel4
+    3300032: apc_wheel5
+    3300034: apc_wheel6
+    3300036: apc_wheel7
+    4300000: apc_mainBody
+    4300002: apc_turret
+    4300004: apc_cannon
+    4300006: apc_suspension
+    4300008: apc_suspension1
+    4300010: apc_suspension2
+    4300012: apc_suspension3
+    4300014: apc_suspension4
+    4300016: apc_suspension5
+    4300018: apc_suspension6
+    4300020: apc_suspension7
+    4300022: apc_wheel1
+    4300024: apc_wheel2
+    4300026: apc_wheel3
+    4300028: apc_wheel4
+    4300030: apc_wheel5
+    4300032: apc_wheel6
+    4300034: apc_wheel7
+    4300036: apc_wheel
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
