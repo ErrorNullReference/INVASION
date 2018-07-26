@@ -2,6 +2,7 @@
 using SOPRO;
 using GENUtility;
 using Steamworks;
+
 [CreateAssetMenu(menuName = "Network/PowerUpsMgr")]
 public class PowerUpsMgr : Factory<byte>
 {
@@ -13,11 +14,13 @@ public class PowerUpsMgr : Factory<byte>
         Vector3 pos = new Vector3(ByteManipulator.ReadSingle(data, 5), ByteManipulator.ReadSingle(data, 9), ByteManipulator.ReadSingle(data, 13));
         GetPowUp((PowerUpType)data[0], ByteManipulator.ReadInt32(data, 1), null, pos, Quaternion.identity, data, 17, (int)length - 17);
     }
+
     public void Init()
     {
         Client.AddCommand(PacketType.PowerUpSpawn, NetSpawnedPowUp);
         Client.AddCommand(PacketType.PowerUpDespawn, NetDespawnedPowUp);
     }
+
     public void SendMsgSpawnPowerUp(PowerUpType type, int id, Vector3 pos, byte[] additionalData = null, bool sendToSender = true)
     {
         int addLength = additionalData == null ? 0 : additionalData.Length;
@@ -39,6 +42,7 @@ public class PowerUpsMgr : Factory<byte>
 
         ArrayPool<byte>.Recycle(data);
     }
+
     private void NetDespawnedPowUp(byte[] data, uint length, CSteamID sender)
     {
         int id = ByteManipulator.ReadInt32(data, 0);
@@ -70,6 +74,7 @@ public class PowerUpsMgr : Factory<byte>
 
         return powUp;
     }
+
     protected override byte ExtractIdentifier(GameObject obj)
     {
         return (byte)obj.GetComponent<PowerUp>().Type.Value;

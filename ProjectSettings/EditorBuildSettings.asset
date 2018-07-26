@@ -9,9 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/TestScenes/Lobby.unity
     guid: 32c25d0ee16ddbf42891abe7cda202e1
   - enabled: 1
+    path: Assets/Scenes/TestScenes/EnemySpawnScenes/PlayScene.unity
+    guid: 3e5e970ff9070354b93b41d419e59a92
+  - enabled: 0
     path: Assets/Scenes/TestScenes/EnemySpawnScenes/LobbyForPathfindingWithSpawner.unity
     guid: f3efa8351668c6740a1175a41ecbb997
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TestScenes/EnemySpawnScenes/PathfindingTestSceneWithSpawner.unity
     guid: ffe15cb60b6aed84cae8b1c08e96dcbd
   - enabled: 0
@@ -20,6 +23,3 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/TestScenes/PathfindingScene/PathfindingTestScene.unity
     guid: c5f10432076bef845a1433fee8f61f41
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000

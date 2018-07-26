@@ -243,7 +243,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 6
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
@@ -423,7 +423,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'AMMO   :'
+  m_Text: 'ENERGY  :'
 --- !u!114 &114493860843221858
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -691,7 +691,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180}
   m_AnchorMin: {x: 0.030520834, y: 0.8808069}
   m_AnchorMax: {x: 0.07052083, y: 0.95300007}
-  m_AnchoredPosition: {x: 0.26000977, y: 0.92993164}
+  m_AnchoredPosition: {x: 0.25976562, y: 0.9301758}
   m_SizeDelta: {x: -0.52000046, y: -0.15000153}
   m_Pivot: {x: 0.49999967, y: 0.49999934}
 --- !u!224 &224107290162378880
@@ -709,7 +709,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.030520834, y: 0.852217}
   m_AnchorMax: {x: 0.11152084, y: 0.8761798}
-  m_AnchoredPosition: {x: 0.19995117, y: -8.400024}
+  m_AnchoredPosition: {x: 0.20019531, y: -8.399902}
   m_SizeDelta: {x: -26.689999, y: -1.0900002}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224210746257139328
@@ -788,8 +788,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.090354174, y: 0.81000006}
   m_AnchorMax: {x: 0.15300001, y: 0.827}
-  m_AnchoredPosition: {x: 0.5, y: 0.099975586}
-  m_SizeDelta: {x: 18.997505, y: 7.859295}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224692309613697186
 RectTransform:
@@ -859,8 +859,8 @@ RectTransform:
   m_Father: {fileID: 224573777364092104}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.090354174, y: 0.8475899}
-  m_AnchorMax: {x: 0.18247917, y: 0.86767125}
-  m_AnchoredPosition: {x: 0, y: -11.699951}
-  m_SizeDelta: {x: -37.5, y: -2.94}
+  m_AnchorMin: {x: 0.106479175, y: 0.8475899}
+  m_AnchorMax: {x: 0.18247917, y: 0.86855555}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
