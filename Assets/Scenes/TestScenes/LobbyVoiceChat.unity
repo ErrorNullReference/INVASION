@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -4385,6 +4385,17 @@ MonoBehaviour:
   Actions:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 11400000, guid: b90721fe7aa9d8542b0aa20c4647457f, type: 2}
+        m_MethodName: CreateSpeakers
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 11400000, guid: 1c534515a0b8c7242a428928d8a7daa3, type: 2}
         m_MethodName: Init
         m_Mode: 1
@@ -4473,7 +4484,18 @@ MonoBehaviour:
   Event: {fileID: 11400000, guid: 44b1672e48fb21742ac29ed3109c3a9e, type: 2}
   Actions:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: b90721fe7aa9d8542b0aa20c4647457f, type: 2}
+        m_MethodName: RemoveSpeaker
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: SOPRO.UnEvCSteamID, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
 --- !u!114 &2128224458
@@ -4490,7 +4512,18 @@ MonoBehaviour:
   Event: {fileID: 11400000, guid: 115c3444f1483b442a45e59cb4d1ca1a, type: 2}
   Actions:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: b90721fe7aa9d8542b0aa20c4647457f, type: 2}
+        m_MethodName: AddSpeaker
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: SOPRO.UnEvCSteamID, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
 --- !u!114 &2128224459
@@ -4507,7 +4540,18 @@ MonoBehaviour:
   Event: {fileID: 11400000, guid: f4f482df599e6e341b91d8cd107b00cc, type: 2}
   Actions:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: b90721fe7aa9d8542b0aa20c4647457f, type: 2}
+        m_MethodName: RemoveLocalSpeaker
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: SOPRO.UnEvVoid, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
 --- !u!114 &2128224460
@@ -4524,7 +4568,18 @@ MonoBehaviour:
   Event: {fileID: 11400000, guid: 6ecf0a0a492edac42aa6d8e7bf56c33c, type: 2}
   Actions:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: b90721fe7aa9d8542b0aa20c4647457f, type: 2}
+        m_MethodName: CreateSpeakers
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: SOPRO.UnEvVoid, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
 --- !u!114 &2128224461
