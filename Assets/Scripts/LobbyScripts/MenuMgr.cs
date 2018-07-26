@@ -5,7 +5,7 @@ using Steamworks;
 
 public class MenuMgr : MonoBehaviour
 {
-    public Canvas EnterLobby, AvatarSelection, FriendsList, RequestList, Chat;
+    public Canvas EnterLobby, AvatarSelection, FriendsList, Chat;
 
     // Use this for initialization
     void Start()

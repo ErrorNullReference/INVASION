@@ -253,7 +253,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.000030517578}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &69955639
@@ -382,7 +382,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &176990974
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1510,8 +1510,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -183, y: 281}
-  m_SizeDelta: {x: 40, y: 40}
+  m_AnchoredPosition: {x: -188, y: 223}
+  m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &715249798
 MonoBehaviour:
@@ -1930,7 +1930,8 @@ MonoBehaviour:
   - {fileID: 1689767429}
   - {fileID: 1708051806}
   - {fileID: 688937073}
-  posY: 0.636
+  posY: 0.508
+  distance: 350
   Avatars:
   - {fileID: 0}
   - {fileID: 0}
@@ -1953,7 +1954,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &881227910
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4260,8 +4261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnterLobby: {fileID: 1150385761}
   AvatarSelection: {fileID: 871824304}
-  FriendsList: {fileID: 0}
-  RequestList: {fileID: 0}
+  FriendsList: {fileID: 176990977}
   Chat: {fileID: 57123651}
 --- !u!4 &2120571761
 Transform:

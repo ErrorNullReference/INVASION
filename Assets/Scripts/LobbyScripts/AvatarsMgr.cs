@@ -14,6 +14,8 @@ public class AvatarsMgr : MonoBehaviour
     [SerializeField]
     [Range(0, 1)]
     private float posY;
+    [SerializeField]
+    private float distance;
     [HideInInspector]
     public SelectableAvatar[] Avatars;
     float time, timer;
@@ -33,7 +35,8 @@ public class AvatarsMgr : MonoBehaviour
             Avatars[i] = Instantiate(SelectableAvatarTemplate, this.transform);
             Avatars[i].avatarID = i;
             Avatars[i].modelImage.texture = AvatarsTextures[i];
-            Avatars[i].transform.position = new Vector3(Screen.width / 8f * (2 * i + 1), Screen.height * posY, 0);
+            //Avatars[i].transform.position = new Vector3(Screen.width / 8f * (2 * i + 1), Screen.height * posY, 0);
+            Avatars[i].transform.position = new Vector3(distance * i + (Screen.width - distance * 3) / 2f, Screen.height * posY, 0);
         }
 
         timer = 1;

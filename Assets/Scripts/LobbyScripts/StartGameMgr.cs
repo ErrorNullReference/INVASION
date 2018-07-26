@@ -89,7 +89,7 @@ public class StartGameMgr : MonoBehaviour
     {
         SceneManager.sceneLoaded += SetInGame;
         Client.LeaveCurrentLobby();
-        SceneManager.LoadSceneAsync(GameSceneId);
+        SceneManager.LoadScene(GameSceneId);
     }
 
     void SetInGame(Scene s, LoadSceneMode ls)

@@ -16,15 +16,24 @@ public class FriendsMgr : MonoBehaviour
         SteamCallbackReceiver.LobbyInviteEvent += AcceptInvite;
     }
 
+    void OnDestroy()
+    {
+        SteamCallbackReceiver.LobbyInviteEvent -= AcceptInvite;
+    }
+
+    void OnEnable()
+    {
+        OpenFriendsList();
+    }
+
     public void OpenFriendsList()
     {
-        FriendsList.gameObject.SetActive(true);
         SetFriends();
     }
 
     public void CloseFriendsList()
     {
-        FriendsList.gameObject.SetActive(false);
+        gameObject.SetActive(false);
         ClearFriends();
     }
 

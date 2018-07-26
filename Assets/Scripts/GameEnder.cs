@@ -7,6 +7,8 @@ using SOPRO;
 public class GameEnder : MonoBehaviour
 {
     [SerializeField]
+    private int SceneID;
+    [SerializeField]
     private SOListPlayerContainer Players, ActivePlayers;
     [SerializeField]
     private Transform EndGamePanel;
@@ -39,7 +41,7 @@ public class GameEnder : MonoBehaviour
 
     public void LoadGameStart()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(SceneID);
         if (Client.OnGameEnd != null)
             Client.OnGameEnd.Invoke();
     }

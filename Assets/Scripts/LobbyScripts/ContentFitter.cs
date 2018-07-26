@@ -28,6 +28,9 @@ public class ContentFitter : MonoBehaviour
         }
         if (height < Viewport.rect.height)
             height = Viewport.rect.height;
+        if (rect == null)
+            rect = GetComponent<RectTransform>();
+
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
         rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, -rect.rect.height / 2f);
     }
