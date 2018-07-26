@@ -146,6 +146,7 @@ public class Client : MonoBehaviour
         AddCommands(PacketType.GameEntered, GameEntered);
         AddCommands(PacketType.ExitGame, ReceiveDisconnection);
         AddCommands(PacketType.GameStart, (dt, l, s) => OnGameStarted.Raise());
+        AddCommands(PacketType.Alive, ReceiveAlive);
 
         waitForSeconds = new WaitForSeconds(0.1f);
         waitForSecondsAlive = new WaitForSeconds(0.5f);
@@ -254,7 +255,8 @@ public class Client : MonoBehaviour
     {
         while (true)
         {
-            Client.SendPacketToHost(emptyArray, 0, 0, PacketType.Alive, EP2PSend.k_EP2PSendReliable);
+            if (!IsHost)
+                Client.SendPacketToHost(emptyArray, 0, 0, PacketType.Alive, EP2PSend.k_EP2PSendReliable);
             yield return waitForSecondsAlive;
         }
     }
