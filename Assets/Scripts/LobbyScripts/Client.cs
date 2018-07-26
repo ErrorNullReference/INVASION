@@ -262,7 +262,7 @@ public class Client : MonoBehaviour
     void ReceiveAlive(byte[] data, uint lenght, CSteamID id)
     {
         if (IsHost)
-            Client.SendPacket(emptyArray, 0, 0, PacketType.Alive, MyID, id, EP2PSend.k_EP2PSendReliable, false);
+            Client.SendPacket(emptyArray, 0, 0, PacketType.Alive, MyID, id, EP2PSend.k_EP2PSendReliable);
     }
 
     void UpdateUsersTimers()
