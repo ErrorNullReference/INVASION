@@ -163,6 +163,8 @@ public class Client : MonoBehaviour
     {
         if (id == Host)
         {
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 0)
+                return;
             if (OnGameEnd != null)
                 OnGameEnd.Invoke();
             UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
@@ -252,9 +254,15 @@ public class Client : MonoBehaviour
     {
         while (true)
         {
-            Client.SendPacketToHost(emptyArray, 0, 0, PacketType.Alive, EP2PSend.k_EP2PSendUnreliable);
+            Client.SendPacketToHost(emptyArray, 0, 0, PacketType.Alive, EP2PSend.k_EP2PSendReliable);
             yield return waitForSecondsAlive;
         }
+    }
+
+    void ReceiveAlive(byte[] data, uint lenght, CSteamID id)
+    {
+        if (IsHost)
+            Client.SendPacket(emptyArray, 0, 0, PacketType.Alive, MyID, id, EP2PSend.k_EP2PSendReliable, false);
     }
 
     void UpdateUsersTimers()
