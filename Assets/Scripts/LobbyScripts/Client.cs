@@ -174,7 +174,8 @@ public class Client : MonoBehaviour
 
     void SendDisconnection()
     {
-        Client.SendPacketToHost(new byte[0], 0, 0, PacketType.ExitGame, EP2PSend.k_EP2PSendReliable);
+        if (!IsHost)
+            Client.SendPacketToHost(new byte[0], 0, 0, PacketType.ExitGame, EP2PSend.k_EP2PSendReliable);
     }
 
     void ReceiveDisconnection(byte[] data, uint length, CSteamID sender)
