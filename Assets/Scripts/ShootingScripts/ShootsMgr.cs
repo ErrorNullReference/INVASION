@@ -111,6 +111,11 @@ public class ShootsMgr : MonoBehaviour
         //Debug.Log("Added ray to shootmanager");
         Instance.rays.Add(ray);
     }
+
+    void OnDestroy()
+    {
+        Instance = null;
+    }
 }
 
 public class RayPlus

@@ -156,5 +156,6 @@ public class PlayersMgr : MonoBehaviour
     void OnDestroy()
     {
         Client.OnUserDisconnected -= PlayerDisconnected;
+        instance = null;
     }
 }

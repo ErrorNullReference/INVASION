@@ -79,9 +79,6 @@ public class Player : LivingBeing
         if (!Client.IsHost)
             return;
 
-        if (this.Avatar.UserInfo != Server.LocalPlayer)
-            Debug.Log(life);
-
         //Death logic
         if (Dead)
         {
