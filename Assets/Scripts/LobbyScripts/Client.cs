@@ -125,7 +125,6 @@ public class Client : MonoBehaviour
             return;
         }
 
-        clientEnteredGameCount = 0;
 
         SteamCallbackReceiver.Init();
 
@@ -159,6 +158,12 @@ public class Client : MonoBehaviour
 
         if (OnClientInitialized)
             OnClientInitialized.Raise();
+    }
+
+    void OnEnable()
+    {
+        if (instance != null)
+            instance.clientEnteredGameCount = 0;
     }
 
     void Disconnect(CSteamID id)

@@ -10,7 +10,7 @@ public class StartGameMgr : MonoBehaviour
 {
     private static readonly byte[] emptyArray = new byte[0];
     public Button StartButton;
-    public int GameSceneId = 2;
+    public int GameSceneId = 1;
     List<CSteamID> readyUsers;
     List<CSteamID> confirmedUsers;
 
@@ -96,6 +96,7 @@ public class StartGameMgr : MonoBehaviour
     {
         SteamMatchmaking.SetLobbyMemberData(Client.Lobby.LobbyID, "InGame", "1");
         Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.GameEntered, EP2PSend.k_EP2PSendReliable, true);
+        SceneManager.sceneLoaded -= SetInGame;
     }
 
     void SetStartButtonState()

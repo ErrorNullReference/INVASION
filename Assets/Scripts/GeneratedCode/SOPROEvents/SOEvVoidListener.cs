@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+
 namespace SOPRO
 {
     /// <summary>
@@ -22,6 +23,7 @@ namespace SOPRO
         {
             Event.AddListener(this);
         }
+
         /// <summary>
         /// Removes listener from event
         /// </summary>
@@ -29,15 +31,18 @@ namespace SOPRO
         {
             Event.RemoveListener(this);
         }
-				protected virtual void Awake()
+
+        protected virtual void Awake()
         {
             Event.AddListener(this);
         }
-		protected virtual void OnDestroy()
+
+        protected virtual void OnDestroy()
         {
             Event.RemoveListener(this);
         }
-		        /// <summary>
+
+        /// <summary>
         /// Invokes unity event
         /// </summary>
         internal void OnEventRaised()
