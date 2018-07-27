@@ -53,7 +53,7 @@ public class AIShootTillOnSight : AIBehaviour
 
     private void Shot()
     {
-        if (targetToShot == null)
+        if (targetToShot == null || targetToShot.Dead)
         {
             owner.SwitchState(targetLost);
             return;
@@ -92,7 +92,7 @@ public class AIShootTillOnSight : AIBehaviour
         }
 
         targetToShot = previousState.Target.GetComponent<Player>();
-        if (!targetToShot)
+        if (!targetToShot || targetToShot.Dead)
         {
             owner.SwitchState(targetLost);
             return;
