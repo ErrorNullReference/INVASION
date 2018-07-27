@@ -21,7 +21,7 @@ public class SwitchCamera : MonoBehaviour
                 if (index >= length)
                     index = 0;
 
-                if (!Players[index].Dead)
+                if (Players[index] != null && !Players[index].Dead)
                 {
                     Follow.CurrentIndex = index;
                     break;

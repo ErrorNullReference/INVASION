@@ -120,7 +120,7 @@ public class PlayersMgr : MonoBehaviour
     {
         CSteamID target = (CSteamID)ByteManipulator.ReadUInt64(data, 0);
 
-        if (avatars.ContainsKey(target))
+        if (avatars.ContainsKey(target) && avatars[target] != null)
         {
             Player player = avatars[target].GetComponent<Player>();
 

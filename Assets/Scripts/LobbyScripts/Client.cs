@@ -184,7 +184,9 @@ public class Client : MonoBehaviour
         if (IsHost)
             Client.SendPacketToInGameUsers(new byte[0], 0, 0, PacketType.ExitGame, sender, EP2PSend.k_EP2PSendReliable, false);
 
-        Users.Remove(GetUser(sender));
+        User u = GetUser(sender);
+        if (u != null)
+            Users.Remove(u);
         if (OnUserDisconnected != null)
             OnUserDisconnected.Invoke(sender);
     }
