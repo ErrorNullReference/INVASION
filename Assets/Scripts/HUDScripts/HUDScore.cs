@@ -31,6 +31,9 @@ public class HUDScore : HUD
         }*/
 
         if (Player == null)
+            GetUserInfo();
+        
+        if (Player == null)
             return;
 
         if (Player.TotalPoints != prevPoints)

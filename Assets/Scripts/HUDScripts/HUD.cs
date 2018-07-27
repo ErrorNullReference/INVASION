@@ -11,6 +11,7 @@ public abstract class HUD : MonoBehaviour
 
     protected Text textComponent;
     protected Player Player;
+    bool userInfoNull;
 
     void Start()
     {
@@ -21,6 +22,12 @@ public abstract class HUD : MonoBehaviour
         catch
         {
         }
+    }
+
+    public void GetUserInfo()
+    {
+        if (userInfoNull)
+            return;
 
         UserInfo info = GetComponentInParent<UserInfo>();
         if (info != null)
@@ -31,6 +38,7 @@ public abstract class HUD : MonoBehaviour
                     Player = DataContainer.Elements[i];
             }
         }
+        else
+            userInfoNull = true;
     }
-	
 }

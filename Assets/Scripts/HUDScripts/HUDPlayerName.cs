@@ -6,6 +6,9 @@ public class HUDPlayerName : HUD
 {
     void Update()
     {
+        if (Player == null)
+            GetUserInfo();
+
         if (Player != null)
             textComponent.text = Player.Avatar.UserInfo.SteamUsername;
 

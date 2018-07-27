@@ -15,6 +15,9 @@ public class HUDPlayerImage : HUD
 
     void Update()
     {
+        if (Player == null)
+            GetUserInfo();
+
         if (Player != null)
             playerImg.texture = Player.Avatar.UserInfo.SteamAvatarImage;
     }

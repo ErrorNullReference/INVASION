@@ -775,7 +775,6 @@ public class Client : MonoBehaviour
     void OnGUI()
     {
         GUILayout.Label("Latency " + Latency.ToString());
-        GUILayout.Label(SteamManager.Initialized.ToString());
     }
 
     User GetUser(CSteamID userID)
