@@ -2,6 +2,7 @@
 using Steamworks;
 using GENUtility;
 using SOPRO;
+
 [CreateAssetMenu(menuName = "Network/TransformMgr")]
 public class ClientTransformManager : ScriptableObject
 {
@@ -16,6 +17,9 @@ public class ClientTransformManager : ScriptableObject
     private void NetObjTransformReceive(byte[] data, uint dataLength, CSteamID sender)
     {
         int id = ByteManipulator.ReadInt32(data, 0);
+
+        if (id >= netEntities.Elements.Count)
+            return;
 
         if (!netEntities.Elements.ContainsKey(id))
             return;

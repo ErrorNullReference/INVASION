@@ -74,6 +74,12 @@ public class EnemySpawner : Factory<byte>
     {
         int Id = ByteManipulator.ReadInt32(data, 0);
 
+        if (Id >= netEntities.Elements.Count)
+            return;
+
+        if (!netEntities.Elements.ContainsKey(Id))
+            return;
+
         Enemy obj = netEntities[Id].GetComponent<Enemy>();
 
         if (!obj)

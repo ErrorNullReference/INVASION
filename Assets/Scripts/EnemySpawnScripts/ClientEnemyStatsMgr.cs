@@ -28,6 +28,12 @@ public class ClientEnemyStatsMgr : ScriptableObject
     {
         int id = ByteManipulator.ReadInt32(data, 0);
 
+        if (id >= netEntities.Elements.Count)
+            return;
+
+        if (!netEntities.Elements.ContainsKey(id))
+            return;
+        
         Enemy enemy = netEntities[id].GetComponent<Enemy>();
 
         if (!enemy)
