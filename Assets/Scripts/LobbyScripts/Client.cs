@@ -124,6 +124,7 @@ public class Client : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
+
         clientEnteredGameCount = 0;
 
         SteamCallbackReceiver.Init();
@@ -238,7 +239,8 @@ public class Client : MonoBehaviour
     /// <param name="command">The method to link to the PacketType</param>
     public static void AddCommand(PacketType commandType, Command command)
     {
-        instance.AddCommands(commandType, command);
+        if (instance != null)
+            instance.AddCommands(commandType, command);
     }
 
     void Update()
@@ -773,6 +775,7 @@ public class Client : MonoBehaviour
     void OnGUI()
     {
         GUILayout.Label("Latency " + Latency.ToString());
+        GUILayout.Label(SteamManager.Initialized.ToString());
     }
 
     User GetUser(CSteamID userID)

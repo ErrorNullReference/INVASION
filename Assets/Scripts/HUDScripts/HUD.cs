@@ -10,8 +10,9 @@ public abstract class HUD : MonoBehaviour
     public HeadsUpDisplay InputAssetHUD;
 
     protected Text textComponent;
+    protected Player Player;
 
-	void Start ()
+    void Start()
     {
         try
         {
@@ -20,6 +21,16 @@ public abstract class HUD : MonoBehaviour
         catch
         {
         }
-	}
+
+        UserInfo info = GetComponentInParent<UserInfo>();
+        if (info != null)
+        {
+            for (int i = 0; i < DataContainer.Elements.Count; i++)
+            {
+                if (DataContainer.Elements[i].Avatar.UserInfo.SteamID == info.ID)
+                    Player = DataContainer.Elements[i];
+            }
+        }
+    }
 	
 }

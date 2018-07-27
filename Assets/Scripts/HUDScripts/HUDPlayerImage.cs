@@ -8,15 +8,14 @@ public class HUDPlayerImage : HUD
 {
     private RawImage playerImg;
 
-    void Start ()
+    void Start()
     {
         playerImg = gameObject.GetComponent<RawImage>();
     }
-	
-	void Update ()
-    {
-        if (Server.Users != null && Server.Users.Count > 0)
-            playerImg.texture = Server.LocalPlayer.SteamAvatarImage;
 
+    void Update()
+    {
+        if (Player != null)
+            playerImg.texture = Player.Avatar.UserInfo.SteamAvatarImage;
     }
 }

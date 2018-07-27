@@ -311,6 +311,7 @@ GameObject:
   - component: {fileID: 114589947947188420}
   - component: {fileID: 114130298613650360}
   - component: {fileID: 114306316975834924}
+  - component: {fileID: 114627177195289184}
   m_Layer: 8
   m_Name: Avatar
   m_TagString: Untagged
@@ -1536,6 +1537,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfcf39376071af74c9c742830dda2ebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114627177195289184
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1359835376740600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2f0db7cf4f6c4b4483626eff14a86a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Template: {fileID: 114944951730026662, guid: 9274518f874485f49802466b850fe0bf, type: 2}
 --- !u!114 &114671118993287660
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1625,7 +1638,8 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: 80dc6c25a9f833543859922bcb0f5511, type: 3}
-  - {fileID: 2100000, guid: 19087781830d63a4e87a8edd5eff9f9f, type: 2}
+  - {fileID: 2100000, guid: 8fd30f027fba18e498c96d0e09f89305, type: 2}
+  - {fileID: 2100000, guid: c306dba9238983141b2179f2c4b3370f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

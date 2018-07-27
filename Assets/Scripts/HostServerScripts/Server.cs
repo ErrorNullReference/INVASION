@@ -10,9 +10,9 @@ public class Server : MonoBehaviour
     public List<User> InGameUsers;
     public User MyPlayer;
 
-    public static User LocalPlayer { get { return Instance.MyPlayer; } }
+    public static User LocalPlayer { get { return Instance != null ? Instance.MyPlayer : null; } }
 
-    public static List<User> Users { get { return Instance.InGameUsers; } }
+    public static List<User> Users { get { return Instance != null ? Instance.InGameUsers : null; } }
 
     public static bool Initialized;
     public static CSteamID Host;

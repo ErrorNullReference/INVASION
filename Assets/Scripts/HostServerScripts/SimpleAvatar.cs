@@ -12,6 +12,8 @@ public class SimpleAvatar : MonoBehaviour
     //Used by other classes.
     public User UserInfo { get; set; }
 
+    public Player Player { get; set; }
+
     Prediction predition;
     Vector3 startPos, endPos, speed;
     Quaternion startRot, endRot;
@@ -22,6 +24,7 @@ public class SimpleAvatar : MonoBehaviour
     {
         ShootSystem = GetComponent<ShootSystem>();     
         AnimatorController = GetComponentInChildren<PlayerAnimatorController>();
+        Player = GetComponent<Player>();
 
         startPos = endPos = transform.position;
         startRot = endRot = transform.rotation;

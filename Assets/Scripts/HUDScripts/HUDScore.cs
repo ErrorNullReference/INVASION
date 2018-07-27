@@ -5,10 +5,10 @@ using UnityEngine;
 public class HUDScore : HUD
 {
     int prevPoints;
-    Player player;
+
     void LateUpdate()
     {
-        if (!player)
+        /*if (!player)
         {
             for (int i = 0; i < DataContainer.Elements.Count; i++)
             {
@@ -28,6 +28,15 @@ public class HUDScore : HUD
         {
             textComponent.text = player.TotalPoints.ToString();
             prevPoints = player.TotalPoints;
+        }*/
+
+        if (Player == null)
+            return;
+
+        if (Player.TotalPoints != prevPoints)
+        {
+            textComponent.text = Player.TotalPoints.ToString();
+            prevPoints = Player.TotalPoints;
         }
     }
 }

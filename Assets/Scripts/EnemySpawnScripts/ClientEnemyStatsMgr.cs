@@ -4,6 +4,7 @@ using UnityEngine;
 using Steamworks;
 using SOPRO;
 using GENUtility;
+
 [CreateAssetMenu(menuName = "Network/EnemyMgr")]
 public class ClientEnemyStatsMgr : ScriptableObject
 {
@@ -15,6 +16,7 @@ public class ClientEnemyStatsMgr : ScriptableObject
     private PowerUpsMgr powUpMgr;
     [SerializeField]
     private SODictionaryTransformContainer netEntities;
+
     public void Init()
     {
         Client.AddCommand(PacketType.ShootHit, ManageEnemyHit);
@@ -59,11 +61,11 @@ public class ClientEnemyStatsMgr : ScriptableObject
             }
         }
 
-        PlayersMgr.Players[(CSteamID)shooter].GetComponent<Player>().TotalPoints += points; //TODO: rimuovere questo getcomponent
+        PlayersMgr.Players[(CSteamID)shooter].Player.TotalPoints += points; //TODO: rimuovere questo getcomponent
     }
-   //private void ShootCall(byte[] data, uint length, CSteamID sender)
-   //{
-   //    int id = ByteManipulator.ReadInt32(data, 0);
-   //    netEntities[id].GetComponent<EnemyShootSync>().ReceiveShotCall();
-   //}
+    //private void ShootCall(byte[] data, uint length, CSteamID sender)
+    //{
+    //    int id = ByteManipulator.ReadInt32(data, 0);
+    //    netEntities[id].GetComponent<EnemyShootSync>().ReceiveShotCall();
+    //}
 }
