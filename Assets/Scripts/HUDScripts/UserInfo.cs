@@ -28,6 +28,8 @@ public class UserInfo : MonoBehaviour
     {
         if (MyPlayer)
             ID = Client.MyID;
+
+        Client.OnUserDisconnected += DestroyOnDisconnection;
     }
 
     public void Create(CSteamID id, Vector2 size)
@@ -39,6 +41,11 @@ public class UserInfo : MonoBehaviour
         YOffset = YOffset * (float)Screen.height;
         XOffset = XOffset * (float)Screen.height;
         SetScale(size);
+        CalculatePosition();
+    }
+
+    void CalculatePosition()
+    {
         SetPosition(new Vector2(XOffset, Screen.height - YOffset - UserInfo.Count * (Height * size.y)));
     }
 
@@ -53,5 +60,18 @@ public class UserInfo : MonoBehaviour
         this.size = new Vector3(size.x, size.y, 1);
         staticRoot.transform.localScale = this.size;
         dinamicRoot.transform.localScale = this.size;
+    }
+
+    void DestroyOnDisconnection(CSteamID id)
+    {
+        if (this.ID == id)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    void OnDestroy()
+    {
+        Client.OnUserDisconnected -= DestroyOnDisconnection;
     }
 }
