@@ -19,7 +19,7 @@ public class User
     int disconnectionTime;
     float timer;
 
-    public User(CSteamID id, int disconnectionTime = 10)
+    public User(CSteamID id, int disconnectionTime = 20)
     {
         AvatarID = -1;
         SteamID = id;
