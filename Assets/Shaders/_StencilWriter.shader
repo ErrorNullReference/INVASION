@@ -30,39 +30,9 @@ Shader "Custom/_StencilWriter"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma target 3.0
-			#pragma shader_feature _USENORMAL_OFF _USENORMAL_ON 
-			#pragma shader_feature _LIGHTING_OFF _LIGHTING_VERT _LIGHTING_FRAG
-			#pragma shader_feature _AMBIENTMODE_OFF _AMBIENTMODE_ON
-			#pragma shader_feature _RIM_OFF _RIM_ON
 
 			#include "UnityCG.cginc"
 			#include "CGLighting.cginc"
-			
-			uniform half4 _MainColor;
-			uniform sampler2D _MainTexture;
-			uniform float4 _MainTexture_ST;
-
-			uniform sampler2D _NormalMap;
-			uniform float4 _NormalMap_ST;
-
-			uniform float _Diffuse;
-			uniform float4 _LightColor0; 
-
-			//
-			uniform sampler2D _SpecularMap;
-			uniform float _SpecularFactor;
-			uniform float _SpecularPower;
-
-			#if _AMBIENTMODE_ON
-			uniform float _AmbientFactor;
-			#endif
-
-			#if _RIM_ON
-			uniform half4 _RimColor;
-			uniform float _RimFactor;
-			uniform float _RimCutoff;
-			uniform float _RimPower;
-			#endif
 			
 			struct vertexInput
 			{

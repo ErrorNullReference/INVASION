@@ -164,6 +164,10 @@ public class Player : LivingBeing
 
         playersAlive.Elements.Add(this);
 
+        RessHealthPercentage *= 0.5f;
+        if (RessHealthPercentage < 0.1f)
+            RessHealthPercentage = 0.1f;
+
         if (avatar.UserInfo.SteamID == Client.MyID)
             PlayerAliveStatusChanged.Raise(true);
     }
