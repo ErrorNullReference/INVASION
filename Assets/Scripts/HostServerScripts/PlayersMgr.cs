@@ -128,7 +128,8 @@ public class PlayersMgr : MonoBehaviour
 
             if (player.Life <= 0f)
             {
-                player.Die();
+                if (!player.Dead)
+                    player.Die();
                 return true;
             }
             else if (player.Dead)

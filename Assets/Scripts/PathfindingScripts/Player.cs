@@ -84,6 +84,7 @@ public class Player : LivingBeing
         {
             int length = playersAlive.Elements.Count;
             Transform transf = transform;
+            bool near = false;
 
             for (int i = 0; i < length; i++)
             {
@@ -93,24 +94,26 @@ public class Player : LivingBeing
                     this.life += RessTimeMultiplier * Stats.MaxHealth * Time.deltaTime;
                     if (this.life >= Stats.MaxHealth)
                         this.Resurrect(Stats.MaxHealth * RessHealthPercentage);
-                    return;
+                    near = true;
+                    break;
                 }
             }
 
             //if no player is near the dead player the death timer will proceed
-            timer += Time.deltaTime;
-            if (timer > MaxRessTime)
+            if (!near)
             {
-                byte[] data = ArrayPool<byte>.Get(8);
+                timer += Time.deltaTime;
+                if (timer > MaxRessTime)
+                {
+                    byte[] data = ArrayPool<byte>.Get(8);
 
-                ByteManipulator.Write(data, 0, (ulong)avatar.UserInfo.SteamID);
+                    ByteManipulator.Write(data, 0, (ulong)avatar.UserInfo.SteamID);
 
-                Client.SendPacketToInGameUsers(data, 0, data.Length, PacketType.PlayerDeath, EP2PSend.k_EP2PSendReliable, true);
+                    Client.SendPacketToInGameUsers(data, 0, data.Length, PacketType.PlayerDeath, EP2PSend.k_EP2PSendReliable, true);
 
-                ArrayPool<byte>.Recycle(data);
+                    ArrayPool<byte>.Recycle(data);
+                }
             }
-
-            return;
         }
 
         //Alive logic
@@ -125,7 +128,7 @@ public class Player : LivingBeing
             ByteManipulator.Write(packet, 8, life);
 
             Client.SendPacketToInGameUsers(packet, 0, packet.Length, PacketType.PlayerStatus, EP2PSend.k_EP2PSendReliable, false);
-            if (life <= 0f)
+            if (life <= 0f && !Dead)
             {
                 Die();
                 Client.SendTransformToInGameUsers(packet, this.transform, EP2PSend.k_EP2PSendReliable, false);
@@ -147,6 +150,8 @@ public class Player : LivingBeing
         if (avatar.UserInfo.SteamID == Client.MyID)
             PlayerAliveStatusChanged.Raise(false);
 
+        if (!Client.IsHost)
+            return;
         ByteManipulator.Write(packet, 0, (ulong)avatar.UserInfo.SteamID);
         ByteManipulator.Write(packet, 8, life);
         Client.SendPacketToInGameUsers(packet, 0, packet.Length, PacketType.PlayerStatus, EP2PSend.k_EP2PSendReliable, false);
