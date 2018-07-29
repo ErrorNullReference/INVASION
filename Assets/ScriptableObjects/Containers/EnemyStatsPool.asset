@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e97b792f08734e94280949131dd960d6, type: 3}
+  m_Name: EnemyStatsPool
+  m_EditorClassIdentifier: 
+  DEBUG_DeveloperDescription: 
+  Elements:
+  - {fileID: 11400000, guid: 2d7526c0305f0764198a4b5712d60ee0, type: 2}
+  - {fileID: 11400000, guid: 150ae41169a223844b5a40609674ac65, type: 2}
+  - {fileID: 11400000, guid: ccc56690a36031e40a2bfb01b52b2207, type: 2}

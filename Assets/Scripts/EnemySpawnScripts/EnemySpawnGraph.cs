@@ -21,6 +21,16 @@ public class EnemySpawnGraph : ScriptableObject
     int currentWaveEnemyCount, currentWaveIndex, enemySpawnedCount;
     bool waveSpawning;
 
+    [SerializeField]
+    private CurveType[] typeCurves;
+
+    [System.Serializable]
+    public struct CurveType
+    {
+        public AnimationCurve curve;
+        public EnemyType type;
+    }
+
     void OnEnable()
     {
         enemySpawnedCount = 0;
@@ -113,5 +123,30 @@ public class EnemySpawnGraph : ScriptableObject
     int ReadCurveByEnemy(float time)
     {
         return (int)(curve.Evaluate(time) * EnemyCountMultiplier);
+    }
+
+    public EnemyType GetEnemyType()
+    {
+        float time = 0;
+        if (WaveStartInterval == 0)
+            time = timeFromStartSpawning / CurveReadDuration;
+        else
+            time = (float)currentWaveIndex / (float)WavesCount;
+                
+        Vector2[] limits = new Vector2[typeCurves.Length];
+        for (int i = 0; i < limits.Length; i++)
+        {
+            float last = i == 0 ? 0 : limits[i - 1].y;
+            limits[i] = new Vector2(last, last + typeCurves[i].curve.Evaluate(time)); 
+        }
+
+        float r = Random.Range(0.0f, limits[limits.Length - 1].y);
+        for (int i = 0; i < limits.Length; i++)
+        {
+            if (r >= limits[i].x && r < limits[i].y)
+                return typeCurves[i].type;
+        }
+
+        return EnemyType.Normal;
     }
 }

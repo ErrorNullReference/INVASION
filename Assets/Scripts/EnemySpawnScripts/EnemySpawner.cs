@@ -18,12 +18,14 @@ public class EnemySpawner : Factory<byte>
 
     public NavMeshAreaMaskHolder Mask;
 
+    public SOListGenericContainer EnemyStatsPool;
 
     private Transform poolRoot;
 
     public void Init()
     {
         Client.AddCommand(PacketType.EnemyDeath, OnEnemyDeath);
+        Client.AddCommand(PacketType.EnemyDown, OnEnemyDown);
         Client.AddCommand(PacketType.EnemySpawn, InstantiateEnemy);
         EnemiesCount.Value = 0;
     }
@@ -50,7 +52,7 @@ public class EnemySpawner : Factory<byte>
 
         Vector3 position = new Vector3(positionX, positionY, positionZ);
 
-        SOPool pool = organizedPools[type];
+        SOPool pool = organizedPools[(int)EnemyType.Normal];
 
         bool parented;
         int nullObjsRemovedFromPool;
@@ -59,6 +61,7 @@ public class EnemySpawner : Factory<byte>
         Enemy enemy = go.GetComponent<Enemy>();
         enemy.Pool = pool;
         enemy.NetObj.SetNetworkId(id);
+        enemy.Stats = (EnemyStats)EnemyStatsPool.Elements[type];
 
         NavMeshHit hit;
         if (NavMesh.SamplePosition(position, out hit, 1f, Mask))
@@ -88,5 +91,23 @@ public class EnemySpawner : Factory<byte>
         obj.Pool.Recycle(obj.gameObject);
 
         EnemiesCount.Value--;
+    }
+
+    private void OnEnemyDown(byte[] data, uint length, CSteamID senderId)
+    {
+        int Id = ByteManipulator.ReadInt32(data, 0);
+
+        if (Id >= netEntities.Elements.Count)
+            return;
+
+        if (!netEntities.Elements.ContainsKey(Id))
+            return;
+
+        Enemy obj = netEntities[Id].GetComponent<Enemy>();
+
+        if (!obj)
+            throw new NullReferenceException("NetId does not correspond to an enemy");
+
+        obj.Down();
     }
 }

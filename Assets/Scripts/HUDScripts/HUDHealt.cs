@@ -12,13 +12,14 @@ public class HUDHealt : HUD
     private void Start()
     {
         GOSlider = gameObject.GetComponent<Slider>();
-        GOImg    = gameObject.GetComponent<Image>();
+        GOImg = gameObject.GetComponent<Image>();
         livingBeing = gameObject.GetComponentInParent<LivingBeing>();
 
     }
-    void Update ()
+
+    void Update()
     {
-        if (GOSlider != null)     
+        if (GOSlider != null)
         {
             //HUD 2D text subcase
             GOSlider.value = livingBeing.Life * InputAssetHUD.InverseMaxHealth;
@@ -26,13 +27,13 @@ public class HUDHealt : HUD
         else if (GOImg != null)
         {
             // Sprite subcase
-            GOImg.color = InputAssetHUD.PlayerHealthBarGradient.Evaluate(livingBeing.Life * InputAssetHUD.InverseMaxHealth);
+            GOImg.color = InputAssetHUD.HealthBarGradient.Evaluate(livingBeing.Life * InputAssetHUD.InverseMaxHealth);
             GOImg.fillAmount = (livingBeing.Life * InputAssetHUD.InverseMaxHealth);
         }
         else
         {
             //Quad subcase 
-            gameObject.GetComponent<MeshRenderer>().material.color = InputAssetHUD.PlayerHealthBarGradient.Evaluate(livingBeing.Life * InputAssetHUD.InverseMaxHealth);
+            gameObject.GetComponent<MeshRenderer>().material.color = InputAssetHUD.HealthBarGradient.Evaluate(livingBeing.Life * InputAssetHUD.InverseMaxHealth);
         }
 
     }

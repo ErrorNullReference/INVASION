@@ -45,7 +45,7 @@ public class HUDLifeBar : HUD
             if (transform != null)
                 transform.localScale = new Vector3(Player.Life / Player.MaxLife, 1, 1);
             if (image != null)
-                image.color = Player.Stats.PlayerHealthBarGradient.Evaluate(Player.Life / Player.MaxLife);
+                image.color = Player.Stats.HealthBarGradient.Evaluate(Player.Life / Player.MaxLife);
             prevEnergy = (int)Player.Life;
         }
     }

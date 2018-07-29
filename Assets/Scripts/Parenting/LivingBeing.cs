@@ -8,7 +8,8 @@ public abstract class LivingBeing : MonoBehaviour
 
     public float MaxLife { get { return Stats.MaxHealth; } }
 
-    public HeadsUpDisplay Stats;
+    public Stats Stats;
+
     protected float life;
 
     public abstract void Die();

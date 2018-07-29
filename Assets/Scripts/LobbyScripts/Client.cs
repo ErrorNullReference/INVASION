@@ -20,6 +20,7 @@ public enum PacketType : byte
     VoiceChatData,
     VoiceChatMutedMessage,
     EnemyDeath,
+    EnemyDown,
     EnemySpawn,
     RequestAvatarSelection,
     AnswerAvatarSelection,

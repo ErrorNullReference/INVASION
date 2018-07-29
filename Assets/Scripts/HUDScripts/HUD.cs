@@ -7,7 +7,7 @@ using SOPRO;
 public abstract class HUD : MonoBehaviour
 {
     public SOListPlayerContainer DataContainer;
-    public HeadsUpDisplay InputAssetHUD;
+    public Stats InputAssetHUD;
 
     protected Text textComponent;
     protected Player Player;

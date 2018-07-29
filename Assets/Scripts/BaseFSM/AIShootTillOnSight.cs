@@ -10,8 +10,6 @@ public class AIShootTillOnSight : AIBehaviour
     private LayerMaskHolder targetLayerMask;
     [SerializeField]
     private float maxViewDistance;
-    [SerializeField]
-    private float damage;
 
     [SerializeField]
     private float minCooldownBetweenShoots;
@@ -74,7 +72,7 @@ public class AIShootTillOnSight : AIBehaviour
             return;
         }
 
-        targetToShot.DecreaseLife(this.damage);
+        targetToShot.DecreaseLife(owner.enemy != null ? ((EnemyStats)owner.enemy.Stats).Damage : 1);
         transform.LookAt(shot, Vector3.up);
 
         ResetShootCooldown();

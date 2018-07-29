@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+
 public abstract class AIBehaviour : MonoBehaviour
 {
     [SerializeField]
@@ -10,5 +11,6 @@ public abstract class AIBehaviour : MonoBehaviour
     }
 
     public abstract void OnStateEnter();
+
     public abstract void OnStateExit();
 }

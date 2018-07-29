@@ -119,8 +119,6 @@ public class Player : LivingBeing
         }
 
         //Alive logic
-        Energy = Mathf.Min(Energy, Stats.MaxEnergy);
-
         if (!Mathf.Approximately(prevLife, life))
         {
             life = Mathf.Min(life, Stats.MaxHealth);

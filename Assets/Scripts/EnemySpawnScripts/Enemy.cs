@@ -5,18 +5,23 @@ using UnityEngine.UI;
 using SOPRO;
 using GENUtility;
 using System;
+
 [RequireComponent(typeof(GameNetworkObject))]
 public class Enemy : LivingBeing
 {
     public SOVariableEnemyType Type;
     [NonSerialized]
     public SOPool Pool;
-    private float HUDTimer;
+    private float HUDTimer, deadTimer;
     [SerializeField]
     private float HUDTimerShow;
     private GameNetworkObject networkId;
     HUDHealt hudManager;
     Image healthImage;
+    EnemyStats enemyStats;
+    bool dead;
+    Animator animator;
+    Brain brain;
 
     public GameNetworkObject NetObj
     {
@@ -32,14 +37,21 @@ public class Enemy : LivingBeing
         healthImage = hudManager.GetComponent<Image>();
         healthImage.enabled = false;
         hudManager.InputAssetHUD = Stats;
+        enemyStats = Stats as EnemyStats;
+        animator = GetComponent<Animator>();
+        brain = GetComponent<Brain>();
     }
+
     private void Awake()
     {
         networkId = GetComponent<GameNetworkObject>();
     }
+
     private void OnEnable()
     {
         life = Stats.MaxHealth;
+        dead = false;
+        deadTimer = 0;
     }
 
     private void OnDisable()
@@ -55,7 +67,10 @@ public class Enemy : LivingBeing
         byte[] d = ArrayPool<byte>.Get(sizeof(int));
         ByteManipulator.Write(d, 0, networkId.NetworkId);
 
-        Client.SendPacketToInGameUsers(d, 0, d.Length, PacketType.EnemyDeath, Steamworks.EP2PSend.k_EP2PSendReliable);
+        if (dead)
+            Client.SendPacketToInGameUsers(d, 0, d.Length, PacketType.EnemyDeath, Steamworks.EP2PSend.k_EP2PSendReliable);
+        else
+            Client.SendPacketToInGameUsers(d, 0, d.Length, PacketType.EnemyDown, Steamworks.EP2PSend.k_EP2PSendReliable);
 
         ArrayPool<byte>.Recycle(d);
     }
@@ -78,5 +93,21 @@ public class Enemy : LivingBeing
                 healthImage.enabled = false;
             }
         }
+
+        if (dead && enemyStats != null)
+        {
+            deadTimer += Time.deltaTime;
+            if (deadTimer >= enemyStats.DeathTime)
+                Die();
+        }
+    }
+
+    public void Down()
+    {
+        dead = true;
+        if (animator != null)
+            animator.SetBool("Dead", dead);
+        if (brain != null)
+            brain.ShutDown();
     }
 }

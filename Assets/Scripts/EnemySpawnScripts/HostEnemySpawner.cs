@@ -60,7 +60,7 @@ public class HostEnemySpawner : MonoBehaviour
         if (EnemySpawnGraph.GetSpawn(out NumEnemiesToSpawn, Time.deltaTime))
         {
             for (int i = 0; i < NumEnemiesToSpawn; i++)
-                InstantiateEnemy(EnemyType.Normal, AllSpawnPointsOutsideView.Elements[Random.Range(0, AllSpawnPointsOutsideView.Elements.Count)]);
+                InstantiateEnemy(EnemySpawnGraph.GetEnemyType(), AllSpawnPointsOutsideView.Elements[Random.Range(0, AllSpawnPointsOutsideView.Elements.Count)]);
         }
     }
 

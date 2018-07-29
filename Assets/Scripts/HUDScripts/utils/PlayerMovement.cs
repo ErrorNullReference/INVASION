@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;
-    public HeadsUpDisplay HUDInput;
+    public Stats HUDInput;
 	
     // Update is called once per frame
     void Update()
