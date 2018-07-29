@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using SOPRO;
+using Steamworks;
 
 public class GameEnder : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class GameEnder : MonoBehaviour
     private Transform EndGamePanel;
     bool gameEnd, startControl;
 
+    void Start()
+    {
+        Client.AddCommand(PacketType.GameOver, ActivateEnd);
+    }
+
     void Enable()
     {
         gameEnd = false;
@@ -21,6 +27,9 @@ public class GameEnder : MonoBehaviour
 
     void Update()
     {
+        if (!Client.IsHost)
+            return;
+
         if (!startControl)
         {
             if (Players.Elements.Count != 0 && ActivePlayers.Elements.Count != 0)
@@ -33,10 +42,16 @@ public class GameEnder : MonoBehaviour
         if (!gameEnd && Players.Elements.Count != 0 && ActivePlayers.Elements.Count == 0)
         {
             gameEnd = true;
-            EndGamePanel.gameObject.SetActive(true);
-            if (Client.OnGameEnd != null)
-                Client.OnGameEnd.Invoke();
+            Client.SendPacketToInGameUsers(new byte[]{ 0 }, 0, 0, PacketType.GameOver, Steamworks.EP2PSend.k_EP2PSendReliable, false);
+            ActivateEnd(null, 0, new CSteamID(0));
         }
+    }
+
+    void ActivateEnd(byte[] data, uint length, CSteamID id)
+    {
+        EndGamePanel.gameObject.SetActive(true);
+        if (Client.OnGameEnd != null)
+            Client.OnGameEnd.Invoke();
     }
 
     public void LoadGameStart()

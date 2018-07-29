@@ -62,6 +62,8 @@ public class Player : LivingBeing
 
         if (!Dead)
             playersAlive.Elements.Add(this);
+
+        Client.OnGameEnd += Die;
     }
 
     private void OnEnable()
@@ -175,5 +177,10 @@ public class Player : LivingBeing
 
         if (avatar.UserInfo.SteamID == Client.MyID)
             PlayerAliveStatusChanged.Raise(true);
+    }
+
+    void OnDestroy()
+    {
+        Client.OnGameEnd -= Die;
     }
 }

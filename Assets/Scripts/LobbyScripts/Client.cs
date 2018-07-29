@@ -25,6 +25,7 @@ public enum PacketType : byte
     AnswerAvatarSelection,
     EnterGame,
     ExitGame,
+    GameOver,
     ReceivedEnterGame,
     ConfirmEnterGame,
     GameEntered,
