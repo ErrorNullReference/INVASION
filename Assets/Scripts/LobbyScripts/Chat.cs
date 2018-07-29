@@ -34,6 +34,7 @@ public class Chat : MonoBehaviour
             {
                 InputField.gameObject.SetActive(true);
                 InputField.Select();
+                InputField.ActivateInputField();
             }
         }
         else if (justClosed)
@@ -42,8 +43,11 @@ public class Chat : MonoBehaviour
 
     public void SendChatMessage(string message)
     {
-        inputData = Encoding.UTF8.GetBytes(message);
-        Client.SendPacketToInGameUsers(inputData, 0, inputData.Length, PacketType.Chat, EP2PSend.k_EP2PSendReliable, true);
+        if (message.Length != 0)
+        {
+            inputData = Encoding.UTF8.GetBytes(message);
+            Client.SendPacketToInGameUsers(inputData, 0, inputData.Length, PacketType.Chat, EP2PSend.k_EP2PSendReliable, true);
+        }
         InputField.text = "";
         InputField.gameObject.SetActive(false);
         justClosed = true;
