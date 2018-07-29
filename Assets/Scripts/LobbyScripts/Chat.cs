@@ -17,6 +17,7 @@ public class Chat : MonoBehaviour
     void Start()
     {
         Client.AddCommand(PacketType.Chat, ReceiveChatMessage);
+        Client.AddCommand(PacketType.ServerChat, ReceiveServerChatMessage);
         builder = new StringBuilder();
     }
 
@@ -46,7 +47,7 @@ public class Chat : MonoBehaviour
         if (message.Length != 0)
         {
             inputData = Encoding.UTF8.GetBytes(message);
-            Client.SendPacketToInGameUsers(inputData, 0, inputData.Length, PacketType.Chat, EP2PSend.k_EP2PSendReliable, true);
+            Client.SendPacketToHost(inputData, 0, inputData.Length, PacketType.ServerChat, Client.MyID, EP2PSend.k_EP2PSendReliable);
         }
         InputField.text = "";
         InputField.gameObject.SetActive(false);
@@ -66,6 +67,11 @@ public class Chat : MonoBehaviour
         builder.Append("\n");
 
         Text.text = RemoveExcessLines(builder.ToString(), 3);
+    }
+
+    void ReceiveServerChatMessage(byte[] data, uint length, CSteamID sender)
+    {
+        Client.SendPacketToInGameUsers(data, 0, (int)length, PacketType.Chat, EP2PSend.k_EP2PSendReliable, true);
     }
 
     string RemoveExcessLines(string text, int maxLines)

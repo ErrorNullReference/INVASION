@@ -16,7 +16,7 @@ public enum PacketType : byte
     NetObjTransform,
     NetObjTransformServer,
     Chat,
-    Serverchat,
+    ServerChat,
     VoiceChatData,
     VoiceChatMutedMessage,
     EnemyDeath,
