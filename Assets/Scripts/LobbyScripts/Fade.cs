@@ -2,38 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Fade : MonoBehaviour
+public class Fade : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    //public Graphic GraphicComponent;
+    Graphic GraphicComponent;
+    [Range(0, 255)]
     public int MaxAlpha, MinAlpha;
 
     void OnEnable()
     {
+        GraphicComponent = GetComponent<Graphic>();
+
         FadeDown();
     }
 
     public void FadeUp()
     {
-        int num = transform.childCount;
-        for (int i = 0; i < num; i++)
-        {
-            Graphic g = transform.GetChild(i).GetComponent<Graphic>();
-            if (g != null)
-                g.color = new Color(g.color.r, g.color.g, g.color.b, MaxAlpha / 255f);
-        }
-        //GraphicComponent.color = new Color(GraphicComponent.color.r, GraphicComponent.color.g, GraphicComponent.color.b, MaxAlpha / 255f);
+        GraphicComponent.color = new Color(GraphicComponent.color.r, GraphicComponent.color.g, GraphicComponent.color.b, MaxAlpha / 255f);
     }
 
     public void FadeDown()
     {
-        int num = transform.childCount;
-        for (int i = 0; i < num; i++)
-        {
-            Graphic g = transform.GetChild(i).GetComponent<Graphic>();
-            if (g != null)
-                g.color = new Color(g.color.r, g.color.g, g.color.b, MinAlpha / 255f);
-        }
-        //GraphicComponent.color = new Color(GraphicComponent.color.r, GraphicComponent.color.g, GraphicComponent.color.b, MinAlpha / 255f);
+        GraphicComponent.color = new Color(GraphicComponent.color.r, GraphicComponent.color.g, GraphicComponent.color.b, MinAlpha / 255f);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        FadeUp();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        FadeDown();
     }
 }
