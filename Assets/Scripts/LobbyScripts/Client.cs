@@ -517,7 +517,8 @@ public class Client : MonoBehaviour
     /// <param name="sendType">EP2PSend type of the packet</param>
     public static void SendPacket(byte[] data, int startIndex, int length, PacketType command, CSteamID sender, CSteamID receiver, EP2PSend sendType)
     {
-        instance.Send(data, startIndex, length, command, sender, receiver, sendType);
+        if (instance != null)
+            instance.Send(data, startIndex, length, command, sender, receiver, sendType);
     }
 
     /// <summary>
@@ -531,7 +532,8 @@ public class Client : MonoBehaviour
     /// <param name="sendToSender">True if the sender have to receive the packet, false otherwise</param>
     public static void SendPacketToLobby(byte[] data, int startIndex, int length, PacketType command, CSteamID sender, EP2PSend sendType, bool sendToSender = true)
     {
-        instance.SendAllLobby(data, startIndex, length, command, sender, sendType, sendToSender);
+        if (instance != null)
+            instance.SendAllLobby(data, startIndex, length, command, sender, sendType, sendToSender);
     }
 
     /// <summary>
@@ -545,7 +547,8 @@ public class Client : MonoBehaviour
     /// <param name="sendToSender">True if the sender have to receive the packet, false otherwise</param>
     public static void SendPacketToInGameUsers(byte[] data, int startIndex, int length, PacketType command, CSteamID sender, EP2PSend sendType, bool sendToSender = true)
     {
-        instance.SendAllInGameUsers(data, startIndex, length, command, sender, sendType, sendToSender);
+        if (instance != null)
+            instance.SendAllInGameUsers(data, startIndex, length, command, sender, sendType, sendToSender);
     }
 
     /// <summary>
@@ -558,7 +561,8 @@ public class Client : MonoBehaviour
     /// <param name="sendToSender">True if the sender have to receive the packet, false otherwise</param>
     public static void SendPacketToLobby(byte[] data, int startIndex, int length, PacketType command, EP2PSend sendType, bool sendToSender = true)
     {
-        instance.SendAllLobby(data, startIndex, length, command, Client.MyID, sendType, sendToSender);
+        if (instance != null)
+            instance.SendAllLobby(data, startIndex, length, command, Client.MyID, sendType, sendToSender);
     }
 
     /// <summary>
@@ -571,7 +575,8 @@ public class Client : MonoBehaviour
     /// <param name="sendToSender">True if the sender have to receive the packet, false otherwise</param>
     public static void SendPacketToInGameUsers(byte[] data, int startIndex, int length, PacketType command, EP2PSend sendType, bool sendToSender = true)
     {
-        instance.SendAllInGameUsers(data, startIndex, length, command, Client.MyID, sendType, sendToSender);
+        if (instance != null)
+            instance.SendAllInGameUsers(data, startIndex, length, command, Client.MyID, sendType, sendToSender);
     }
 
     /// <summary>
@@ -584,7 +589,8 @@ public class Client : MonoBehaviour
     /// <param name="sendType">EP2PSend type of the packet</param>
     public static void SendPacketToHost(byte[] data, int startIndex, int length, PacketType command, CSteamID sender, EP2PSend sendType)
     {
-        instance.SendToHost(data, startIndex, length, command, sender, sendType);
+        if (instance != null)
+            instance.SendToHost(data, startIndex, length, command, sender, sendType);
     }
 
     /// <summary>
@@ -596,7 +602,8 @@ public class Client : MonoBehaviour
     /// <param name="sendType">EP2PSend type of the packet</param>
     public static void SendPacketToHost(byte[] data, int startIndex, int length, PacketType command, EP2PSend sendType)
     {
-        instance.SendToHost(data, startIndex, length, command, MyID, sendType);
+        if (instance != null)
+            instance.SendToHost(data, startIndex, length, command, MyID, sendType);
     }
 
     /// <summary>

@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4633199333694554}
   - component: {fileID: 137649907597941540}
+  - component: {fileID: 114547692691597214}
+  - component: {fileID: 114057151591595830}
   m_Layer: 10
   m_Name: GlassesMESH
   m_TagString: Untagged
@@ -129,6 +131,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4006940157982222}
   - component: {fileID: 137793398600063586}
+  - component: {fileID: 114371061581435766}
+  - component: {fileID: 114933430849137236}
   m_Layer: 10
   m_Name: BackpackMESH
   m_TagString: Untagged
@@ -649,6 +653,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4003903409412684}
   - component: {fileID: 137228237182741918}
+  - component: {fileID: 114132651964063600}
   m_Layer: 10
   m_Name: StuffMESH
   m_TagString: Untagged
@@ -710,6 +715,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4991310300686960}
   - component: {fileID: 137141336583367360}
+  - component: {fileID: 114179072539662420}
+  - component: {fileID: 114754449386107810}
   m_Layer: 10
   m_Name: HelmetMESH
   m_TagString: Untagged
@@ -926,6 +933,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4584691139445202}
   - component: {fileID: 137879049341670598}
+  - component: {fileID: 114463790283421830}
   m_Layer: 10
   m_Name: LegStrapsMESH
   m_TagString: Untagged
@@ -942,6 +950,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4607550379536868}
   - component: {fileID: 137081437771772282}
+  - component: {fileID: 114453566144356340}
   m_Layer: 10
   m_Name: RadioMESH
   m_TagString: Untagged
@@ -1196,6 +1205,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4078926043702496}
   - component: {fileID: 137340795443909632}
+  - component: {fileID: 114097842744814364}
+  - component: {fileID: 114135102301639798}
   m_Layer: 10
   m_Name: BodyMESH
   m_TagString: Untagged
@@ -1242,6 +1253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4385721838475176}
   - component: {fileID: 137811913063953226}
+  - component: {fileID: 114985709901803122}
   m_Layer: 10
   m_Name: HolsterMESH
   m_TagString: Untagged
@@ -2155,7 +2167,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1764905658333020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -7.820469, y: -5.8023014, z: 1.3696446}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4511886525233504}
@@ -2726,6 +2738,22 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114057151591595830
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000108692092498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab41ab5305670a48802dfa7e384e322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Material: {fileID: 2100000, guid: adb3b734e2bf6384e983963397a5c36a, type: 2}
+  SubMeshToModify: 3
+  SubMeshToCopy: 1
+  SetSubMeshNumber: 1
+  SubMeshNumber: 4
 --- !u!114 &114057339501243828
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2739,6 +2767,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   disableIfClient: 1
   currentState: {fileID: 114454403185978774}
+  enemy: {fileID: 0}
+--- !u!114 &114097842744814364
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1770597636623358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab41ab5305670a48802dfa7e384e322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Material: {fileID: 2100000, guid: adb3b734e2bf6384e983963397a5c36a, type: 2}
+  SubMeshToModify: 2
+  SubMeshToCopy: 0
+  SetSubMeshNumber: 1
+  SubMeshNumber: 4
 --- !u!114 &114130182057454510
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2753,12 +2798,59 @@ MonoBehaviour:
   owner: {fileID: 114057339501243828}
   targetLayerMask: {fileID: 11400000, guid: 5ab00fb41531e634694def18c509b702, type: 2}
   maxViewDistance: 15
-  damage: 1
   minCooldownBetweenShoots: 1
   maxCooldownBetweenShoots: 3
   muzzle: {fileID: 4309865899282914}
   shootSync: {fileID: 114318863650488276}
   targetLost: {fileID: 114454403185978774}
+--- !u!114 &114132651964063600
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1409854031411778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab41ab5305670a48802dfa7e384e322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Material: {fileID: 2100000, guid: adb3b734e2bf6384e983963397a5c36a, type: 2}
+  SubMeshToModify: 2
+  SubMeshToCopy: 0
+  SetSubMeshNumber: 1
+  SubMeshNumber: 3
+--- !u!114 &114135102301639798
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1770597636623358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab41ab5305670a48802dfa7e384e322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Material: {fileID: 2100000, guid: adb3b734e2bf6384e983963397a5c36a, type: 2}
+  SubMeshToModify: 3
+  SubMeshToCopy: 1
+  SetSubMeshNumber: 1
+  SubMeshNumber: 4
+--- !u!114 &114179072539662420
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1481464242315816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab41ab5305670a48802dfa7e384e322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Material: {fileID: 2100000, guid: adb3b734e2bf6384e983963397a5c36a, type: 2}
+  SubMeshToModify: 2
+  SubMeshToCopy: 0
+  SetSubMeshNumber: 1
+  SubMeshNumber: 4
 --- !u!114 &114226324737965404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2798,6 +2890,22 @@ MonoBehaviour:
   Stats: {fileID: 11400000, guid: 2d7526c0305f0764198a4b5712d60ee0, type: 2}
   Type: {fileID: 11400000, guid: 3b5dad2d0caf02f42b3bcfd23499ef91, type: 2}
   HUDTimerShow: 2
+--- !u!114 &114371061581435766
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1104369980172120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab41ab5305670a48802dfa7e384e322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Material: {fileID: 2100000, guid: adb3b734e2bf6384e983963397a5c36a, type: 2}
+  SubMeshToModify: 2
+  SubMeshToCopy: 0
+  SetSubMeshNumber: 1
+  SubMeshNumber: 4
 --- !u!114 &114437912616470450
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2816,6 +2924,22 @@ MonoBehaviour:
   cooldownBeforeRecalculation: 1
   targetVisible: {fileID: 114130182057454510}
   targetLost: {fileID: 114454403185978774}
+--- !u!114 &114453566144356340
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1600268270052934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab41ab5305670a48802dfa7e384e322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Material: {fileID: 2100000, guid: adb3b734e2bf6384e983963397a5c36a, type: 2}
+  SubMeshToModify: 2
+  SubMeshToCopy: 0
+  SetSubMeshNumber: 1
+  SubMeshNumber: 3
 --- !u!114 &114454403185978774
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2830,6 +2954,22 @@ MonoBehaviour:
   owner: {fileID: 114057339501243828}
   possibleTargets: {fileID: 11400000, guid: 8c3bf4eccc08acb42867bac67e33f9f7, type: 2}
   aggroActivated: {fileID: 114437912616470450}
+--- !u!114 &114463790283421830
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1598507501186772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab41ab5305670a48802dfa7e384e322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Material: {fileID: 2100000, guid: adb3b734e2bf6384e983963397a5c36a, type: 2}
+  SubMeshToModify: 2
+  SubMeshToCopy: 0
+  SetSubMeshNumber: 1
+  SubMeshNumber: 3
 --- !u!114 &114536206547846040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2846,6 +2986,22 @@ MonoBehaviour:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 0, g: 1, b: 0, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
+--- !u!114 &114547692691597214
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000108692092498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab41ab5305670a48802dfa7e384e322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Material: {fileID: 2100000, guid: adb3b734e2bf6384e983963397a5c36a, type: 2}
+  SubMeshToModify: 2
+  SubMeshToCopy: 0
+  SetSubMeshNumber: 1
+  SubMeshNumber: 4
 --- !u!114 &114578491837655658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2867,6 +3023,22 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114754449386107810
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1481464242315816}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab41ab5305670a48802dfa7e384e322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Material: {fileID: 2100000, guid: adb3b734e2bf6384e983963397a5c36a, type: 2}
+  SubMeshToModify: 3
+  SubMeshToCopy: 1
+  SetSubMeshNumber: 1
+  SubMeshNumber: 4
 --- !u!114 &114762180788985250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2935,6 +3107,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AcceptanceTreshold: 0.1
+--- !u!114 &114933430849137236
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1104369980172120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab41ab5305670a48802dfa7e384e322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Material: {fileID: 2100000, guid: adb3b734e2bf6384e983963397a5c36a, type: 2}
+  SubMeshToModify: 3
+  SubMeshToCopy: 1
+  SetSubMeshNumber: 1
+  SubMeshNumber: 4
+--- !u!114 &114985709901803122
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1787242122439240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab41ab5305670a48802dfa7e384e322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Material: {fileID: 2100000, guid: adb3b734e2bf6384e983963397a5c36a, type: 2}
+  SubMeshToModify: 2
+  SubMeshToCopy: 0
+  SetSubMeshNumber: 1
+  SubMeshNumber: 3
 --- !u!114 &114987240227332286
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3072,6 +3276,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: 228f0f0877b268c46a8c3a4e56455552, type: 2}
+  - {fileID: 2100000, guid: adb3b734e2bf6384e983963397a5c36a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3276,6 +3481,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: d30ce25baf7bc784899f8d634fc1f6a4, type: 2}
+  - {fileID: 2100000, guid: adb3b734e2bf6384e983963397a5c36a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3470,6 +3676,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: 228f0f0877b268c46a8c3a4e56455552, type: 2}
+  - {fileID: 2100000, guid: adb3b734e2bf6384e983963397a5c36a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3517,6 +3724,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: 228f0f0877b268c46a8c3a4e56455552, type: 2}
+  - {fileID: 2100000, guid: adb3b734e2bf6384e983963397a5c36a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
