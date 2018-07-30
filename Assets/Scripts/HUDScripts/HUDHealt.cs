@@ -14,11 +14,20 @@ public class HUDHealt : HUD
         GOSlider = gameObject.GetComponent<Slider>();
         GOImg = gameObject.GetComponent<Image>();
         livingBeing = gameObject.GetComponentInParent<LivingBeing>();
-
     }
 
     void Update()
     {
+        if (livingBeing.Life == 3)
+        {
+            int a = 0;
+        }
+        if (livingBeing.Life == 2)
+        {
+            int a = 0;
+        }
+
+
         if (GOSlider != null)
         {
             //HUD 2D text subcase

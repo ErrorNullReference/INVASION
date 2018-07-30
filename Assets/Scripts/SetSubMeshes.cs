@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestSubMeshes : MonoBehaviour
+public class SetSubMeshes : MonoBehaviour
 {
     public Material Material;
     public int SubMeshToModify, SubMeshToCopy;

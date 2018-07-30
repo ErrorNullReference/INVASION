@@ -61,7 +61,7 @@ public class EnemySpawner : Factory<byte>
         Enemy enemy = go.GetComponent<Enemy>();
         enemy.Pool = pool;
         enemy.NetObj.SetNetworkId(id);
-        enemy.Stats = (EnemyStats)EnemyStatsPool.Elements[type];
+        enemy.Init((EnemyStats)EnemyStatsPool.Elements[type]);
 
         NavMeshHit hit;
         if (NavMesh.SamplePosition(position, out hit, 1f, Mask))

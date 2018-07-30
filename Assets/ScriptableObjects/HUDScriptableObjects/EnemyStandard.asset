@@ -43,5 +43,6 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   Damage: 1
-  DeathTime: 4
+  DeathTime: 3
   Color: {r: 0, g: 0, b: 0, a: 0}
+  Type: 0

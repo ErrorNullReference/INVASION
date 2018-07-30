@@ -1,37 +1,28 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-
-// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
-
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
+﻿
 Shader "Custom/_Disintegration"
 {
 	Properties 
 	{
 		_MainTex("Noise", 2D) = "white" {}
 		_OutlineColor("Outline Color", color) = (1,0,0,1)
+		_DisColor("DisColor", color) = (0,0,0,1)
+		_Color("Color", color) = (0,0,0,0)
 		_Duration("Duration", Float) = 10
-		_DebugTime("Time", Range(0, 10)) = 0
+		_T("T", Float) = 10
+		_Cutoff("Cutoff", Range(0,1)) = 1
+		_Active("Active", int) = 0
 	}
 	Subshader
 	{
-		Tags{"Queue" = "Geometry-2" "IgnoreProjector" = "true" "RenderType" = "Opaque"}
-		//ZWrite Off
+		Tags{"Queue" = "Geometry+1" "IgnoreProjector" = "true" "RenderType" = "Opaque" }
 
 		Pass
 		{
-			Stencil
-			{
-				Ref 2
-				Comp Always
-				Pass Replace
-			}
-				Tags{"LightMode" = "ForwardBase"}
+				Name "Disintegration"
+				Tags{ "LightMode" = "ForwardBase" "Customtag" = "test" }
 				Blend SrcAlpha OneMinusSrcAlpha
 				BlendOp Add
+				//ZWrite Off
 
 				CGPROGRAM
 				#pragma vertex vert
@@ -56,9 +47,13 @@ Shader "Custom/_Disintegration"
 				sampler2D _MainTex;
 				float4 _MainTex_ST;
 				uniform half4 _OutlineColor;
+				uniform half4 _DisColor;
+				uniform half4 _Color;
 				uniform float _Duration;
-				uniform float _DebugTime;
-				
+				uniform float _T;
+				uniform float _Cutoff;
+				uniform int _Active;
+
 				vertexOutput vert(vertexInput v)
 				{
 					vertexOutput o; 
@@ -70,18 +65,23 @@ Shader "Custom/_Disintegration"
 
 				half4 frag(vertexOutput i): COLOR
 				{
+					if(_Active == 0)
+						discard;
+						
 					half4 noiseColor = tex2D(_MainTex, i.uv);
 
-					float t = _DebugTime / _Duration;
+					float t = _T / _Duration;
+					clamp(0,1,t);
+
 					float val = (noiseColor.r + noiseColor.g + noiseColor.b) / 3;
 
 					if(val >= t)
-						discard;
+						return _Color;
 
 					float c = val / t;
-					if(c < t)
+					if(c <= _Cutoff * t)
 						c = 0;
-					return lerp(half4(0,0,0,0), _OutlineColor, c);
+					return lerp(_DisColor, _OutlineColor, c);
 				}
 				ENDCG
 		}

@@ -22,4 +22,4 @@ MonoBehaviour:
   wallParticle: {fileID: 0}
   bloodParticles: {fileID: 0}
   gunSystem: 0
-  damage: 2
+  damage: 1

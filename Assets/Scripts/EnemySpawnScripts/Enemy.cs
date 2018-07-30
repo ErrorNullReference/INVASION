@@ -18,10 +18,12 @@ public class Enemy : LivingBeing
     private GameNetworkObject networkId;
     HUDHealt hudManager;
     Image healthImage;
-    EnemyStats enemyStats;
+    public EnemyStats EnemyStats;
     bool dead;
     Animator animator;
     Brain brain;
+
+    public Action OnDown, OnDeath;
 
     public GameNetworkObject NetObj
     {
@@ -33,11 +35,10 @@ public class Enemy : LivingBeing
 
     private void Start()
     {
-        hudManager = GetComponentInChildren<HUDHealt>();
+        if (hudManager == null)
+            hudManager = GetComponentInChildren<HUDHealt>();
         healthImage = hudManager.GetComponent<Image>();
         healthImage.enabled = false;
-        hudManager.InputAssetHUD = Stats;
-        enemyStats = Stats as EnemyStats;
         animator = GetComponent<Animator>();
         brain = GetComponent<Brain>();
     }
@@ -47,9 +48,13 @@ public class Enemy : LivingBeing
         networkId = GetComponent<GameNetworkObject>();
     }
 
-    private void OnEnable()
+    public void Init(EnemyStats stats)
     {
-        life = Stats.MaxHealth;
+        EnemyStats = stats;
+        if (hudManager == null)
+            hudManager = GetComponentInChildren<HUDHealt>();
+        hudManager.InputAssetHUD = EnemyStats;
+        life = EnemyStats.MaxHealth;
         dead = false;
         deadTimer = 0;
     }
@@ -94,20 +99,27 @@ public class Enemy : LivingBeing
             }
         }
 
-        if (dead && enemyStats != null)
+        if (dead && EnemyStats != null)
         {
             deadTimer += Time.deltaTime;
-            if (deadTimer >= enemyStats.DeathTime)
+            if (deadTimer >= EnemyStats.DeathTime)
+            {
                 Die();
+                if (OnDeath != null)
+                    OnDeath.Invoke();
+            }
         }
     }
 
     public void Down()
     {
         dead = true;
+        deadTimer = 0;
         if (animator != null)
             animator.SetBool("Dead", dead);
         if (brain != null)
             brain.ShutDown();
+        if (OnDown != null)
+            OnDown.Invoke();
     }
 }
