@@ -96,6 +96,8 @@ public class StartGameMgr : MonoBehaviour
     {
         SteamMatchmaking.SetLobbyMemberData(Client.Lobby.LobbyID, "InGame", "1");
         Client.SendPacketToHost(emptyArray, 0, 0, PacketType.GameEntered, EP2PSend.k_EP2PSendReliable);
+        if (!Client.IsHost)
+            Client.SendPacket(emptyArray, 0, 0, PacketType.GameEntered, Client.MyID, Client.MyID, EP2PSend.k_EP2PSendReliable);
         SceneManager.sceneLoaded -= SetInGame;
     }
 
