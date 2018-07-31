@@ -328,9 +328,10 @@ public class Client : MonoBehaviour
         {
             CSteamID userID = SteamMatchmaking.GetLobbyMemberByIndex(lobby.LobbyID, i);
             lobby.Users.Add(new User(userID));
+            SteamNetworking.AcceptP2PSessionWithUser(userID);
         }
 
-        SendPacketToLobby(emptyArray, 0, 0, PacketType.Test, EP2PSend.k_EP2PSendReliable, false);
+        //SendPacketToLobby(emptyArray, 0, 0, PacketType.Test, EP2PSend.k_EP2PSendReliable, false);
 
 
         if (OnLobbyInitializationEvent)
@@ -402,6 +403,8 @@ public class Client : MonoBehaviour
             if (lobby.GetUserFromID((CSteamID)cb.m_ulSteamIDUserChanged) == null)
             {
                 lobby.Users.Add(new User((CSteamID)cb.m_ulSteamIDUserChanged));
+                SteamNetworking.AcceptP2PSessionWithUser((CSteamID)cb.m_ulSteamIDUserChanged);
+
                 if (OnUserEnter)
                     OnUserEnter.Raise((CSteamID)cb.m_ulSteamIDUserChanged);
             }
