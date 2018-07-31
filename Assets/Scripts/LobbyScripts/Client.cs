@@ -206,7 +206,7 @@ public class Client : MonoBehaviour
             OnGameEntered.Raise();
 
         clientEnteredGameCount++;
-        //TODO: start game here, also need to manage players that quit and endgame
+
         if (Client.IsHost && clientEnteredGameCount == Users.Count)
             Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.GameStart, EP2PSend.k_EP2PSendReliable, true);
     }
