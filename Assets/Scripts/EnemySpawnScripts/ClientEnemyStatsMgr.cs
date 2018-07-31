@@ -20,8 +20,12 @@ public class ClientEnemyStatsMgr : ScriptableObject
     public void Init()
     {
         Client.AddCommand(PacketType.ShootHit, ManageEnemyHit);
+        Client.AddCommand(PacketType.ShootHitServer, ManageEnemyHitServer);
+    }
 
-        //Client.AddCommand(PacketType.EnemyShoot, ShootCall);
+    private void ManageEnemyHitServer(byte[] data, uint length, CSteamID sender)
+    {
+        Client.SendPacketToInGameUsers(data, 0, (int)length, PacketType.ShootHit, Steamworks.EP2PSend.k_EP2PSendReliable, true);
     }
 
     private void ManageEnemyHit(byte[] data, uint length, CSteamID sender)
@@ -69,9 +73,4 @@ public class ClientEnemyStatsMgr : ScriptableObject
 
         PlayersMgr.Players[(CSteamID)shooter].Player.TotalPoints += points; //TODO: rimuovere questo getcomponent
     }
-    //private void ShootCall(byte[] data, uint length, CSteamID sender)
-    //{
-    //    int id = ByteManipulator.ReadInt32(data, 0);
-    //    netEntities[id].GetComponent<EnemyShootSync>().ReceiveShotCall();
-    //}
 }

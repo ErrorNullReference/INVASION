@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody body;
     Camera camera;
     RaycastHit hitInfo;
+    bool active;
 
     public Vector3 Velocity { get { return body.velocity; } }
 
@@ -21,10 +22,18 @@ public class PlayerController : MonoBehaviour
 
         if (Camera.main != null)
             camera = Camera.main;
+
+        MenuEvents.OnMenuOpen += Disable;
+        MenuEvents.OnMenuClose += Activate;
+
+        active = true;
     }
 
     void FixedUpdate()
     {
+        if (!active)
+            return;
+
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -71,5 +80,21 @@ public class PlayerController : MonoBehaviour
         Vector3 forward = rotation * new Vector3(0, 0, 1);
         Vector3 right = rotation * new Vector3(1, 0, 0);
         return forward * vertical + right * horizontal;
+    }
+
+    void Disable()
+    {
+        active = false;
+    }
+
+    void Activate()
+    {
+        active = true;
+    }
+
+    void OnDestroy()
+    {
+        MenuEvents.OnMenuOpen -= Disable;
+        MenuEvents.OnMenuClose -= Activate;
     }
 }

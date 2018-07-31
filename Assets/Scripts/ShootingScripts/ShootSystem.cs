@@ -5,32 +5,15 @@ using System;
 using SOPRO;
 using GENUtility;
 
-public enum ShootingType
-{
-    Single,
-    Consecutive,
-}
-
-
 public class ShootSystem : MonoBehaviour
 {
-    /*
-     
-    Read documentation
-         
-    */
-    /// <summary>
-    /// Kind of shooting
-    /// </summary>
-    //0: shoot in one frame - 1: shoot in some time
-    [Tooltip("0: shoot in one frame - 1: shoot in some time")]
-    public ShootingType shootingType;
-    private float recoilTime;
     public Gun gun;
     public Muzzle muzzle;
-    private RaycastHit raycastHit;
     [SerializeField]
     private LayerMaskHolder mask;
+    private RaycastHit raycastHit;
+    private Ray ray;
+    private float recoilTime;
     private static readonly byte[] emptyArray = new byte[0];
 
     SimpleAvatar avatar;
@@ -40,62 +23,41 @@ public class ShootSystem : MonoBehaviour
         recoilTime = 0;
         raycastHit = new RaycastHit();
         avatar = GetComponent<SimpleAvatar>();
+        ray = new Ray();
     }
 
     void CallShoot()
     {
-        /*if (Selector == 0)
-        {
-            Shoot0();
-        }
-        else if (Selector == 1)
-        {
-            Shoot1();
-            PerformShoot();
-        }*/
-
         Shoot(true);
         SendShootToAll();
     }
 
     public void Shoot(bool activateCallbacks = false)
     {
-        //rotate muzzle transform
-        float r = gun.values.Range;
-        muzzle.transform.localRotation = Quaternion.Euler(UnityEngine.Random.Range(-r, r), 0, UnityEngine.Random.Range(-r, r));
-        //instanziate ray
-        Ray ray = new Ray(muzzle.transform.position, muzzle.transform.forward);
-
-        //method for start shooting
-        float distance = shootingType == ShootingType.Single ? gun.values.MaxDistance : gun.values.Speed * Time.deltaTime;
-
-        //if (Application.isEditor)
-        //  Debug.DrawRay(ray.origin, ray.direction * distance, Color.red, 0.5f);
-
-        //if it shot someone
-        if (Physics.Raycast(ray, out raycastHit, distance, mask))
+        if (activateCallbacks)
         {
-            //this method went call when 
-            if (activateCallbacks)
+            //instanziate ray
+            ray.origin = muzzle.transform.position;
+            ray.direction = muzzle.transform.forward;
+
+            //if it shot someone
+            if (Physics.Raycast(ray, out raycastHit, gun.values.MaxDistance, mask))
             {
                 GameNetworkObject obj = raycastHit.collider.gameObject.GetComponent<GameNetworkObject>();
                 if (obj != null)
                     SendHitMessage(obj.NetworkId, gun.values.Damage);
             }
         }
-        else if (shootingType == ShootingType.Consecutive) // else add the ray in a list
-        {
-            ShootsMgr.AddRay(new RayPlus(ray.origin + ray.direction * distance, ray.direction, distance, gun.values.Damage, gun.values.Speed, gun.values.MaxDistance, (ulong)avatar.UserInfo.SteamID, activateCallbacks));
-        }
-        //set rotation on identity
-        muzzle.transform.localRotation = Quaternion.identity;
 
         gun.Shoot();
     }
 
     void SendShootToAll()
     {
-        Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.PlayerShoot, Steamworks.EP2PSend.k_EP2PSendReliable, false);
+        if (Client.IsHost)
+            Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.PlayerShoot, Steamworks.EP2PSend.k_EP2PSendReliable, false);
+        else
+            Client.SendPacketToHost(emptyArray, 0, 0, PacketType.PlayerShootServer, Steamworks.EP2PSend.k_EP2PSendReliable);
     }
 
     void SendHitMessage(int id, float damage)
@@ -105,10 +67,12 @@ public class ShootSystem : MonoBehaviour
         ByteManipulator.Write(data, 4, damage);
         ByteManipulator.Write(data, 8, (ulong)avatar.UserInfo.SteamID);
 
-        Client.SendPacketToInGameUsers(data, 0, data.Length, PacketType.ShootHit, Steamworks.EP2PSend.k_EP2PSendReliable, true);
+        if (Client.IsHost)
+            Client.SendPacketToInGameUsers(data, 0, data.Length, PacketType.ShootHit, Steamworks.EP2PSend.k_EP2PSendReliable, true);
+        else
+            Client.SendPacketToHost(data, 0, data.Length, PacketType.ShootHitServer, Steamworks.EP2PSend.k_EP2PSendReliable);
 
         ArrayPool<byte>.Recycle(data);
-        //Debug.Log("hit");
     }
 
     void Update()
@@ -117,7 +81,7 @@ public class ShootSystem : MonoBehaviour
         recoilTime -= Time.deltaTime;
         switch (gun.values.GunSystem)
         {
-            //single shoot
+        //single shoot
             case 0:
                 if (Input.GetButtonDown("Fire1") && recoilTime <= 0)
                 {
@@ -125,7 +89,7 @@ public class ShootSystem : MonoBehaviour
                     recoilTime = gun.values.Rateo;
                 }
                 break;
-            //multi shoot
+        //multi shoot
             case 1:
                 if (Input.GetButton("Fire1") && recoilTime <= 0)
                 {
@@ -137,15 +101,4 @@ public class ShootSystem : MonoBehaviour
                 break;
         }
     }
-
-    //if you want change gun
-    //use this for set time to 0
-    /// <summary>
-    /// if you want change gun
-    /// use this for set time to 0
-    /// </summary>
-    //    public void SetTimeTo0()
-    //    {
-    //        recoilTime = 0;
-    //    }
 }

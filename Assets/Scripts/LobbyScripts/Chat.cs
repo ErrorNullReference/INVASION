@@ -36,6 +36,8 @@ public class Chat : MonoBehaviour
                 InputField.gameObject.SetActive(true);
                 InputField.Select();
                 InputField.ActivateInputField();
+                if (MenuEvents.OnMenuOpen != null)
+                    MenuEvents.OnMenuOpen.Invoke();
             }
         }
         else if (justClosed)
@@ -52,6 +54,8 @@ public class Chat : MonoBehaviour
         InputField.text = "";
         InputField.gameObject.SetActive(false);
         justClosed = true;
+        if (MenuEvents.OnMenuClose != null)
+            MenuEvents.OnMenuClose.Invoke();
     }
 
     void ReceiveChatMessage(byte[] data, uint length, CSteamID sender)

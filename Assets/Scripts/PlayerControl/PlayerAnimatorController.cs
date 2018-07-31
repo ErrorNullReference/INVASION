@@ -15,16 +15,24 @@ public class PlayerAnimatorController : MonoBehaviour
     Vector3 dir, oldPos, cameraDir, playerDirection;
     Camera camera;
     Animator animator;
+    bool active;
 
     void Start()
     {
         camera = Camera.main;
         animator = GetComponent<Animator>();
+        active = true;
+
+        MenuEvents.OnMenuOpen += Disable;
+        MenuEvents.OnMenuClose += Activate;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!active)
+            return;
+
         dir = Vector3.zero;
 
         if (UseInputs)
@@ -86,5 +94,21 @@ public class PlayerAnimatorController : MonoBehaviour
     public void Die(bool isDead)
     {
         animator.SetBool(death, isDead);
+    }
+
+    void Disable()
+    {
+        active = false;
+    }
+
+    void Activate()
+    {
+        active = true;
+    }
+
+    void OnDestroy()
+    {
+        MenuEvents.OnMenuOpen -= Disable;
+        MenuEvents.OnMenuClose -= Activate;
     }
 }

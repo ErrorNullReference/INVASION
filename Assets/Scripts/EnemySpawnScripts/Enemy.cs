@@ -22,6 +22,7 @@ public class Enemy : LivingBeing
     bool dead;
     Animator animator;
     Brain brain;
+    Collider collider;
 
     public Action OnDown, OnDeath;
 
@@ -41,6 +42,7 @@ public class Enemy : LivingBeing
         healthImage.enabled = false;
         animator = GetComponent<Animator>();
         brain = GetComponent<Brain>();
+        collider = GetComponent<Collider>();
     }
 
     private void Awake()
@@ -57,6 +59,7 @@ public class Enemy : LivingBeing
         life = EnemyStats.MaxHealth;
         dead = false;
         deadTimer = 0;
+        collider.enabled = true;
     }
 
     private void OnDisable()
@@ -121,5 +124,6 @@ public class Enemy : LivingBeing
             brain.ShutDown();
         if (OnDown != null)
             OnDown.Invoke();
+        collider.enabled = false;
     }
 }
