@@ -72,34 +72,7 @@ public class HostEnemySpawner : MonoBehaviour
             return;
         }
         spawnPos = NearestSpawnPointOutsideView;
-        //continuousCoroutineStarted = false;
-        //waitForSeconds = new WaitForSeconds(TimeForLittleSquadSpawn);
-        //coroutineOver = true;
     }
-
-    /*private IEnumerator SpawnEnemyContinuous()
-    {
-        while (true)
-        {
-            yield return waitForSeconds;
-            int length = Random.Range(MinLittleSquadSpawn, MaxLittleSquadSpawn);
-            for (int i = 0; i < length; i++)
-            {
-                InstantiateEnemy(EnemyType.Normal, NearestSpawnPointOutsideView);
-            }
-        }
-    }*/
-
-    /*private IEnumerator SpawnEnemyWave()
-    {
-        coroutineOver = false;
-        for (int i = 0; i < waveCount; i++)
-        {
-            yield return waitForFrame;
-            InstantiateEnemy(EnemyType.Normal, spawnPos);
-        }
-        coroutineOver = true;
-    }*/
 
     //sends to clients the command to instantiate an enemy in a given position, or it takes a random position from an array of randomic given positions if none is specified
     public void InstantiateEnemy(EnemyType type, Vector3 position)
@@ -119,7 +92,6 @@ public class HostEnemySpawner : MonoBehaviour
         idAndPos.Write(position.z);
 
         Client.SendPacketToInGameUsers(idAndPos.Data, 0, idAndPos.MaxCapacity, PacketType.EnemySpawn, Client.MyID, Steamworks.EP2PSend.k_EP2PSendReliable);
-        //Debug.Log("sent: " + Id);
     }
 
     //this won't be in this cass, is just for testing

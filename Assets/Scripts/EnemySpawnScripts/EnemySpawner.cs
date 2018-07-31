@@ -34,6 +34,7 @@ public class EnemySpawner : Factory<byte>
     {
         return (byte)obj.GetComponent<Enemy>().Type.Value;
     }
+
     //InstantiateEnemy will be called when command EnemySpawn is received from host
     private void InstantiateEnemy(byte[] data, uint length, CSteamID senderId)
     {

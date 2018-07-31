@@ -57,7 +57,7 @@ namespace SOPRO
 
             for (int i = 0; i < Elements.Count; i++)
             {
-                if (Elements[i].Avatar != null && Elements[i].Avatar.UserInfo.SteamID == id)
+                if (Elements[i] != null && Elements[i].Avatar != null && Elements[i].Avatar.UserInfo != null && Elements[i].Avatar.UserInfo.SteamID == id)
                 {
                     Elements.RemoveAt(i);
                     return;
