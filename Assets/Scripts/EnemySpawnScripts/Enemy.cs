@@ -42,7 +42,6 @@ public class Enemy : LivingBeing
         healthImage.enabled = false;
         animator = GetComponent<Animator>();
         brain = GetComponent<Brain>();
-        collider = GetComponent<Collider>();
     }
 
     private void Awake()
@@ -59,6 +58,8 @@ public class Enemy : LivingBeing
         life = EnemyStats.MaxHealth;
         dead = false;
         deadTimer = 0;
+        if (collider == null)
+            collider = GetComponent<Collider>();
         collider.enabled = true;
     }
 

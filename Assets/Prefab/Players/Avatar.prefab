@@ -911,7 +911,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1359835376740600}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -36.083195, y: 37.037834, z: 42.116325}
+  m_LocalPosition: {x: -6.5458517, y: -2.5597908, z: 4.9207973}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224135848765037470}
@@ -1454,7 +1454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2aec9008d5db564daa34aebf9642616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Stats: {fileID: 11400000, guid: 4459b8975c9995d4ba7b1ea216fdbd0f, type: 2}
+  Stats: {fileID: 11400000, guid: ca9dc7d021b95b8458834229083da282, type: 2}
   TotalPoints: 0
   Energy: 0
   Dead: 0
@@ -1507,7 +1507,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 645e2bcb3ff8f3d43ae5cf385d4ce797, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingType: 0
   gun: {fileID: 114329797879480352}
   muzzle: {fileID: 114886338899470942}
   mask: {fileID: 11400000, guid: b3cd3679c53bbaf468cf6a30caf76859, type: 2}
