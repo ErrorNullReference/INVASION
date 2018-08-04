@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SOPRO;
+
 public class Projectile : MonoBehaviour
 {
     public float Speed;
     private float time;
     public float Timer;
+    public ParticleSystem[] PS;
+    public Transform ChildRoot;
 
     private void OnEnable()
     {
@@ -20,7 +23,7 @@ public class Projectile : MonoBehaviour
         MoveForward();
         if (time <= 0)
         {
-            Destroy(this.gameObject);
+            Deactivate();
         }
     }
 
@@ -31,6 +34,17 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
+        Deactivate();  
+    }
+
+    void Deactivate()
+    {
+        for (int i = 0; i < PS.Length; i++)
+        {
+            ParticleSystem.MainModule m = PS[i].main;
+            m.loop = false;
+        }
+        ChildRoot.SetParent(null);
         Destroy(this.gameObject);
     }
 }

@@ -8,6 +8,7 @@ using SOPRO;
 public class PlayerController : MonoBehaviour
 {
     public ReferenceFloat WalkSpeed, RunSpeed;
+    public float MouseRotationOffset;
     Rigidbody body;
     Camera camera;
     RaycastHit hitInfo;
@@ -61,7 +62,7 @@ public class PlayerController : MonoBehaviour
     {
         body.angularVelocity = Vector3.zero;
 
-        if (camera != null)
+        /*if (camera != null)
         {
             if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hitInfo, 100))
             {
@@ -71,7 +72,23 @@ public class PlayerController : MonoBehaviour
             }
         }
         else
+            transform.rotation = Quaternion.identity;*/
+        
+        if (camera != null)
+        {
+            Vector2 positionOnScreen = camera.WorldToViewportPoint(transform.position);
+            Vector2 mouseOnScreen = (Vector2)camera.ScreenToViewportPoint(Input.mousePosition);
+            float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen) + MouseRotationOffset;
+            body.MoveRotation(Quaternion.Euler(0, -angle, 0));
+        }
+        else
             transform.rotation = Quaternion.identity;
+
+    }
+
+    float AngleBetweenTwoPoints(Vector3 a, Vector3 b)
+    {
+        return Mathf.Atan2(a.y - b.y, a.x - b.x) * Mathf.Rad2Deg;
     }
 
     Vector3 GetCameraDirectionPerAxes(Camera camera, float horizontal, float vertical)

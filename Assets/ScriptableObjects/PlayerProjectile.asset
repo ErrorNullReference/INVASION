@@ -11,5 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: -1173331668, guid: 7d6b284e18a06314ea7b65d1fe4236f6, type: 3}
   m_Name: PlayerProjectile
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 1584354942422022, guid: 3f48662b35782ea4f8e79fbd311ac9a1, type: 2}
-  PersistentPoolInScenes: 1
+  Prefab: {fileID: 1849131398180664, guid: 811552bcd149b384d9c251ce475c901f, type: 2}

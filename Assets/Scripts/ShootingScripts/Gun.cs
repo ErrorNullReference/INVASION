@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SOPRO;
+
 public class Gun : MonoBehaviour
 {
     public SOPool PrefabPool;
@@ -23,6 +24,6 @@ public class Gun : MonoBehaviour
     public void Shoot()
     {
         int nullObjsRemovedFromPool;
-        PrefabPool.Get(null, Muzzle.position, Muzzle.rotation,out nullObjsRemovedFromPool);
+        PrefabPool.Get(null, Muzzle.position, Muzzle.rotation, out nullObjsRemovedFromPool);
     }
 }
