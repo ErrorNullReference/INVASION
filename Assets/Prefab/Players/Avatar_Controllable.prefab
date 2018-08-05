@@ -245,6 +245,7 @@ GameObject:
   - component: {fileID: 4739188375861826}
   - component: {fileID: 198621452989551674}
   - component: {fileID: 199203936899115526}
+  - component: {fileID: 114119061546954224}
   m_Layer: 0
   m_Name: ShootParticleSystem
   m_TagString: Untagged
@@ -1159,7 +1160,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1248683764693932}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.8049324, y: -1.0185821, z: 5.790655}
+  m_LocalPosition: {x: -24.590826, y: 14.995794, z: 7.6354446}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224484695160501432}
@@ -1629,6 +1630,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 0
   m_FillOrigin: 0
+--- !u!114 &114119061546954224
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1277093353891422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f834da87d07e12b4cb80578a745979d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114129577360974160
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1676,7 +1688,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1248683764693932}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 664bb93b7daa9314189621778db1056a, type: 3}
   m_Name: 
@@ -2030,7 +2042,7 @@ ParticleSystem:
   serializedVersion: 5
   lengthInSec: 1
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 3
   looping: 0
   prewarm: 0
   playOnAwake: 0
@@ -2081,7 +2093,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 188437030
+  randomSeed: -1443939016
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4620,7 +4632,7 @@ ParticleSystem:
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:

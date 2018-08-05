@@ -63,9 +63,9 @@ public class SimpleAvatar : MonoBehaviour
         transform.rotation = Quaternion.Slerp(startRot, endRot, frac);
     }
 
-    public void Shoot(bool activateCallbacks = false)
+    public void Shoot()
     {
-        ShootSystem.Shoot(activateCallbacks);
+        ShootSystem.Shoot();
         AnimatorController.Shoot();
     }
 }

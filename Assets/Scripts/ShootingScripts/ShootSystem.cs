@@ -28,13 +28,13 @@ public class ShootSystem : MonoBehaviour
 
     void CallShoot()
     {
-        Shoot(true);
+        Shoot();
         SendShootToAll();
     }
 
-    public void Shoot(bool activateCallbacks = false)
+    public void Shoot()
     {
-        if (activateCallbacks)
+        /*if (activateCallbacks)
         {
             //instanziate ray
             ray.origin = muzzle.transform.position;
@@ -47,7 +47,7 @@ public class ShootSystem : MonoBehaviour
                 if (obj != null)
                     SendHitMessage(obj.NetworkId, gun.values.Damage);
             }
-        }
+        }*/
 
         gun.Shoot();
     }
@@ -60,7 +60,7 @@ public class ShootSystem : MonoBehaviour
             Client.SendPacketToHost(emptyArray, 0, 0, PacketType.PlayerShootServer, Steamworks.EP2PSend.k_EP2PSendReliable);
     }
 
-    void SendHitMessage(int id, float damage)
+    public void SendHitMessage(int id, float damage)
     {
         byte[] data = ArrayPool<byte>.Get(16);
         ByteManipulator.Write(data, 0, id);
@@ -96,8 +96,6 @@ public class ShootSystem : MonoBehaviour
                     CallShoot();
                     recoilTime = gun.values.Rateo;
                 }
-                break;
-            default:
                 break;
         }
     }

@@ -28,14 +28,14 @@ public class ShootsMgr : MonoBehaviour
     void ReceiveShoot(byte[] data, uint lenght, CSteamID sender)
     {
         if (sender != Client.MyID)
-            PlayersMgr.Players[sender].Shoot(false);
+            PlayersMgr.Players[sender].Shoot();
     }
 
     void ReceiveShootServer(byte[] data, uint lenght, CSteamID sender)
     {
         Client.SendPacketToInGameUsers(data, 0, (int)lenght, PacketType.PlayerShoot, sender, EP2PSend.k_EP2PSendReliable, false);
         if (sender != Client.MyID)
-            PlayersMgr.Players[sender].Shoot(false);
+            PlayersMgr.Players[sender].Shoot();
     }
 
     void OnDestroy()
