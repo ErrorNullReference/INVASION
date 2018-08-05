@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: -1173331668, guid: 7d6b284e18a06314ea7b65d1fe4236f6, type: 3}
   m_Name: PlayerProjectile
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 1849131398180664, guid: 811552bcd149b384d9c251ce475c901f, type: 2}
+  Prefab: {fileID: 1312265339240094, guid: 960a194a68b647b4eb13876f4fc1bbb7, type: 2}

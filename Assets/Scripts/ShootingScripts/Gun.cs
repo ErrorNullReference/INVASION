@@ -5,6 +5,7 @@ using SOPRO;
 
 public class Gun : MonoBehaviour
 {
+    public ParticleSystem PS;
     public SOPool PrefabPool;
 
     public GunScriptable values;
@@ -23,7 +24,14 @@ public class Gun : MonoBehaviour
 
     public void Shoot()
     {
-        int nullObjsRemovedFromPool;
-        PrefabPool.Get(null, Muzzle.position, Muzzle.rotation, out nullObjsRemovedFromPool);
+        if (PS != null)
+        {
+            PS.Play();
+        }
+        else
+        {
+            int nullObjsRemovedFromPool;
+            PrefabPool.Get(null, Muzzle.position, Muzzle.rotation, out nullObjsRemovedFromPool);
+        }
     }
 }
