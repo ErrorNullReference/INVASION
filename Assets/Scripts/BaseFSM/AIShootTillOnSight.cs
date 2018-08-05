@@ -22,6 +22,7 @@ public class AIShootTillOnSight : AIBehaviour
     private Player targetToShot;
 
     public EnemyShootSync shootSync;
+    Gun gun;
 
     [SerializeField]
     private AIBehaviour targetLost;
@@ -36,6 +37,8 @@ public class AIShootTillOnSight : AIBehaviour
         {
             targetToShot = null;
         };
+
+        gun = GetComponentInChildren<Gun>();
     }
 
     private void Update()
@@ -78,6 +81,9 @@ public class AIShootTillOnSight : AIBehaviour
         ResetShootCooldown();
         if (shootSync != null)
             shootSync.SendShotCall();
+
+        if (gun != null)
+            gun.Shoot();
     }
 
     public override void OnStateEnter()

@@ -5,7 +5,7 @@ using SOPRO;
 
 public class Gun : MonoBehaviour
 {
-    public ParticleSystem PS;
+    public ParticleSystem[] PS;
     public SOPool PrefabPool;
 
     public GunScriptable values;
@@ -26,7 +26,8 @@ public class Gun : MonoBehaviour
     {
         if (PS != null)
         {
-            PS.Play();
+            for (int i = 0; i < PS.Length; i++)
+                PS[i].Play();
         }
         else
         {

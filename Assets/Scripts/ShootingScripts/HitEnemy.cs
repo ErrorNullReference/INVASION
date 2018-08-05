@@ -13,7 +13,6 @@ public class HitEnemy : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-        Debug.Log("hit");
         if (other.GetComponent<Enemy>() != null)
             SS.SendHitMessage(other.GetComponent<GameNetworkObject>().NetworkId, SS.gun.values.Damage);
     }
