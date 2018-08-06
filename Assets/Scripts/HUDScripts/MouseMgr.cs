@@ -4,23 +4,27 @@ using UnityEngine;
 
 public class MouseMgr : MonoBehaviour
 {
+    public Texture2D MouseTexture;
+
     // Use this for initialization
     void Start()
     {
-        MenuEvents.OnMenuOpen += ShowMouse;
-        MenuEvents.OnMenuClose += HideMouse;
+        //MenuEvents.OnMenuOpen += ShowMouse;
+        //MenuEvents.OnMenuClose += HideMouse;
 
-        HideMouse();
+        //HideMouse();
 
         Cursor.lockState = CursorLockMode.Confined;
+
+        Cursor.SetCursor(MouseTexture, new Vector2(MouseTexture.width / 2f, MouseTexture.height / 2f), CursorMode.Auto);
     }
 
     void OnDestroy()
     {
         ShowMouse();
 
-        MenuEvents.OnMenuOpen -= ShowMouse;
-        MenuEvents.OnMenuClose -= HideMouse;
+        //MenuEvents.OnMenuOpen -= ShowMouse;
+        //MenuEvents.OnMenuClose -= HideMouse;
     }
 
     void ShowMouse()
