@@ -15,11 +15,15 @@ public class Gun : MonoBehaviour
     public float AmmoInMagazine;
     public float MaxAmmoStored;
 
+    SoundEmitter emitter;
+
     public void Awake()
     {
         AmmoReady = values.CurrentAmmoInMag;
         AmmoInMagazine = values.MagCapacity;
         MaxAmmoStored = values.ComplessiveAmmoInMags;
+
+        emitter = GetComponent<SoundEmitter>();
     }
 
     public void Shoot()
@@ -34,5 +38,8 @@ public class Gun : MonoBehaviour
             int nullObjsRemovedFromPool;
             PrefabPool.Get(null, Muzzle.position, Muzzle.rotation, out nullObjsRemovedFromPool);
         }
+
+        if (emitter)
+            emitter.EmitSound();
     }
 }
