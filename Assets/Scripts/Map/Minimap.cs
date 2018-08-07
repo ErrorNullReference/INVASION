@@ -19,7 +19,7 @@ public class Minimap : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        camera.SetReplacementShader(unlitShader, "");
+        //camera.SetReplacementShader(unlitShader, "");
 
         offset = camera.transform.position;
 
@@ -51,6 +51,9 @@ public class Minimap : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Player == null)
+            return;
+
         camera.transform.position = Player.position + offset;
         if (RotateCamera)
             camera.transform.rotation = Quaternion.Slerp(camera.transform.rotation, Quaternion.Euler(90, Player.eulerAngles.y, 0), Time.deltaTime * LerpSpeed);
