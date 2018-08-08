@@ -790,11 +790,6 @@ public class Client : MonoBehaviour
         Client.SendPacketToInGameUsers(instance.Packet.Data, 0, instance.Packet.CurrentLength, command, sendType, sendToSender);
     }
 
-    void OnGUI()
-    {
-        GUILayout.Label("Latency " + Latency.ToString());
-    }
-
     User GetUser(CSteamID userID)
     {
         if (Users == null)

@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     public ReferenceFloat WalkSpeed, RunSpeed;
     public float MouseRotationOffset;
+    public LayerMask Mask;
     Rigidbody body;
     Camera camera;
     RaycastHit hitInfo;
@@ -62,9 +63,9 @@ public class PlayerController : MonoBehaviour
     {
         body.angularVelocity = Vector3.zero;
 
-        /*if (camera != null)
+        if (camera != null)
         {
-            if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hitInfo, 100))
+            if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hitInfo, 100, Mask.value))
             {
                 Vector3 dir = (hitInfo.point - transform.position).normalized;
                 dir.y = 0;
@@ -72,9 +73,9 @@ public class PlayerController : MonoBehaviour
             }
         }
         else
-            transform.rotation = Quaternion.identity;*/
+            transform.rotation = Quaternion.identity;
         
-        if (camera != null)
+        /*if (camera != null)
         {
             Vector2 positionOnScreen = camera.WorldToViewportPoint(transform.position);
             Vector2 mouseOnScreen = (Vector2)camera.ScreenToViewportPoint(Input.mousePosition);
@@ -82,7 +83,7 @@ public class PlayerController : MonoBehaviour
             body.MoveRotation(Quaternion.Euler(0, -angle, 0));
         }
         else
-            transform.rotation = Quaternion.identity;
+            transform.rotation = Quaternion.identity;*/
 
     }
 
