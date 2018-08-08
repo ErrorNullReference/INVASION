@@ -48,8 +48,9 @@ public class AvatarsMgr : MonoBehaviour
 
     void OnValidate()
     {
-        for (int i = 0; i < Avatars.Length; i++)
-            Avatars[i].transform.position = new Vector3(distance * i + (screenDimensions.x - distance * 3) / 2f, screenDimensions.y * posY, 0);
+        if (Avatars != null)
+            for (int i = 0; i < Avatars.Length; i++)
+                Avatars[i].transform.position = new Vector3(distance * i + (screenDimensions.x - distance * 3) / 2f, screenDimensions.y * posY, 0);
     }
 
     void OnEnable()
