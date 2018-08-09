@@ -20,6 +20,7 @@ public class AvatarsMgr : MonoBehaviour
     public SelectableAvatar[] Avatars;
     float time, timer;
     List<int> notActivatedAvatars;
+    Vector2 screenDimensions;
 
     void Start()
     {
@@ -41,6 +42,20 @@ public class AvatarsMgr : MonoBehaviour
 
         timer = 1;
         notActivatedAvatars = new List<int>(Avatars.Length);
+
+        screenDimensions = new Vector2(Screen.width, Screen.height);
+    }
+
+    void OnValidate()
+    {
+        if (Avatars != null)
+        {
+            for (int i = 0; i < Avatars.Length; i++)
+            {
+                if (Avatars[i] != null)
+                    Avatars[i].transform.position = new Vector3(distance * i + (screenDimensions.x - distance * 3) / 2f, screenDimensions.y * posY, 0);
+            }
+        }
     }
 
     void OnEnable()

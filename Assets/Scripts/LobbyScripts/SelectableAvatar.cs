@@ -9,6 +9,8 @@ public class SelectableAvatar : MonoBehaviour
     public int avatarID;
     public Button Button, AddButton;
     public RawImage avatarImage, modelImage;
+    public Text Name;
+    public string DefaultName;
     [HideInInspector]
     public User Owner;
     [SerializeField]
@@ -57,6 +59,7 @@ public class SelectableAvatar : MonoBehaviour
     {
         Owner = owner;
         SetTex(Owner.SteamAvatarImage);
+        Name.text = owner.SteamUsername;
 
         AddButton.gameObject.SetActive(false);
     }
@@ -72,6 +75,7 @@ public class SelectableAvatar : MonoBehaviour
     public void Reset()
     {
         Owner = null;
+        Name.text = DefaultName;
         avatarImage.texture = DefaultTexture;
         Button.interactable = true;
         AddButton.gameObject.SetActive(true);
