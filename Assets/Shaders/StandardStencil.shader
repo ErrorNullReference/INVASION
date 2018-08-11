@@ -53,7 +53,7 @@ Shader "StandardStencil"
 
     SubShader
     {
-        Tags { "RenderType"="Opaque" "PerformanceChecks"="False" }
+        Tags { "RenderType"="Transparent" "PerformanceChecks"="False" "Queue"="Transparent" }
         LOD 300
 
         // ------------------------------------------------------------------
@@ -248,7 +248,7 @@ Shader "StandardStencil"
 
     SubShader
     {
-        Tags { "RenderType"="Opaque" "PerformanceChecks"="False" }
+        Tags { "RenderType"="Transparent" "PerformanceChecks"="False" "Geometry"="Transparent" }
         LOD 150
 
         // ------------------------------------------------------------------

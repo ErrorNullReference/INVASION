@@ -8,6 +8,7 @@ public class DisintegrateEnemyOnDown : MonoBehaviour
     public string PassName;
     public ParticleSystem PS;
     public Shader Shader;
+    public float DurationMult;
     Enemy enemy;
     bool init, dead;
     List<Material> mInstances;
@@ -61,22 +62,18 @@ public class DisintegrateEnemyOnDown : MonoBehaviour
 
     void Reset()
     {
-        for (int i = 0; i < mInstances.Count; i++)
-            mInstances[i].SetInt("_Active", 0);
-        Replace(null);
+        // Replace(null);
         dead = false;
+        for (int i = 0; i < mInstances.Count; i++)
+            mInstances[i].SetFloat("_T", 0); //2f
         t = 0;
-        index = 1;
     }
 
     void ActivateDisintegration()
     {
-        duration = ((EnemyStats)enemy.Stats).DeathTime;
+        duration = ((EnemyStats)enemy.Stats).DeathTime * DurationMult;
         for (int i = 0; i < mInstances.Count; i++)
-        {
-            mInstances[i].SetInt("_Active", 1);
-            mInstances[i].SetFloat("_Duration", duration / 2f);
-        }
+            mInstances[i].SetFloat("_Duration", duration);
         dead = true;
         t = 0;
     }
@@ -107,15 +104,15 @@ public class DisintegrateEnemyOnDown : MonoBehaviour
         if (!dead)
             return;
         
-        t += Time.deltaTime * index;
+        t += Time.deltaTime;
         for (int i = 0; i < mInstances.Count; i++)
             mInstances[i].SetFloat("_T", t);
 
-        if (t >= duration / 2f && index == 1)
+        /*if (t >= duration / 2f && index == 1)
         {
             MidDisintegration();
             t = duration / 2f;
-        }
+        }*/
     }
 
     void OnDestroy()
