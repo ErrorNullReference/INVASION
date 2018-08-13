@@ -1,6 +1,6 @@
 // Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
 
-Shader "StandardCullOff (Specular setup)"
+Shader "StandardStencil (Specular setup)"
 {
     Properties
     {
@@ -52,7 +52,7 @@ Shader "StandardCullOff (Specular setup)"
 
     SubShader
     {
-        Tags { "RenderType"="Opaque" "PerformanceChecks"="False" }
+        Tags { "RenderType"="Transparent" "PerformanceChecks"="False" "Queue"="Transparent"}
         LOD 300
 
         // ------------------------------------------------------------------
@@ -246,7 +246,7 @@ Shader "StandardCullOff (Specular setup)"
 
     SubShader
     {
-        Tags { "RenderType"="Opaque" "PerformanceChecks"="False" }
+        Tags { "RenderType"="Transparent" "PerformanceChecks"="False" "Geometry"="Transparent" }
         LOD 150
         // ------------------------------------------------------------------
         //  Base forward pass (directional light, emission, lightmaps, ...)

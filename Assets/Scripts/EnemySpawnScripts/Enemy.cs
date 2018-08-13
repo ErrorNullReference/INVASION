@@ -34,6 +34,18 @@ public class Enemy : LivingBeing
         }
     }
 
+    public bool CallDown;
+
+    void OnValidate()
+    {
+        if (CallDown)
+        {
+            if (OnDown != null)
+                OnDown.Invoke();
+            CallDown = false;
+        }
+    }
+
     private void Start()
     {
         if (hudManager == null)

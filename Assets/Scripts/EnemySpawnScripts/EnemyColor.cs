@@ -27,7 +27,7 @@ public class EnemyColor : MonoBehaviour
             {
                 int t = (int)enemy.EnemyStats.Type;
                 if (t < Colors.Length)
-                    Mesh.material.color = Colors[t];
+                    Mesh.materials[2].color = Colors[t];
             }
             Updated = true;
         }
