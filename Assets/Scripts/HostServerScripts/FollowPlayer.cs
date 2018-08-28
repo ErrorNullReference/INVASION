@@ -23,7 +23,7 @@ public class FollowPlayer : MonoBehaviour
             for (int i = 0; i < Players.Elements.Count; i++)
             {
                 Player p = Players[i];
-                if (!p.Dead && p.Avatar.UserInfo.SteamID == Client.MyID)
+                if (!p.Dead && p.Avatar.UserInfo != null && p.Avatar.UserInfo.SteamID == Client.MyID)
                 {
                     CurrentID = Client.MyID;
                     break;
@@ -56,7 +56,7 @@ public class FollowPlayer : MonoBehaviour
 
         for (int i = 0; i < Players.Elements.Count; i++)
         {
-            if (Players.Elements[i].Avatar.UserInfo.SteamID == CurrentID)
+            if (Players.Elements[i].Avatar.UserInfo != null && Players.Elements[i].Avatar.UserInfo.SteamID == CurrentID)
                 return i;
         }
         return -1;

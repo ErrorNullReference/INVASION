@@ -23,11 +23,17 @@ public class User
     {
         AvatarID = -1;
         SteamID = id;
-        SteamUsername = SteamFriends.GetFriendPersonaName(id);
-        if (SteamUsername == "" || SteamUsername == "[unknown]")
-            LoadName();
+
+        if (!Client.instance.DebugOverride)
+        {
+            SteamUsername = SteamFriends.GetFriendPersonaName(id);
+            if (SteamUsername == "" || SteamUsername == "[unknown]")
+                LoadName();
+            else
+                DownloadAvatar(SteamID);
+        }
         else
-            DownloadAvatar(SteamID);
+            SteamUsername = "Debug";
 
         this.disconnectionTime = disconnectionTime;
         timer = disconnectionTime;

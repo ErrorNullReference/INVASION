@@ -24,6 +24,7 @@ public class PlayersMgr : MonoBehaviour
         #if UNITY_EDITOR
         Debug.Log("Users count when init playerManager" + Client.Users.Count + ", using server list : " + (Client.Lobby.LobbyID.m_SteamID == 0));
         #endif
+
         for (int i = 0; i < Client.Users.Count; i++)
         {
             SimpleAvatar a;

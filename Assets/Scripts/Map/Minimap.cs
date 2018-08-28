@@ -19,13 +19,11 @@ public class Minimap : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //camera.SetReplacementShader(unlitShader, "");
-
         offset = camera.transform.position;
 
         for (int i = 0; i < Players.Elements.Count; i++)
         {
-            if (Players[i].Avatar.UserInfo.SteamID == Client.MyID)
+            if (Players[i].Avatar.UserInfo != null && Players[i].Avatar.UserInfo.SteamID == Client.MyID)
             {
                 Player = Players[i].transform;
                 break;

@@ -34,7 +34,7 @@ public abstract class HUD : MonoBehaviour
         {
             for (int i = 0; i < DataContainer.Elements.Count; i++)
             {
-                if (DataContainer.Elements[i].Avatar.UserInfo.SteamID == info.ID)
+                if (DataContainer.Elements[i].Avatar.UserInfo != null && DataContainer.Elements[i].Avatar.UserInfo.SteamID == info.ID)
                     Player = DataContainer.Elements[i];
             }
         }

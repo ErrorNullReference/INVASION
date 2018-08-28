@@ -89,11 +89,16 @@ public class Client : MonoBehaviour
     {
         get
         {
-            if (instance.lobby.LobbyID != (CSteamID)0)
+            if (instance.DebugOverride)
                 return instance.lobby.Users;
-            else if (Server.Host != (CSteamID)0)
-                return Server.Users;
-            return null;
+            else
+            {
+                if (instance.lobby.LobbyID != (CSteamID)0)
+                    return instance.lobby.Users;
+                else if (Server.Host != (CSteamID)0)
+                    return Server.Users;
+                return null;
+            }
         }
     }
 
@@ -118,6 +123,8 @@ public class Client : MonoBehaviour
     float latencyTimer;
     WaitForSeconds waitForSeconds, waitForSecondsAlive;
 
+    public bool DebugOverride;
+
     // Use this for initialization
     void Start()
     {
@@ -129,8 +136,8 @@ public class Client : MonoBehaviour
             return;
         }
 
-
-        SteamCallbackReceiver.Init();
+        if (!DebugOverride)
+            SteamCallbackReceiver.Init();
 
         Lobby = lobby;
         MaxNumOfPlayers = NumOfPlayers;
@@ -141,7 +148,8 @@ public class Client : MonoBehaviour
         SteamCallbackReceiver.AcceptP2PEvent += AcceptP2P;
         SteamCallbackReceiver.P2PFailEvent += P2PStatus;
 
-        MyID = SteamUser.GetSteamID();
+        if (!DebugOverride)
+            MyID = SteamUser.GetSteamID();
 
         Packet = new BytePacket(4096);
 
@@ -256,9 +264,12 @@ public class Client : MonoBehaviour
 
     void Update()
     {
-        uint dataLenght;
-        while (SteamNetworking.IsP2PPacketAvailable(out dataLenght))
-            Receive(dataLenght);
+        if (!DebugOverride)
+        {
+            uint dataLenght;
+            while (SteamNetworking.IsP2PPacketAvailable(out dataLenght))
+                Receive(dataLenght);
+        }
 
         UpdateUsersTimers();
 
@@ -332,6 +343,25 @@ public class Client : MonoBehaviour
 
         SendPacketToLobby(emptyArray, 0, 0, PacketType.Test, EP2PSend.k_EP2PSendReliable, false);
 
+
+        if (OnLobbyInitializationEvent)
+            OnLobbyInitializationEvent.Raise();
+    }
+
+    public void DebugInit()
+    {
+        if (!instance.DebugOverride)
+            return;
+
+        lobby.LobbyID = (CSteamID)0;
+        if (Users == null)
+            lobby.Users = new List<User>();
+        else
+            Users.Clear();
+
+        lobby.Users.Add(new User((CSteamID)0));
+
+        SendPacketToLobby(emptyArray, 0, 0, PacketType.Test, EP2PSend.k_EP2PSendReliable, false);
 
         if (OnLobbyInitializationEvent)
             OnLobbyInitializationEvent.Raise();
@@ -502,10 +532,15 @@ public class Client : MonoBehaviour
 
     void SendToHost(byte[] data, int startIndex, int length, PacketType command, CSteamID sender, EP2PSend sendType)
     {
-        if (lobby.Owner != (CSteamID)0)
+        if (DebugOverride)
             Send(data, startIndex, length, command, sender, lobby.Owner, sendType);
-        else if (Server.Host != (CSteamID)0)
-            Send(data, startIndex, length, command, sender, Server.Host, sendType);
+        else
+        {
+            if (lobby.Owner != (CSteamID)0)
+                Send(data, startIndex, length, command, sender, lobby.Owner, sendType);
+            else if (Server.Host != (CSteamID)0)
+                Send(data, startIndex, length, command, sender, Server.Host, sendType);
+        }
     }
 
     /// <summary>
@@ -639,6 +674,9 @@ public class Client : MonoBehaviour
     /// </summary>
     public static void SendTransformToHost(Transform transform, EP2PSend sendType)
     {
+        if (instance == null)
+            return;
+        
         instance.WriteTransformOnPacketData(transform, true);
 
         Client.SendPacketToHost(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.PlayerDataServer, sendType);
@@ -650,6 +688,9 @@ public class Client : MonoBehaviour
     /// /// <param name="data">buffer to include in the final packet in addition to the transform.</param>
     public static void SendTransformToHost(byte[] data, Transform transform, EP2PSend sendType)
     {
+        if (instance == null)
+            return;
+
         instance.Packet.CurrentSeek = 0;
         instance.Packet.CurrentLength = 0;
 
@@ -665,6 +706,9 @@ public class Client : MonoBehaviour
     /// </summary>
     public static void SendTransformToHost(Transform transform, PacketType command, EP2PSend sendType)
     {
+        if (instance == null)
+            return;
+
         instance.WriteTransformOnPacketData(transform, true);
 
         Client.SendPacketToHost(instance.Packet.Data, 0, instance.Packet.CurrentLength, command, sendType);
@@ -676,6 +720,9 @@ public class Client : MonoBehaviour
     /// /// <param name="data">buffer to include in the final packet in addition to the transform.</param>
     public static void SendTransformToHost(byte[] data, Transform transform, PacketType command, EP2PSend sendType)
     {
+        if (instance == null)
+            return;
+
         instance.Packet.CurrentSeek = 0;
         instance.Packet.CurrentLength = 0;
 
@@ -691,6 +738,9 @@ public class Client : MonoBehaviour
     /// </summary>
     public static void SendTransformToLobby(Transform transform, EP2PSend sendType, bool sendToSender = true)
     {
+        if (instance == null)
+            return;
+
         instance.WriteTransformOnPacketData(transform, true);
 
         Client.SendPacketToLobby(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.PlayerDataServer, sendType, sendToSender);
@@ -702,6 +752,9 @@ public class Client : MonoBehaviour
     /// /// <param name="data">buffer to include in the final packet in addition to the transform. Data will be written before the transform.</param>
     public static void SendTransformToLobby(byte[] data, Transform transform, EP2PSend sendType, bool sendToSender = true)
     {
+        if (instance == null)
+            return;
+
         instance.Packet.CurrentSeek = 0;
         instance.Packet.CurrentLength = 0;
 
@@ -728,6 +781,9 @@ public class Client : MonoBehaviour
     /// /// <param name="data">buffer to include in the final packet in addition to the transform. Data will be written before the transform.</param>
     public static void SendTransformToLobby(byte[] data, Transform transform, PacketType command, EP2PSend sendType, bool sendToSender = true)
     {
+        if (instance == null)
+            return;
+
         instance.Packet.CurrentSeek = 0;
         instance.Packet.CurrentLength = 0;
 
@@ -743,6 +799,9 @@ public class Client : MonoBehaviour
     /// </summary>
     public static void SendTransformToInGameUsers(Transform transform, EP2PSend sendType, bool sendToSender = true)
     {
+        if (instance == null)
+            return;
+
         instance.WriteTransformOnPacketData(transform, true);
 
         Client.SendPacketToInGameUsers(instance.Packet.Data, 0, instance.Packet.CurrentLength, PacketType.PlayerDataServer, sendType, sendToSender);
@@ -754,6 +813,9 @@ public class Client : MonoBehaviour
     /// /// <param name="data">buffer to include in the final packet in addition to the transform. Data will be written before the transform.</param>
     public static void SendTransformToInGameUsers(byte[] data, Transform transform, EP2PSend sendType, bool sendToSender = true)
     {
+        if (instance == null)
+            return;
+
         instance.Packet.CurrentSeek = 0;
         instance.Packet.CurrentLength = 0;
 
@@ -769,6 +831,9 @@ public class Client : MonoBehaviour
     /// </summary>
     public static void SendTransformToInGameUsers(Transform transform, PacketType command, EP2PSend sendType, bool sendToSender = true)
     {
+        if (instance == null)
+            return;
+
         instance.WriteTransformOnPacketData(transform, true);
 
         Client.SendPacketToInGameUsers(instance.Packet.Data, 0, instance.Packet.CurrentLength, command, sendType, sendToSender);
@@ -780,6 +845,9 @@ public class Client : MonoBehaviour
     /// /// <param name="data">buffer to include in the final packet in addition to the transform. Data will be written before the transform.</param>
     public static void SendTransformToInGameUsers(byte[] data, Transform transform, PacketType command, EP2PSend sendType, bool sendToSender = true)
     {
+        if (instance == null)
+            return;
+
         instance.Packet.CurrentSeek = 0;
         instance.Packet.CurrentLength = 0;
 
