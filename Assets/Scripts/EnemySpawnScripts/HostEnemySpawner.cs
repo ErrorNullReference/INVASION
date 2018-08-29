@@ -7,6 +7,7 @@ using SOPRO;
 
 public class HostEnemySpawner : MonoBehaviour
 {
+    public EnemySpawner EnemySpawner;
     public SOVariableVector3 NearestSpawnPointOutsideView;
     public SOListVector3Container AllSpawnPointsOutsideView;
     public ReferenceInt MaxEnemyCount;
@@ -60,7 +61,12 @@ public class HostEnemySpawner : MonoBehaviour
         if (EnemySpawnGraph.GetSpawn(out NumEnemiesToSpawn, Time.deltaTime))
         {
             for (int i = 0; i < NumEnemiesToSpawn; i++)
-                InstantiateEnemy(EnemySpawnGraph.GetEnemyType(), AllSpawnPointsOutsideView.Elements[Random.Range(0, AllSpawnPointsOutsideView.Elements.Count)]);
+            {
+                if (EnemySpawner != null)
+                    InstantiateEnemy(Random.Range(0, EnemySpawner.EnemyInitializers.Length), AllSpawnPointsOutsideView.Elements[Random.Range(0, AllSpawnPointsOutsideView.Elements.Count)]);
+                else
+                    InstantiateEnemy(EnemySpawnGraph.GetEnemyType(), AllSpawnPointsOutsideView.Elements[Random.Range(0, AllSpawnPointsOutsideView.Elements.Count)]);
+            }
         }
     }
 
@@ -76,6 +82,25 @@ public class HostEnemySpawner : MonoBehaviour
 
     //sends to clients the command to instantiate an enemy in a given position, or it takes a random position from an array of randomic given positions if none is specified
     public void InstantiateEnemy(EnemyType type, Vector3 position)
+    {
+        if (CurrentEnemyCount >= MaxEnemyCount)
+            return;
+
+        int Id = IdDispenser.GetNewNetId();
+
+        idAndPos.CurrentLength = 0;
+        idAndPos.CurrentSeek = 0;
+
+        idAndPos.Write((byte)type);
+        idAndPos.Write(Id);
+        idAndPos.Write(position.x);
+        idAndPos.Write(position.y);
+        idAndPos.Write(position.z);
+
+        Client.SendPacketToInGameUsers(idAndPos.Data, 0, idAndPos.MaxCapacity, PacketType.EnemySpawn, Client.MyID, Steamworks.EP2PSend.k_EP2PSendReliable);
+    }
+
+    public void InstantiateEnemy(int type, Vector3 position)
     {
         if (CurrentEnemyCount >= MaxEnemyCount)
             return;

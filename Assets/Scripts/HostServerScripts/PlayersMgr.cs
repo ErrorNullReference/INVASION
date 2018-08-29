@@ -6,7 +6,8 @@ using SOPRO;
 
 public class PlayersMgr : MonoBehaviour
 {
-    public SimpleAvatar AvatarTemplate, ControllableAvatarTemplate;
+    public SimpleAvatar[] ControllableAvatars;
+    public SimpleAvatar[] Avatars;
     public Transform SpawnPosition;
     public Material[] Materials;
 
@@ -29,9 +30,9 @@ public class PlayersMgr : MonoBehaviour
         {
             SimpleAvatar a;
             if (Client.Users[i].SteamID == Client.MyID)
-                a = Instantiate(ControllableAvatarTemplate);
+                a = Instantiate(ControllableAvatars[Client.Users[i].AvatarID]);
             else
-                a = Instantiate(AvatarTemplate);
+                a = Instantiate(Avatars[Client.Users[i].AvatarID]);
 
             a.UserInfo = Client.Users[i];
             a.transform.position = SpawnPosition.position;
@@ -45,6 +46,7 @@ public class PlayersMgr : MonoBehaviour
 
         Client.OnUserDisconnected += PlayerDisconnected;
     }
+
     // Use this for initialization
     void Start()
     {

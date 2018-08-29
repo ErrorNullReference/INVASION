@@ -11,9 +11,18 @@ public class AIAggroPlayers : AIVision
     [SerializeField]
     private AIBehaviour aggroActivated;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        if (aggroActivated == null)
+            aggroActivated = GetComponent<AIGoToTargetUntilOnSight>();
+    }
+
     private void Update()
     {
-        this.currentTarget = possibleTargets.Elements.Count == 0 ? null : possibleTargets[Random.Range(0, possibleTargets.Elements.Count)].transform;
+        Player p = possibleTargets.Elements.Count == 0 ? null : possibleTargets[Random.Range(0, possibleTargets.Elements.Count)];
+        if (p != null)
+            this.currentTarget = p.transform;
         if (currentTarget)
             owner.SwitchState(aggroActivated);
     }

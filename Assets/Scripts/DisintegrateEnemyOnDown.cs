@@ -9,15 +9,16 @@ public class DisintegrateEnemyOnDown : MonoBehaviour
     public ParticleSystem PS;
     public Shader Shader;
     public float DurationMult;
+    public float DisableShadowFrac = 0.7f;
     Enemy enemy;
-    bool init, dead;
+    bool dead, shadowsDisabled;
     List<Material> mInstances;
     Dictionary<Material, Shader> mInstancesNot;
     Action InitLate;
     float t, duration;
-    int index;
+    DisableShadows[] DisShadows;
 
-    void Init()
+    public void Init()
     {
         enemy = GetComponent<Enemy>();
         if (enemy == null)
@@ -42,30 +43,18 @@ public class DisintegrateEnemyOnDown : MonoBehaviour
         }
 
         enemy.OnDown += ActivateDisintegration;
-        //enemy.OnDeath += ActivatePS;
         
         Reset();
 
-        init = true;
-    }
-
-    void OnEnable()
-    {
-        if (!init)
-        {
-            InitLate = Init;
-            return;
-        }
-
-        Reset();
+        DisShadows = GetComponentsInChildren<DisableShadows>();
     }
 
     void Reset()
     {
-        // Replace(null);
+        shadowsDisabled = false;
         dead = false;
         for (int i = 0; i < mInstances.Count; i++)
-            mInstances[i].SetFloat("_T", 0); //2f
+            mInstances[i].SetFloat("_T", 0);
         t = 0;
     }
 
@@ -78,18 +67,11 @@ public class DisintegrateEnemyOnDown : MonoBehaviour
         t = 0;
     }
 
-    void MidDisintegration()
+    void DisableShadows()
     {
-        index = -1;
-        Replace(Shader);
-    }
-
-    void ActivatePS()
-    {
-        ParticleSystem ps = Instantiate(PS);
-        ps.transform.position = transform.position;
-        ps.transform.rotation = Quaternion.Euler(90, 0, 0);
-        ps.Play();
+        shadowsDisabled = true;
+        for (int i = 0; i < DisShadows.Length; i++)
+            DisShadows[i].Disable();
     }
 
     // Update is called once per frame
@@ -108,17 +90,13 @@ public class DisintegrateEnemyOnDown : MonoBehaviour
         for (int i = 0; i < mInstances.Count; i++)
             mInstances[i].SetFloat("_T", t);
 
-        /*if (t >= duration / 2f && index == 1)
-        {
-            MidDisintegration();
-            t = duration / 2f;
-        }*/
+        if (t >= duration * DisableShadowFrac && !shadowsDisabled)
+            DisableShadows();
     }
 
     void OnDestroy()
     {
         enemy.OnDown -= ActivateDisintegration;
-        //enemy.OnDeath -= ActivatePS;
     }
 
     void Replace(Shader shader)

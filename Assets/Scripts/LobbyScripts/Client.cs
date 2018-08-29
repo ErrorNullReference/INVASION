@@ -360,6 +360,7 @@ public class Client : MonoBehaviour
             Users.Clear();
 
         lobby.Users.Add(new User((CSteamID)0));
+        lobby.Users[0].AvatarID = 0;
 
         SendPacketToLobby(emptyArray, 0, 0, PacketType.Test, EP2PSend.k_EP2PSendReliable, false);
 

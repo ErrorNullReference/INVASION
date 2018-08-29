@@ -75,7 +75,7 @@ public class PowerUpsMgr : Factory<byte>
         return powUp;
     }
 
-    protected override byte ExtractIdentifier(GameObject obj)
+    protected override byte ExtractIdentifier(GameObject obj, int i)
     {
         return (byte)obj.GetComponent<PowerUp>().Type.Value;
     }

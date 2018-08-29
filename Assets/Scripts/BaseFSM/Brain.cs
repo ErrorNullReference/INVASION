@@ -26,6 +26,9 @@ public class Brain : MonoBehaviour
 
         enemy = GetComponent<Enemy>();
 
+        if (currentState == null)
+            currentState = GetComponent<AIAggroPlayers>();
+
         if (currentState != null)
         {
             currentState.enabled = true;

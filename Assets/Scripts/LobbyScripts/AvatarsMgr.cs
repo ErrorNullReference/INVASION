@@ -12,6 +12,8 @@ public class AvatarsMgr : MonoBehaviour
     [SerializeField]
     private Animator[] AvatarsAnim;
     [SerializeField]
+    private string[] Names;
+    [SerializeField]
     [Range(0, 1)]
     private float posY;
     [SerializeField]
@@ -30,14 +32,14 @@ public class AvatarsMgr : MonoBehaviour
         Client.AddCommand(PacketType.RequestAvatarSelection, ControlAvatarDisponibility);
         Client.AddCommand(PacketType.AnswerAvatarSelection, SetAvatar);
 
-        Avatars = new SelectableAvatar[4];
-        for (int i = 0; i < 4; i++)
+        Avatars = new SelectableAvatar[AvatarsTextures.Length];
+        for (int i = 0; i < Avatars.Length; i++)
         {
             Avatars[i] = Instantiate(SelectableAvatarTemplate, this.transform);
             Avatars[i].avatarID = i;
             Avatars[i].modelImage.texture = AvatarsTextures[i];
-            //Avatars[i].transform.position = new Vector3(Screen.width / 8f * (2 * i + 1), Screen.height * posY, 0);
-            Avatars[i].transform.position = new Vector3(distance * i + (Screen.width - distance * 3) / 2f, Screen.height * posY, 0);
+            Avatars[i].transform.position = new Vector3(Screen.width / 2f + distance * i - (distance * (Avatars.Length - 1)) / 2f, Screen.height * posY, 0);
+            Avatars[i].DefaultName = Names[i];
         }
 
         timer = 1;
@@ -53,7 +55,7 @@ public class AvatarsMgr : MonoBehaviour
             for (int i = 0; i < Avatars.Length; i++)
             {
                 if (Avatars[i] != null)
-                    Avatars[i].transform.position = new Vector3(distance * i + (screenDimensions.x - distance * 3) / 2f, screenDimensions.y * posY, 0);
+                    Avatars[i].transform.position = new Vector3(screenDimensions.x / 2f + distance * i - (distance * (Avatars.Length - 1)) / 2f, screenDimensions.y * posY, 0);
             }
         }
     }

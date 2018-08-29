@@ -2,10 +2,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 using SOPRO;
+
 [Serializable]
 public abstract class Factory<T> : ScriptableObject
 {
-    protected Dictionary<T, SOPool> organizedPools;
+    public Dictionary<T, SOPool> organizedPools { get; protected set; }
 
     [SerializeField]
     private SOPool[] pools = new SOPool[0];
@@ -26,7 +27,7 @@ public abstract class Factory<T> : ScriptableObject
         {
             SOPool pool = pools[i];
 
-            T identifier = ExtractIdentifier(pool.Prefab);
+            T identifier = ExtractIdentifier(pool.Prefab, i);
 
             if (organizedPools.ContainsKey(identifier))
                 throw new ArgumentException("Impossible to initialize FactoryObj, 1 or more objects are classified by the same identifier (" + identifier + "). Conflict between " + pool.name + " and " + organizedPools[identifier].name, "pools");
@@ -34,12 +35,14 @@ public abstract class Factory<T> : ScriptableObject
             organizedPools.Add(identifier, pool);
         }
     }
+
     /// <summary>
     /// Called when filling up organizedPools.
     /// </summary>
     /// <param name="obj">obj from which to extract identifier</param>
     /// <returns>identifier</returns>
-    protected abstract T ExtractIdentifier(GameObject obj);
+    protected abstract T ExtractIdentifier(GameObject obj, int i);
+
     /// <summary>
     /// Called on organizedPools initialization. Return null to not use custom comparer
     /// </summary>

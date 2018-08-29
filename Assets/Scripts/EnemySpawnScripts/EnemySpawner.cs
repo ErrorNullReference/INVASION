@@ -20,6 +20,8 @@ public class EnemySpawner : Factory<byte>
 
     public SOListGenericContainer EnemyStatsPool;
 
+    public EnemyInitializer[] EnemyInitializers;
+
     private Transform poolRoot;
 
     public void Init()
@@ -30,9 +32,10 @@ public class EnemySpawner : Factory<byte>
         EnemiesCount.Value = 0;
     }
 
-    protected override byte ExtractIdentifier(GameObject obj)
+    protected override byte ExtractIdentifier(GameObject obj, int i)
     {
-        return (byte)obj.GetComponent<Enemy>().Type.Value;
+        return (byte)i;
+        //return (byte)obj.GetComponent<Enemy>().Type.Value;
     }
 
     //InstantiateEnemy will be called when command EnemySpawn is received from host
@@ -42,6 +45,7 @@ public class EnemySpawner : Factory<byte>
         {
             poolRoot = GameObject.Instantiate(PoolRoot).transform;
             poolRoot.name = "Enemies Root";
+            poolRoot.gameObject.AddComponent<ObjectsRegister>().Obj = this;
         }
 
         byte type = data[0];
@@ -54,6 +58,7 @@ public class EnemySpawner : Factory<byte>
         Vector3 position = new Vector3(positionX, positionY, positionZ);
 
         SOPool pool = organizedPools[(int)EnemyType.Normal];
+        //SOPool pool = organizedPools[type];
 
         bool parented;
         int nullObjsRemovedFromPool;
@@ -62,7 +67,8 @@ public class EnemySpawner : Factory<byte>
         Enemy enemy = go.GetComponent<Enemy>();
         enemy.Pool = pool;
         enemy.NetObj.SetNetworkId(id);
-        enemy.Init((EnemyStats)EnemyStatsPool.Elements[type]);
+        enemy.Initializer = EnemyInitializers[(int)type];
+        enemy.Init((EnemyStats)EnemyStatsPool.Elements[0]); //[type]
 
         NavMeshHit hit;
         if (NavMesh.SamplePosition(position, out hit, 1f, Mask))

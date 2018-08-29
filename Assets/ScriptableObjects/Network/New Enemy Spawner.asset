@@ -1,20 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c13fc0e49bf0034dad17f46686cdf7d, type: 3}
-  m_Name: New Enemy Spawner
-  m_EditorClassIdentifier: 
-  pools:
-  - {fileID: 11400000, guid: ec80055c0b6a7d94f8161aa139ca11af, type: 2}
-  netEntities: {fileID: 11400000, guid: 209e760079e7a28429153a90e96df903, type: 2}
-  PoolRoot: {fileID: 1507460858770256, guid: 07ed9b25ff098e14aa3df81bbca13e31, type: 2}
-  EnemiesCount: {fileID: 11400000, guid: 680e3e3bfab9c0b49b9e0bb02d964541, type: 2}
-  Mask: {fileID: 11400000, guid: ddc61fca2bd6a664ca21fe8d3d467156, type: 2}
-  EnemyStatsPool: {fileID: 11400000, guid: 5cc8b825c64ca7a418b01479a36c105f, type: 2}
+version https://git-lfs.github.com/spec/v1
+oid sha256:01282336aa97008628e07996a109c103faa57823ae32d7075e8c425db0911f56
+size 2977

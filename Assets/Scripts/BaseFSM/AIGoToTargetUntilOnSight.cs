@@ -22,7 +22,9 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
     public Transform Target { get { return this.target; } }
 
     private NavMeshAgent agent;
-    private AnimationControllerScript animController;
+    private Enemy enemy;
+
+    private AnimationControllerScript animController { get { return enemy.animController; } }
 
     [SerializeField]
     private AIBehaviour targetVisible;
@@ -33,12 +35,17 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
     {
         base.Awake();
         agent = this.GetComponent<NavMeshAgent>();
-        animController = this.GetComponent<AnimationControllerScript>();
+        enemy = GetComponent<Enemy>();
 
         Client.OnUserDisconnected += (id) =>
         {
             target = null;
         };
+
+        if (targetVisible == null)
+            targetVisible = GetComponent<AIShootTillOnSight>();
+        if (targetLost == null)
+            targetLost = GetComponent<AIAggroPlayers>();
     }
 
     private void Update()

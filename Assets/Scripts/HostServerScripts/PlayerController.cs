@@ -52,9 +52,9 @@ public class PlayerController : MonoBehaviour
 
     void Move(Vector3 direction, bool run)
     {
-        //body.velocity = Vector3.zero;
-        //body.angularDrag = 0;
-        //body.angularVelocity = Vector3.zero;
+        body.velocity = Vector3.zero;
+        body.angularDrag = 0;
+        body.angularVelocity = Vector3.zero;
        
         body.MovePosition(transform.position + direction * (run ? RunSpeed : WalkSpeed) * Time.deltaTime);
     }

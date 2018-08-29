@@ -8,6 +8,9 @@ public abstract class AIBehaviour : MonoBehaviour
     protected virtual void Awake()
     {
         this.enabled = false;
+
+        if (owner == null)
+            owner = GetComponent<Brain>();
     }
 
     public abstract void OnStateEnter();

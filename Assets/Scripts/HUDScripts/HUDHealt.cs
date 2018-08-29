@@ -36,6 +36,8 @@ public class HUDHealt : HUD
         else if (GOImg != null)
         {
             // Sprite subcase
+            if (InputAssetHUD == null)
+                return;
             GOImg.color = InputAssetHUD.HealthBarGradient.Evaluate(livingBeing.Life * InputAssetHUD.InverseMaxHealth);
             GOImg.fillAmount = (livingBeing.Life * InputAssetHUD.InverseMaxHealth);
         }

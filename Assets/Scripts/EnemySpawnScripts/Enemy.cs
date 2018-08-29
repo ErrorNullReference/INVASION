@@ -9,6 +9,8 @@ using System;
 [RequireComponent(typeof(GameNetworkObject))]
 public class Enemy : LivingBeing
 {
+    public EnemyInitializer Initializer;
+    public Transform BodyRoot;
     public SOVariableEnemyType Type;
     [NonSerialized]
     public SOPool Pool;
@@ -20,9 +22,16 @@ public class Enemy : LivingBeing
     Image healthImage;
     public EnemyStats EnemyStats;
     bool dead;
-    Animator animator;
+
+    public Animator animator { get; set; }
+
+    public AnimationControllerScript animController { get; set; }
+
     Brain brain;
     Collider collider;
+    Rigidbody body;
+    bool init;
+    DisintegrateEnemyOnDown disintegrate;
 
     public Action OnDown, OnDeath;
 
@@ -52,8 +61,8 @@ public class Enemy : LivingBeing
             hudManager = GetComponentInChildren<HUDHealt>();
         healthImage = hudManager.GetComponent<Image>();
         healthImage.enabled = false;
-        animator = GetComponent<Animator>();
         brain = GetComponent<Brain>();
+        body = GetComponent<Rigidbody>();
     }
 
     private void Awake()
@@ -63,6 +72,11 @@ public class Enemy : LivingBeing
 
     public void Init(EnemyStats stats)
     {
+        if (BodyRoot.childCount > 0)
+            Destroy(BodyRoot.GetChild(0).gameObject);
+        if (Initializer != null)
+            Initializer.Init(this, BodyRoot);
+
         EnemyStats = stats;
         if (hudManager == null)
             hudManager = GetComponentInChildren<HUDHealt>();
@@ -73,6 +87,10 @@ public class Enemy : LivingBeing
         if (collider == null)
             collider = GetComponent<Collider>();
         collider.enabled = true;
+
+        if (disintegrate == null)
+            disintegrate = GetComponent<DisintegrateEnemyOnDown>();
+        disintegrate.Init();
     }
 
     private void OnDisable()
@@ -138,5 +156,12 @@ public class Enemy : LivingBeing
         if (OnDown != null)
             OnDown.Invoke();
         collider.enabled = false;
+    }
+
+    void FixedUpdate()
+    {
+        body.velocity = Vector3.zero;
+        body.angularDrag = 0;
+        body.angularVelocity = Vector3.zero;
     }
 }
