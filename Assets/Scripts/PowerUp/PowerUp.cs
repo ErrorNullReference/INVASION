@@ -3,6 +3,7 @@ using System;
 using SOPRO;
 using Steamworks;
 using GENUtility;
+
 [RequireComponent(typeof(GameNetworkObject))]
 public abstract class PowerUp : MonoBehaviour
 {
@@ -26,7 +27,9 @@ public abstract class PowerUp : MonoBehaviour
         Pool.Recycle(this.gameObject);
         netObj.ResetNetworkId();
     }
+
     public abstract void ProcessAdditionalData(byte[] data, int startIndex, int length);
+
     protected virtual void OnEnable()
     {
         if (!netObj)
@@ -47,6 +50,7 @@ public abstract class PowerUp : MonoBehaviour
 
         timer = 0f;
     }
+
     protected virtual void Update()
     {
         timer += Time.deltaTime;
@@ -57,6 +61,7 @@ public abstract class PowerUp : MonoBehaviour
             Recycle(default(CSteamID), false);
         }
     }
+
     /// <summary>
     /// Method called when there have been a valid collision
     /// </summary>
@@ -64,6 +69,7 @@ public abstract class PowerUp : MonoBehaviour
     /// <param name="collided">player collided</param>
     /// <returns>true to despawn power up, false to not despawn power up</returns>
     protected abstract bool OnTriggerActive(Collider collision, Player collided);
+
     protected void Recycle(CSteamID picker, bool picked)
     {
         byte[] data = ArrayPool<byte>.Get(picked ? 12 : 4);
@@ -71,7 +77,7 @@ public abstract class PowerUp : MonoBehaviour
         if (picked)
             ByteManipulator.Write(data, 4, picker.m_SteamID);
 
-        Client.SendPacketToInGameUsers(data, 0, data.Length, PacketType.PowerUpDespawn, EP2PSend.k_EP2PSendUnreliable, true);
+        Client.SendPacketToInGameUsers(data, 0, data.Length, PacketType.PowerUpDespawn, EP2PSend.k_EP2PSendReliable, true);
 
         ArrayPool<byte>.Recycle(data);
     }

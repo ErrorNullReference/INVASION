@@ -20,12 +20,19 @@ public class DisintegrateEnemyOnDown : MonoBehaviour
 
     public void Init()
     {
-        enemy = GetComponent<Enemy>();
+        if (enemy == null)
+            enemy = GetComponent<Enemy>();
         if (enemy == null)
             return;
 
-        mInstances = new List<Material>();
-        mInstancesNot = new Dictionary<Material, Shader>();
+        if (mInstances == null)
+            mInstances = new List<Material>();
+        else
+            mInstances.Clear();
+        if (mInstancesNot == null)
+            mInstancesNot = new Dictionary<Material, Shader>();
+        else
+            mInstancesNot.Clear();
 
         Renderer[] r = enemy.GetComponentsInChildren<Renderer>();
         PassName = PassName.ToUpper();
@@ -43,15 +50,18 @@ public class DisintegrateEnemyOnDown : MonoBehaviour
         }
 
         enemy.OnDown += ActivateDisintegration;
+        if (DisShadows == null)
+            DisShadows = GetComponentsInChildren<DisableShadows>();
         
         Reset();
-
-        DisShadows = GetComponentsInChildren<DisableShadows>();
     }
 
     void Reset()
     {
         shadowsDisabled = false;
+        for (int i = 0; i < DisShadows.Length; i++)
+            DisShadows[i].Enable();
+
         dead = false;
         for (int i = 0; i < mInstances.Count; i++)
             mInstances[i].SetFloat("_T", 0);

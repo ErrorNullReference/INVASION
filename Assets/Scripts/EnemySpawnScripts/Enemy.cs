@@ -43,7 +43,8 @@ public class Enemy : LivingBeing
         }
     }
 
-    public bool CallDown;
+    [SerializeField]
+    bool CallDown, ForceInit;
 
     void OnValidate()
     {
@@ -52,6 +53,15 @@ public class Enemy : LivingBeing
             if (OnDown != null)
                 OnDown.Invoke();
             CallDown = false;
+        }
+
+        if (ForceInit)
+        {
+            ForceInit = false;
+            if (BodyRoot.childCount > 0)
+                Destroy(BodyRoot.GetChild(0).gameObject);
+            if (Initializer != null)
+                Initializer.Init(this, BodyRoot);
         }
     }
 
@@ -72,8 +82,6 @@ public class Enemy : LivingBeing
 
     public void Init(EnemyStats stats)
     {
-        if (BodyRoot.childCount > 0)
-            Destroy(BodyRoot.GetChild(0).gameObject);
         if (Initializer != null)
             Initializer.Init(this, BodyRoot);
 
@@ -95,6 +103,7 @@ public class Enemy : LivingBeing
 
     private void OnDisable()
     {
+        Initializer.Destroy();
         networkId.ResetNetworkId();
     }
 

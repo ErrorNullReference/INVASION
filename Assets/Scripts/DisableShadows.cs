@@ -22,4 +22,12 @@ public class DisableShadows : MonoBehaviour
         else if (mesh != null)
             mesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
     }
+
+    public void Enable()
+    {
+        if (skinMesh != null)
+            skinMesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+        else if (mesh != null)
+            mesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+    }
 }
