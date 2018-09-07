@@ -1,0 +1,201 @@
+fileFormatVersion: 2
+guid: d32e2189cdc933d45add63821684d859
+timeCreated: 1535961065
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: aggancio1
+    100002: aggancio2
+    100004: aggancio3
+    100006: aggancio4
+    100008: carrelliPiattaforma
+    100010: //RootNode
+    100012: palo1
+    100014: palo2
+    100016: palo3
+    100018: palo4
+    100020: piattaforma
+    100022: ringhiera1
+    100024: ringhiera1 1
+    100026: ringhiera1 2
+    100028: ringhiera1 3
+    100030: ringhiera2
+    100032: ringhiera2 1
+    100034: ringhieraAggancio1
+    100036: ringhieraAggancio1 1
+    100038: ringhieraAggancio2
+    100040: ringhieraAggancio2 1
+    100042: ringhieraAggancio3
+    100044: ringhieraAggancio3 1
+    100046: ringhiereLato1
+    100048: ringhiereLato2
+    400000: aggancio1
+    400002: aggancio2
+    400004: aggancio3
+    400006: aggancio4
+    400008: carrelliPiattaforma
+    400010: //RootNode
+    400012: palo1
+    400014: palo2
+    400016: palo3
+    400018: palo4
+    400020: piattaforma
+    400022: ringhiera1
+    400024: ringhiera1 1
+    400026: ringhiera1 2
+    400028: ringhiera1 3
+    400030: ringhiera2
+    400032: ringhiera2 1
+    400034: ringhieraAggancio1
+    400036: ringhieraAggancio1 1
+    400038: ringhieraAggancio2
+    400040: ringhieraAggancio2 1
+    400042: ringhieraAggancio3
+    400044: ringhieraAggancio3 1
+    400046: ringhiereLato1
+    400048: ringhiereLato2
+    2100000: MAT_props_piattaformaMontacarichi
+    2300000: aggancio1
+    2300002: aggancio2
+    2300004: aggancio3
+    2300006: aggancio4
+    2300008: palo1
+    2300010: palo2
+    2300012: palo3
+    2300014: palo4
+    2300016: piattaforma
+    2300018: ringhiera1
+    2300020: ringhiera1 1
+    2300022: ringhiera1 2
+    2300024: ringhiera1 3
+    2300026: ringhiera2
+    2300028: ringhiera2 1
+    2300030: ringhieraAggancio1
+    2300032: ringhieraAggancio1 1
+    2300034: ringhieraAggancio2
+    2300036: ringhieraAggancio2 1
+    2300038: ringhieraAggancio3
+    2300040: ringhieraAggancio3 1
+    3300000: aggancio1
+    3300002: aggancio2
+    3300004: aggancio3
+    3300006: aggancio4
+    3300008: palo1
+    3300010: palo2
+    3300012: palo3
+    3300014: palo4
+    3300016: piattaforma
+    3300018: ringhiera1
+    3300020: ringhiera1 1
+    3300022: ringhiera1 2
+    3300024: ringhiera1 3
+    3300026: ringhiera2
+    3300028: ringhiera2 1
+    3300030: ringhieraAggancio1
+    3300032: ringhieraAggancio1 1
+    3300034: ringhieraAggancio2
+    3300036: ringhieraAggancio2 1
+    3300038: ringhieraAggancio3
+    3300040: ringhieraAggancio3 1
+    4300000: piattaforma
+    4300002: aggancio4
+    4300004: aggancio3
+    4300006: aggancio2
+    4300008: aggancio1
+    4300010: ringhieraAggancio1
+    4300012: ringhiera1
+    4300014: ringhieraAggancio2
+    4300016: ringhiera2
+    4300018: ringhieraAggancio3
+    4300020: ringhiera1
+    4300022: ringhieraAggancio1
+    4300024: ringhiera1
+    4300026: ringhieraAggancio2
+    4300028: ringhiera2
+    4300030: ringhieraAggancio3
+    4300032: ringhiera1
+    4300034: palo4
+    4300036: palo3
+    4300038: palo2
+    4300040: palo1
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
