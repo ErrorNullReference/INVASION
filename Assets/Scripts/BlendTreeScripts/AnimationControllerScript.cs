@@ -22,6 +22,8 @@ public class AnimationControllerScript : MonoBehaviour
 
     public void Animation(float forward, float right)
     {
+        if (anim == null)
+            return;
         anim.SetFloat(speed, forward);
         anim.SetFloat(LeftSpeed, right);
     }

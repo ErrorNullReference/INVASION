@@ -40,6 +40,8 @@ public class EnemySpawnGraph : ScriptableObject
         timeEnemyInterval = 0;
         timeFromStartSpawning = 0;
         waveSpawning = true;
+        if (CurveReadDuration == 0)
+            CurveReadDuration = 1;
     }
 
     // Update is called once per frame

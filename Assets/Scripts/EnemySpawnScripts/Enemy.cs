@@ -32,6 +32,7 @@ public class Enemy : LivingBeing
     Rigidbody body;
     bool init;
     DisintegrateEnemyOnDown disintegrate;
+    int bodyIndex;
 
     public Action OnDown, OnDeath;
 
@@ -61,7 +62,7 @@ public class Enemy : LivingBeing
             if (BodyRoot.childCount > 0)
                 Destroy(BodyRoot.GetChild(0).gameObject);
             if (Initializer != null)
-                Initializer.Init(this, BodyRoot);
+                Initializer.Init(this, BodyRoot, ref bodyIndex);
         }
     }
 
@@ -83,7 +84,7 @@ public class Enemy : LivingBeing
     public void Init(EnemyStats stats)
     {
         if (Initializer != null)
-            Initializer.Init(this, BodyRoot);
+            Initializer.Init(this, BodyRoot, ref bodyIndex);
 
         EnemyStats = stats;
         if (hudManager == null)
@@ -103,7 +104,7 @@ public class Enemy : LivingBeing
 
     private void OnDisable()
     {
-        Initializer.Destroy();
+        Initializer.Destroy(bodyIndex);
         networkId.ResetNetworkId();
     }
 
