@@ -8,7 +8,6 @@ using SOPRO;
 public class PlayerController : MonoBehaviour
 {
     public ReferenceFloat WalkSpeed, RunSpeed;
-    public float MouseRotationOffset;
     public LayerMask Mask;
     Rigidbody body;
     Camera camera;
@@ -52,7 +51,7 @@ public class PlayerController : MonoBehaviour
 
     void Move(Vector3 direction, bool run)
     {
-        body.velocity = Vector3.zero;
+        body.velocity = new Vector3(0, body.velocity.y, 0);
         body.angularDrag = 0;
         body.angularVelocity = Vector3.zero;
        
@@ -74,17 +73,6 @@ public class PlayerController : MonoBehaviour
         }
         else
             transform.rotation = Quaternion.identity;
-        
-        /*if (camera != null)
-        {
-            Vector2 positionOnScreen = camera.WorldToViewportPoint(transform.position);
-            Vector2 mouseOnScreen = (Vector2)camera.ScreenToViewportPoint(Input.mousePosition);
-            float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen) + MouseRotationOffset;
-            body.MoveRotation(Quaternion.Euler(0, -angle, 0));
-        }
-        else
-            transform.rotation = Quaternion.identity;*/
-
     }
 
     float AngleBetweenTwoPoints(Vector3 a, Vector3 b)
