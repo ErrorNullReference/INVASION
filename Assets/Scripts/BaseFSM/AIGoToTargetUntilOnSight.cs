@@ -54,9 +54,7 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
         if (target != null && currentCooldownLeftBeforeRecalculation <= 0)
             this.agent.SetDestination(target.position);
 
-        Vector3 vel = this.agent.velocity.normalized;
-
-        animController.Animation(vel.x, vel.z);
+        animController.Animation(transform.forward, this.agent.velocity.normalized, this.agent.velocity.magnitude);
 
         CheckIfTargetInVision();
     }
@@ -78,7 +76,7 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
     public override void OnStateExit()
     {
         agent.isStopped = true;
-        animController.Animation(0, 0);
+        animController.Animation(0, 0, 0);
 
     }
 

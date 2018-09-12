@@ -85,7 +85,7 @@ public class NetObjTransformSync : MonoBehaviour
             myTransform.rotation = Quaternion.Slerp(startRot, endRot, frac);
 
             if (Mathf.Approximately(frac, 1))
-                animController.Animation(0, 0);
+                animController.Animation(0, 0, 0);
             return;
         }
 
@@ -98,9 +98,10 @@ public class NetObjTransformSync : MonoBehaviour
         startPos = myTransform.position;
         startRot = myTransform.rotation;
         interpolationTime = prediction.Predict(pos, rot, out endPos, out endRot, out speed);
+
         Vector3 normalizedSpeed = speed.normalized;
         if ((startPos - endPos).magnitude >= AcceptanceTreshold)
-            animController.Animation(normalizedSpeed.x, normalizedSpeed.z);
+            animController.Animation(transform.forward, normalizedSpeed, speed.magnitude);
         time = 0;
     }
 }

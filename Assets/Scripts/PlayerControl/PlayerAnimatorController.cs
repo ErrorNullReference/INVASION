@@ -62,7 +62,7 @@ public class PlayerAnimatorController : MonoBehaviour
         {
             cameraDir = camera.transform.forward * z + camera.transform.right * x;
             cameraDir.y = 0;
-            float angle = -Mathf.Deg2Rad * Vector3.SignedAngle(cameraDir.normalized, transform.forward, Vector3.up);
+            float angle = Mathf.Deg2Rad * Vector3.SignedAngle(transform.forward, cameraDir.normalized, Vector3.up);
             dir = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
 
             if (Input.GetButton(sprint))
@@ -78,7 +78,7 @@ public class PlayerAnimatorController : MonoBehaviour
         float magnitude = playerDirection.magnitude / Time.deltaTime;
         if (magnitude >= movementTreshold)
         {
-            float angle = -Mathf.Deg2Rad * Vector3.SignedAngle(playerDirection.normalized, transform.forward, Vector3.up);
+            float angle = Mathf.Deg2Rad * Vector3.SignedAngle(transform.forward, playerDirection.normalized, Vector3.up);
             dir = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
 
             if (magnitude >= RunTreshold)

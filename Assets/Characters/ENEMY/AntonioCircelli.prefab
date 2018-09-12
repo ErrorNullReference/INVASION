@@ -2101,8 +2101,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimSpeed: {fileID: 11400000, guid: 714aa688231fe1e4fb18c60a53cb876d, type: 2}
-  LeftSpeed: {fileID: 11400000, guid: 0e0956761016a014a88f387b5375eac1, type: 2}
-  speed: {fileID: 11400000, guid: 72814ab5f7a2a5245b73db8b74449aea, type: 2}
+  SpeedY: {fileID: 11400000, guid: 0e0956761016a014a88f387b5375eac1, type: 2}
+  SpeedX: {fileID: 11400000, guid: 72814ab5f7a2a5245b73db8b74449aea, type: 2}
+  SpeedMag: {fileID: 11400000, guid: f21c81459ec668f4ebd802ac3e9e88d3, type: 2}
 --- !u!114 &114668355268370724
 MonoBehaviour:
   m_ObjectHideFlags: 1

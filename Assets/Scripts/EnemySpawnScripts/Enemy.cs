@@ -92,6 +92,10 @@ public class Enemy : LivingBeing
         hudManager.InputAssetHUD = EnemyStats;
         life = EnemyStats.MaxHealth;
         dead = false;
+
+        if (animator != null)
+            animator.applyRootMotion = false;
+
         deadTimer = 0;
         if (collider == null)
             collider = GetComponent<Collider>();
@@ -160,7 +164,11 @@ public class Enemy : LivingBeing
         dead = true;
         deadTimer = 0;
         if (animator != null)
-            animator.SetBool("Dead", dead);
+        {
+            animator.SetTrigger("Die");
+            animator.SetFloat("Death", UnityEngine.Random.Range(1, 4));
+            animator.applyRootMotion = true;
+        }
         if (brain != null)
             brain.ShutDown();
         if (OnDown != null)

@@ -104,9 +104,7 @@ public class MovementManager : MonoBehaviour
             sphereV.StartLooking();
             coneV.StartLooking();
         }
-        Vector3 direction = this.agent.velocity.normalized;
-        animController.Animation(direction.x, direction.z);
-        //SendTransform();
+        animController.Animation(transform.forward, this.agent.velocity.normalized, this.agent.velocity.magnitude);
     }
 
     private IEnumerator SendTransform()
@@ -165,8 +163,8 @@ public class MovementManager : MonoBehaviour
         startPos = transform.position;
         startRot = transform.rotation;
         interpolationTime = prediction.Predict(pos, rot, out endPos, out endRot, out speed);
-        Vector3 normalizedSpeed = speed.normalized;
-        animController.Animation(normalizedSpeed.x, normalizedSpeed.z);
+
+        animController.Animation(transform.forward, speed.normalized, speed.magnitude);
         time = 0;
     }
 
