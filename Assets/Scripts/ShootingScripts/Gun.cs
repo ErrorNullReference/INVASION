@@ -47,7 +47,7 @@ public class Gun : MonoBehaviour
         }
     }
 
-    public void Shoot()
+    public void Shoot(uint shootType)
     {
         if (PSMuzzle != null)
             PSMuzzle.Play();

@@ -26,13 +26,13 @@ public class ShootSystem : MonoBehaviour
         ray = new Ray();
     }
 
-    void CallShoot()
+    void CallShoot(uint shootIndex)
     {
-        Shoot();
-        SendShootToAll();
+        Shoot(shootIndex);
+        SendShootToAll(shootIndex);
     }
 
-    public void Shoot()
+    public void Shoot(uint shootIndex)
     {
         /*if (activateCallbacks)
         {
@@ -49,15 +49,15 @@ public class ShootSystem : MonoBehaviour
             }
         }*/
 
-        gun.Shoot();
+        gun.Shoot(shootIndex);
     }
 
-    void SendShootToAll()
+    void SendShootToAll(uint index)
     {
         if (Client.IsHost)
-            Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.PlayerShoot, Steamworks.EP2PSend.k_EP2PSendReliable, false);
+            Client.SendPacketToInGameUsers(new byte[]{ (byte)index }, 0, 0, PacketType.PlayerShoot, Steamworks.EP2PSend.k_EP2PSendReliable, false);
         else
-            Client.SendPacketToHost(emptyArray, 0, 0, PacketType.PlayerShootServer, Steamworks.EP2PSend.k_EP2PSendReliable);
+            Client.SendPacketToHost(new byte[]{ (byte)index }, 0, 0, PacketType.PlayerShootServer, Steamworks.EP2PSend.k_EP2PSendReliable);
     }
 
     public void SendHitMessage(int id, float damage)
@@ -79,24 +79,15 @@ public class ShootSystem : MonoBehaviour
     {
         //different beheaviour with number
         recoilTime -= Time.deltaTime;
-        switch (gun.values.GunSystem)
+        if (Input.GetButtonDown("Fire1") && recoilTime <= 0)
         {
-        //single shoot
-            case 0:
-                if (Input.GetButtonDown("Fire1") && recoilTime <= 0)
-                {
-                    CallShoot();
-                    recoilTime = gun.values.Rateo;
-                }
-                break;
-        //multi shoot
-            case 1:
-                if (Input.GetButton("Fire1") && recoilTime <= 0)
-                {
-                    CallShoot();
-                    recoilTime = gun.values.Rateo;
-                }
-                break;
+            CallShoot(0);
+            recoilTime = gun.values.Rateo;
+        }
+        else if (Input.GetButtonDown("Fire2") && recoilTime <= 0)
+        {
+            CallShoot(1);
+            recoilTime = gun.values.Rateo;
         }
     }
 }

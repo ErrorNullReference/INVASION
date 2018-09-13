@@ -141,7 +141,7 @@ public class AIShootTillOnSight : AIBehaviour
             shootSync.SendShotCall();
 
         if (gun != null)
-            gun.Shoot();
+            gun.Shoot(0);
     }
 
     public override void OnStateEnter()

@@ -531,6 +531,7 @@ MonoBehaviour:
   Type: {fileID: 11400000, guid: 3b5dad2d0caf02f42b3bcfd23499ef91, type: 2}
   HUDTimerShow: 2
   EnemyStats: {fileID: 0}
+  RadarIndicator: {fileID: 1398684184192540}
   CallDown: 0
   ForceInit: 0
 --- !u!114 &114790966283351056
