@@ -3479,6 +3479,7 @@ MonoBehaviour:
   Mask:
     serializedVersion: 2
     m_Bits: 8192
+  OffOnStart: 1
 --- !u!114 &114358862557123424
 MonoBehaviour:
   m_ObjectHideFlags: 1

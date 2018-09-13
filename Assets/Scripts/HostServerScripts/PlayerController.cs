@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     public ReferenceFloat WalkSpeed, RunSpeed;
     public LayerMask Mask;
+    public bool OffOnStart;
     Rigidbody body;
     Camera camera;
     RaycastHit hitInfo;
@@ -27,7 +28,10 @@ public class PlayerController : MonoBehaviour
         MenuEvents.OnMenuOpen += Disable;
         MenuEvents.OnMenuClose += Activate;
 
-        active = true;
+        if (OffOnStart)
+            active = false;
+        else
+            active = true;
     }
 
     void FixedUpdate()
@@ -88,12 +92,12 @@ public class PlayerController : MonoBehaviour
         return forward * vertical + right * horizontal;
     }
 
-    void Disable()
+    public void Disable()
     {
         active = false;
     }
 
-    void Activate()
+    public void Activate()
     {
         active = true;
     }

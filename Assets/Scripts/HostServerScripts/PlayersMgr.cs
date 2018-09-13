@@ -36,6 +36,7 @@ public class PlayersMgr : MonoBehaviour
 
             a.UserInfo = Client.Users[i];
             a.transform.position = SpawnPosition.position;
+            a.transform.forward = new Vector3(-Camera.main.transform.forward.x, 0, -Camera.main.transform.forward.z);
             avatars.Add(Client.Users[i].SteamID, a);
         }
 

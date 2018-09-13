@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class EnemyInitializer : ScriptableObject
 {
+    public static int StartInstancesAmount = 3;
     [SerializeField]
     public GameObject Body;
     [HideInInspector]
@@ -14,6 +15,25 @@ public class EnemyInitializer : ScriptableObject
     {
         public GameObject Instance;
         public bool Used;
+    }
+
+    public void InitInstances()
+    {
+        if (BodyInstance == null)
+            BodyInstance = new List<BodyInstanced>();
+
+        if (BodyInstance.Count != 0)
+            return;
+
+        for (int i = 0; i < StartInstancesAmount; i++)
+        {
+            BodyInstanced b2 = new BodyInstanced();
+            b2.Instance = Instantiate(Body);
+            b2.Instance.hideFlags = HideFlags.HideInHierarchy;
+            b2.Used = false;
+            b2.Instance.SetActive(false);
+            BodyInstance.Add(b2);
+        }
     }
 
     public void Init(Enemy enemy, Transform root, ref int index)
@@ -65,9 +85,17 @@ public class EnemyInitializer : ScriptableObject
 
         BodyInstanced b2 = new BodyInstanced();
         b2.Instance = Instantiate(Body);
+        b2.Instance.hideFlags = HideFlags.HideInHierarchy;
         b2.Used = true;
         BodyInstance.Add(b2);
         index = BodyInstance.Count - 1;
         return b2.Instance;
+    }
+
+    void OnDestroy()
+    {
+        for (int i = 0; i < BodyInstance.Count; i++)
+            Destroy(BodyInstance[i].Instance);
+        BodyInstance.Clear();
     }
 }
