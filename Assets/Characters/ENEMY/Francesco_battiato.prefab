@@ -548,7 +548,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4590494022313796}
   - component: {fileID: 137385547695319490}
-  - component: {fileID: 114334406923136770}
   m_Layer: 0
   m_Name: Soldato
   m_TagString: Untagged
@@ -776,7 +775,6 @@ GameObject:
   - component: {fileID: 4045337726891788}
   - component: {fileID: 33008110439617932}
   - component: {fileID: 23667820799453180}
-  - component: {fileID: 114747747402487242}
   m_Layer: 0
   m_Name: Arma
   m_TagString: Untagged
@@ -2033,8 +2031,9 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: c1d6eefe0c9bc5d4a9a307e48048013e, type: 2}
   - {fileID: 2100000, guid: c4646e50562e75c4e8ee4f9b8933b44d, type: 2}
+  - {fileID: 2100000, guid: 8fd30f027fba18e498c96d0e09f89305, type: 2}
+  - {fileID: 2100000, guid: 54e66b161d2d5844cb7ccee0c0280b91, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2089,28 +2088,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b96e96a6367a9b4fa43eff1a9c871ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114334406923136770
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1597659847485630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36d3c553b5906447b6084130abfcba6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114747747402487242
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1737528421555710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36d3c553b5906447b6084130abfcba6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114904412175784494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2140,8 +2117,9 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: c1d6eefe0c9bc5d4a9a307e48048013e, type: 2}
   - {fileID: 2100000, guid: d9d038369bb8ef4489a5bd32e0836d87, type: 2}
+  - {fileID: 2100000, guid: 8fd30f027fba18e498c96d0e09f89305, type: 2}
+  - {fileID: 2100000, guid: 54e66b161d2d5844cb7ccee0c0280b91, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

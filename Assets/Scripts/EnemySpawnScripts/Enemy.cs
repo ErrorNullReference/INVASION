@@ -32,7 +32,6 @@ public class Enemy : LivingBeing
     Collider collider;
     Rigidbody body;
     bool init;
-    DisintegrateEnemyOnDown disintegrate;
     int bodyIndex;
 
     public Action OnDown, OnDeath;
@@ -101,10 +100,6 @@ public class Enemy : LivingBeing
         if (collider == null)
             collider = GetComponent<Collider>();
         collider.enabled = true;
-
-        if (disintegrate == null)
-            disintegrate = GetComponent<DisintegrateEnemyOnDown>();
-        disintegrate.Init();
 
         if (RadarIndicator != null)
             RadarIndicator.SetActive(true);

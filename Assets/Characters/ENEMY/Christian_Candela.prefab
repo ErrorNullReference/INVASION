@@ -698,7 +698,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4248527964798624}
   - component: {fileID: 137911823731720172}
-  - component: {fileID: 114911019325513996}
   m_Layer: 0
   m_Name: soldato
   m_TagString: Untagged
@@ -1031,7 +1030,6 @@ GameObject:
   - component: {fileID: 4011241449899884}
   - component: {fileID: 33023286361853210}
   - component: {fileID: 23609789358125664}
-  - component: {fileID: 114698366382693822}
   m_Layer: 0
   m_Name: arma
   m_TagString: Untagged
@@ -2033,8 +2031,9 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: c1d6eefe0c9bc5d4a9a307e48048013e, type: 2}
-  - {fileID: 2100000, guid: e4bd19a3969d43c4da4d27a87482ea45, type: 2}
+  - {fileID: 2100000, guid: f24259f1d240fbf4d9d7b8e9c91a92e9, type: 2}
+  - {fileID: 2100000, guid: 8fd30f027fba18e498c96d0e09f89305, type: 2}
+  - {fileID: 2100000, guid: 54e66b161d2d5844cb7ccee0c0280b91, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2089,28 +2088,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b96e96a6367a9b4fa43eff1a9c871ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114698366382693822
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1982784066284412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36d3c553b5906447b6084130abfcba6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114911019325513996
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1644718420113096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36d3c553b5906447b6084130abfcba6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114932974900121250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2140,8 +2117,9 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: c1d6eefe0c9bc5d4a9a307e48048013e, type: 2}
   - {fileID: 2100000, guid: 75e6f1943469a5e48ad9adfb36918ce7, type: 2}
+  - {fileID: 2100000, guid: 8fd30f027fba18e498c96d0e09f89305, type: 2}
+  - {fileID: 2100000, guid: 54e66b161d2d5844cb7ccee0c0280b91, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
