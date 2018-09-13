@@ -18,15 +18,6 @@ public class HUDHealt : HUD
 
     void Update()
     {
-        if (livingBeing.Life == 3)
-        {
-            int a = 0;
-        }
-        if (livingBeing.Life == 2)
-        {
-            int a = 0;
-        }
-
 
         if (GOSlider != null)
         {

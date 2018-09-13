@@ -38,7 +38,10 @@ public class NetObjTransformSync : MonoBehaviour
 
         startPos = endPos = transform.position;
         startRot = endRot = transform.rotation;
-        prediction = new Prediction(startPos, startRot);
+		if (prediction == null)
+			prediction = new Prediction (startPos, startRot);
+		else
+			prediction.Reset (startPos, startRot);
     }
 
     private void OnDisable()

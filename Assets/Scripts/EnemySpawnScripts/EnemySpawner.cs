@@ -8,116 +8,216 @@ using UnityEngine.AI;
 using GENUtility;
 using SOPRO;
 
-[CreateAssetMenu(menuName = "Network/EnemySpawner")]
+[CreateAssetMenu (menuName = "Network/EnemySpawner")]
 public class EnemySpawner : Factory<byte>
 {
-    public SODictionaryTransformContainer netEntities;
-    public GameObject PoolRoot;
+	public static int PreInstantiedCount = 20;
 
-    public SOVariableInt EnemiesCount;
+	public SODictionaryTransformContainer netEntities;
+	public GameObject PoolRoot;
 
-    public NavMeshAreaMaskHolder Mask;
+	public SOVariableInt EnemiesCount;
 
-    public SOListGenericContainer EnemyStatsPool;
+	public NavMeshAreaMaskHolder Mask;
 
-    public EnemyInitializer[] EnemyInitializers;
+	public SOListGenericContainer EnemyStatsPool;
 
-    private Transform poolRoot;
+	public GameObject EnemyTemplate;
 
-    public void Init()
-    {
-        Client.AddCommand(PacketType.EnemyDeath, OnEnemyDeath);
-        Client.AddCommand(PacketType.EnemyDown, OnEnemyDown);
-        Client.AddCommand(PacketType.EnemySpawn, InstantiateEnemy);
-        EnemiesCount.Value = 0;
+	public EnemyInitializer[] EnemyInitializers;
 
-        for (int i = 0; i < EnemyInitializers.Length; i++)
-            EnemyInitializers[i].InitInstances();
-    }
+	private Transform poolRoot;
 
-    protected override byte ExtractIdentifier(GameObject obj, int i)
-    {
-        return (byte)i;
-        //return (byte)obj.GetComponent<Enemy>().Type.Value;
-    }
+	private Pool enemyPool;
 
-    //InstantiateEnemy will be called when command EnemySpawn is received from host
-    private void InstantiateEnemy(byte[] data, uint length, CSteamID senderId)
-    {
-        if (!poolRoot && PoolRoot)
-        {
-            poolRoot = GameObject.Instantiate(PoolRoot).transform;
-            poolRoot.name = "Enemies Root";
-            poolRoot.gameObject.AddComponent<ObjectsRegister>().Obj = this;
-        }
+	public void Init ()
+	{
+		Client.AddCommand (PacketType.EnemyDeath, OnEnemyDeath);
+		Client.AddCommand (PacketType.EnemyDown, OnEnemyDown);
+		Client.AddCommand (PacketType.EnemySpawn, InstantiateEnemy);
+		EnemiesCount.Value = 0;
 
-        byte type = data[0];
-        int id = ByteManipulator.ReadInt32(data, 1);
+		if (!poolRoot && PoolRoot) {
+			poolRoot = GameObject.Instantiate (PoolRoot).transform;
+			poolRoot.name = "Enemies Root";
+			poolRoot.gameObject.AddComponent<ObjectsRegister> ().Obj = this;
+		}
+		enemyPool = new Pool (EnemyTemplate, poolRoot, PreInstantiedCount);
 
-        float positionX = ByteManipulator.ReadSingle(data, 5);
-        float positionY = ByteManipulator.ReadSingle(data, 9);
-        float positionZ = ByteManipulator.ReadSingle(data, 13);
+		for (int i = 0; i < EnemyInitializers.Length; i++)
+			EnemyInitializers [i].InitInstances ();
+	}
 
-        Vector3 position = new Vector3(positionX, positionY, positionZ);
+	protected override byte ExtractIdentifier (GameObject obj, int i)
+	{
+		return (byte)i;
+		//return (byte)obj.GetComponent<Enemy>().Type.Value;
+	}
 
-        SOPool pool = organizedPools[(int)EnemyType.Normal];
-        //SOPool pool = organizedPools[type];
+	private void InstantiateEnemy (byte[] data, uint length, CSteamID senderId)
+	{
+		byte type = data [0];
+		int id = ByteManipulator.ReadInt32 (data, 1);
 
-        bool parented;
-        int nullObjsRemovedFromPool;
-        GameObject go = pool.DirectGet(poolRoot, position, Quaternion.identity, out nullObjsRemovedFromPool, out parented);
+		float positionX = ByteManipulator.ReadSingle (data, 5);
+		float positionY = ByteManipulator.ReadSingle (data, 9);
+		float positionZ = ByteManipulator.ReadSingle (data, 13);
 
-        Enemy enemy = go.GetComponent<Enemy>();
-        enemy.Pool = pool;
-        enemy.NetObj.SetNetworkId(id);
-        enemy.Initializer = EnemyInitializers[(int)type];
-        enemy.Init((EnemyStats)EnemyStatsPool.Elements[0]); //[type]
+		Vector3 position = new Vector3 (positionX, positionY, positionZ);
 
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(position, out hit, 1f, Mask))
-            go.GetComponent<NavMeshAgent>().Warp(hit.position);
+		GameObject go = enemyPool.Get ();
+		go.transform.position = position;
+		go.transform.rotation = Quaternion.identity;
 
-        go.SetActive(true);
+		Enemy enemy = go.GetComponent<Enemy> ();
+		enemy.NetObj.SetNetworkId (id);
+		enemy.Initializer = EnemyInitializers [(int)type];
+		enemy.Init ((EnemyStats)EnemyStatsPool.Elements [0]); //[type]
 
-        EnemiesCount.Value++;
-    }
+		NavMeshHit hit;
+		if (NavMesh.SamplePosition (position, out hit, 1f, Mask))
+			go.GetComponent<NavMeshAgent> ().Warp (hit.position);
 
-    //OnEnemyDeath will be called when command EnemyDeath is received from host
-    private void OnEnemyDeath(byte[] data, uint length, CSteamID senderId)
-    {
-        int Id = ByteManipulator.ReadInt32(data, 0);
+		go.SetActive (true);
 
-        if (Id >= netEntities.Elements.Count)
-            return;
+		EnemiesCount.Value++;
+	}
 
-        if (!netEntities.Elements.ContainsKey(Id))
-            return;
+	/*//InstantiateEnemy will be called when command EnemySpawn is received from host
+	private void InstantiateEnemy (byte[] data, uint length, CSteamID senderId)
+	{
+		if (!poolRoot && PoolRoot) {
+			poolRoot = GameObject.Instantiate (PoolRoot).transform;
+			poolRoot.name = "Enemies Root";
+			poolRoot.gameObject.AddComponent<ObjectsRegister> ().Obj = this;
+		}
 
-        Enemy obj = netEntities[Id].GetComponent<Enemy>();
+		byte type = data [0];
+		int id = ByteManipulator.ReadInt32 (data, 1);
 
-        if (!obj)
-            throw new NullReferenceException("NetId does not correspond to an enemy");
+		float positionX = ByteManipulator.ReadSingle (data, 5);
+		float positionY = ByteManipulator.ReadSingle (data, 9);
+		float positionZ = ByteManipulator.ReadSingle (data, 13);
 
-        obj.Pool.Recycle(obj.gameObject);
+		Vector3 position = new Vector3 (positionX, positionY, positionZ);
 
-        EnemiesCount.Value--;
-    }
+		SOPool pool = organizedPools [(int)EnemyType.Normal];
+		//SOPool pool = organizedPools[type];
 
-    private void OnEnemyDown(byte[] data, uint length, CSteamID senderId)
-    {
-        int Id = ByteManipulator.ReadInt32(data, 0);
+		bool parented;
+		int nullObjsRemovedFromPool;
+		GameObject go = pool.DirectGet (poolRoot, position, Quaternion.identity, out nullObjsRemovedFromPool, out parented);
 
-        if (Id >= netEntities.Elements.Count)
-            return;
+		Enemy enemy = go.GetComponent<Enemy> ();
+		enemy.Pool = pool;
+		enemy.NetObj.SetNetworkId (id);
+		enemy.Initializer = EnemyInitializers [(int)type];
+		enemy.Init ((EnemyStats)EnemyStatsPool.Elements [0]); //[type]
 
-        if (!netEntities.Elements.ContainsKey(Id))
-            return;
+		NavMeshHit hit;
+		if (NavMesh.SamplePosition (position, out hit, 1f, Mask))
+			go.GetComponent<NavMeshAgent> ().Warp (hit.position);
 
-        Enemy obj = netEntities[Id].GetComponent<Enemy>();
+		go.SetActive (true);
 
-        if (!obj)
-            throw new NullReferenceException("NetId does not correspond to an enemy");
+		EnemiesCount.Value++;
+	}*/
 
-        obj.Down();
-    }
+	//OnEnemyDeath will be called when command EnemyDeath is received from host
+	private void OnEnemyDeath (byte[] data, uint length, CSteamID senderId)
+	{
+		int Id = ByteManipulator.ReadInt32 (data, 0);
+
+		if (Id >= netEntities.Elements.Count)
+			return;
+
+		if (!netEntities.Elements.ContainsKey (Id))
+			return;
+
+		Enemy obj = netEntities [Id].GetComponent<Enemy> ();
+
+		if (!obj)
+			throw new NullReferenceException ("NetId does not correspond to an enemy");
+
+		//obj.Pool.Recycle (obj.gameObject);
+		enemyPool.Recycle(obj.gameObject);
+
+		EnemiesCount.Value--;
+	}
+
+	private void OnEnemyDown (byte[] data, uint length, CSteamID senderId)
+	{
+		int Id = ByteManipulator.ReadInt32 (data, 0);
+
+		if (Id >= netEntities.Elements.Count)
+			return;
+
+		if (!netEntities.Elements.ContainsKey (Id))
+			return;
+
+		Enemy obj = netEntities [Id].GetComponent<Enemy> ();
+
+		if (!obj)
+			throw new NullReferenceException ("NetId does not correspond to an enemy");
+
+		obj.Down ();
+	}
+
+	class Pool
+	{
+		Dictionary<int, GameObject> objs;
+		GameObject template;
+		Transform root;
+		int index;
+
+		public Pool (GameObject template, Transform root, int preInstanceCount = 0)
+		{
+			objs = new Dictionary<int, GameObject> (PreInstantiedCount);
+			this.template = template;
+			this.root = root;
+			index = 0;
+
+			for (int i = 0; i < preInstanceCount; i++) {
+				objs.Add (i, Instantiate (template, root));
+				objs[i].SetActive(false);
+			}
+		}
+
+		public GameObject Get ()
+		{
+			for (int i = index; i < objs.Count; i++) {
+				if (objs [i].activeSelf == false) {
+					objs [i].SetActive (true);
+					index = i;
+					return objs [i];
+				}
+			}
+
+			for (int i = 0; i < index; i++) {
+				if (objs [i].activeSelf == false) {
+					objs [i].SetActive (true);
+					index = i;
+					return objs [index];
+				}
+			}
+
+			GameObject o = Instantiate (template, root);
+			index = objs.Count;
+			objs.Add (index, o);
+			return o;
+		}
+
+		public void Recycle (GameObject item)
+		{
+			for (int i = 0; i < objs.Count; i++)
+				if (objs [i] == item)
+					objs [i].SetActive (false);
+		}
+
+		public void RecycleAll ()
+		{
+			for (int i = 0; i < objs.Count; i++)
+				objs [i].SetActive (false);
+		}
+	}
 }
