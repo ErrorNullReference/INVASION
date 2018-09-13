@@ -87,7 +87,8 @@ public class StartGameMgr : MonoBehaviour
 
     void ControlStart(byte[] data, uint length, CSteamID sender)
     {
-        SceneManager.sceneLoaded += SetInGame;
+        SceneLoader.OnLoad += SetInGame;
+        //SceneManager.sceneLoaded += SetInGame;
         Client.LeaveCurrentLobby();
         SceneManager.LoadScene(GameSceneId);
     }
@@ -98,7 +99,8 @@ public class StartGameMgr : MonoBehaviour
         Client.SendPacketToHost(emptyArray, 0, 0, PacketType.GameEntered, EP2PSend.k_EP2PSendReliable);
         if (!Client.IsHost)
             Client.SendPacket(emptyArray, 0, 0, PacketType.GameEntered, Client.MyID, Client.MyID, EP2PSend.k_EP2PSendReliable);
-        SceneManager.sceneLoaded -= SetInGame;
+        //SceneManager.sceneLoaded -= SetInGame;
+        SceneLoader.OnLoad -= SetInGame;
     }
 
     void SetStartButtonState()

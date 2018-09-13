@@ -170,7 +170,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4706271542693476}
   - component: {fileID: 137295516586922942}
-  - component: {fileID: 114681892496642142}
   m_Layer: 0
   m_Name: soldato
   m_TagString: Untagged
@@ -819,7 +818,6 @@ GameObject:
   - component: {fileID: 4093854922790838}
   - component: {fileID: 33654271869095554}
   - component: {fileID: 23685060198712148}
-  - component: {fileID: 114328689060472230}
   m_Layer: 0
   m_Name: arma
   m_TagString: Untagged
@@ -1132,7 +1130,7 @@ Transform:
   m_GameObject: {fileID: 1898728920527614}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 14, y: 0, z: 0}
-  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_Children:
   - {fileID: 4132200182330326}
   - {fileID: 4706271542693476}
@@ -2033,8 +2031,9 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: c1d6eefe0c9bc5d4a9a307e48048013e, type: 2}
-  - {fileID: 2100000, guid: ba3abf5f9acc49b469104aaa30900cd6, type: 2}
+  - {fileID: 2100000, guid: f24259f1d240fbf4d9d7b8e9c91a92e9, type: 2}
+  - {fileID: 2100000, guid: 8fd30f027fba18e498c96d0e09f89305, type: 2}
+  - {fileID: 2100000, guid: 54e66b161d2d5844cb7ccee0c0280b91, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2093,28 +2092,6 @@ MonoBehaviour:
   SpeedY: {fileID: 11400000, guid: 0e0956761016a014a88f387b5375eac1, type: 2}
   SpeedX: {fileID: 11400000, guid: 72814ab5f7a2a5245b73db8b74449aea, type: 2}
   SpeedMag: {fileID: 11400000, guid: f21c81459ec668f4ebd802ac3e9e88d3, type: 2}
---- !u!114 &114328689060472230
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1846042375393062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36d3c553b5906447b6084130abfcba6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114681892496642142
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1139599035717838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36d3c553b5906447b6084130abfcba6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114889785051519078
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2140,8 +2117,9 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: c1d6eefe0c9bc5d4a9a307e48048013e, type: 2}
   - {fileID: 2100000, guid: ca57038dcf7125e46b56835317fea2aa, type: 2}
+  - {fileID: 2100000, guid: 8fd30f027fba18e498c96d0e09f89305, type: 2}
+  - {fileID: 2100000, guid: 54e66b161d2d5844cb7ccee0c0280b91, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

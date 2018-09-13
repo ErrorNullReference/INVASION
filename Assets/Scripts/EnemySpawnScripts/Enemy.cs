@@ -21,6 +21,7 @@ public class Enemy : LivingBeing
     HUDHealt hudManager;
     Image healthImage;
     public EnemyStats EnemyStats;
+    public GameObject RadarIndicator;
     bool dead;
 
     public Animator animator { get; set; }
@@ -31,7 +32,6 @@ public class Enemy : LivingBeing
     Collider collider;
     Rigidbody body;
     bool init;
-    DisintegrateEnemyOnDown disintegrate;
     int bodyIndex;
 
     public Action OnDown, OnDeath;
@@ -101,9 +101,8 @@ public class Enemy : LivingBeing
             collider = GetComponent<Collider>();
         collider.enabled = true;
 
-        if (disintegrate == null)
-            disintegrate = GetComponent<DisintegrateEnemyOnDown>();
-        disintegrate.Init();
+        if (RadarIndicator != null)
+            RadarIndicator.SetActive(true);
     }
 
     private void OnDisable()
@@ -174,6 +173,9 @@ public class Enemy : LivingBeing
         if (OnDown != null)
             OnDown.Invoke();
         collider.enabled = false;
+
+        if (RadarIndicator != null)
+            RadarIndicator.SetActive(false);
     }
 
     void FixedUpdate()

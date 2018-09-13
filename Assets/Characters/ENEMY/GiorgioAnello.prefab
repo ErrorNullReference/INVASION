@@ -534,7 +534,6 @@ GameObject:
   - component: {fileID: 4004542302909228}
   - component: {fileID: 33041090827481812}
   - component: {fileID: 23989855984350012}
-  - component: {fileID: 114027957315902554}
   m_Layer: 0
   m_Name: Arma
   m_TagString: Untagged
@@ -1001,7 +1000,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4752930136881362}
   - component: {fileID: 137141893518225042}
-  - component: {fileID: 114739893136262060}
   m_Layer: 0
   m_Name: Soldato
   m_TagString: Untagged
@@ -1251,7 +1249,7 @@ Transform:
   m_GameObject: {fileID: 1067034393262470}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 44, y: 0, z: 0}
-  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_Children:
   - {fileID: 4010285344742712}
   - {fileID: 4752930136881362}
@@ -2033,8 +2031,9 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: c1d6eefe0c9bc5d4a9a307e48048013e, type: 2}
   - {fileID: 2100000, guid: ec8bdc7fe2a90704aa2dd03b29042d49, type: 2}
+  - {fileID: 2100000, guid: 8fd30f027fba18e498c96d0e09f89305, type: 2}
+  - {fileID: 2100000, guid: 54e66b161d2d5844cb7ccee0c0280b91, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2078,17 +2077,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114027957315902554
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1469780127010154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36d3c553b5906447b6084130abfcba6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114566752776383872
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2098,17 +2086,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b96e96a6367a9b4fa43eff1a9c871ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114739893136262060
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1933598313802934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36d3c553b5906447b6084130abfcba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114780542498296282
@@ -2140,8 +2117,9 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: c1d6eefe0c9bc5d4a9a307e48048013e, type: 2}
   - {fileID: 2100000, guid: 12c598e4b4471b742a7a7153a90e0d09, type: 2}
+  - {fileID: 2100000, guid: 8fd30f027fba18e498c96d0e09f89305, type: 2}
+  - {fileID: 2100000, guid: 54e66b161d2d5844cb7ccee0c0280b91, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

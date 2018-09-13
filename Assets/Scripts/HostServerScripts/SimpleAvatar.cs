@@ -9,6 +9,8 @@ public class SimpleAvatar : MonoBehaviour
 
     public PlayerAnimatorController AnimatorController { get; private set; }
 
+    public PlayerController Controller { get; private set; }
+
     //Used by other classes.
     public User UserInfo { get; set; }
 
@@ -24,6 +26,7 @@ public class SimpleAvatar : MonoBehaviour
     {
         ShootSystem = GetComponent<ShootSystem>();     
         AnimatorController = GetComponentInChildren<PlayerAnimatorController>();
+        Controller = GetComponent<PlayerController>();
         Player = GetComponent<Player>();
 
         startPos = endPos = transform.position;
@@ -63,9 +66,9 @@ public class SimpleAvatar : MonoBehaviour
         transform.rotation = Quaternion.Slerp(startRot, endRot, frac);
     }
 
-    public void Shoot()
+    public void Shoot(uint shootType)
     {
-        ShootSystem.Shoot();
+        ShootSystem.Shoot(shootType);
         AnimatorController.Shoot();
     }
 }

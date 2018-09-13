@@ -1,0 +1,160 @@
+fileFormatVersion: 2
+guid: 29dfaf16a2e86954f92e93f9705f3461
+timeCreated: 1536762419
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: briefingTable_bar
+    100002: briefingTable_bar1
+    100004: briefingTable_bar2
+    100006: briefingTable_bar3
+    100008: briefingTable_corner
+    100010: briefingTable_corner1
+    100012: briefingTable_corner2
+    100014: briefingTable_corner3
+    100016: briefingTable_desk
+    100018: briefingTable_desk1
+    100020: briefingTable_desk2
+    100022: briefingTable_desk3
+    100024: briefingTable_hologramDesk
+    100026: briefingTable_holoSphere
+    100028: //RootNode
+    400000: briefingTable_bar
+    400002: briefingTable_bar1
+    400004: briefingTable_bar2
+    400006: briefingTable_bar3
+    400008: briefingTable_corner
+    400010: briefingTable_corner1
+    400012: briefingTable_corner2
+    400014: briefingTable_corner3
+    400016: briefingTable_desk
+    400018: briefingTable_desk1
+    400020: briefingTable_desk2
+    400022: briefingTable_desk3
+    400024: briefingTable_hologramDesk
+    400026: briefingTable_holoSphere
+    400028: //RootNode
+    2100000: MAT_props_tavoloBriefing
+    2300000: briefingTable_bar
+    2300002: briefingTable_bar1
+    2300004: briefingTable_bar2
+    2300006: briefingTable_bar3
+    2300008: briefingTable_corner
+    2300010: briefingTable_corner1
+    2300012: briefingTable_corner2
+    2300014: briefingTable_corner3
+    2300016: briefingTable_desk
+    2300018: briefingTable_desk1
+    2300020: briefingTable_desk2
+    2300022: briefingTable_desk3
+    2300024: briefingTable_hologramDesk
+    2300026: briefingTable_holoSphere
+    3300000: briefingTable_bar
+    3300002: briefingTable_bar1
+    3300004: briefingTable_bar2
+    3300006: briefingTable_bar3
+    3300008: briefingTable_corner
+    3300010: briefingTable_corner1
+    3300012: briefingTable_corner2
+    3300014: briefingTable_corner3
+    3300016: briefingTable_desk
+    3300018: briefingTable_desk1
+    3300020: briefingTable_desk2
+    3300022: briefingTable_desk3
+    3300024: briefingTable_hologramDesk
+    3300026: briefingTable_holoSphere
+    4300000: briefingTable_corner3
+    4300002: briefingTable_corner2
+    4300004: briefingTable_corner1
+    4300006: briefingTable_desk3
+    4300008: briefingTable_desk2
+    4300010: briefingTable_desk1
+    4300012: briefingTable_bar3
+    4300014: briefingTable_bar2
+    4300016: briefingTable_bar1
+    4300018: briefingTable_corner
+    4300020: briefingTable_bar
+    4300022: briefingTable_desk
+    4300024: briefingTable_hologramDesk
+    4300026: briefingTable_holoSphere
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

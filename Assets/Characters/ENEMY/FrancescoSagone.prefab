@@ -110,7 +110,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4990280452271004}
   - component: {fileID: 137635913460893496}
-  - component: {fileID: 114392047271732616}
   m_Layer: 0
   m_Name: soldato2
   m_TagString: Untagged
@@ -766,7 +765,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4942612599090106}
   - component: {fileID: 137407903048329836}
-  - component: {fileID: 114439276630036024}
   m_Layer: 0
   m_Name: soldato1
   m_TagString: Untagged
@@ -874,7 +872,6 @@ GameObject:
   - component: {fileID: 4837836688755650}
   - component: {fileID: 33364898432068432}
   - component: {fileID: 23620385395722116}
-  - component: {fileID: 114615781659874398}
   m_Layer: 0
   m_Name: arma1
   m_TagString: Untagged
@@ -1842,7 +1839,7 @@ Transform:
   m_GameObject: {fileID: 1346663046117946}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 34, y: 0, z: 0}
-  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_Children:
   - {fileID: 4945348397163294}
   - {fileID: 4942612599090106}
@@ -2290,8 +2287,9 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: c1d6eefe0c9bc5d4a9a307e48048013e, type: 2}
-  - {fileID: 2100000, guid: 35f6490a2e8a8ea42aabbc22fa30329d, type: 2}
+  - {fileID: 2100000, guid: f24259f1d240fbf4d9d7b8e9c91a92e9, type: 2}
+  - {fileID: 2100000, guid: 8fd30f027fba18e498c96d0e09f89305, type: 2}
+  - {fileID: 2100000, guid: 54e66b161d2d5844cb7ccee0c0280b91, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2397,28 +2395,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114392047271732616
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1111755892171634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36d3c553b5906447b6084130abfcba6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114439276630036024
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1694198933281534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36d3c553b5906447b6084130abfcba6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114515148710375120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2428,17 +2404,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b96e96a6367a9b4fa43eff1a9c871ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114615781659874398
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1773121608373246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36d3c553b5906447b6084130abfcba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114968496287960416
@@ -2470,8 +2435,9 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: c1d6eefe0c9bc5d4a9a307e48048013e, type: 2}
   - {fileID: 2100000, guid: b9a0277c8753e2f45acb459ba2584178, type: 2}
+  - {fileID: 2100000, guid: 8fd30f027fba18e498c96d0e09f89305, type: 2}
+  - {fileID: 2100000, guid: 54e66b161d2d5844cb7ccee0c0280b91, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2569,8 +2535,9 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: c1d6eefe0c9bc5d4a9a307e48048013e, type: 2}
   - {fileID: 2100000, guid: b9a0277c8753e2f45acb459ba2584178, type: 2}
+  - {fileID: 2100000, guid: 8fd30f027fba18e498c96d0e09f89305, type: 2}
+  - {fileID: 2100000, guid: 54e66b161d2d5844cb7ccee0c0280b91, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

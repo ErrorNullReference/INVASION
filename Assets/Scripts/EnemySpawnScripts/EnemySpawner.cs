@@ -30,6 +30,9 @@ public class EnemySpawner : Factory<byte>
         Client.AddCommand(PacketType.EnemyDown, OnEnemyDown);
         Client.AddCommand(PacketType.EnemySpawn, InstantiateEnemy);
         EnemiesCount.Value = 0;
+
+        for (int i = 0; i < EnemyInitializers.Length; i++)
+            EnemyInitializers[i].InitInstances();
     }
 
     protected override byte ExtractIdentifier(GameObject obj, int i)
