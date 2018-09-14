@@ -22,7 +22,7 @@ public class EnemySpawner : Factory<byte>
 
 	public SOListGenericContainer EnemyStatsPool;
 
-	public GameObject EnemyTemplate;
+	public Enemy EnemyTemplate;
 
 	public EnemyInitializer[] EnemyInitializers;
 
@@ -42,7 +42,7 @@ public class EnemySpawner : Factory<byte>
 			poolRoot.name = "Enemies Root";
 			poolRoot.gameObject.AddComponent<ObjectsRegister> ().Obj = this;
 		}
-		enemyPool = new Pool (EnemyTemplate, poolRoot, PreInstantiedCount);
+		enemyPool = new Pool (EnemyTemplate, poolRoot, new Vector3(-1000, 0, 0), PreInstantiedCount);
 
 		for (int i = 0; i < EnemyInitializers.Length; i++)
 			EnemyInitializers [i].InitInstances ();
@@ -65,20 +65,17 @@ public class EnemySpawner : Factory<byte>
 
 		Vector3 position = new Vector3 (positionX, positionY, positionZ);
 
-		GameObject go = enemyPool.Get ();
+		Enemy go = enemyPool.Get ();
 		go.transform.position = position;
 		go.transform.rotation = Quaternion.identity;
 
-		Enemy enemy = go.GetComponent<Enemy> ();
-		enemy.NetObj.SetNetworkId (id);
-		enemy.Initializer = EnemyInitializers [(int)type];
-		enemy.Init ((EnemyStats)EnemyStatsPool.Elements [0]); //[type]
+		go.NetObj.SetNetworkId (id);
+		go.Initializer = EnemyInitializers [(int)type];
+		go.Init ((EnemyStats)EnemyStatsPool.Elements [0]); //[type]
 
 		NavMeshHit hit;
 		if (NavMesh.SamplePosition (position, out hit, 1f, Mask))
 			go.GetComponent<NavMeshAgent> ().Warp (hit.position);
-
-		go.SetActive (true);
 
 		EnemiesCount.Value++;
 	}
@@ -140,7 +137,7 @@ public class EnemySpawner : Factory<byte>
 			throw new NullReferenceException ("NetId does not correspond to an enemy");
 
 		//obj.Pool.Recycle (obj.gameObject);
-		enemyPool.Recycle(obj.gameObject);
+		enemyPool.Recycle(obj);
 
 		EnemiesCount.Value--;
 	}
@@ -165,59 +162,68 @@ public class EnemySpawner : Factory<byte>
 
 	class Pool
 	{
-		Dictionary<int, GameObject> objs;
-		GameObject template;
+		Dictionary<int, Enemy> objs;
+		Enemy template;
 		Transform root;
 		int index;
+		Vector3 idlePosition;
 
-		public Pool (GameObject template, Transform root, int preInstanceCount = 0)
+		public Pool (Enemy template, Transform root, Vector3 pos, int preInstanceCount = 0)
 		{
-			objs = new Dictionary<int, GameObject> (PreInstantiedCount);
+			objs = new Dictionary<int, Enemy> (PreInstantiedCount);
 			this.template = template;
 			this.root = root;
 			index = 0;
+			idlePosition = pos;
 
 			for (int i = 0; i < preInstanceCount; i++) {
-				objs.Add (i, Instantiate (template, root));
-				objs[i].SetActive(false);
+				objs.Add (i, Instantiate (template, idlePosition, Quaternion.identity, root));
+				objs[i].StartInit();
 			}
 		}
 
-		public GameObject Get ()
+		public Enemy Get ()
 		{
 			for (int i = index; i < objs.Count; i++) {
-				if (objs [i].activeSelf == false) {
-					objs [i].SetActive (true);
+				if (!objs [i].IsActive()) {
+					objs [i].Activate ();
 					index = i;
 					return objs [i];
 				}
 			}
 
 			for (int i = 0; i < index; i++) {
-				if (objs [i].activeSelf == false) {
-					objs [i].SetActive (true);
+				if (!objs [i].IsActive()) {
+					objs [i].Activate ();
 					index = i;
 					return objs [index];
 				}
 			}
 
-			GameObject o = Instantiate (template, root);
+			Enemy o = Instantiate (template, root);
 			index = objs.Count;
 			objs.Add (index, o);
+			objs[index].StartInit();
+			objs [index].Activate ();
+
 			return o;
 		}
 
-		public void Recycle (GameObject item)
+		public void Recycle (Enemy item)
 		{
 			for (int i = 0; i < objs.Count; i++)
-				if (objs [i] == item)
-					objs [i].SetActive (false);
+				if (objs [i] == item) {
+					objs[i].transform.position = idlePosition;
+					objs [i].Deactivate ();
+				}
 		}
 
 		public void RecycleAll ()
 		{
-			for (int i = 0; i < objs.Count; i++)
-				objs [i].SetActive (false);
+			for (int i = 0; i < objs.Count; i++) {
+				objs[i].transform.position = idlePosition;
+				objs [i].Deactivate ();
+			}
 		}
 	}
 }

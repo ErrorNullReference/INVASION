@@ -49,6 +49,9 @@ public class AIGoToTargetUntilOnSight : AIBehaviour
 
 	private void Update ()
 	{
+		if (!owner.Active)
+			return;
+
 		currentCooldownLeftBeforeRecalculation -= Time.deltaTime;
 		if (target != null && currentCooldownLeftBeforeRecalculation <= 0)
 			this.agent.SetDestination (target.position);

@@ -20,6 +20,9 @@ public class AIAggroPlayers : AIVision
 
     private void Update()
     {
+		if (!owner.Active)
+			return;
+
         Player p = possibleTargets.Elements.Count == 0 ? null : possibleTargets[Random.Range(0, possibleTargets.Elements.Count)];
         if (p != null)
             this.currentTarget = p.transform;

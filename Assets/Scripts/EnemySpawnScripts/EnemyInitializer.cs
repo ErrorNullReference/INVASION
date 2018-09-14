@@ -2,100 +2,98 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu()]
+[CreateAssetMenu ()]
 public class EnemyInitializer : ScriptableObject
 {
-    public static int StartInstancesAmount = 3;
-    [SerializeField]
-    public GameObject Body;
-    [HideInInspector]
-    public List<BodyInstanced> BodyInstance;
+	public static int StartInstancesAmount = 3;
+	[SerializeField]
+	public GameObject Body;
+	[HideInInspector]
+	public List<BodyInstanced> BodyInstance;
+	static Vector3 idlePosition = new Vector3 (-1000, 0, 0);
 
-    public struct BodyInstanced
-    {
-        public GameObject Instance;
-        public bool Used;
-    }
+	public struct BodyInstanced
+	{
+		public GameObject Instance;
+		public bool Used;
+	}
 
-    public void InitInstances()
-    {
-        if (BodyInstance == null)
-            BodyInstance = new List<BodyInstanced>();
+	public void InitInstances ()
+	{
+		if (BodyInstance == null)
+			BodyInstance = new List<BodyInstanced> ();
 
-        if (BodyInstance.Count != 0)
-            return;
+		if (BodyInstance.Count != 0)
+			return;
 
-        for (int i = 0; i < StartInstancesAmount; i++)
-        {
-            BodyInstanced b2 = new BodyInstanced();
-            b2.Instance = Instantiate(Body);
-            b2.Instance.hideFlags = HideFlags.HideInHierarchy;
-            b2.Used = false;
-            b2.Instance.SetActive(false);
-            BodyInstance.Add(b2);
-        }
-    }
+		for (int i = 0; i < StartInstancesAmount; i++) {
+			BodyInstanced b2 = new BodyInstanced ();
+			b2.Instance = Instantiate (Body);
+			b2.Instance.hideFlags = HideFlags.HideInHierarchy;
+			b2.Used = false;
+			//b2.Instance.SetActive(false);
+			b2.Instance.transform.position = idlePosition;
+			BodyInstance.Add (b2);
+		}
+	}
 
-    public void Init(Enemy enemy, Transform root, ref int index)
-    {
-        if (BodyInstance == null)
-            BodyInstance = new List<BodyInstanced>();
+	public void Init (Enemy enemy, Transform root, ref int index)
+	{
+		if (BodyInstance == null)
+			BodyInstance = new List<BodyInstanced> ();
 
-        GameObject o = GetBody(ref index);
+		GameObject o = GetBody (ref index);
 
-        o.SetActive(true);
-        o.transform.SetParent(root);
-        o.transform.localPosition = Vector3.zero;
-        o.transform.localRotation = Quaternion.identity;
+		//o.SetActive(true);
+		o.transform.SetParent (root);
+		o.transform.localPosition = Vector3.zero;
+		o.transform.localRotation = Quaternion.identity;
 
-        enemy.animator = o.GetComponent<Animator>();
-        enemy.animController = o.GetComponent<AnimationControllerScript>();
-    }
+		enemy.animator = o.GetComponent<Animator> ();
+		enemy.animator.Play ("Idle");
+		enemy.animController = o.GetComponent<AnimationControllerScript> ();
+	}
 
-    public void Destroy(int index)
-    {
-        for (int i = 0; i < BodyInstance.Count; i++)
-        {
-            if (i == index)
-            {
-                BodyInstanced b = BodyInstance[i];
-                b.Used = false;
-                BodyInstance[i] = b;
-                BodyInstance[i].Instance.transform.SetParent(null);
-                BodyInstance[i].Instance.SetActive(false);
+	public void Destroy (int index)
+	{
+		if (BodyInstance [index].Instance == null)
+			return;
 
-                return;
-            }
-        }
-    }
+		BodyInstanced b = BodyInstance [index];
+		b.Used = false;
+		BodyInstance [index] = b;
+		BodyInstance [index].Instance.transform.SetParent (null);
+		//BodyInstance[i].Instance.SetActive(false);
+		BodyInstance [index].Instance.transform.position = idlePosition;
 
-    GameObject GetBody(ref int index)
-    {
-        for (int i = 0; i < BodyInstance.Count; i++)
-        {
-            if (!BodyInstance[i].Used)
-            {
-                BodyInstanced b = BodyInstance[i];
-                b.Used = true;
-                BodyInstance[i] = b;
-                index = i;
-                return BodyInstance[i].Instance;
-            }
-        }
+		return;
+	}
 
-        BodyInstanced b2 = new BodyInstanced();
-        b2.Instance = Instantiate(Body);
-        b2.Instance.hideFlags = HideFlags.HideInHierarchy;
-        b2.Used = true;
-        BodyInstance.Add(b2);
-        index = BodyInstance.Count - 1;
-        return b2.Instance;
-    }
+	GameObject GetBody (ref int index)
+	{
+		for (int i = 0; i < BodyInstance.Count; i++) {
+			if (!BodyInstance [i].Used) {
+				BodyInstanced b = BodyInstance [i];
+				b.Used = true;
+				BodyInstance [i] = b;
+				index = i;
+				return BodyInstance [i].Instance;
+			}
+		}
 
-    void OnDestroy()
-    {
-        for (int i = 0; i < BodyInstance.Count; i++)
-            Destroy(BodyInstance[i].Instance);
-        BodyInstance.Clear();
-    }
+		BodyInstanced b2 = new BodyInstanced ();
+		b2.Instance = Instantiate (Body);
+		b2.Instance.hideFlags = HideFlags.HideInHierarchy;
+		b2.Used = true;
+		BodyInstance.Add (b2);
+		index = BodyInstance.Count - 1;
+		return b2.Instance;
+	}
+
+	void OnDestroy ()
+	{
+		for (int i = 0; i < BodyInstance.Count; i++)
+			Destroy (BodyInstance [i].Instance);
+		BodyInstance.Clear ();
+	}
 }

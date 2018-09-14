@@ -69,6 +69,9 @@ public class AIShootTillOnSight : AIBehaviour
 
     private void Update()
     {
+		if (!owner.Active)
+			return;
+
         Move();
 
         if (targetToShot != null)

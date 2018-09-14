@@ -15,6 +15,7 @@ public class Brain : MonoBehaviour
 
     [HideInInspector]
     public Enemy enemy;
+	public bool Active;
 
     private void Start()
     {
@@ -36,7 +37,7 @@ public class Brain : MonoBehaviour
         }
     }
 
-    void OnEnable()
+    public void OnEnable()
     {
         if (disableIfClient && !Client.IsHost)
             return;
@@ -83,5 +84,7 @@ public class Brain : MonoBehaviour
         }
 
         currentState = null;
+
+		Active = false;
     }
 }

@@ -6,182 +6,201 @@ using SOPRO;
 using GENUtility;
 using System;
 
-[RequireComponent(typeof(GameNetworkObject))]
+[RequireComponent (typeof(GameNetworkObject))]
 public class Enemy : LivingBeing
 {
-    public EnemyInitializer Initializer;
-    public Transform BodyRoot;
-    public SOVariableEnemyType Type;
-    [NonSerialized]
-    public SOPool Pool;
-    private float HUDTimer, deadTimer;
-    [SerializeField]
-    private float HUDTimerShow;
-    private GameNetworkObject networkId;
-    HUDHealt hudManager;
-    Image healthImage;
-    public EnemyStats EnemyStats;
-    public GameObject RadarIndicator;
-    bool dead;
+	public EnemyInitializer Initializer;
+	public Transform BodyRoot;
+	public SOVariableEnemyType Type;
+	[NonSerialized]
+	public SOPool Pool;
+	private float HUDTimer, deadTimer;
+	[SerializeField]
+	private float HUDTimerShow;
+	private GameNetworkObject networkId;
+	HUDHealt hudManager;
+	Image healthImage;
+	public EnemyStats EnemyStats;
+	public GameObject RadarIndicator;
+	bool dead;
 
-    public Animator animator { get; set; }
+	public Animator animator { get; set; }
 
-    public AnimationControllerScript animController { get; set; }
+	public AnimationControllerScript animController { get; set; }
 
-    Brain brain;
-    Collider collider;
-    Rigidbody body;
-    bool init;
-    int bodyIndex;
+	Brain brain;
+	Collider collider;
+	Rigidbody body;
+	bool init;
+	int bodyIndex;
 
-    public Action OnDown, OnDeath;
+	public Action OnDown, OnDeath;
 
-    public GameNetworkObject NetObj
-    {
-        get
-        {
-            return networkId;
-        }
-    }
+	public bool Active { get; private set; }
 
-    [SerializeField]
-    bool CallDown, ForceInit;
+	public GameNetworkObject NetObj {
+		get {
+			return networkId;
+		}
+	}
 
-    void OnValidate()
-    {
-        if (CallDown)
-        {
-            if (OnDown != null)
-                OnDown.Invoke();
-            CallDown = false;
-        }
+	[SerializeField]
+	bool CallDown, ForceInit;
 
-        if (ForceInit)
-        {
-            ForceInit = false;
-            if (BodyRoot.childCount > 0)
-                Destroy(BodyRoot.GetChild(0).gameObject);
-            if (Initializer != null)
-                Initializer.Init(this, BodyRoot, ref bodyIndex);
-        }
-    }
+	void OnValidate ()
+	{
+		if (CallDown) {
+			if (OnDown != null)
+				OnDown.Invoke ();
+			CallDown = false;
+		}
 
-    private void Start()
-    {
-        if (hudManager == null)
-            hudManager = GetComponentInChildren<HUDHealt>();
-        healthImage = hudManager.GetComponent<Image>();
-        healthImage.enabled = false;
-        brain = GetComponent<Brain>();
-        body = GetComponent<Rigidbody>();
-    }
+		if (ForceInit) {
+			ForceInit = false;
+			if (BodyRoot.childCount > 0)
+				Destroy (BodyRoot.GetChild (0).gameObject);
+			if (Initializer != null)
+				Initializer.Init (this, BodyRoot, ref bodyIndex);
+		}
+	}
 
-    private void Awake()
-    {
-        networkId = GetComponent<GameNetworkObject>();
-    }
+	public void StartInit ()
+	{
+		hudManager = GetComponentInChildren<HUDHealt> ();
+		healthImage = hudManager.GetComponent<Image> ();
+		healthImage.enabled = false;
+		brain = GetComponent<Brain> ();
+		body = GetComponent<Rigidbody> ();
+		collider = GetComponent<Collider> ();
+		networkId = GetComponent<GameNetworkObject> ();
+		Active = false;
+		brain.Active = false;
+	}
 
-    public void Init(EnemyStats stats)
-    {
-        if (Initializer != null)
-            Initializer.Init(this, BodyRoot, ref bodyIndex);
+	private void Awake ()
+	{
+		//networkId = GetComponent<GameNetworkObject> ();
+	}
 
-        EnemyStats = stats;
-        if (hudManager == null)
-            hudManager = GetComponentInChildren<HUDHealt>();
-        hudManager.InputAssetHUD = EnemyStats;
-        life = EnemyStats.MaxHealth;
-        dead = false;
+	public void Init (EnemyStats stats)
+	{
+		if (Initializer != null)
+			Initializer.Init (this, BodyRoot, ref bodyIndex);
 
-        if (animator != null)
-            animator.applyRootMotion = false;
+		EnemyStats = stats;
+		//if (hudManager == null)
+		//    hudManager = GetComponentInChildren<HUDHealt>();
+		hudManager.InputAssetHUD = EnemyStats;
+		life = EnemyStats.MaxHealth;
+		dead = false;
 
-        deadTimer = 0;
-        if (collider == null)
-            collider = GetComponent<Collider>();
-        collider.enabled = true;
+		if (animator != null)
+			animator.applyRootMotion = false;
 
-        if (RadarIndicator != null)
-            RadarIndicator.SetActive(true);
-    }
+		deadTimer = 0;
+		//if (collider == null)
+		//	collider = GetComponent<Collider> ();
+		collider.enabled = true;
 
-    private void OnDisable()
-    {
-        Initializer.Destroy(bodyIndex);
-        networkId.ResetNetworkId();
-    }
+		if (RadarIndicator != null)
+			RadarIndicator.SetActive (true);
 
-    public override void Die()
-    {
-        if (!Client.IsHost)
-            return;
+		brain.Active = true;
+	}
 
-        byte[] d = ArrayPool<byte>.Get(sizeof(int));
-        ByteManipulator.Write(d, 0, networkId.NetworkId);
+	private void OnDisable ()
+	{
+		if (Initializer != null)
+			Initializer.Destroy (bodyIndex);
+		networkId.ResetNetworkId ();
+	}
 
-        if (dead)
-            Client.SendPacketToInGameUsers(d, 0, d.Length, PacketType.EnemyDeath, Steamworks.EP2PSend.k_EP2PSendReliable);
-        else
-            Client.SendPacketToInGameUsers(d, 0, d.Length, PacketType.EnemyDown, Steamworks.EP2PSend.k_EP2PSendReliable);
+	public override void Die ()
+	{
+		if (!Client.IsHost)
+			return;
 
-        ArrayPool<byte>.Recycle(d);
-    }
+		byte[] d = ArrayPool<byte>.Get (sizeof(int));
+		ByteManipulator.Write (d, 0, networkId.NetworkId);
 
-    public override void DecreaseLife(float decrease)
-    {
-        healthImage.enabled = true;
-        HUDTimer = HUDTimerShow;
+		if (dead)
+			Client.SendPacketToInGameUsers (d, 0, d.Length, PacketType.EnemyDeath, Steamworks.EP2PSend.k_EP2PSendReliable);
+		else
+			Client.SendPacketToInGameUsers (d, 0, d.Length, PacketType.EnemyDown, Steamworks.EP2PSend.k_EP2PSendReliable);
 
-        base.DecreaseLife(decrease);
-    }
+		ArrayPool<byte>.Recycle (d);
+	}
 
-    private void Update()
-    {
-        if (HUDTimer > 0)
-        {
-            HUDTimer -= Time.deltaTime;
-            if (HUDTimer <= 0)
-            {
-                healthImage.enabled = false;
-            }
-        }
+	public override void DecreaseLife (float decrease)
+	{
+		healthImage.enabled = true;
+		HUDTimer = HUDTimerShow;
 
-        if (dead && EnemyStats != null)
-        {
-            deadTimer += Time.deltaTime;
-            if (deadTimer >= EnemyStats.DeathTime)
-            {
-                Die();
-                if (OnDeath != null)
-                    OnDeath.Invoke();
-            }
-        }
-    }
+		base.DecreaseLife (decrease);
+	}
 
-    public void Down()
-    {
-        dead = true;
-        deadTimer = 0;
-        if (animator != null)
-        {
-            animator.SetTrigger("Die");
-            animator.SetFloat("Death", UnityEngine.Random.Range(1, 4));
-            animator.applyRootMotion = true;
-        }
-        if (brain != null)
-            brain.ShutDown();
-        if (OnDown != null)
-            OnDown.Invoke();
-        collider.enabled = false;
+	private void Update ()
+	{
+		if (!Active)
+			return;
 
-        if (RadarIndicator != null)
-            RadarIndicator.SetActive(false);
-    }
+		if (HUDTimer > 0) {
+			HUDTimer -= Time.deltaTime;
+			if (HUDTimer <= 0) {
+				healthImage.enabled = false;
+			}
+		}
 
-    void FixedUpdate()
-    {
-        body.velocity = Vector3.zero;
-        body.angularDrag = 0;
-        body.angularVelocity = Vector3.zero;
-    }
+		if (dead && EnemyStats != null) {
+			deadTimer += Time.deltaTime;
+			if (deadTimer >= EnemyStats.DeathTime) {
+				Die ();
+				if (OnDeath != null)
+					OnDeath.Invoke ();
+			}
+		}
+	}
+
+	public void Down ()
+	{
+		dead = true;
+		deadTimer = 0;
+		if (animator != null) {
+			animator.SetTrigger ("Die");
+			animator.SetFloat ("Death", UnityEngine.Random.Range (1, 4));
+			animator.applyRootMotion = true;
+		}
+		if (brain != null)
+			brain.ShutDown ();
+		if (OnDown != null)
+			OnDown.Invoke ();
+		collider.enabled = false;
+
+		if (RadarIndicator != null)
+			RadarIndicator.SetActive (false);
+	}
+
+	void FixedUpdate ()
+	{
+		body.velocity = Vector3.zero;
+		body.angularDrag = 0;
+		body.angularVelocity = Vector3.zero;
+	}
+
+	public bool IsActive ()
+	{
+		return Active;
+	}
+
+	public void Activate ()
+	{
+		Active = true;
+		brain.OnEnable ();
+	}
+
+	public void Deactivate ()
+	{
+		Active = false;
+		OnDisable ();
+	}
 }
