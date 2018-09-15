@@ -392,6 +392,7 @@ public class Client : MonoBehaviour
     public void LeaveLobby()
     {
         CSteamID lobbyID = lobby.LobbyID;
+		SteamMatchmaking.SetLobbyMemberData (Client.Lobby.LobbyID, "AvatrID", "");
         lobby.Reset();
         if (OnLobbyLeaveEvent)
             OnLobbyLeaveEvent.Raise();

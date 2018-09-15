@@ -4532,7 +4532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d1cb89f792d894c961e58756283e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseInputs: 1
+  UseInputs: 0
   speedZ: {fileID: 11400000, guid: 23d50b1dcf3aed748bfde9a704ad84a8, type: 2}
   speedX: {fileID: 11400000, guid: 4c195ab848bc64c4e84dbbce64c4b64f, type: 2}
   shoot: {fileID: 11400000, guid: 577f79ee815855c4aa2b2cf8071b3438, type: 2}

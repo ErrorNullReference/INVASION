@@ -7,105 +7,116 @@ using Steamworks;
 
 public class FollowPlayer : MonoBehaviour
 {
-    public SOListPlayerContainer Players;
-    public ReferenceVector3 Offset;
-    public Vector3 StartOffset, StartRotOffset;
-    public bool Debug;
-    public float PauseDuration, AnimationDuration;
+	public SOListPlayerContainer Players;
+	public ReferenceVector3 Offset;
+	public Vector3 StartOffset, StartRotOffset;
+	public bool Debug;
+	public float PauseDuration, AnimationDuration;
 
-    [NonSerialized]
-    public CSteamID CurrentID;
-    [NonSerialized]
-    public int CurrentIndex;
-    bool onAnimation;
-    float timer, frac;
-    Vector3 startPos;
-    Quaternion startRot, endRot;
-    int state;
+	[NonSerialized]
+	public CSteamID CurrentID;
+	[NonSerialized]
+	public int CurrentIndex;
+	bool onAnimation, initialized;
+	float timer, frac;
+	Vector3 startPos;
+	Quaternion startRot, endRot;
+	int state;
 
-    public void SetFollowLocalPlayer()
-    {
-        if (!Debug)
-        {
-            for (int i = 0; i < Players.Elements.Count; i++)
-            {
-                Player p = Players[i];
-                if (!p.Dead && p.Avatar.UserInfo != null && p.Avatar.UserInfo.SteamID == Client.MyID)
-                {
-                    CurrentID = Client.MyID;
-                    break;
-                }
-            }
-        }
-        else
-        {
-            CurrentIndex = 0;
-        }
-    }
+	public CSteamID SetFollowLocalPlayer ()
+	{
+		if (!Debug) {
+			GetID ();
+		} else {
+			CurrentID = Client.MyID;
+			CurrentIndex = 0;
+		}
 
-    private void Start()
-    {
-        SetFollowLocalPlayer();
-       
-        StartCoroutine(Init());
-    }
+		return CurrentID;
+	}
 
-    IEnumerator Init()
-    {
-        yield return null;
+	CSteamID GetID ()
+	{
+		for (int i = 0; i < Players.Elements.Count; i++) {
+			Player p = Players [i];
+			if (!p.Dead && p.Avatar.UserInfo != null && p.Avatar.UserInfo.SteamID == Client.MyID) {
+				CurrentID = Client.MyID;
+				break;
+			}
+		}
+		return CurrentID;
+	}
 
-        if (!Debug)
-            CurrentIndex = GetIndex();
-        Players[CurrentIndex].Avatar.Controller.Disable();
-        onAnimation = true;
-        timer = 0;
-        startPos = transform.position = Players[CurrentIndex].transform.position + Players[CurrentIndex].transform.forward * StartOffset.z + new Vector3(StartOffset.x, StartOffset.y, 0);
-        endRot = transform.rotation;
-        startRot = transform.rotation = Quaternion.LookRotation((Players[CurrentIndex].transform.position + new Vector3(StartRotOffset.x, StartRotOffset.y, 0) - transform.position).normalized, Vector3.up);
-    }
+	private void Start ()
+	{
+		initialized = false;
+		StartCoroutine (Init ());
+	}
 
-    // Update is called once per frame
-    void LateUpdate()
-    {
-        CurrentIndex = GetIndex();
+	IEnumerator Init ()
+	{
+		yield return null;
 
-        if (state == 0)
-        {
-            timer += Time.deltaTime;
-            if (timer >= PauseDuration)
-            {
-                timer = 0;
-                state = 1;
-            }
-        }
-        else if (state == 1)
-        {
-            timer += Time.deltaTime;
-            frac = timer / AnimationDuration;
-            transform.position = Vector3.Lerp(startPos, Players[CurrentIndex].transform.position + Offset, frac);
-            transform.rotation = Quaternion.Slerp(startRot, endRot, frac);
+		while (SetFollowLocalPlayer () == (CSteamID)0) {
+			yield return null;
+		}
 
-            if (frac >= 1)
-            {
-                timer = 0;
-                state = 2;
-                Players[CurrentIndex].Avatar.Controller.Activate();
-            }
-        }
-        else if (state == 2 && CurrentIndex != -1)
-            transform.position = Players[CurrentIndex].transform.position + Offset;
-    }
+		if (!Debug)
+			CurrentIndex = GetIndex ();
+		Players [CurrentIndex].Avatar.Controller.Disable ();
+		onAnimation = true;
+		timer = 0;
+		startPos = transform.position = Players [CurrentIndex].transform.position + Players [CurrentIndex].transform.forward * StartOffset.z + new Vector3 (StartOffset.x, StartOffset.y, 0);
+		endRot = transform.rotation;
+		startRot = transform.rotation = Quaternion.LookRotation ((Players [CurrentIndex].transform.position + new Vector3 (StartRotOffset.x, StartRotOffset.y, 0) - transform.position).normalized, Vector3.up);
+		initialized = true;
+	}
 
-    int GetIndex()
-    {
-        if (Debug)
-            return 0;
+	// Update is called once per frame
+	void LateUpdate ()
+	{
+		if (!initialized)
+			return;
 
-        for (int i = 0; i < Players.Elements.Count; i++)
-        {
-            if (Players.Elements[i].Avatar.UserInfo != null && Players.Elements[i].Avatar.UserInfo.SteamID == CurrentID)
-                return i;
-        }
-        return -1;
-    }
+		CurrentIndex = GetIndex ();
+		if (CurrentIndex == -1)
+			return;
+
+		if (state == 0) {
+			timer += Time.deltaTime;
+			if (timer >= PauseDuration) {
+				timer = 0;
+				state = 1;
+			}
+		} else if (state == 1) {
+			timer += Time.deltaTime;
+			frac = timer / AnimationDuration;
+			transform.position = Vector3.Lerp (startPos, Players [CurrentIndex].transform.position + Offset, frac);
+			transform.rotation = Quaternion.Slerp (startRot, endRot, frac);
+
+			if (frac >= 1) {
+				timer = 0;
+				state = 2;
+				Players [CurrentIndex].Avatar.Controller.Activate ();
+			}
+		} else if (state == 2 && CurrentIndex != -1)
+			transform.position = Players [CurrentIndex].transform.position + Offset;
+	}
+
+	int GetIndex ()
+	{
+		if (Debug)
+			return 0;
+
+		if (CurrentID == (CSteamID)0) {
+			if (GetID () == (CSteamID)0)
+				return -1;
+		}
+
+		for (int i = 0; i < Players.Elements.Count; i++) {
+			if (Players.Elements [i].Avatar.UserInfo != null && Players.Elements [i].Avatar.UserInfo.SteamID == CurrentID)
+				return i;
+		}
+		return -1;
+	}
 }
