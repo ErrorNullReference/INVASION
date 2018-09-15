@@ -1,0 +1,225 @@
+fileFormatVersion: 2
+guid: fcfea8d724124804f92717b1794ea923
+timeCreated: 1537011926
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Aggancio_prot
+    100002: Base_mappa
+    100004: Base_prot
+    100006: Canna
+    100008: Canna_denti
+    100010: Canna_tondi
+    100012: Corpo
+    100014: Corpo 1
+    100016: Corpo_anteriore
+    100018: Corpo_cono
+    100020: Grilletto
+    100022: Impugnatura
+    100024: Manubri
+    100026: //RootNode
+    100028: Motore
+    100030: Motore_connettore
+    100032: Motore_deco
+    100034: Motore_denti
+    100036: Motore_retro
+    100038: Motore_retro_cono
+    100040: Motore_retrobasso
+    100042: Motore_superiore
+    100044: Protezione
+    100046: Scudo
+    100048: Scudo_anteriore
+    100050: Scudo_centrale
+    100052: Scudo_posteriore
+    100054: Scudo_sfere
+    400000: Aggancio_prot
+    400002: Base_mappa
+    400004: Base_prot
+    400006: Canna
+    400008: Canna_denti
+    400010: Canna_tondi
+    400012: Corpo
+    400014: Corpo 1
+    400016: Corpo_anteriore
+    400018: Corpo_cono
+    400020: Grilletto
+    400022: Impugnatura
+    400024: Manubri
+    400026: //RootNode
+    400028: Motore
+    400030: Motore_connettore
+    400032: Motore_deco
+    400034: Motore_denti
+    400036: Motore_retro
+    400038: Motore_retro_cono
+    400040: Motore_retrobasso
+    400042: Motore_superiore
+    400044: Protezione
+    400046: Scudo
+    400048: Scudo_anteriore
+    400050: Scudo_centrale
+    400052: Scudo_posteriore
+    400054: Scudo_sfere
+    2100000: M_Minigun
+    2300000: Aggancio_prot
+    2300002: Base_mappa
+    2300004: Base_prot
+    2300006: Canna
+    2300008: Canna_denti
+    2300010: Canna_tondi
+    2300012: Corpo 1
+    2300014: Corpo_anteriore
+    2300016: Corpo_cono
+    2300018: Grilletto
+    2300020: Impugnatura
+    2300022: Manubri
+    2300024: Motore
+    2300026: Motore_connettore
+    2300028: Motore_deco
+    2300030: Motore_denti
+    2300032: Motore_retro
+    2300034: Motore_retro_cono
+    2300036: Motore_retrobasso
+    2300038: Motore_superiore
+    2300040: Protezione
+    2300042: Scudo_anteriore
+    2300044: Scudo_centrale
+    2300046: Scudo_posteriore
+    2300048: Scudo_sfere
+    3300000: Aggancio_prot
+    3300002: Base_mappa
+    3300004: Base_prot
+    3300006: Canna
+    3300008: Canna_denti
+    3300010: Canna_tondi
+    3300012: Corpo 1
+    3300014: Corpo_anteriore
+    3300016: Corpo_cono
+    3300018: Grilletto
+    3300020: Impugnatura
+    3300022: Manubri
+    3300024: Motore
+    3300026: Motore_connettore
+    3300028: Motore_deco
+    3300030: Motore_denti
+    3300032: Motore_retro
+    3300034: Motore_retro_cono
+    3300036: Motore_retrobasso
+    3300038: Motore_superiore
+    3300040: Protezione
+    3300042: Scudo_anteriore
+    3300044: Scudo_centrale
+    3300046: Scudo_posteriore
+    3300048: Scudo_sfere
+    4300000: Canna_denti
+    4300002: Base_prot
+    4300004: Base_mappa
+    4300006: Aggancio_prot
+    4300008: Corpo_anteriore
+    4300010: Corpo_cono
+    4300012: Motore_retro_cono
+    4300014: Canna_tondi
+    4300016: Motore_denti
+    4300018: Motore_deco
+    4300020: Motore_retrobasso
+    4300022: Motore_retro
+    4300024: Corpo
+    4300026: Motore
+    4300028: Protezione
+    4300030: Impugnatura
+    4300032: Motore_connettore
+    4300034: Canna
+    4300036: Grilletto
+    4300038: Manubri
+    4300040: Motore_superiore
+    4300042: Scudo_centrale
+    4300044: Scudo_posteriore
+    4300046: Scudo_anteriore
+    4300048: Scudo_sfere
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Minigun
+    second: {fileID: 2100000, guid: f3222e6cf118aef49acfd1dfbbeb1cdb, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 10
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
