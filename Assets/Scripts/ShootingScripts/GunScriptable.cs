@@ -55,9 +55,6 @@ public class GunScriptable : ScriptableObject
 
     public int GunSystem { get { return gunSystem; } }
 
-    //Damage
-    [SerializeField]
-    private float damage;
-
-    public float Damage { get { return damage; } }
+	[SerializeField]
+	public float[] Damage;
 }

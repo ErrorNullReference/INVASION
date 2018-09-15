@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HitEnemy : MonoBehaviour
 {
+	public int DamageId;
     ShootSystem SS;
 
     void Start()
@@ -14,6 +15,6 @@ public class HitEnemy : MonoBehaviour
     void OnParticleCollision(GameObject other)
     {
         if (other.GetComponent<Enemy>() != null)
-            SS.SendHitMessage(other.GetComponent<GameNetworkObject>().NetworkId, SS.gun.values.Damage);
+			SS.SendHitMessage(other.GetComponent<GameNetworkObject>().NetworkId, SS.gun.values.Damage[DamageId]);
     }
 }
