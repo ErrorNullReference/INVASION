@@ -33,6 +33,7 @@ public class Enemy : LivingBeing
 	Rigidbody body;
 	bool init;
 	int bodyIndex;
+	Gun gun;
 
 	public Action OnDown, OnDeath;
 
@@ -75,6 +76,7 @@ public class Enemy : LivingBeing
 		networkId = GetComponent<GameNetworkObject> ();
 		Active = false;
 		brain.Active = false;
+		gun = GetComponentInChildren<Gun> ();
 	}
 
 	private void Awake ()
@@ -106,6 +108,8 @@ public class Enemy : LivingBeing
 			RadarIndicator.SetActive (true);
 
 		brain.Active = true;
+		if (gun != null)
+			gun.Enable ();
 	}
 
 	private void OnDisable ()
@@ -113,6 +117,7 @@ public class Enemy : LivingBeing
 		if (Initializer != null)
 			Initializer.Destroy (bodyIndex);
 		networkId.ResetNetworkId ();
+		gun.Disable ();
 	}
 
 	public override void Die ()

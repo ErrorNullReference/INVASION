@@ -404,6 +404,7 @@ MonoBehaviour:
   disableIfClient: 1
   currentState: {fileID: 0}
   enemy: {fileID: 0}
+  Active: 0
 --- !u!114 &114298185163409534
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -415,11 +416,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aace91807481ad54192f156fa41b214a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PSMuzzle: {fileID: 0}
+  PSMuzzle: {fileID: 198314280279756464, guid: c0ebd9e38b9a8a546bdc22ba5fd054be, type: 2}
   OffsetMuzzle: {x: 0, y: 0, z: 0}
-  PSProjectile: {fileID: 198786467577187732, guid: 1ab4424d1721bfb4ca2c34fd71a006bb,
-    type: 2}
-  OffsetProjectile: {x: 0, y: 0, z: 0}
+  PSProjectile:
+  - {fileID: 198786467577187732, guid: 1ab4424d1721bfb4ca2c34fd71a006bb, type: 2}
+  OffsetProjectile: {x: 0, y: 0, z: 0.5}
   InstantiatePS: 1
   PrefabPool: {fileID: 0}
   values: {fileID: 11400000, guid: e4305df8f3337154a93e1a7800ccb8fc, type: 2}
@@ -630,7 +631,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

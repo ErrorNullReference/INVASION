@@ -751,6 +751,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1946434519043676
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4252102295762888}
+  - component: {fileID: 114293189197294288}
+  m_Layer: 0
+  m_Name: Muzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1951726407773846
 GameObject:
   m_ObjectHideFlags: 1
@@ -1043,6 +1059,19 @@ Transform:
   m_Children:
   - {fileID: 4928711940286902}
   m_Father: {fileID: 4770572476288518}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4252102295762888
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1946434519043676}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.215, y: 0.795, z: 0.012}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4961764553300140}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4252511996886934
@@ -1565,13 +1594,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1762603133368200}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0.08235405, y: 0.047158726, z: -0.20052812, w: 0.9750807}
   m_LocalPosition: {x: -0.016133236, y: 0.11364448, z: 0.02461209}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4252102295762888}
   m_Father: {fileID: 4200087632398980}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -8.146001, y: 7.254, z: -23.759}
 --- !u!4 &4968836129013532
 Transform:
   m_ObjectHideFlags: 1
@@ -1688,6 +1718,17 @@ MonoBehaviour:
   SpeedY: {fileID: 11400000, guid: 0e0956761016a014a88f387b5375eac1, type: 2}
   SpeedX: {fileID: 11400000, guid: 72814ab5f7a2a5245b73db8b74449aea, type: 2}
   SpeedMag: {fileID: 11400000, guid: f21c81459ec668f4ebd802ac3e9e88d3, type: 2}
+--- !u!114 &114293189197294288
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1946434519043676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b96e96a6367a9b4fa43eff1a9c871ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!137 &137713827324298732
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
