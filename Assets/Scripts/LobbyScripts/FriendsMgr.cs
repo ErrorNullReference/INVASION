@@ -5,23 +5,23 @@ using Steamworks;
 
 public class FriendsMgr : MonoBehaviour
 {
-    public Transform FriendsList, Content;
-    public FriendInvite FriendTemplate;
-    public ContentFitter fitter;
-    List<FriendInvite> friends;
-    int currIndex;
+	public Transform FriendsList, Content;
+	public FriendInvite FriendTemplate;
+	public ContentFitter fitter;
+	List<FriendInvite> friends;
+	int currIndex;
 
-    void Start()
-    {
-        SteamCallbackReceiver.LobbyInviteEvent += AcceptInvite;
-    }
+	void Start ()
+	{
+		SteamCallbackReceiver.LobbyInviteEvent += AcceptInvite;
+	}
 
-    void OnDestroy()
-    {
-        SteamCallbackReceiver.LobbyInviteEvent -= AcceptInvite;
-    }
+	void OnDestroy ()
+	{
+		SteamCallbackReceiver.LobbyInviteEvent -= AcceptInvite;
+	}
 
-    void OnEnable()
+	/*void OnEnable()
     {
         OpenFriendsList();
     }
@@ -58,17 +58,17 @@ public class FriendsMgr : MonoBehaviour
     void ClearFriends()
     {
         currIndex = 0;
-    }
+    }*/
 
-    void AcceptInvite(GameLobbyJoinRequested_t cb)
-    {
-        Client.LeaveCurrentLobby();
-        FindObjectOfType<MenuMgr>().ReturnToSelection();
-        SteamAPICall_t request = SteamMatchmaking.JoinLobby((CSteamID)cb.m_steamIDLobby);
-        SteamCallbackReceiver.Set<LobbyEnter_t>(request);
-    }
+	void AcceptInvite (GameLobbyJoinRequested_t cb)
+	{
+		Client.LeaveCurrentLobby ();
+		FindObjectOfType<MenuMgr> ().ReturnToSelection ();
+		SteamAPICall_t request = SteamMatchmaking.JoinLobby ((CSteamID)cb.m_steamIDLobby);
+		SteamCallbackReceiver.Set<LobbyEnter_t> (request);
+	}
 
-    FriendInvite GetFreeFriend()
+	/*FriendInvite GetFreeFriend()
     {
         int index = currIndex;
         if (index >= friends.Count)
@@ -79,5 +79,5 @@ public class FriendsMgr : MonoBehaviour
 
         currIndex++;
         return friends[index];
-    }
+    }*/
 }

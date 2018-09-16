@@ -33,7 +33,7 @@ public class AnimationControllerScript : MonoBehaviour
         if (anim == null)
             return;
 
-        float ang = Vector3.SignedAngle(transform.forward, direction, Vector3.up) * Mathf.Deg2Rad;
+        float ang = Vector3.SignedAngle(forward, direction, Vector3.up) * Mathf.Deg2Rad;
 
         anim.SetFloat(SpeedMag.PropertyName, magnitude);
         anim.SetFloat(SpeedY.PropertyName, Mathf.Cos(ang));

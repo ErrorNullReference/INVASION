@@ -3,112 +3,108 @@ using System.Collections.Generic;
 using UnityEngine;
 using SOPRO;
 
-[RequireComponent(typeof(Animator))]
+[RequireComponent (typeof(Animator))]
 public class PlayerAnimatorController : MonoBehaviour
 {
-    [SerializeField]
-    bool UseInputs;
-    [SerializeField]
-    AnimatorPropertyHolder speedZ, speedX, shoot, death;
-    [SerializeField]
-    float RunTreshold, movementTreshold;
-    Vector3 dir, oldPos, cameraDir, playerDirection;
-    Camera camera;
-    Animator animator;
-    bool active;
+	[SerializeField]
+	bool UseInputs;
+	[SerializeField]
+	AnimatorPropertyHolder speedZ, speedX, shoot, death;
+	[SerializeField]
+	float RunTreshold, movementTreshold;
+	Vector3 dir, oldPos, cameraDir, playerDirection;
+	Camera camera;
+	Animator animator;
+	bool active;
 
-    void Start()
-    {
-        camera = Camera.main;
-        animator = GetComponent<Animator>();
-        active = true;
+	void Start ()
+	{
+		camera = Camera.main;
+		animator = GetComponent<Animator> ();
+		active = true;
 
-        MenuEvents.OnMenuOpen += Disable;
-        MenuEvents.OnMenuClose += Activate;
-    }
+		MenuEvents.OnMenuOpen += Disable;
+		MenuEvents.OnMenuClose += Activate;
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (!active)
-            return;
+	// Update is called once per frame
+	void Update ()
+	{
+		if (!active)
+			return;
 
-        dir = Vector3.zero;
+		dir = Vector3.zero;
 
-        if (UseInputs)
-        {
-            ExtrapolateDirectionWithInputs();
-            if (Input.GetButtonDown(fire1))
-                Shoot();
-        }
-        else
-            ExtrapolateDirectionWithoutInputs();
+		if (UseInputs) {
+			ExtrapolateDirectionWithInputs ();
+			if (Input.GetButtonDown (fire1))
+				Shoot ();
+		} else
+			ExtrapolateDirectionWithoutInputs ();
 
-        animator.SetFloat(speedX, dir.x);
-        animator.SetFloat(speedZ, dir.z);
-    }
+		animator.SetFloat (speedX, dir.x);
+		animator.SetFloat (speedZ, dir.z);
+	}
 
-    private const string horizontal = "Horizontal";
-    private const string vertical = "Vertical";
-    private const string sprint = "Sprint";
-    private const string fire1 = "Fire1";
+	private const string horizontal = "Horizontal";
+	private const string vertical = "Vertical";
+	private const string sprint = "Sprint";
+	private const string fire1 = "Fire1";
 
-    void ExtrapolateDirectionWithInputs()
-    {
-        float x = Input.GetAxis(horizontal);
-        float z = Input.GetAxis(vertical);
+	void ExtrapolateDirectionWithInputs ()
+	{
+		float x = Input.GetAxis (horizontal);
+		float z = Input.GetAxis (vertical);
 
-        if (x != 0 || z != 0)
-        {
-            cameraDir = camera.transform.forward * z + camera.transform.right * x;
-            cameraDir.y = 0;
-            float angle = Mathf.Deg2Rad * Vector3.SignedAngle(transform.forward, cameraDir.normalized, Vector3.up);
-            dir = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
+		if (x != 0 || z != 0) {
+			cameraDir = camera.transform.forward * z + camera.transform.right * x;
+			cameraDir.y = 0;
+			float angle = Mathf.Deg2Rad * Vector3.SignedAngle (transform.forward, cameraDir.normalized, Vector3.up);
+			dir = new Vector3 (Mathf.Sin (angle), 0, Mathf.Cos (angle));
 
-            if (Input.GetButton(sprint))
-                dir *= 2;
-        }
-    }
+			if (Input.GetButton (sprint))
+				dir *= 2;
+		}
+	}
 
-    void ExtrapolateDirectionWithoutInputs()
-    {
-        playerDirection = transform.position - oldPos;
-        oldPos = transform.position;
+	void ExtrapolateDirectionWithoutInputs ()
+	{
+		playerDirection = transform.position - oldPos;
+		oldPos = transform.position;
 
-        float magnitude = playerDirection.magnitude / Time.deltaTime;
-        if (magnitude >= movementTreshold)
-        {
-            float angle = Mathf.Deg2Rad * Vector3.SignedAngle(transform.forward, playerDirection.normalized, Vector3.up);
-            dir = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
+		float magnitude = playerDirection.magnitude / Time.deltaTime;
+		if (magnitude >= movementTreshold) {
+			float angle = Mathf.Deg2Rad * Vector3.SignedAngle (transform.forward, playerDirection.normalized, Vector3.up);
+			dir = new Vector3 (Mathf.Sin (angle), 0, Mathf.Cos (angle));
 
-            if (magnitude >= RunTreshold)
-                dir *= 2;
-        }
-    }
+			//if (magnitude >= RunTreshold)
+			//	dir *= 2;
+		}
+	}
 
-    public void Shoot()
-    {
-        animator.SetTrigger(shoot);
-    }
+	public void Shoot ()
+	{
+		animator.SetTrigger (shoot);
+	}
 
-    public void Die(bool isDead)
-    {
-        animator.SetBool(death, isDead);
-    }
+	public void Die (bool isDead)
+	{
+		animator.SetBool (death, isDead);
+	}
 
-    void Disable()
-    {
-        active = false;
-    }
+	void Disable ()
+	{
+		active = false;
+	}
 
-    void Activate()
-    {
-        active = true;
-    }
+	void Activate ()
+	{
+		active = true;
+	}
 
-    void OnDestroy()
-    {
-        MenuEvents.OnMenuOpen -= Disable;
-        MenuEvents.OnMenuClose -= Activate;
-    }
+	void OnDestroy ()
+	{
+		MenuEvents.OnMenuOpen -= Disable;
+		MenuEvents.OnMenuClose -= Activate;
+	}
 }

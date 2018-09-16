@@ -47,6 +47,7 @@ public class Enemy : LivingBeing
 
 	[SerializeField]
 	bool CallDown, ForceInit;
+	NetObjTransformSync trSync;
 
 	void OnValidate ()
 	{
@@ -77,6 +78,7 @@ public class Enemy : LivingBeing
 		Active = false;
 		brain.Active = false;
 		gun = GetComponentInChildren<Gun> ();
+		trSync = GetComponent<NetObjTransformSync> ();
 	}
 
 	private void Awake ()
@@ -110,6 +112,8 @@ public class Enemy : LivingBeing
 		brain.Active = true;
 		if (gun != null)
 			gun.Enable ();
+		if (trSync != null)
+			trSync.Enable ();
 	}
 
 	private void OnDisable ()
@@ -117,7 +121,10 @@ public class Enemy : LivingBeing
 		if (Initializer != null)
 			Initializer.Destroy (bodyIndex);
 		networkId.ResetNetworkId ();
-		gun.Disable ();
+		if (gun != null)
+			gun.Disable ();
+		if (trSync != null)
+			trSync.Disable ();
 	}
 
 	public override void Die ()

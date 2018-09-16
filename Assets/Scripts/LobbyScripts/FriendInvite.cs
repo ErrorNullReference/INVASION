@@ -23,6 +23,6 @@ public class FriendInvite : MonoBehaviour
     {
         SteamMatchmaking.InviteUserToLobby(Client.Lobby.LobbyID, id);
 
-        mgr.CloseFriendsList();
+        //mgr.CloseFriendsList();
     }
 }

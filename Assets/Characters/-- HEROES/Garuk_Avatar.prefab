@@ -4538,7 +4538,7 @@ MonoBehaviour:
   shoot: {fileID: 11400000, guid: 577f79ee815855c4aa2b2cf8071b3438, type: 2}
   death: {fileID: 11400000, guid: 9e4985d483722cd4fb7356f661d4cb25, type: 2}
   RunTreshold: 0
-  movementTreshold: 0
+  movementTreshold: 1
 --- !u!114 &114171132094751302
 MonoBehaviour:
   m_ObjectHideFlags: 1
