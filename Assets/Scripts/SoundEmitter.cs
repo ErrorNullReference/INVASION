@@ -7,6 +7,9 @@ public class SoundEmitter : MonoBehaviour
 {
     public AudioClip Clip;
     public AudioMixerGroup Mixer;
+    public float Spartialvalue;
+    public float MaxDistnceVolume;
+    public AnimationCurve VolumeCurve;
     private AudioSource soundSource;
 
     private void Awake()
@@ -14,6 +17,9 @@ public class SoundEmitter : MonoBehaviour
         soundSource = gameObject.AddComponent<AudioSource>();
         soundSource.outputAudioMixerGroup = Mixer;
         soundSource.clip = Clip;
+        soundSource.spatialBlend = Spartialvalue;
+        soundSource.maxDistance = MaxDistnceVolume;
+        soundSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, VolumeCurve);
     }
 
     public void EmitSound()
