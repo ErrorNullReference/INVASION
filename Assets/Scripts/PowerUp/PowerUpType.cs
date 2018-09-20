@@ -2,4 +2,5 @@
 {
     Health = 0,
     Energy,
+    Points,
 }

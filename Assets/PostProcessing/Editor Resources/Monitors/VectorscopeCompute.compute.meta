@@ -3,7 +3,8 @@ guid: 45de9ff58691e934c9810dc23de2ba50
 timeCreated: 1459956391
 licenseType: Store
 ComputeShaderImporter:
-  currentAPIMask: 4
+  externalObjects: {}
+  currentAPIMask: 131076
   userData: 
   assetBundleName: 
   assetBundleVariant: 

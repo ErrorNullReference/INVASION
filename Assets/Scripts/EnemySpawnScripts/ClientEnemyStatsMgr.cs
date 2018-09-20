@@ -8,6 +8,8 @@ using GENUtility;
 [CreateAssetMenu(menuName = "Network/EnemyMgr")]
 public class ClientEnemyStatsMgr : ScriptableObject
 {
+    public static float BonuPointsMult;
+
     public ReferenceFloat PlayerDamagePointsMultiplicator;
     public ReferenceInt PlayerKillPointsMultiplicator;
     [SerializeField]
@@ -71,6 +73,11 @@ public class ClientEnemyStatsMgr : ScriptableObject
             }
         }
 
-        PlayersMgr.Players[(CSteamID)shooter].Player.TotalPoints += points; //TODO: rimuovere questo getcomponent
+        PlayersMgr.Players[(CSteamID)shooter].Player.TotalPoints += (int)(points * BonuPointsMult);
+    }
+
+    public static void ResetBonusPoints()
+    {
+        ClientEnemyStatsMgr.BonuPointsMult = 1;
     }
 }

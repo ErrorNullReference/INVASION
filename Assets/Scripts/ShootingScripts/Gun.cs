@@ -19,9 +19,7 @@ public class Gun : MonoBehaviour
     public float AmmoInMagazine;
     public float MaxAmmoStored;
     [SerializeField]
-    SoundEmitter emitter;
-    [SerializeField]
-    SoundEmitter emitter2;
+    SoundEmitter[] emitters;
     Root root;
 
     public void Awake()
@@ -29,8 +27,6 @@ public class Gun : MonoBehaviour
         AmmoReady = values.CurrentAmmoInMag;
         AmmoInMagazine = values.MagCapacity;
         MaxAmmoStored = values.ComplessiveAmmoInMags;
-
-        emitter = GetComponent<SoundEmitter>();
 
         if (GetComponentInParent<Enemy>() != null)
             root = this.gameObject.GetComponentInParent<Enemy>().gameObject.AddComponent<Root>();
@@ -78,9 +74,7 @@ public class Gun : MonoBehaviour
         if (PSProjectile != null && shootType < PSProjectile.Length && PSProjectile[shootType] != null)
             PSProjectile[shootType].Play();
 
-        if (emitter && shootType == 0)
-            emitter.EmitSound();
-        else if (emitter && shootType == 1)
-            emitter2.EmitSound();
+        if (emitters != null && shootType < emitters.Length && emitters[shootType] != null)
+            emitters[shootType].EmitSound();
     }
 }

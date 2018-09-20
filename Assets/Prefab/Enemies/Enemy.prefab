@@ -430,8 +430,8 @@ MonoBehaviour:
   AmmoReady: 0
   AmmoInMagazine: 0
   MaxAmmoStored: 0
-  emitter: {fileID: 0}
-  emitter2: {fileID: 0}
+  emitters:
+  - {fileID: 114709231282908706}
 --- !u!114 &114412088734822778
 MonoBehaviour:
   m_ObjectHideFlags: 1

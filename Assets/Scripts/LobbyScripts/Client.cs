@@ -40,7 +40,8 @@ public enum PacketType : byte
     EnemyShoot,
     PowerUpSpawn,
     PowerUpDespawn,
-    Alive
+    Alive,
+    BonusPoints
 }
 
 public enum PacketOffset
@@ -392,7 +393,7 @@ public class Client : MonoBehaviour
     public void LeaveLobby()
     {
         CSteamID lobbyID = lobby.LobbyID;
-		SteamMatchmaking.SetLobbyMemberData (Client.Lobby.LobbyID, "AvatrID", "");
+        SteamMatchmaking.SetLobbyMemberData(Client.Lobby.LobbyID, "AvatrID", "");
         lobby.Reset();
         if (OnLobbyLeaveEvent)
             OnLobbyLeaveEvent.Raise();
