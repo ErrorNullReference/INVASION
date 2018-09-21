@@ -18,6 +18,7 @@ public class Player : LivingBeing
     public float MaxRessDistance = 10f;
     public float RessTimeMultiplier = 0.2f;
     public float RessHealthPercentage = 0.5f;
+    public float InvincibilityDuration = 10f;
 
     public SOEvBool PlayerAliveStatusChanged;
 
@@ -34,9 +35,11 @@ public class Player : LivingBeing
     [SerializeField]
     private PlayerAnimatorController controller;
 
-    private float timer;
+    private float timer, invTimer;
 
     private float prevLife;
+
+    private bool Invincible;
 
     private void Awake()
     {
@@ -74,6 +77,12 @@ public class Player : LivingBeing
     private void OnDisable()
     {
         allPlayers.Elements.Remove(this);
+    }
+
+    void Update()
+    {
+        if (Invincible)
+            UpdateInvincibility();
     }
 
     protected void LateUpdate()
@@ -180,5 +189,25 @@ public class Player : LivingBeing
     void OnDestroy()
     {
         Client.OnGameEnd -= Die;
+    }
+
+    void ManageInvincibility(byte[] data, uint length, CSteamID id)
+    {
+        Invincible = true;
+        invTimer = InvincibilityDuration;
+    }
+
+    void UpdateInvincibility()
+    {
+        invTimer -= Time.deltaTime;
+        if (invTimer <= 0)
+            Invincible = false;
+    }
+
+    public override void DecreaseLife(float decreaseAmount)
+    {
+        if (Invincible)
+            return;
+        base.DecreaseLife(decreaseAmount);
     }
 }

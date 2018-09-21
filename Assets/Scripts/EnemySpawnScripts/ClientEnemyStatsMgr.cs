@@ -14,6 +14,7 @@ public class ClientEnemyStatsMgr : ScriptableObject
     public ReferenceInt PlayerKillPointsMultiplicator;
     [SerializeField]
     public NetIdDispenser dispenser;
+    public bool SpawnDrop;
     [SerializeField]
     private PowerUpsMgr powUpMgr;
     [SerializeField]
@@ -57,7 +58,7 @@ public class ClientEnemyStatsMgr : ScriptableObject
             points += (int)(enemy.Stats.MaxHealth * PlayerKillPointsMultiplicator);
 
             //only if this is host spawn energy power up
-            if (Client.IsHost)
+            if (SpawnDrop && Client.IsHost)
             {
                 Vector3 position = enemy.transform.position;
 

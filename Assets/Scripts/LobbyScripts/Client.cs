@@ -41,7 +41,9 @@ public enum PacketType : byte
     PowerUpSpawn,
     PowerUpDespawn,
     Alive,
-    BonusPoints
+    BonusPoints,
+    Invincibility,
+    Nuke
 }
 
 public enum PacketOffset
@@ -257,10 +259,14 @@ public class Client : MonoBehaviour
     /// </summary>
     /// <typeparam name="T">type</typeparam>
     /// <param name="command">The method to link to the PacketType</param>
-    public static void AddCommand(PacketType commandType, Command command)
+    public static bool AddCommand(PacketType commandType, Command command)
     {
         if (instance != null)
+        {
             instance.AddCommands(commandType, command);
+            return true;
+        }
+        return false;
     }
 
     void Update()

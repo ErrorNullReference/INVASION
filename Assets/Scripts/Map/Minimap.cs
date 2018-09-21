@@ -12,7 +12,6 @@ public class Minimap : MonoBehaviour
     public Vector2 MapSize, WorldSize;
     Transform Player;
     Vector3 startPos;
-    Vector2 mapStartPos;
     float multX, multY;
 
     // Use this for initialization
@@ -29,8 +28,7 @@ public class Minimap : MonoBehaviour
 
         camera.transform.position = Player.transform.position + new Vector3(0, 90, 0);
         camera.transform.eulerAngles = new Vector3(90, 180, 0);
-        startPos = camera.transform.position;
-        mapStartPos = Map.transform.position;
+        startPos = new Vector3(0, 90, 0);
 
         multX = MapSize.x / WorldSize.x;
         multY = MapSize.y / WorldSize.y;
@@ -43,15 +41,12 @@ public class Minimap : MonoBehaviour
             return;
 
         camera.transform.position = Player.transform.position + new Vector3(0, 90, 0);
-        Vector3 pos = startPos - camera.transform.position;
-        Map.transform.position = mapStartPos - Convert(pos);
+        Vector3 pos = camera.transform.position - startPos;
+        Map.rectTransform.anchoredPosition = Convert(pos);
     }
 
     Vector2 Convert(Vector3 pos)
     {
-        multX = MapSize.x / WorldSize.x;
-        multY = MapSize.y / WorldSize.y;
-
         Vector2 p = new Vector2(pos.x * multX, pos.z * multY);
         return p;
     }

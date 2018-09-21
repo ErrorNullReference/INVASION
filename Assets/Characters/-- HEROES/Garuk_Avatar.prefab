@@ -1928,7 +1928,7 @@ Transform:
   m_GameObject: {fileID: 1577184342525492}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 10, z: 0}
-  m_LocalScale: {x: 5, y: 1, z: 5}
+  m_LocalScale: {x: 3, y: 1, z: 3}
   m_Children: []
   m_Father: {fileID: 4439483133073204}
   m_RootOrder: 3
@@ -2399,7 +2399,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1019256894548494}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.01, z: 0}
   m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_Children:
   - {fileID: 4948517699157010}
@@ -4037,7 +4037,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 768c376c1e6c7f44faafed89e0598401, type: 2}
+  - {fileID: 2100000, guid: 023862bc813ec0b498aee0bd45d08a3e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4347,6 +4347,7 @@ MonoBehaviour:
   MaxRessDistance: 10
   RessTimeMultiplier: 0.2
   RessHealthPercentage: 0.5
+  InvincibilityDuration: 10
   PlayerAliveStatusChanged: {fileID: 11400000, guid: 19c5cfa168636f147a93e63cfc145108,
     type: 2}
   playerCollider: {fileID: 136090499689449816}

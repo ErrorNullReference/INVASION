@@ -9,6 +9,7 @@ public class Chat : MonoBehaviour
 {
     public Text Text;
     public InputField InputField;
+    public Fade Panel;
     private byte[] inputData;
     StringBuilder builder;
     bool justClosed;
@@ -16,15 +17,30 @@ public class Chat : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Client.AddCommand(PacketType.Chat, ReceiveChatMessage);
-        Client.AddCommand(PacketType.ServerChat, ReceiveServerChatMessage);
+        if (Client.AddCommand(PacketType.Chat, ReceiveChatMessage))
+            Client.AddCommand(PacketType.ServerChat, ReceiveServerChatMessage);
+        else
+            StartCoroutine(Init());
         builder = new StringBuilder();
+    }
+
+    IEnumerator Init()
+    {
+        bool initialized = false;
+
+        do
+        {
+            yield return null;
+            initialized = Client.AddCommand(PacketType.Chat, ReceiveChatMessage);
+            Client.AddCommand(PacketType.ServerChat, ReceiveServerChatMessage);
+        } while (!initialized);
     }
 
     void OnEnable()
     {
         Text.text = "";
         InputField.text = "";
+        Panel.FadeDown();
     }
 
     void Update()
@@ -36,6 +52,7 @@ public class Chat : MonoBehaviour
                 InputField.gameObject.SetActive(true);
                 InputField.Select();
                 InputField.ActivateInputField();
+                Panel.FadeUp();
                 if (MenuEvents.OnMenuOpen != null)
                     MenuEvents.OnMenuOpen.Invoke();
             }
@@ -53,6 +70,7 @@ public class Chat : MonoBehaviour
         }
         InputField.text = "";
         InputField.gameObject.SetActive(false);
+        Panel.FadeDown();
         justClosed = true;
         if (MenuEvents.OnMenuClose != null)
             MenuEvents.OnMenuClose.Invoke();
@@ -60,7 +78,11 @@ public class Chat : MonoBehaviour
 
     void ReceiveChatMessage(byte[] data, uint length, CSteamID sender)
     {
-        string name = SteamFriends.GetFriendPersonaName(sender);
+        string name;
+        if (Client.instance.DebugOverride)
+            name = "Debug";
+        else
+            name = SteamFriends.GetFriendPersonaName(sender);
         string message = Encoding.UTF8.GetString(data, 0, (int)length);
 
         builder.Remove(0, builder.ToString().Length);

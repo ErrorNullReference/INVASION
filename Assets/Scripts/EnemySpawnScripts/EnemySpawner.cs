@@ -28,7 +28,7 @@ public class EnemySpawner : Factory<byte>
 
     private Transform poolRoot;
 
-    private Pool enemyPool;
+    public Pool enemyPool;
 
     public void Init()
     {
@@ -162,9 +162,10 @@ public class EnemySpawner : Factory<byte>
         obj.Down();
     }
 
-    class Pool
+    public class Pool
     {
-        Dictionary<int, Enemy> objs;
+        public Dictionary<int, Enemy> objs { get; private set; }
+
         Enemy template;
         Transform root;
         int index;
