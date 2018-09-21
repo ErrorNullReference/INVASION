@@ -30,7 +30,7 @@ public class HostEnemySpawner : MonoBehaviour
     bool continuousCoroutineStarted;*/
     private int NumEnemiesToSpawn;
     private Vector3 spawnPos;
-    private static readonly BytePacket idAndPos = new BytePacket(17);
+    private static readonly BytePacket idAndPos = new BytePacket(18);
     private static readonly byte[] emptyArray = new byte[0];
     // Use this for initialization
     void Start()
@@ -92,6 +92,7 @@ public class HostEnemySpawner : MonoBehaviour
         idAndPos.CurrentSeek = 0;
 
         idAndPos.Write((byte)type);
+        idAndPos.Write((byte)0);
         idAndPos.Write(Id);
         idAndPos.Write(position.x);
         idAndPos.Write(position.y);
@@ -111,6 +112,7 @@ public class HostEnemySpawner : MonoBehaviour
         idAndPos.CurrentSeek = 0;
 
         idAndPos.Write((byte)type);
+        idAndPos.Write((byte)0);
         idAndPos.Write(Id);
         idAndPos.Write(position.x);
         idAndPos.Write(position.y);

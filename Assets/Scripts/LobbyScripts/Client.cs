@@ -40,7 +40,10 @@ public enum PacketType : byte
     EnemyShoot,
     PowerUpSpawn,
     PowerUpDespawn,
-    Alive
+    Alive,
+    BonusPoints,
+    Invincibility,
+    Nuke
 }
 
 public enum PacketOffset
@@ -256,10 +259,14 @@ public class Client : MonoBehaviour
     /// </summary>
     /// <typeparam name="T">type</typeparam>
     /// <param name="command">The method to link to the PacketType</param>
-    public static void AddCommand(PacketType commandType, Command command)
+    public static bool AddCommand(PacketType commandType, Command command)
     {
         if (instance != null)
+        {
             instance.AddCommands(commandType, command);
+            return true;
+        }
+        return false;
     }
 
     void Update()
@@ -392,7 +399,7 @@ public class Client : MonoBehaviour
     public void LeaveLobby()
     {
         CSteamID lobbyID = lobby.LobbyID;
-		SteamMatchmaking.SetLobbyMemberData (Client.Lobby.LobbyID, "AvatrID", "");
+        SteamMatchmaking.SetLobbyMemberData(Client.Lobby.LobbyID, "AvatrID", "");
         lobby.Reset();
         if (OnLobbyLeaveEvent)
             OnLobbyLeaveEvent.Raise();

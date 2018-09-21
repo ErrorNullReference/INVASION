@@ -29,7 +29,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1375845714248914
 GameObject:
   m_ObjectHideFlags: 1
@@ -285,7 +285,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxAlpha: 100
-  MinAlpha: 0
+  MinAlpha: 10
+  OnPointer: 0
 --- !u!114 &114583675236211978
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -372,7 +373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -422,6 +423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Text: {fileID: 114659627701564208}
   InputField: {fileID: 114583675236211978}
+  Panel: {fileID: 114367324035199282}
 --- !u!222 &222276208524202504
 CanvasRenderer:
   m_ObjectHideFlags: 1

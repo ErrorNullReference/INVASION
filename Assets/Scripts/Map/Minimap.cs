@@ -7,20 +7,16 @@ using SOPRO;
 public class Minimap : MonoBehaviour
 {
     public Camera camera;
-    public RawImage PlayerView;
-    public Shader unlitShader;
+    public RawImage Map;
     public SOListPlayerContainer Players;
-    public float LerpSpeed;
-    public bool RotateCamera, RotateView;
+    public Vector2 MapSize, WorldSize;
     Transform Player;
-    Vector3 offset;
-    Quaternion startRot;
+    Vector3 startPos;
+    float multX, multY;
 
     // Use this for initialization
     void Start()
     {
-        offset = camera.transform.position;
-
         for (int i = 0; i < Players.Elements.Count; i++)
         {
             if (Players[i].Avatar.UserInfo != null && Players[i].Avatar.UserInfo.SteamID == Client.MyID)
@@ -30,32 +26,28 @@ public class Minimap : MonoBehaviour
             }
         }
 
-        Quaternion rotation = Quaternion.Euler(new Vector3(0, Camera.main.transform.eulerAngles.y, 0));
-        Vector3 forward = rotation * new Vector3(0, 0, 1);
+        camera.transform.position = Player.transform.position + new Vector3(0, 90, 0);
+        camera.transform.eulerAngles = new Vector3(90, 180, 0);
+        startPos = new Vector3(0, 90, 0);
 
-        startRot = Quaternion.LookRotation(forward);
-        camera.transform.rotation = startRot * Quaternion.Euler(90, 0, 0);
-        PlayerView.transform.rotation = startRot;
-    }
-
-    void OnValidate()
-    {
-        if (!RotateCamera)
-            camera.transform.rotation = startRot * Quaternion.Euler(90, 0, 0);
-        else
-            PlayerView.transform.rotation = Quaternion.Euler(0, startRot.eulerAngles.y, 0);
+        multX = MapSize.x / WorldSize.x;
+        multY = MapSize.y / WorldSize.y;
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if (Player == null)
             return;
 
-        camera.transform.position = Player.position + offset;
-        if (RotateCamera)
-            camera.transform.rotation = Quaternion.Slerp(camera.transform.rotation, Quaternion.Euler(90, Player.eulerAngles.y, 0), Time.deltaTime * LerpSpeed);
-        else if (RotateView)
-            PlayerView.transform.rotation = Quaternion.Slerp(PlayerView.transform.rotation, Quaternion.Euler(0, 0, -Player.eulerAngles.y + startRot.eulerAngles.y), Time.deltaTime * LerpSpeed);
+        camera.transform.position = Player.transform.position + new Vector3(0, 90, 0);
+        Vector3 pos = camera.transform.position - startPos;
+        Map.rectTransform.anchoredPosition = Convert(pos);
+    }
+
+    Vector2 Convert(Vector3 pos)
+    {
+        Vector2 p = new Vector2(pos.x * multX, pos.z * multY);
+        return p;
     }
 }

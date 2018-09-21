@@ -8,10 +8,13 @@ using GENUtility;
 [CreateAssetMenu(menuName = "Network/EnemyMgr")]
 public class ClientEnemyStatsMgr : ScriptableObject
 {
+    public static float BonuPointsMult;
+
     public ReferenceFloat PlayerDamagePointsMultiplicator;
     public ReferenceInt PlayerKillPointsMultiplicator;
     [SerializeField]
     public NetIdDispenser dispenser;
+    public bool SpawnDrop;
     [SerializeField]
     private PowerUpsMgr powUpMgr;
     [SerializeField]
@@ -55,7 +58,7 @@ public class ClientEnemyStatsMgr : ScriptableObject
             points += (int)(enemy.Stats.MaxHealth * PlayerKillPointsMultiplicator);
 
             //only if this is host spawn energy power up
-            if (Client.IsHost)
+            if (SpawnDrop && Client.IsHost)
             {
                 Vector3 position = enemy.transform.position;
 
@@ -71,6 +74,11 @@ public class ClientEnemyStatsMgr : ScriptableObject
             }
         }
 
-        PlayersMgr.Players[(CSteamID)shooter].Player.TotalPoints += points; //TODO: rimuovere questo getcomponent
+        PlayersMgr.Players[(CSteamID)shooter].Player.TotalPoints += (int)(points * BonuPointsMult);
+    }
+
+    public static void ResetBonusPoints()
+    {
+        ClientEnemyStatsMgr.BonuPointsMult = 1;
     }
 }

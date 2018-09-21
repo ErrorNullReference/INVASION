@@ -19,7 +19,8 @@ public class SoundEmitter : MonoBehaviour
         soundSource.clip = Clip;
         soundSource.spatialBlend = Spartialvalue;
         soundSource.maxDistance = MaxDistnceVolume;
-        soundSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, VolumeCurve);
+        if (VolumeCurve.length != 0)
+            soundSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, VolumeCurve);
     }
 
     public void EmitSound()
