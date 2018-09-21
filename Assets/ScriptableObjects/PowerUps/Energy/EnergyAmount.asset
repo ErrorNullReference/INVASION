@@ -1,15 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50aa3f5a569f83140a6a26197107dd2f, type: 3}
-  m_Name: EnergyAmount
-  m_EditorClassIdentifier: 
-  DEBUG_DeveloperDescription: 
-  Value: 5
+version https://git-lfs.github.com/spec/v1
+oid sha256:a38617ed7dddae243ac46c7cabea6255d3ff3d7ad610ba6e5534cd034f78670f
+size 408
