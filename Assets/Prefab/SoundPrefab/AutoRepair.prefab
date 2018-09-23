@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4285245883960566}
   - component: {fileID: 82502153341600634}
+  - component: {fileID: 114412422143716832}
   m_Layer: 0
   m_Name: AutoRepair
   m_TagString: Untagged
@@ -121,3 +122,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &114412422143716832
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1543070131471044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f39f76fc07323d49827785d3e41060f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Clip: {fileID: 0}
+  Mixer: {fileID: 243356468987160944, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
+  Spartialvalue: 0
+  MaxDistnceVolume: 0
+  VolumeCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

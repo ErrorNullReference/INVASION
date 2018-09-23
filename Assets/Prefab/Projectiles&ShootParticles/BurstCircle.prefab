@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4593083176952030}
   - component: {fileID: 198849084522378586}
   - component: {fileID: 199060968311358662}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4695518802147234}
   - component: {fileID: 198483313829271234}
   - component: {fileID: 199490477765326570}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: BurstCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

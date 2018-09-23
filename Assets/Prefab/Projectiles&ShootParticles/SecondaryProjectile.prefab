@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4137890175513686}
   - component: {fileID: 198625330877277288}
   - component: {fileID: 199608874502499776}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ShootCloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 198985246371752230}
   - component: {fileID: 199101540106188322}
   - component: {fileID: 114737550965616890}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SecondaryProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

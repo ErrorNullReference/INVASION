@@ -62,10 +62,10 @@ public class HostEnemySpawner : MonoBehaviour
         {
             for (int i = 0; i < NumEnemiesToSpawn; i++)
             {
-                if (EnemySpawner != null)
-                    InstantiateEnemy(Random.Range(0, EnemySpawner.EnemyInitializers.Length), AllSpawnPointsOutsideView.Elements[Random.Range(0, AllSpawnPointsOutsideView.Elements.Count)]);
+                if (EnemySpawner == null)
+                    InstantiateEnemy(Random.Range(0, EnemySpawner.EnemyInitializers.Length), 0, AllSpawnPointsOutsideView.Elements[Random.Range(0, AllSpawnPointsOutsideView.Elements.Count)]);
                 else
-                    InstantiateEnemy(EnemySpawnGraph.GetEnemyType(), AllSpawnPointsOutsideView.Elements[Random.Range(0, AllSpawnPointsOutsideView.Elements.Count)]);
+					InstantiateEnemy(Random.Range(0, EnemySpawner.EnemyInitializers.Length), EnemySpawnGraph.GetEnemyType(), AllSpawnPointsOutsideView.Elements[Random.Range(0, AllSpawnPointsOutsideView.Elements.Count)]);
             }
         }
     }
@@ -81,7 +81,7 @@ public class HostEnemySpawner : MonoBehaviour
     }
 
     //sends to clients the command to instantiate an enemy in a given position, or it takes a random position from an array of randomic given positions if none is specified
-    public void InstantiateEnemy(EnemyType type, Vector3 position)
+	public void InstantiateEnemy(int type, EnemyType statsType, Vector3 position)
     {
         if (CurrentEnemyCount >= MaxEnemyCount)
             return;
@@ -92,7 +92,7 @@ public class HostEnemySpawner : MonoBehaviour
         idAndPos.CurrentSeek = 0;
 
         idAndPos.Write((byte)type);
-        idAndPos.Write((byte)0);
+		idAndPos.Write((byte)statsType);
         idAndPos.Write(Id);
         idAndPos.Write(position.x);
         idAndPos.Write(position.y);

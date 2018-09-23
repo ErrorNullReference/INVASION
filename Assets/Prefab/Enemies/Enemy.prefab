@@ -464,6 +464,7 @@ MonoBehaviour:
   minCooldownBetweenShoots: 0.15
   maxCooldownBetweenShoots: 0.3
   cooldownBeforeRecalculation: 1
+  SuccessPercentage: 100
   shootSync: {fileID: 0}
   targetLost: {fileID: 0}
   goToPlayer: {fileID: 0}

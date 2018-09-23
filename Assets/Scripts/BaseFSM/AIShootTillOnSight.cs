@@ -26,6 +26,9 @@ public class AIShootTillOnSight : AIBehaviour
     [SerializeField]
     private float cooldownBeforeRecalculation;
     private float currentCooldownLeftBeforeRecalculation;
+	[SerializeField]
+	[Range(0,100)]
+	private int SuccessPercentage;
 
     private Player targetToShot;
 
@@ -121,23 +124,27 @@ public class AIShootTillOnSight : AIBehaviour
             return;
         }
 
-        RaycastHit hit;
-        Vector3 currentPos = transform.position;
-        Vector3 dir = (targetToShot.transform.position - currentPos).normalized;
-        Transform shot = null;
+		int r = UnityEngine.Random.Range (0, 101);
+		if (r <= SuccessPercentage)
+		{
+	        RaycastHit hit;
+	        Vector3 currentPos = transform.position;
+	        Vector3 dir = (targetToShot.transform.position - currentPos).normalized;
+	        Transform shot = null;
 
 
-        if (Physics.Raycast(currentPos + new Vector3(0, 0.5f, 0), dir, out hit, maxViewDistance, targetLayerMask))
-            shot = hit.collider.transform.root;
+	        if (Physics.Raycast(currentPos + new Vector3(0, 0.5f, 0), dir, out hit, maxViewDistance, targetLayerMask))
+	            shot = hit.collider.transform.root;
 
-        if (!shot || shot != targetToShot.transform)
-        {
-            owner.SwitchState(targetLost);
-            return;
-        }
+	        if (!shot || shot != targetToShot.transform)
+	        {
+	            owner.SwitchState(targetLost);
+	            return;
+	        }
 
-        targetToShot.DecreaseLife(owner.enemy != null ? ((EnemyStats)owner.enemy.Stats).Damage : 1);
-        transform.LookAt(shot, Vector3.up);
+	        targetToShot.DecreaseLife(owner.enemy != null ? ((EnemyStats)owner.enemy.Stats).Damage : 1);
+	        transform.LookAt(shot, Vector3.up);
+		}
 
         ResetShootCooldown();
         if (shootSync != null)

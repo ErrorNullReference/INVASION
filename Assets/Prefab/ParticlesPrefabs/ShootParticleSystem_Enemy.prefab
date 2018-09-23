@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4029061327840594}
   - component: {fileID: 198786467577187732}
   - component: {fileID: 199689327446808756}
-  m_Layer: 0
-  m_Name: ShootParticleSystem
+  m_Layer: 18
+  m_Name: ShootParticleSystem_Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
