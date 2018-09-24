@@ -5,6 +5,7 @@ using UnityEngine;
 public class CreateUserInfo : MonoBehaviour
 {
     public UserInfo Template;
+	public bool MyPlayer;
 
     // Use this for initialization
     void Start()
@@ -16,6 +17,10 @@ public class CreateUserInfo : MonoBehaviour
         int count = UserInfo.Count;
 
         UserInfo info = Instantiate(Template);
-        info.Create(avatar.UserInfo.SteamID, new Vector2(0.7f, 0.7f));
+
+		float size = 0.7f;
+		if (MyPlayer)
+			size = 1;
+		info.Create(avatar.UserInfo.SteamID, new Vector2(size, size), MyPlayer);
     }
 }

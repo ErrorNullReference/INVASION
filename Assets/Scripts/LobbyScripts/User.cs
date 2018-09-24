@@ -7,6 +7,7 @@ public class User
 {
     public CSteamID SteamID;
     public int AvatarID;
+	public bool InGame;
 
     public Texture2D SteamAvatarImage { get; private set; }
 

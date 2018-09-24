@@ -18,21 +18,17 @@ public class UserInfo : MonoBehaviour
     [SerializeField]
     [Range(0, 1)]
     private float XOffset;
-    public bool MyPlayer;
     private Vector2 rootOffset;
     private Vector3 size;
 
-    public static int Count;
+    public static int Count = 1;
 
     void Start()
     {
-        if (MyPlayer)
-            ID = Client.MyID;
-
         Client.OnUserDisconnected += DestroyOnDisconnection;
     }
 
-    public void Create(CSteamID id, Vector2 size)
+    public void Create(CSteamID id, Vector2 size, bool myPlayer)
     {
         Count++;
         this.ID = id;
@@ -41,12 +37,15 @@ public class UserInfo : MonoBehaviour
         YOffset = YOffset * (float)Screen.height;
         XOffset = XOffset * (float)Screen.height;
         SetScale(size);
-        CalculatePosition();
+		CalculatePosition(myPlayer);
     }
 
-    void CalculatePosition()
+    void CalculatePosition(bool myPlayer)
     {
-        SetPosition(new Vector2(XOffset, Screen.height - YOffset - UserInfo.Count * (Height * size.y)));
+		if(myPlayer)
+			SetPosition(new Vector2(XOffset, Screen.height - YOffset));
+		else
+      	  	SetPosition(new Vector2(XOffset, Screen.height - YOffset - UserInfo.Count * (Height * size.y)));
     }
 
     public void SetPosition(Vector2 position)
@@ -73,5 +72,6 @@ public class UserInfo : MonoBehaviour
     void OnDestroy()
     {
         Client.OnUserDisconnected -= DestroyOnDisconnection;
+		Count--;
     }
 }

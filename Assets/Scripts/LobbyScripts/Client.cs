@@ -217,6 +217,7 @@ public class Client : MonoBehaviour
             OnGameEntered.Raise();
 
         clientEnteredGameCount++;
+		GetUser (sender).InGame = true;
 
         if (Client.IsHost && clientEnteredGameCount == Users.Count)
             Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.GameStart, EP2PSend.k_EP2PSendReliable, true);

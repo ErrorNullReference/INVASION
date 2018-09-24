@@ -251,6 +251,7 @@ GameObject:
   - component: {fileID: 114307799888627160}
   - component: {fileID: 114049257899219866}
   - component: {fileID: 81516665074857422}
+  - component: {fileID: 114892728547836870}
   m_Layer: 8
   m_Name: Garuk_Controllable
   m_TagString: Untagged
@@ -4666,6 +4667,19 @@ MonoBehaviour:
   allPlayers: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
   avatar: {fileID: 114941016981980114}
   controller: {fileID: 114791341793257250}
+--- !u!114 &114892728547836870
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1202159223904248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2f0db7cf4f6c4b4483626eff14a86a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Template: {fileID: 114944951730026662, guid: 9274518f874485f49802466b850fe0bf, type: 2}
+  MyPlayer: 1
 --- !u!114 &114902421573151712
 MonoBehaviour:
   m_ObjectHideFlags: 1
