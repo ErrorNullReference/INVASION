@@ -15,6 +15,7 @@ public class ShootSystem : MonoBehaviour
 	private Ray ray;
 	private float recoilTime;
 	private static readonly byte[] emptyArray = new byte[0];
+	bool menuOpen;
 
 	SimpleAvatar avatar;
 
@@ -24,6 +25,19 @@ public class ShootSystem : MonoBehaviour
 		raycastHit = new RaycastHit ();
 		avatar = GetComponent<SimpleAvatar> ();
 		ray = new Ray ();
+	}
+
+	void Start ()
+	{
+		MenuEvents.OnMenuOpen += () => menuOpen = true;
+		MenuEvents.OnMenuClose += () => menuOpen = false;
+	}
+
+	void OnDestroy ()
+	{
+
+		MenuEvents.OnMenuOpen -= () => menuOpen = true;
+		MenuEvents.OnMenuClose -= () => menuOpen = false;
 	}
 
 	void CallShoot (uint shootIndex)
@@ -77,6 +91,9 @@ public class ShootSystem : MonoBehaviour
 
 	void Update ()
 	{
+		if (menuOpen)
+			return;
+
 		//different beheaviour with number
 		recoilTime -= Time.deltaTime;
 		if (Input.GetButtonDown ("Fire1") && recoilTime <= 0) {

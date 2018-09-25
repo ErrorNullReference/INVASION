@@ -13,15 +13,15 @@ public class WaitingPlayers : MonoBehaviour
 		start = false;
 	}
 
-	public void StartGame()
+	public void StartGame ()
 	{
 		start = true;
 	}
 
 	void OnGUI ()
 	{
-		//if (start)
-		//	return;
+		if (start)
+			return;
 
 		Color c = GUI.color;
 		GUI.skin.label.fontSize = fontSize;

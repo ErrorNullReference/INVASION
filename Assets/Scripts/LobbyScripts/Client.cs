@@ -262,7 +262,7 @@ public class Client : MonoBehaviour
     /// <param name="command">The method to link to the PacketType</param>
     public static bool AddCommand(PacketType commandType, Command command)
     {
-        if (instance != null)
+		if (instance != null && Commands != null)
         {
             instance.AddCommands(commandType, command);
             return true;
