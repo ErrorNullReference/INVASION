@@ -15,7 +15,7 @@ public class Minimap : MonoBehaviour
     float multX, multY;
 
     // Use this for initialization
-    void Start()
+    public void Init()
     {
         for (int i = 0; i < Players.Elements.Count; i++)
         {
