@@ -4,43 +4,52 @@ using UnityEngine;
 
 public class WaitingPlayers : MonoBehaviour
 {
-	bool start;
-	public int fontSize;
+    bool start;
+    public int fontSize;
 
-	// Use this for initialization
-	void Start ()
-	{
-		start = false;
-	}
+    // Use this for initialization
+    void Start()
+    {
+        Client.OnGameEnd += () => start = false;
+    }
 
-	public void StartGame ()
-	{
-		start = true;
-	}
+    void Destroy()
+    {
+        Client.OnGameEnd -= () => start = false;
+    }
 
-	void OnGUI ()
-	{
-		if (start)
-			return;
+    public void StartGame()
+    {
+        start = true;
+    }
 
-		Color c = GUI.color;
-		GUI.skin.label.fontSize = fontSize;
-		GUILayout.Label ("Waiting for players");
+    void OnGUI()
+    {
+        if (start)
+            return;
 
-		for (int i = 0; i < Client.Users.Count; i++) {
-			GUILayout.BeginHorizontal ();
-			GUILayout.Label (Client.Users [i].SteamUsername + " : ");
-			if (Client.Users [i].InGame) {
-				GUI.color = Color.green;
-				GUILayout.Label ("Ready");
+        Color c = GUI.color;
+        GUI.skin.label.fontSize = fontSize;
+        GUILayout.Label("Waiting for players");
 
-			} else {
-				GUI.color = Color.red;
-				GUILayout.Label ("Waiting");
+        for (int i = 0; i < Client.Users.Count; i++)
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(Client.Users[i].SteamUsername + " : ");
+            if (Client.Users[i].InGame)
+            {
+                GUI.color = Color.green;
+                GUILayout.Label("Ready");
 
-			}
-			GUI.color = c;
-			GUILayout.EndHorizontal ();
-		}
-	}
+            }
+            else
+            {
+                GUI.color = Color.red;
+                GUILayout.Label("Waiting");
+
+            }
+            GUI.color = c;
+            GUILayout.EndHorizontal();
+        }
+    }
 }
