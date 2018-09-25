@@ -70,6 +70,11 @@ public class Enemy : LivingBeing
         }
     }
 
+    public void Shoot(uint id)
+    {
+        gun.Shoot(id);
+    }
+
     public void StartInit()
     {
         hudManager = GetComponentInChildren<HUDHealt>();

@@ -32,6 +32,8 @@ public class WaitingPlayers : MonoBehaviour
         GUI.skin.label.fontSize = fontSize;
         GUILayout.Label("Waiting for players");
 
+        if (Client.Users == null)
+            return;
         for (int i = 0; i < Client.Users.Count; i++)
         {
             GUILayout.BeginHorizontal();

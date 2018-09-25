@@ -217,7 +217,7 @@ public class Client : MonoBehaviour
             OnGameEntered.Raise();
 
         clientEnteredGameCount++;
-		GetUser (sender).InGame = true;
+        GetUser(sender).InGame = true;
 
         if (Client.IsHost && clientEnteredGameCount == Users.Count)
             Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.GameStart, EP2PSend.k_EP2PSendReliable, true);
@@ -262,7 +262,7 @@ public class Client : MonoBehaviour
     /// <param name="command">The method to link to the PacketType</param>
     public static bool AddCommand(PacketType commandType, Command command)
     {
-		if (instance != null && Commands != null)
+        if (instance != null && Commands != null)
         {
             instance.AddCommands(commandType, command);
             return true;

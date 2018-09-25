@@ -24,7 +24,6 @@ public class NetObjTransformSync : MonoBehaviour
     private void Awake()
     {
         waitForSecond = new WaitForSeconds(0.1f);
-        animController = GetComponent<AnimationControllerScript>();
     }
 
     public void Enable()
@@ -43,6 +42,8 @@ public class NetObjTransformSync : MonoBehaviour
             prediction = new Prediction(startPos, startRot);
         else
             prediction.Reset(startPos, startRot);
+
+        animController = GetComponentInChildren<AnimationControllerScript>();
 
         active = true;
     }
@@ -92,7 +93,7 @@ public class NetObjTransformSync : MonoBehaviour
             myTransform.position = Vector3.Lerp(startPos, endPos, frac);
             myTransform.rotation = Quaternion.Slerp(startRot, endRot, frac);
 
-            if (Mathf.Approximately(frac, 1))
+            if (animController != null && Mathf.Approximately(frac, 1))
                 animController.Animation(0, 0, 0);
             return;
         }
@@ -108,7 +109,7 @@ public class NetObjTransformSync : MonoBehaviour
         startRot = myTransform.rotation;
         interpolationTime = prediction.Predict(pos, rot, out endPos, out endRot, out speed);
 
-        if (speed.magnitude / Time.deltaTime >= AcceptanceTreshold)
+        if (animController != null && speed.magnitude / Time.deltaTime >= AcceptanceTreshold)
             animController.Animation(transform.forward, speed, speed.magnitude / Time.deltaTime);
         time = 0;
     }
