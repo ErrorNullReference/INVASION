@@ -122,13 +122,14 @@ public class PlayersMgr : MonoBehaviour
 
     private bool SetHealth(byte[] data)
     {
-        CSteamID target = (CSteamID)ByteManipulator.ReadUInt64(data, 0);
+		bool dead = ByteManipulator.ReadBoolean(data, 0);
+        CSteamID target = (CSteamID)ByteManipulator.ReadUInt64(data, 1);
 
         if (avatars.ContainsKey(target) && avatars[target] != null)
         {
             Player player = avatars[target].GetComponent<Player>();
 
-            player.SetLife(ByteManipulator.ReadSingle(data, 8));
+            player.SetLife(ByteManipulator.ReadSingle(data, 9));
 
             if (player.Life <= 0f)
             {
@@ -138,7 +139,8 @@ public class PlayersMgr : MonoBehaviour
             }
             else if (player.Dead)
             {
-                player.Resurrect(player.Life);
+				if(!dead)
+               		player.Resurrect(player.Life);
             }
         }
 

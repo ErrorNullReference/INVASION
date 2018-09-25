@@ -503,7 +503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: a0564bc61f785694993a861f57ef0934, type: 3}
-  Mixer: {fileID: 243462199580598960, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
+  Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
   Spartialvalue: 1
   MaxDistnceVolume: 10
   VolumeCurve:

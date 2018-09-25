@@ -2,212 +2,213 @@
 using Steamworks;
 using SOPRO;
 using GENUtility;
+using System.Collections;
 
 public class Player : LivingBeing
 {
-    private static readonly byte[] packet = new byte[12];
+	private static readonly byte[] packet = new byte[12];
 
-    public SimpleAvatar Avatar { get { return avatar; } }
+	public SimpleAvatar Avatar { get { return avatar; } }
 
-    public int TotalPoints = 0;
-    public int Energy;
+	public int TotalPoints = 0;
+	public int Energy;
 
-    public bool Dead;
+	public bool Dead;
 
-    public float MaxRessTime = 120f;
-    public float MaxRessDistance = 10f;
-    public float RessTimeMultiplier = 0.2f;
-    public float RessHealthPercentage = 0.5f;
-    public float InvincibilityDuration = 10f;
+	public float MaxRessTime = 120f;
+	public float MaxRessDistance = 10f;
+	public float RessTimeMultiplier = 0.2f;
+	public float RessHealthPercentage = 0.5f;
+	public float InvincibilityDuration = 10f;
 
-    public SOEvBool PlayerAliveStatusChanged;
+	public SOEvBool PlayerAliveStatusChanged;
 
-    public Collider PlayerCollider { get { return playerCollider; } }
+	public Collider PlayerCollider { get { return playerCollider; } }
 
-    [SerializeField]
-    private Collider playerCollider;
-    [SerializeField]
-    private SOListPlayerContainer playersAlive;
-    [SerializeField]
-    private SOListPlayerContainer allPlayers;
-    [SerializeField]
-    private SimpleAvatar avatar;
-    [SerializeField]
-    private PlayerAnimatorController controller;
+	[SerializeField]
+	private Collider playerCollider;
+	[SerializeField]
+	private SOListPlayerContainer playersAlive;
+	[SerializeField]
+	private SOListPlayerContainer allPlayers;
+	[SerializeField]
+	private SimpleAvatar avatar;
+	[SerializeField]
+	private PlayerAnimatorController controller;
 
-    private float timer, invTimer;
+	private float timer, invTimer;
 
-    private float prevLife;
+	private float prevLife;
 
-    private bool Invincible;
+	private bool Invincible;
 
-    private void Awake()
-    {
-        for (int i = playersAlive.Elements.Count - 1; i >= 0; i--)
-        {
-            if (!playersAlive[i])
-                playersAlive.Elements.RemoveAt(i);
-        }
-        for (int i = allPlayers.Elements.Count - 1; i >= 0; i--)
-        {
-            if (!allPlayers[i])
-                allPlayers.Elements.RemoveAt(i);
-        }
-    }
+	private void Awake ()
+	{
+		for (int i = playersAlive.Elements.Count - 1; i >= 0; i--) {
+			if (!playersAlive [i])
+				playersAlive.Elements.RemoveAt (i);
+		}
+		for (int i = allPlayers.Elements.Count - 1; i >= 0; i--) {
+			if (!allPlayers [i])
+				allPlayers.Elements.RemoveAt (i);
+		}
+	}
 
-    private void Start()
-    {
-        GetComponentInChildren<HUDHealt>().InputAssetHUD = Stats;
-        life = Stats.MaxHealth;
-        prevLife = life;
-        Dead = life <= 0f;
-        Energy = 0;
+	private void Start ()
+	{
+		GetComponentInChildren<HUDHealt> ().InputAssetHUD = Stats;
+		life = Stats.MaxHealth;
+		prevLife = life;
+		Dead = life <= 0f;
+		Energy = 0;
 
-        if (!Dead)
-            playersAlive.Elements.Add(this);
+		if (!Dead)
+			playersAlive.Elements.Add (this);
 
-        Client.OnGameEnd += Die;
-    }
+		Client.OnGameEnd += Die;
+		StartCoroutine (SetInvincibility ());
+	}
 
-    private void OnEnable()
-    {
-        allPlayers.Elements.Add(this);
-    }
+	IEnumerator SetInvincibility ()
+	{
+		while (!Client.AddCommand (PacketType.Invincibility, ManageInvincibility))
+			yield return null;
+	}
 
-    private void OnDisable()
-    {
-        allPlayers.Elements.Remove(this);
-    }
+	private void OnEnable ()
+	{
+		allPlayers.Elements.Add (this);
+	}
 
-    void Update()
-    {
-        if (Invincible)
-            UpdateInvincibility();
-    }
+	private void OnDisable ()
+	{
+		allPlayers.Elements.Remove (this);
+	}
 
-    protected void LateUpdate()
-    {
-        if (!Client.IsHost)
-            return;
+	void Update ()
+	{
+		if (Invincible)
+			UpdateInvincibility ();
+	}
 
-        //Death logic
-        if (Dead)
-        {
-            int length = playersAlive.Elements.Count;
-            Transform transf = transform;
-            bool near = false;
+	protected void LateUpdate ()
+	{
+		if (!Client.IsHost)
+			return;
 
-            for (int i = 0; i < length; i++)
-            {
-                Player other = playersAlive[i];
-                if (other != this && (transf.position - other.transform.position).sqrMagnitude < MaxRessDistance * MaxRessDistance)
-                {
-                    this.life += RessTimeMultiplier * Stats.MaxHealth * Time.deltaTime;
-                    if (this.life >= Stats.MaxHealth)
-                        this.Resurrect(Stats.MaxHealth * RessHealthPercentage);
-                    near = true;
-                    break;
-                }
-            }
+		//Death logic
+		if (Dead) {
+			int length = playersAlive.Elements.Count;
+			Transform transf = transform;
+			bool near = false;
 
-            //if no player is near the dead player the death timer will proceed
-            if (!near)
-            {
-                timer += Time.deltaTime;
-                if (timer > MaxRessTime)
-                {
-                    byte[] data = ArrayPool<byte>.Get(8);
+			for (int i = 0; i < length; i++) {
+				Player other = playersAlive [i];
+				if (other != this && (transf.position - other.transform.position).sqrMagnitude < MaxRessDistance * MaxRessDistance) {
+					this.life += RessTimeMultiplier * Stats.MaxHealth * Time.deltaTime;
+					if (this.life >= Stats.MaxHealth)
+						this.Resurrect (Stats.MaxHealth * RessHealthPercentage);
+					near = true;
+					break;
+				}
+			}
 
-                    ByteManipulator.Write(data, 0, (ulong)avatar.UserInfo.SteamID);
+			//if no player is near the dead player the death timer will proceed
+			if (!near) {
+				timer += Time.deltaTime;
+				if (timer > MaxRessTime) {
+					byte[] data = ArrayPool<byte>.Get (8);
 
-                    Client.SendPacketToInGameUsers(data, 0, data.Length, PacketType.PlayerDeath, EP2PSend.k_EP2PSendReliable, true);
+					ByteManipulator.Write (data, 0, (ulong)avatar.UserInfo.SteamID);
 
-                    ArrayPool<byte>.Recycle(data);
-                }
-            }
-        }
+					Client.SendPacketToInGameUsers (data, 0, data.Length, PacketType.PlayerDeath, EP2PSend.k_EP2PSendReliable, true);
 
-        //Alive logic
-        if (!Mathf.Approximately(prevLife, life))
-        {
-            life = Mathf.Min(life, Stats.MaxHealth);
-            prevLife = life;
+					ArrayPool<byte>.Recycle (data);
+				}
+			}
+		}
 
-            ByteManipulator.Write(packet, 0, (ulong)avatar.UserInfo.SteamID);
-            ByteManipulator.Write(packet, 8, life);
+		//Alive logic
+		if (!Mathf.Approximately (prevLife, life)) {
+			life = Mathf.Min (life, Stats.MaxHealth);
+			prevLife = life;
 
-            Client.SendPacketToInGameUsers(packet, 0, packet.Length, PacketType.PlayerStatus, EP2PSend.k_EP2PSendReliable, false);
-            if (life <= 0f && !Dead)
-            {
-                Die();
-                Client.SendTransformToInGameUsers(packet, this.transform, EP2PSend.k_EP2PSendReliable, false);
-            }
-        }
-    }
+			ByteManipulator.Write (packet, 0, Dead);
+			ByteManipulator.Write (packet, 1, (ulong)avatar.UserInfo.SteamID);
+			ByteManipulator.Write (packet, 9, life);
 
-    public override void Die()
-    {
-        Dead = true;
+			Client.SendPacketToInGameUsers (packet, 0, packet.Length, PacketType.PlayerStatus, EP2PSend.k_EP2PSendReliable, false);
+			if (life <= 0f && !Dead) {
+				Die ();
+				Client.SendTransformToInGameUsers (packet, this.transform, EP2PSend.k_EP2PSendReliable, false);
+			}
+		}
+	}
 
-        controller.Die(true);
+	public override void Die ()
+	{
+		Dead = true;
 
-        life = 0f;
-        timer = 0f;
+		controller.Die (true);
 
-        playersAlive.Elements.Remove(this);
+		life = 0f;
+		timer = 0f;
 
-        if (avatar.UserInfo.SteamID == Client.MyID)
-            PlayerAliveStatusChanged.Raise(false);
+		playersAlive.Elements.Remove (this);
 
-        if (!Client.IsHost)
-            return;
-        ByteManipulator.Write(packet, 0, (ulong)avatar.UserInfo.SteamID);
-        ByteManipulator.Write(packet, 8, life);
-        Client.SendPacketToInGameUsers(packet, 0, packet.Length, PacketType.PlayerStatus, EP2PSend.k_EP2PSendReliable, false);
-    }
+		if (avatar.UserInfo.SteamID == Client.MyID)
+			PlayerAliveStatusChanged.Raise (false);
 
-    public void Resurrect(float newLife)
-    {
-        life = Mathf.Min(newLife, Stats.MaxHealth);
-        if (life <= 0f)
-            return;
+		if (!Client.IsHost)
+			return;
+		ByteManipulator.Write (packet, 0, Dead);
+		ByteManipulator.Write (packet, 1, (ulong)avatar.UserInfo.SteamID);
+		ByteManipulator.Write (packet, 9, life);
+		Client.SendPacketToInGameUsers (packet, 0, packet.Length, PacketType.PlayerStatus, EP2PSend.k_EP2PSendReliable, false);
+	}
 
-        Dead = false;
+	public void Resurrect (float newLife)
+	{
+		life = Mathf.Min (newLife, Stats.MaxHealth);
+		if (life <= 0f)
+			return;
 
-        controller.Die(false);
+		Dead = false;
 
-        playersAlive.Elements.Add(this);
+		controller.Die (false);
 
-        RessHealthPercentage *= 0.5f;
-        if (RessHealthPercentage < 0.1f)
-            RessHealthPercentage = 0.1f;
+		playersAlive.Elements.Add (this);
 
-        if (avatar.UserInfo.SteamID == Client.MyID)
-            PlayerAliveStatusChanged.Raise(true);
-    }
+		RessHealthPercentage *= 0.5f;
+		if (RessHealthPercentage < 0.1f)
+			RessHealthPercentage = 0.1f;
 
-    void OnDestroy()
-    {
-        Client.OnGameEnd -= Die;
-    }
+		if (avatar.UserInfo.SteamID == Client.MyID)
+			PlayerAliveStatusChanged.Raise (true);
+	}
 
-    void ManageInvincibility(byte[] data, uint length, CSteamID id)
-    {
-        Invincible = true;
-        invTimer = InvincibilityDuration;
-    }
+	void OnDestroy ()
+	{
+		Client.OnGameEnd -= Die;
+	}
 
-    void UpdateInvincibility()
-    {
-        invTimer -= Time.deltaTime;
-        if (invTimer <= 0)
-            Invincible = false;
-    }
+	void ManageInvincibility (byte[] data, uint length, CSteamID id)
+	{
+		Invincible = true;
+		invTimer = InvincibilityDuration;
+	}
 
-    public override void DecreaseLife(float decreaseAmount)
-    {
-        if (Invincible)
-            return;
-        base.DecreaseLife(decreaseAmount);
-    }
+	void UpdateInvincibility ()
+	{
+		invTimer -= Time.deltaTime;
+		if (invTimer <= 0)
+			Invincible = false;
+	}
+
+	public override void DecreaseLife (float decreaseAmount)
+	{
+		if (Invincible)
+			return;
+		base.DecreaseLife (decreaseAmount);
+	}
 }

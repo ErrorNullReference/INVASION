@@ -25,6 +25,8 @@ public class Minimap : MonoBehaviour
                 break;
             }
         }
+		if (Client.instance.DebugOverride)
+			Player = Players [0].transform;
 
         camera.transform.position = Player.transform.position + new Vector3(0, 90, 0);
         camera.transform.eulerAngles = new Vector3(90, 180, 0);

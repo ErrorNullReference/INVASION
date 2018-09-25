@@ -24,13 +24,23 @@ public class NukeBurst : MonoBehaviour
         init = false;
     }
 
-    void ManageNuke(byte[] HostData, uint length, CSteamID IDictionary)
+    void ManageNuke(byte[] Data, uint length, CSteamID ID)
     {
         update = true;
         Burst = true;
 
-        foreach (Enemy item in Spawner.enemyPool.objs.Values)
-            item.SetLife(0);
+		foreach (Enemy item in Spawner.enemyPool.objs.Values)
+		{
+			byte[] data = new byte[sizeof(int) + sizeof(float) + sizeof(ulong)];
+			byte[] id = System.BitConverter.GetBytes (item.GetComponent<GameNetworkObject> ().NetworkId);
+			byte[] damage = System.BitConverter.GetBytes (item.MaxLife);
+			System.Array.Copy (id, 0, data, 0, id.Length);
+			System.Array.Copy (damage, 0, data, id.Length, damage.Length);
+			System.Array.Copy (Data, 0, data, id.Length + damage.Length, Data.Length);
+
+			Client.SendPacketToInGameUsers (data, 0, data.Length, PacketType.ShootHit, EP2PSend.k_EP2PSendReliable, true);
+            //item.SetLife(0);
+		}
     }
 
     void Reset()

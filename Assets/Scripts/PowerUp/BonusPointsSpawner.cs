@@ -13,11 +13,13 @@ public class BonusPointsSpawner : MonoBehaviour
     public NetIdDispenser IdDispenser;
     public PowerUpsMgr Manager;
     public float SpawnTime = 10f;
-    public float BonusTime = 10f;
+	public int PointsToAdd = 100;
+
+    //public float BonusTime = 10f;
 
     private float timer = 0f;
-    private float bonusTimer = 0f;
-    bool bonusActive;
+    //private float bonusTimer = 0f;
+    //bool bonusActive;
 
     void Start()
     {
@@ -29,7 +31,7 @@ public class BonusPointsSpawner : MonoBehaviour
         if (!Client.IsHost)
             this.enabled = false;
         timer = 0f;
-        bonusTimer = 0;
+        //bonusTimer = 0;
     }
 
     private void Update()
@@ -44,7 +46,7 @@ public class BonusPointsSpawner : MonoBehaviour
             Manager.SendMsgSpawnPowerUp(PowerUpType.Points, IdDispenser.GetNewNetId(), closest, null, true);
         }
 
-        if (ClientEnemyStatsMgr.BonuPointsMult != 1)
+        /*if (ClientEnemyStatsMgr.BonuPointsMult != 1)
         {
             bonusTimer += Time.deltaTime;
             if (bonusTimer >= BonusTime)
@@ -54,11 +56,15 @@ public class BonusPointsSpawner : MonoBehaviour
             }
         }
         else
-            bonusTimer = 0;
+            bonusTimer = 0;*/
     }
 
     void UpdateBonusPoints(byte[] data, uint dataLength, CSteamID sender)
     {
-        ClientEnemyStatsMgr.BonuPointsMult = (int)data[0];
+        //ClientEnemyStatsMgr.BonuPointsMult = (int)data[0];
+
+		CSteamID id = (CSteamID)System.BitConverter.ToUInt64 (data, 0);
+		if (PlayersMgr.Players.ContainsKey (id))
+			PlayersMgr.Players [id].Player.TotalPoints += PointsToAdd;
     }
 }

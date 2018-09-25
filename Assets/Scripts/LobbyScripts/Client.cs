@@ -24,11 +24,12 @@ public enum PacketType : byte
     EnemySpawn,
     RequestAvatarSelection,
     AnswerAvatarSelection,
-    EnterGame,
+	EnterGame,
     ExitGame,
     GameOver,
     ReceivedEnterGame,
     ConfirmEnterGame,
+	GameEnteredServer,
     GameEntered,
     GameStart,
     LatencyServer,
@@ -127,6 +128,7 @@ public class Client : MonoBehaviour
     WaitForSeconds waitForSeconds, waitForSecondsAlive;
 
     public bool DebugOverride;
+	private bool inGame;
 
     // Use this for initialization
     void Start()
@@ -170,6 +172,7 @@ public class Client : MonoBehaviour
         StartCoroutine(SendAlive());
         OnUserDisconnected += Disconnect;
         OnGameEnd += SendDisconnection;
+		OnGameEnd += () => inGame = false;
 
         if (OnClientInitialized)
             OnClientInitialized.Raise();
@@ -218,10 +221,19 @@ public class Client : MonoBehaviour
 
         clientEnteredGameCount++;
         GetUser(sender).InGame = true;
+		inGame = true;
 
         if (Client.IsHost && clientEnteredGameCount == Users.Count)
             Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.GameStart, EP2PSend.k_EP2PSendReliable, true);
+		else if(Client.IsHost)
+			Client.SendPacketToInGameUsers(emptyArray, 0, 0, PacketType.GameEnteredServer, EP2PSend.k_EP2PSendReliable, false);
     }
+
+	void GameEnteredServer(byte[] data, uint length, CSteamID sender)
+	{
+		if(inGame)
+			Client.SendPacketToHost(emptyArray, 0, 0, PacketType.GameEntered, EP2PSend.k_EP2PSendReliable);
+	}
 
     IEnumerator LatencyTest()
     {
@@ -392,6 +404,7 @@ public class Client : MonoBehaviour
         SteamCallbackReceiver.ChatUpdateEvent -= UpdateUsers;
         OnUserDisconnected -= Disconnect;
         OnGameEnd -= SendDisconnection;
+		OnGameEnd -= () => inGame = false;
     }
 
     /// <summary>
