@@ -93,5 +93,7 @@ public abstract class PowerUp : MonoBehaviour
 
         if (OnTriggerActive(collision, p))
             Recycle(p.Avatar.UserInfo.SteamID, true);
+
+		PowerUpSpawnMgr.FreePosition (transform.position);
     }
 }

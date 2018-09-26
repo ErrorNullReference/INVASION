@@ -6,7 +6,7 @@ using System.Collections;
 
 public class Player : LivingBeing
 {
-	private static readonly byte[] packet = new byte[12];
+	private static readonly byte[] packet = new byte[13];
 
 	public SimpleAvatar Avatar { get { return avatar; } }
 

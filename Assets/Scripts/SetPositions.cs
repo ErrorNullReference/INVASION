@@ -7,6 +7,7 @@ public class SetPositions : MonoBehaviour
 {
     public SOListVector3Container PositionsToFill;
     public bool ClearFirst = true, DrawGizmos = true;
+	public Color Color = Color.red;
 
     void Start()
     {
@@ -26,7 +27,7 @@ public class SetPositions : MonoBehaviour
         if (!DrawGizmos)
             return;
         
-        Gizmos.color = Color.red;
+		Gizmos.color = Color;
         Transform[] childs = GetComponentsInChildren<Transform>();
         for (int i = 1; i < childs.Length; i++)
         {

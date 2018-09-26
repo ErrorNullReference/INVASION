@@ -9,7 +9,6 @@ using GENUtility;
 
 public class NukeSpawner : MonoBehaviour
 {
-    public SOListVector3Container SpawnPoints;
     public NetIdDispenser IdDispenser;
     public PowerUpsMgr Manager;
     public float SpawnTime = 10f;
@@ -30,7 +29,7 @@ public class NukeSpawner : MonoBehaviour
         {
             timer = 0f;
 
-            Vector3 closest = SpawnPoints[UnityEngine.Random.Range(0, SpawnPoints.Elements.Count)];
+			Vector3 closest = PowerUpSpawnMgr.GetPosition ();
 
             Manager.SendMsgSpawnPowerUp(PowerUpType.Nuke, IdDispenser.GetNewNetId(), closest, null, true);
         }

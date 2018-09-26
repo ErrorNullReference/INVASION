@@ -1882,6 +1882,9 @@ GameObject:
   - component: {fileID: 114740291995726324}
   - component: {fileID: 114904843678683782}
   - component: {fileID: 114817883093633762}
+  - component: {fileID: 54496717525510748}
+  - component: {fileID: 114327438206629204}
+  - component: {fileID: 114958702449319702}
   m_Layer: 8
   m_Name: Terua_Avatar
   m_TagString: Untagged
@@ -4104,6 +4107,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1134385968553562}
   m_Mesh: {fileID: 4300070, guid: 1b3af6ccf9e5c4946819ea8f4286fc38, type: 3}
+--- !u!54 &54496717525510748
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1976697078211942}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!95 &95693175633505898
 Animator:
   serializedVersion: 3
@@ -4206,6 +4224,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DataContainer: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
   InputAssetHUD: {fileID: 0}
+--- !u!114 &114327438206629204
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1976697078211942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f39f76fc07323d49827785d3e41060f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Clip: {fileID: 8300000, guid: 76b57d581062acc4589ceb4290ba1302, type: 3}
+  Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
+  SpatialValue: 1
+  MaxDistanceVolume: 0
+  VolumeCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  soundSource: {fileID: 0}
 --- !u!114 &114368340288406758
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4247,14 +4287,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: b4bc8f3f83590ab4993cae8e54885565, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
-  Spartialvalue: 0
-  MaxDistnceVolume: 0
+  SpatialValue: 0
+  MaxDistanceVolume: 0
   VolumeCurve:
     serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  soundSource: {fileID: 0}
 --- !u!114 &114480387402237838
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4268,14 +4309,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: 9e10af4300c958c46985c22bc4d2ed70, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
-  Spartialvalue: 0
-  MaxDistnceVolume: 0
+  SpatialValue: 0
+  MaxDistanceVolume: 0
   VolumeCurve:
     serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  soundSource: {fileID: 0}
 --- !u!114 &114503431712817660
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4450,6 +4492,19 @@ MonoBehaviour:
   gun: {fileID: 114368340288406758}
   muzzle: {fileID: 114503431712817660}
   mask: {fileID: 11400000, guid: b3cd3679c53bbaf468cf6a30caf76859, type: 2}
+--- !u!114 &114958702449319702
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1976697078211942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2d87edf9df610245ad10cd37b312e04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FootstepInterval: 0.3
+  StepTreshold: 0.1
 --- !u!136 &136945541575458474
 CapsuleCollider:
   m_ObjectHideFlags: 1
