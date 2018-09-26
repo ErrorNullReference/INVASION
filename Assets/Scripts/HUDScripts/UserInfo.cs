@@ -30,12 +30,13 @@ public class UserInfo : MonoBehaviour
 
     public void Create(CSteamID id, Vector2 size, bool myPlayer)
     {
-        Count++;
         this.ID = id;
         rootOffset = staticRoot.position - dinamicRoot.position;
         Height = Height * (float)Screen.height;
         YOffset = YOffset * (float)Screen.height;
         XOffset = XOffset * (float)Screen.height;
+        if (!myPlayer)
+            Count++;
         SetScale(size);
         CalculatePosition(myPlayer);
     }
