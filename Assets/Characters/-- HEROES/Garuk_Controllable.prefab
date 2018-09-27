@@ -2126,16 +2126,16 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1619716846486628}
-  m_LocalRotation: {x: 0.40980792, y: -0.56813556, z: -0.56827056, w: -0.4316805}
-  m_LocalPosition: {x: -0.192, y: -0.686, z: 0.029}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalRotation: {x: 0.40571818, y: -0.56502223, z: -0.5711977, w: -0.43574762}
+  m_LocalPosition: {x: 0.073, y: -1.35, z: -0.107}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_Children:
   - {fileID: 4951450639152960}
   - {fileID: 4592229877921306}
   - {fileID: 4882087113940480}
   m_Father: {fileID: 4664234403370692}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 271.772, y: 53.127003, z: 53.834003}
+  m_LocalEulerAnglesHint: {x: 272.484, y: 41.856003, z: 65.098}
 --- !u!4 &4323941579598234
 Transform:
   m_ObjectHideFlags: 1
@@ -4462,14 +4462,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: 76b57d581062acc4589ceb4290ba1302, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
-  SpatialValue: 1
-  MaxDistanceVolume: 0
-  VolumeCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  RandomizePitch: 1
+  PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
 --- !u!114 &114236374564753038
 MonoBehaviour:
@@ -4512,14 +4506,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: b4bc8f3f83590ab4993cae8e54885565, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
-  SpatialValue: 0
-  MaxDistanceVolume: 0
-  VolumeCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  RandomizePitch: 0
+  PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
 --- !u!114 &114285562092777212
 MonoBehaviour:
@@ -4639,14 +4627,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: 9e10af4300c958c46985c22bc4d2ed70, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
-  SpatialValue: 0
-  MaxDistanceVolume: 0
-  VolumeCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  RandomizePitch: 0
+  PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
 --- !u!114 &114727063679606528
 MonoBehaviour:

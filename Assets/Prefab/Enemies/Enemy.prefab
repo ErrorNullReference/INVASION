@@ -504,38 +504,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: a0564bc61f785694993a861f57ef0934, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
-  Spartialvalue: 1
-  MaxDistnceVolume: 10
-  VolumeCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0.0010757446
-      value: 1
-      inSlope: -0.0052230656
-      outSlope: -0.0052230656
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 0.49838996
-      value: 1.0019298
-      inSlope: -0.02221938
-      outSlope: -0.02221938
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 0.8649658
-      value: 0.1
-      inSlope: -1.2844083
-      outSlope: 0.020488176
-      tangentMode: 1
-    - serializedVersion: 2
-      time: 1.0018394
-      value: 0.10009104
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
+  RandomizePitch: 1
+  PitchLimits: {x: 0.8, y: 1.1}
+  soundSource: {fileID: 0}
 --- !u!114 &114763458174304330
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -4237,14 +4237,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: 76b57d581062acc4589ceb4290ba1302, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
-  SpatialValue: 1
-  MaxDistanceVolume: 0
-  VolumeCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  RandomizePitch: 1
+  PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
 --- !u!114 &114368340288406758
 MonoBehaviour:
@@ -4287,14 +4281,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: b4bc8f3f83590ab4993cae8e54885565, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
-  SpatialValue: 0
-  MaxDistanceVolume: 0
-  VolumeCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  RandomizePitch: 0
+  PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
 --- !u!114 &114480387402237838
 MonoBehaviour:
@@ -4309,14 +4297,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: 9e10af4300c958c46985c22bc4d2ed70, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
-  SpatialValue: 0
-  MaxDistanceVolume: 0
-  VolumeCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  RandomizePitch: 0
+  PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
 --- !u!114 &114503431712817660
 MonoBehaviour:

@@ -2086,16 +2086,16 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1764569599837946}
-  m_LocalRotation: {x: 0.3137374, y: -0.5187646, z: -0.6249375, w: -0.4918388}
-  m_LocalPosition: {x: -0.28049758, y: -1.0210079, z: -0.11700621}
-  m_LocalScale: {x: 2.5000024, y: 2.5000017, z: 2.5000024}
+  m_LocalRotation: {x: 0.40571818, y: -0.56502223, z: -0.5711977, w: -0.43574762}
+  m_LocalPosition: {x: 0.073, y: -1.35, z: -0.107}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_Children:
   - {fileID: 4267200880763520}
   - {fileID: 4584904657904386}
   - {fileID: 4937310714228704}
-  m_Father: {fileID: 4439268991487276}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 271.772, y: 53.127003, z: 53.834003}
+  m_Father: {fileID: 4324610481554730}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 272.484, y: 41.856003, z: 65.098}
 --- !u!4 &4288579684013164
 Transform:
   m_ObjectHideFlags: 1
@@ -2155,6 +2155,7 @@ Transform:
   - {fileID: 4123971142949112}
   - {fileID: 4774814621767596}
   - {fileID: 4814853622368104}
+  - {fileID: 4274422608872686}
   m_Father: {fileID: 4439268991487276}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2265,7 +2266,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4324610481554730}
-  - {fileID: 4274422608872686}
   m_Father: {fileID: 4841075243588838}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2276,7 +2276,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1777228355161646}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.47, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224595265580039696}
@@ -4560,14 +4560,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: b4bc8f3f83590ab4993cae8e54885565, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
-  SpatialValue: 0
-  MaxDistanceVolume: 0
-  VolumeCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  RandomizePitch: 0
+  PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
 --- !u!114 &114775122660094704
 MonoBehaviour:
@@ -4595,14 +4589,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: 76b57d581062acc4589ceb4290ba1302, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
-  SpatialValue: 1
-  MaxDistanceVolume: 0
-  VolumeCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  RandomizePitch: 1
+  PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
 --- !u!114 &114946804732313808
 MonoBehaviour:
@@ -4631,14 +4619,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: 9e10af4300c958c46985c22bc4d2ed70, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
-  SpatialValue: 0
-  MaxDistanceVolume: 0
-  VolumeCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  RandomizePitch: 0
+  PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
 --- !u!136 &136090499689449816
 CapsuleCollider:

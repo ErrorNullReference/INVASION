@@ -26,11 +26,12 @@ public class FootstepsSound : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if ((transform.position - oldPos).sqrMagnitude > StepTreshold) {
+		if ((transform.position - oldPos).sqrMagnitude > StepTreshold)
+		{
 			t += Time.deltaTime;
-			if (t > FootstepInterval) {
+			if (t > FootstepInterval)
+			{
 				t = 0;
-				emitter.soundSource.pitch = Random.Range (0.8f, 1.1f);
 				emitter.EmitSound ();
 			}
 		} else
