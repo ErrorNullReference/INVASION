@@ -14443,6 +14443,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 2120571761}
     m_Modifications:
+    - target: {fileID: 114647343688137270, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 224748858363407234, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -14547,6 +14552,31 @@ Prefab:
         type: 2}
       propertyPath: m_LocalScale.z
       value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114647343688137270, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114647343688137270, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114647343688137270, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 2120571760}
+    - target: {fileID: 114647343688137270, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: UpdateCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 114647343688137270, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd, type: 2}
