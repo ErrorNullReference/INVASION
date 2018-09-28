@@ -16,11 +16,13 @@ public class NukeBurst : MonoBehaviour
 
     private float AnimationTime;
     private bool update, init;
+	private SoundEmitter emitter;
 
     // Use this for initialization
     void Start()
     {
         post = GetComponent<PostProcessingBehaviour>();
+		emitter = GetComponent<SoundEmitter> ();
         init = false;
     }
 
@@ -29,21 +31,26 @@ public class NukeBurst : MonoBehaviour
         update = true;
         Burst = true;
 
-		foreach (Enemy item in Spawner.enemyPool.objs.Values)
+		if (Client.IsHost) 
 		{
-			if (item.Active)
+			foreach (Enemy item in Spawner.enemyPool.objs.Values)
 			{
-				byte[] data = new byte[sizeof(int) + sizeof(float) + sizeof(ulong)];
-				byte[] id = System.BitConverter.GetBytes (item.GetComponent<GameNetworkObject> ().NetworkId);
-				byte[] damage = System.BitConverter.GetBytes (item.MaxLife);
-				System.Array.Copy (id, 0, data, 0, id.Length);
-				System.Array.Copy (damage, 0, data, id.Length, damage.Length);
-				System.Array.Copy (Data, 0, data, id.Length + damage.Length, Data.Length);
+				if (item.Active)
+				{
+					byte[] data = new byte[sizeof(int) + sizeof(float) + sizeof(ulong)];
+					byte[] id = System.BitConverter.GetBytes (item.GetComponent<GameNetworkObject> ().NetworkId);
+					byte[] damage = System.BitConverter.GetBytes (item.MaxLife);
+					System.Array.Copy (id, 0, data, 0, id.Length);
+					System.Array.Copy (damage, 0, data, id.Length, damage.Length);
+					System.Array.Copy (Data, 0, data, id.Length + damage.Length, Data.Length);
 
-				Client.SendPacketToInGameUsers (data, 0, data.Length, PacketType.ShootHit, EP2PSend.k_EP2PSendReliable, true);
+					Client.SendPacketToInGameUsers (data, 0, data.Length, PacketType.ShootHit, EP2PSend.k_EP2PSendReliable, true);
+				}
 			}
-            //item.SetLife(0);
 		}
+
+		if (emitter != null)
+			emitter.EmitSound ();
     }
 
     void Reset()
