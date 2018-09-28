@@ -211,4 +211,16 @@ public class Player : LivingBeing
 			return;
 		base.DecreaseLife (decreaseAmount);
 	}
+
+	public void DisableController ()
+	{
+		avatar.Controller.Disable ();
+		controller.Disable();
+	}
+
+	public void EnableController ()
+	{
+		avatar.Controller.Activate ();
+		controller.Activate();
+	}
 }
