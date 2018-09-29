@@ -14443,11 +14443,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 2120571761}
     m_Modifications:
-    - target: {fileID: 114647343688137270, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 224748858363407234, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -14466,17 +14461,17 @@ Prefab:
     - target: {fileID: 224748858363407234, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
         type: 2}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224748858363407234, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
         type: 2}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224748858363407234, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
         type: 2}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224748858363407234, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
         type: 2}
@@ -14491,22 +14486,22 @@ Prefab:
     - target: {fileID: 224748858363407234, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 960.00024
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224748858363407234, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 540.0001
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224748858363407234, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 799.99994
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224748858363407234, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 449.99997
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224748858363407234, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
         type: 2}
@@ -14531,53 +14526,18 @@ Prefab:
     - target: {fileID: 224748858363407234, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
         type: 2}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224748858363407234, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
         type: 2}
       propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224748858363407234, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
-        type: 2}
-      propertyPath: m_LocalScale.x
-      value: 2.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 224748858363407234, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
-        type: 2}
-      propertyPath: m_LocalScale.y
-      value: 2.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 224748858363407234, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
-        type: 2}
-      propertyPath: m_LocalScale.z
-      value: 2.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114647343688137270, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114647343688137270, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114647343688137270, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2120571760}
-    - target: {fileID: 114647343688137270, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: UpdateCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 114647343688137270, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: eaddf7ba90cb9e344b7c0bf36d3d52bd, type: 2}
   m_IsPrefabParent: 0
