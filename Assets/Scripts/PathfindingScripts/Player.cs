@@ -35,6 +35,7 @@ public class Player : LivingBeing
 	private SimpleAvatar avatar;
 	[SerializeField]
 	private PlayerAnimatorController controller;
+	private ShootSystem shootSystem;
 
 	private float timer, invTimer;
 
@@ -57,6 +58,7 @@ public class Player : LivingBeing
 	private void Start ()
 	{
 		GetComponentInChildren<HUDHealt> ().InputAssetHUD = Stats;
+		shootSystem = GetComponentInChildren<ShootSystem> ();
 		life = Stats.MaxHealth;
 		prevLife = life;
 		Dead = life <= 0f;
@@ -67,6 +69,8 @@ public class Player : LivingBeing
 
 		Client.OnGameEnd += Die;
 		StartCoroutine (SetInvincibility ());
+
+		EnableController ();
 	}
 
 	IEnumerator SetInvincibility ()
@@ -210,5 +214,19 @@ public class Player : LivingBeing
 		if (Invincible)
 			return;
 		base.DecreaseLife (decreaseAmount);
+	}
+
+	public void DisableController ()
+	{
+		avatar.Controller.Disable ();
+		controller.Disable();
+		shootSystem.Disable ();
+	}
+
+	public void EnableController ()
+	{
+		avatar.Controller.Activate ();
+		controller.Activate();
+		shootSystem.Enable ();
 	}
 }

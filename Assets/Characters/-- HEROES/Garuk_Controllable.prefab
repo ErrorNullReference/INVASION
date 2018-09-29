@@ -51,7 +51,7 @@ GameObject:
   - component: {fileID: 4044286387465168}
   - component: {fileID: 33101871854581870}
   - component: {fileID: 23270831258383762}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Canna_tondi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 4269812979896212}
   - component: {fileID: 33689947479860258}
   - component: {fileID: 23462375283333776}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Motore_superiore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 4684002690721468}
   - component: {fileID: 33057617023190912}
   - component: {fileID: 23419630137317132}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Canna_denti
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4951450639152960}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Corpo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 4694878981301706}
   - component: {fileID: 33381704295867570}
   - component: {fileID: 23318553290872220}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Corpo_cono
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 4988894974236400}
   - component: {fileID: 33283686744753832}
   - component: {fileID: 23061200810690602}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Scudo_anteriore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 4133947226075736}
   - component: {fileID: 33582691659243512}
   - component: {fileID: 23654341125629358}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Base_prot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -315,7 +315,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4882087113940480}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: BurstMuzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -377,7 +377,7 @@ GameObject:
   - component: {fileID: 4066136870938762}
   - component: {fileID: 33316840375747808}
   - component: {fileID: 23391185332030966}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Motore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -424,7 +424,7 @@ GameObject:
   - component: {fileID: 4351678485969006}
   - component: {fileID: 33961527188992834}
   - component: {fileID: 23781675803838168}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Base_mappa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +487,7 @@ GameObject:
   - component: {fileID: 4595364572062182}
   - component: {fileID: 33005217124408108}
   - component: {fileID: 23627547055393002}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Corpo_anteriore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -504,7 +504,7 @@ GameObject:
   - component: {fileID: 4703686454622770}
   - component: {fileID: 33039579468580312}
   - component: {fileID: 23622056189860350}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Aggancio_prot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -521,7 +521,7 @@ GameObject:
   - component: {fileID: 4470342306682104}
   - component: {fileID: 33721001087579160}
   - component: {fileID: 23578070736345254}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Motore_deco
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -553,7 +553,7 @@ GameObject:
   - component: {fileID: 4246625808725202}
   - component: {fileID: 33949430351310688}
   - component: {fileID: 23895398090873312}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Motore_connettore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -570,7 +570,7 @@ GameObject:
   - component: {fileID: 4974857781440950}
   - component: {fileID: 33246971017602178}
   - component: {fileID: 23562962755256664}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Motore_retro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -710,7 +710,7 @@ GameObject:
   - component: {fileID: 4505947739543890}
   - component: {fileID: 33037803138902740}
   - component: {fileID: 23629372719602714}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Canna
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -772,7 +772,7 @@ GameObject:
   - component: {fileID: 4679008650650694}
   - component: {fileID: 33349981164685882}
   - component: {fileID: 23304780358839168}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Motore_retro_cono
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -789,7 +789,7 @@ GameObject:
   - component: {fileID: 4941865231194902}
   - component: {fileID: 33203161021076524}
   - component: {fileID: 23944571605978980}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Motore_retrobasso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -866,7 +866,7 @@ GameObject:
   - component: {fileID: 4455764833539846}
   - component: {fileID: 33975286718753770}
   - component: {fileID: 23292178792158128}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Scudo_centrale
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -883,7 +883,7 @@ GameObject:
   - component: {fileID: 4877780407021286}
   - component: {fileID: 33096819193702522}
   - component: {fileID: 23997782290691114}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Corpo 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -948,7 +948,7 @@ GameObject:
   - component: {fileID: 4208447643641826}
   - component: {fileID: 33609290941812522}
   - component: {fileID: 23660995453186748}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Grilletto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -980,7 +980,7 @@ GameObject:
   - component: {fileID: 4080002326527326}
   - component: {fileID: 33444560183491580}
   - component: {fileID: 23129536486141004}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Motore_denti
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1025,7 +1025,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4282329934962214}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mh_Minigun_Garuk_000
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1225,7 +1225,7 @@ GameObject:
   - component: {fileID: 4179822785644558}
   - component: {fileID: 33669011686440292}
   - component: {fileID: 23168111388295012}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Impugnatura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1257,7 +1257,7 @@ GameObject:
   - component: {fileID: 4029019305625844}
   - component: {fileID: 33712713304380780}
   - component: {fileID: 23023677228461188}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Scudo_sfere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1289,7 +1289,7 @@ GameObject:
   - component: {fileID: 4602431841330782}
   - component: {fileID: 33950202557075180}
   - component: {fileID: 23834732461522668}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Scudo_posteriore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1321,7 +1321,7 @@ GameObject:
   - component: {fileID: 4682139744401830}
   - component: {fileID: 33022836722550160}
   - component: {fileID: 23375616538285660}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Protezione
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1555,7 +1555,7 @@ GameObject:
   - component: {fileID: 4271014666809490}
   - component: {fileID: 33504234995676958}
   - component: {fileID: 23790542889178248}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Manubri
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1645,7 +1645,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4592229877921306}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Scudo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2126,16 +2126,16 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1619716846486628}
-  m_LocalRotation: {x: 0.40980792, y: -0.56813556, z: -0.56827056, w: -0.4316805}
-  m_LocalPosition: {x: -0.192, y: -0.686, z: 0.029}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalRotation: {x: 0.40571818, y: -0.56502223, z: -0.5711977, w: -0.43574762}
+  m_LocalPosition: {x: 0.073, y: -1.35, z: -0.107}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_Children:
   - {fileID: 4951450639152960}
   - {fileID: 4592229877921306}
   - {fileID: 4882087113940480}
   m_Father: {fileID: 4664234403370692}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 271.772, y: 53.127003, z: 53.834003}
+  m_LocalEulerAnglesHint: {x: 272.484, y: 41.856003, z: 65.098}
 --- !u!4 &4323941579598234
 Transform:
   m_ObjectHideFlags: 1
@@ -4462,14 +4462,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: 76b57d581062acc4589ceb4290ba1302, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
-  SpatialValue: 1
-  MaxDistanceVolume: 0
-  VolumeCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  Volume: 1
+  RandomizePitch: 1
+  PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
 --- !u!114 &114236374564753038
 MonoBehaviour:
@@ -4512,14 +4507,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: b4bc8f3f83590ab4993cae8e54885565, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
-  SpatialValue: 0
-  MaxDistanceVolume: 0
-  VolumeCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  Volume: 1
+  RandomizePitch: 0
+  PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
 --- !u!114 &114285562092777212
 MonoBehaviour:
@@ -4570,7 +4560,6 @@ MonoBehaviour:
   Mask:
     serializedVersion: 2
     m_Bits: 8192
-  OffOnStart: 1
 --- !u!114 &114390049678046518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4613,7 +4602,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gun: {fileID: 114236374564753038}
   muzzle: {fileID: 114902421573151712}
-  mask: {fileID: 11400000, guid: b3cd3679c53bbaf468cf6a30caf76859, type: 2}
+  EnableRaycastControl: 1
+  controlMask: {fileID: 11400000, guid: 0743e1efb4824f043a969b5b4cb8b6df, type: 2}
 --- !u!114 &114650603406384272
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4639,14 +4629,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: 9e10af4300c958c46985c22bc4d2ed70, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
-  SpatialValue: 0
-  MaxDistanceVolume: 0
-  VolumeCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  Volume: 1
+  RandomizePitch: 0
+  PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
 --- !u!114 &114727063679606528
 MonoBehaviour:

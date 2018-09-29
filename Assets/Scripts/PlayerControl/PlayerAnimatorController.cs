@@ -92,12 +92,12 @@ public class PlayerAnimatorController : MonoBehaviour
 		animator.SetBool (death, isDead);
 	}
 
-	void Disable ()
+	public void Disable ()
 	{
 		active = false;
 	}
 
-	void Activate ()
+	public void Activate ()
 	{
 		active = true;
 	}

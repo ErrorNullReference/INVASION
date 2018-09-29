@@ -65,7 +65,7 @@ public class FollowPlayer : MonoBehaviour
 
         if (!Debug)
             CurrentIndex = GetIndex();
-        Players[CurrentIndex].Avatar.Controller.Disable();
+		Players[CurrentIndex].DisableController();
         onAnimation = true;
         timer = 0;
         startPos = transform.position = Players[CurrentIndex].transform.position + Players[CurrentIndex].transform.forward * StartOffset.z + new Vector3(StartOffset.x, StartOffset.y, 0);
@@ -106,7 +106,7 @@ public class FollowPlayer : MonoBehaviour
                 {
                     timer = 0;
                     state = 2;
-                    Players[CurrentIndex].Avatar.Controller.Activate();
+					Players[CurrentIndex].EnableController();
                 }
             }
             else if (state == 2 && CurrentIndex != -1)

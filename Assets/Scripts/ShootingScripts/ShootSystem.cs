@@ -10,27 +10,30 @@ public class ShootSystem : MonoBehaviour
 	public Gun gun;
 	public Muzzle muzzle;
 	[SerializeField]
-	private LayerMaskHolder mask;
-	private RaycastHit raycastHit;
-	private Ray ray;
+	private bool EnableRaycastControl;
+	[SerializeField]
+	private LayerMaskHolder controlMask;
+	private Ray controlRay;
 	private float recoilTime;
 	private static readonly byte[] emptyArray = new byte[0];
-	bool menuOpen;
+	bool menuOpen, active;
 
 	SimpleAvatar avatar;
 
 	private void Awake ()
 	{
 		recoilTime = 0;
-		raycastHit = new RaycastHit ();
 		avatar = GetComponent<SimpleAvatar> ();
-		ray = new Ray ();
+		if (EnableRaycastControl)
+			controlRay = new Ray ();
 	}
 
 	void Start ()
 	{
 		MenuEvents.OnMenuOpen += () => menuOpen = true;
 		MenuEvents.OnMenuClose += () => menuOpen = false;
+
+		Enable ();
 	}
 
 	void OnDestroy ()
@@ -42,27 +45,24 @@ public class ShootSystem : MonoBehaviour
 
 	void CallShoot (uint shootIndex)
 	{
+		if (EnableRaycastControl)
+		{
+			controlRay.origin = transform.position + new Vector3(0,1.5f,0);
+			Vector3 dir = gun.Projectile.position - controlRay.origin;
+			controlRay.direction = dir.normalized;
+			if (Physics.Raycast (controlRay, dir.magnitude, controlMask)) 
+			{
+				gun.EmitSound (shootIndex);
+				return;
+			}
+		}
+
 		Shoot (shootIndex);
 		SendShootToAll (shootIndex);
 	}
 
 	public void Shoot (uint shootIndex)
 	{
-		/*if (activateCallbacks)
-        {
-            //instanziate ray
-            ray.origin = muzzle.transform.position;
-            ray.direction = muzzle.transform.forward;
-
-            //if it shot someone
-            if (Physics.Raycast(ray, out raycastHit, gun.values.MaxDistance, mask))
-            {
-                GameNetworkObject obj = raycastHit.collider.gameObject.GetComponent<GameNetworkObject>();
-                if (obj != null)
-                    SendHitMessage(obj.NetworkId, gun.values.Damage);
-            }
-        }*/
-
 		gun.Shoot (shootIndex);
 	}
 
@@ -91,7 +91,7 @@ public class ShootSystem : MonoBehaviour
 
 	void Update ()
 	{
-		if (menuOpen)
+		if (menuOpen || !active)
 			return;
 
 		//different beheaviour with number
@@ -103,5 +103,15 @@ public class ShootSystem : MonoBehaviour
 			CallShoot (1);
 			recoilTime = gun.values.Rateo;
 		}
+	}
+
+	public void Enable ()
+	{
+		active = true;
+	}
+
+	public void Disable ()
+	{
+		active = false;
 	}
 }
