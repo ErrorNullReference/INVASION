@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Steamworks;
+using System;
 
 public class MenuMgr : MonoBehaviour
 {
-    public Canvas EnterLobby, AvatarSelection, Chat;
+    public static Action OnStart, OnAvatarSelection;
+
+    public Canvas StartCanvas, AvatarSelection, Chat;
 
     // Use this for initialization
     void Start()
     {
-        EnterLobby.gameObject.SetActive(true);
+        StartCanvas.gameObject.SetActive(true);
 
         SteamCallbackReceiver.LobbyEnterEvent += ChangeLobbyState;
         SteamCallbackReceiver.LobbyCreateEvent += ChangeLobbyState;
@@ -20,9 +23,11 @@ public class MenuMgr : MonoBehaviour
     {
         if (cb.m_ulSteamIDLobby != 0)
         {
-            EnterLobby.gameObject.SetActive(false);
+            StartCanvas.gameObject.SetActive(false);
             AvatarSelection.gameObject.SetActive(true);
             Chat.gameObject.SetActive(true);
+
+            OnAvatarSelection.Invoke();
         }
     }
 
@@ -30,9 +35,11 @@ public class MenuMgr : MonoBehaviour
     {
         if (cb.m_ulSteamIDLobby != 0)
         {
-            EnterLobby.gameObject.SetActive(false);
+            StartCanvas.gameObject.SetActive(false);
             AvatarSelection.gameObject.SetActive(true);
             Chat.gameObject.SetActive(true);
+
+            OnAvatarSelection.Invoke();
         }
     }
 
@@ -50,16 +57,18 @@ public class MenuMgr : MonoBehaviour
 
     public void ReturnToSelection()
     {
-        EnterLobby.gameObject.SetActive(true);
+        StartCanvas.gameObject.SetActive(true);
         AvatarSelection.gameObject.SetActive(false);
         Chat.gameObject.SetActive(false);
+
+        OnStart.Invoke();
     }
 
     public void UpdateCanvas()
     {
-        EnterLobby.gameObject.SetActive(false);
+        StartCanvas.gameObject.SetActive(false);
         Chat.gameObject.SetActive(false);
-        EnterLobby.gameObject.SetActive(true);
+        StartCanvas.gameObject.SetActive(true);
         Chat.gameObject.SetActive(true);
     }
 }

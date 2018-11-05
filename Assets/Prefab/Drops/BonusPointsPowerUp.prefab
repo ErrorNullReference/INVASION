@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 23661752461329146}
   - component: {fileID: 114592951333106626}
   - component: {fileID: 114757584090907088}
+  - component: {fileID: 114922587421482776}
   m_Layer: 0
   m_Name: BonusPointsPowerUp
   m_TagString: Untagged
@@ -37,8 +38,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1054413260009574}
-  m_LocalRotation: {x: 0.052335896, y: -0, z: -0, w: 0.9986295}
-  m_LocalPosition: {x: -0.574, y: 1.25, z: 10.37}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.574, y: 0, z: 10.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -112,6 +113,20 @@ MonoBehaviour:
   LifeTime: {fileID: 11400000, guid: 5930fd8c4a0fc3b48b2a10a727d6eded, type: 2}
   SelfLayer: {fileID: 11400000, guid: e3e4d4fd5d823b84d8b30737e19d2938, type: 2}
   coll: {fileID: 135577056917922198}
+--- !u!114 &114922587421482776
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1054413260009574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67a84e6d9d4a870498d33b386f73ca7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rotation: {x: 0, y: 5, z: 0}
+  LevitationForce: 0.1
+  LevitationDuration: 2
 --- !u!135 &135577056917922198
 SphereCollider:
   m_ObjectHideFlags: 1

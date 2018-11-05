@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 23661752461329146}
   - component: {fileID: 114592951333106626}
   - component: {fileID: 114672264496522838}
+  - component: {fileID: 114040115856665808}
   m_Layer: 0
   m_Name: HealthPowerUp
   m_TagString: Untagged
@@ -37,8 +38,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1054413260009574}
-  m_LocalRotation: {x: 0.052335896, y: -0, z: -0, w: 0.9986295}
-  m_LocalPosition: {x: -1.76, y: 1.25, z: 10.37}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.76, y: 0, z: 10.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -85,6 +86,20 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1054413260009574}
   m_Mesh: {fileID: 4300000, guid: 31c8f9e6d96746d4494f2bfaca5ef320, type: 3}
+--- !u!114 &114040115856665808
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1054413260009574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67a84e6d9d4a870498d33b386f73ca7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rotation: {x: 0, y: 5, z: 0}
+  LevitationForce: 0.1
+  LevitationDuration: 2
 --- !u!114 &114592951333106626
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 23317792111257628}
   - component: {fileID: 114603947708466406}
   - component: {fileID: 114509371367584302}
+  - component: {fileID: 114256761845731286}
   m_Layer: 0
   m_Name: NukePowerUp
   m_TagString: Untagged
@@ -37,8 +38,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1015304281002578}
-  m_LocalRotation: {x: 0.052335896, y: -0, z: -0, w: 0.9986295}
-  m_LocalPosition: {x: -2.984, y: 1.25, z: 10.37}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.984, y: 0, z: 10.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -87,6 +88,20 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1015304281002578}
   m_Mesh: {fileID: 4300000, guid: 1cd787c0de24f5e479415278fdf98260, type: 3}
+--- !u!114 &114256761845731286
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1015304281002578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67a84e6d9d4a870498d33b386f73ca7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rotation: {x: 0, y: 5, z: 0}
+  LevitationForce: 0.1
+  LevitationDuration: 2
 --- !u!114 &114509371367584302
 MonoBehaviour:
   m_ObjectHideFlags: 1
