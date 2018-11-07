@@ -80,6 +80,12 @@ public abstract class PowerUp : MonoBehaviour
         Client.SendPacketToInGameUsers(data, 0, data.Length, PacketType.PowerUpDespawn, EP2PSend.k_EP2PSendReliable, true);
 
         ArrayPool<byte>.Recycle(data);
+
+        data = ArrayPool<byte>.Get(sizeof(int));
+        ByteManipulator.Write(data, 0, (int)Type.Value);
+        Client.SendPacketToInGameUsers(data, 0, data.Length, PacketType.PowerUpSound, EP2PSend.k_EP2PSendReliable, true);
+
+        ArrayPool<byte>.Recycle(data);
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -94,6 +100,6 @@ public abstract class PowerUp : MonoBehaviour
         if (OnTriggerActive(collision, p))
             Recycle(p.Avatar.UserInfo.SteamID, true);
 
-		PowerUpSpawnMgr.FreePosition (transform.position);
+        PowerUpSpawnMgr.FreePosition(transform.position);
     }
 }

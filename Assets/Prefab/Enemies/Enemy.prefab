@@ -83,6 +83,7 @@ GameObject:
   - component: {fileID: 114779665059311554}
   - component: {fileID: 114535885631409956}
   - component: {fileID: 195271296031719136}
+  - component: {fileID: 114636697716583230}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -491,6 +492,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e0c965638ab836459980a865a5605b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114636697716583230
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1122011956417130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f39f76fc07323d49827785d3e41060f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Clip: {fileID: 0}
+  Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
+  Volume: 1
+  RandomizePitch: 0
+  PitchLimits: {x: 0.8, y: 1.1}
+  soundSource: {fileID: 0}
+  UseRandom: 1
+  Clips:
+  - {fileID: 8300000, guid: 16dbe59ca8ad7b14eba0b5400c2e5246, type: 3}
+  - {fileID: 8300000, guid: 84f271f06aba0f741bbd4641663a6436, type: 3}
+  - {fileID: 8300000, guid: 91f6c60bc85e5e348850931dcc02bc14, type: 3}
+  - {fileID: 8300000, guid: c4fb5b058974fd14caf4a137662e372e, type: 3}
+  - {fileID: 8300000, guid: f624f13692ad4844f932e6a1ad287cbc, type: 3}
+  - {fileID: 8300000, guid: f6123c93508baf1428ba3bb6bf5a8c96, type: 3}
+  - {fileID: 8300000, guid: 4312ac634a8decc478dbab407b9f1f4a, type: 3}
+  - {fileID: 8300000, guid: ce3d998614562a44e9b0ae12f2d01684, type: 3}
+  - {fileID: 8300000, guid: fb935393c819361448cdf7c092a90573, type: 3}
+  - {fileID: 8300000, guid: 92c62b43c44efa04d9bd0f3c5fd592b8, type: 3}
+  AutoPlay: 0
+  AutoPlayTime: 0
 --- !u!114 &114709231282908706
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -504,10 +536,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: a0564bc61f785694993a861f57ef0934, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
-  Volume: 0.5
+  Volume: 0.249
   RandomizePitch: 1
   PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
+  UseRandom: 1
+  Clips:
+  - {fileID: 8300000, guid: cf74410ab555b8b4bb2d2ceafa0535ef, type: 3}
+  - {fileID: 8300000, guid: 8ec0ea12f80218c44bcdeefa2ec50424, type: 3}
+  - {fileID: 8300000, guid: 0f682e0a5b8f14a4bbc43d21901cf870, type: 3}
+  - {fileID: 8300000, guid: df834cbff313f5f438ea2c53e876c3e3, type: 3}
+  - {fileID: 8300000, guid: 6665ab8214f090c4b8ddc6953747ca53, type: 3}
+  - {fileID: 8300000, guid: 773f51edcdd41df40b4998dbd7ce9d99, type: 3}
+  - {fileID: 8300000, guid: 5b145d08c81709a49a7f2ace4fd6d9a9, type: 3}
+  - {fileID: 8300000, guid: 8ab1bce0d6bd94940a6412f7f8501641, type: 3}
+  - {fileID: 8300000, guid: f570030daf4fec84d8268bcc5f5dae70, type: 3}
+  - {fileID: 8300000, guid: f744222c59ad7d4409aa4a99e3a9f85e, type: 3}
+  - {fileID: 8300000, guid: ef158b0bc8d60f048949545eb48c104c, type: 3}
+  - {fileID: 8300000, guid: 3814beb319f4ef24ab81352fab76d853, type: 3}
+  - {fileID: 8300000, guid: cb82bc272b41e774b96f8056bd935187, type: 3}
+  - {fileID: 8300000, guid: 5b69c347ecb677043955ac69a25fb7ce, type: 3}
+  - {fileID: 8300000, guid: 40c0ea3983aa1ff44857b88543a7ffa1, type: 3}
+  - {fileID: 8300000, guid: 95c83c09454eb4b428f01a31bbfda1a5, type: 3}
+  - {fileID: 8300000, guid: f9bf823337cb48445a903f2253c3a3e0, type: 3}
+  - {fileID: 8300000, guid: 1f843e4df12586645bc811826b77f061, type: 3}
+  AutoPlay: 0
+  AutoPlayTime: 0
 --- !u!114 &114763458174304330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -537,6 +591,7 @@ MonoBehaviour:
   HUDTimerShow: 2
   EnemyStats: {fileID: 0}
   RadarIndicator: {fileID: 1398684184192540}
+  DeathSound: {fileID: 114636697716583230}
   CallDown: 0
   ForceInit: 0
 --- !u!114 &114790966283351056

@@ -40,6 +40,7 @@ public enum PacketType : byte
     EnemyShoot,
     PowerUpSpawn,
     PowerUpDespawn,
+    PowerUpSound,
     Alive,
     BonusPoints,
     Invincibility,

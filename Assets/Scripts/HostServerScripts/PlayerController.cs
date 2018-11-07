@@ -8,11 +8,12 @@ using SOPRO;
 public class PlayerController : MonoBehaviour
 {
     public ReferenceFloat WalkSpeed, RunSpeed;
+    public float RotationSpeed = 1;
     public LayerMask Mask;
     Rigidbody body;
     Camera camera;
     RaycastHit hitInfo;
-	bool active;
+    bool active;
 
     public Vector3 Velocity { get { return body.velocity; } }
 
@@ -66,7 +67,8 @@ public class PlayerController : MonoBehaviour
             {
                 Vector3 dir = (hitInfo.point - transform.position).normalized;
                 dir.y = 0;
-                body.MoveRotation(Quaternion.LookRotation(dir));
+                Quaternion q = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * RotationSpeed);
+                body.MoveRotation(q);
             }
         }
         else

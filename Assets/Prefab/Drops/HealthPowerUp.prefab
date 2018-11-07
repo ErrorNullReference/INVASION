@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114592951333106626}
   - component: {fileID: 114672264496522838}
   - component: {fileID: 114040115856665808}
+  - component: {fileID: 114862608113624986}
   m_Layer: 0
   m_Name: HealthPowerUp
   m_TagString: Untagged
@@ -127,7 +128,27 @@ MonoBehaviour:
   LifeTime: {fileID: 11400000, guid: f400119a9617c3f4ebf9defa1758bd2a, type: 2}
   SelfLayer: {fileID: 11400000, guid: e3e4d4fd5d823b84d8b30737e19d2938, type: 2}
   coll: {fileID: 135577056917922198}
+  Emitter: {fileID: 114862608113624986}
   RecoverLifeAmount: {fileID: 11400000, guid: f137b6e2f69c55b4c80fbb7b256d1416, type: 2}
+--- !u!114 &114862608113624986
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1054413260009574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f39f76fc07323d49827785d3e41060f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Clip: {fileID: 8300000, guid: c153698660208f042a149845c7bcfde2, type: 3}
+  Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
+  Volume: 1
+  RandomizePitch: 0
+  PitchLimits: {x: 0.8, y: 1.1}
+  soundSource: {fileID: 0}
+  UseRandom: 0
+  Clips: []
 --- !u!135 &135577056917922198
 SphereCollider:
   m_ObjectHideFlags: 1

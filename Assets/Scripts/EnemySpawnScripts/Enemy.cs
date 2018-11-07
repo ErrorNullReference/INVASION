@@ -35,6 +35,8 @@ public class Enemy : LivingBeing
     int bodyIndex;
     Gun gun;
 
+    public SoundEmitter DeathSound;
+
     public Action OnDown, OnDeath;
 
     public bool Active { get; private set; }
@@ -204,6 +206,9 @@ public class Enemy : LivingBeing
 
         if (RadarIndicator != null)
             RadarIndicator.SetActive(false);
+
+        if (DeathSound != null)
+            DeathSound.EmitSound();
     }
 
     void FixedUpdate()

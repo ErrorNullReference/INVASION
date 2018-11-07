@@ -470,6 +470,7 @@ GameObject:
   - component: {fileID: 114131583416335582}
   - component: {fileID: 114779295774347420}
   - component: {fileID: 114041003263949998}
+  - component: {fileID: 114906814182804958}
   m_Layer: 8
   m_Name: Terua_Controllable
   m_TagString: Untagged
@@ -4239,6 +4240,18 @@ MonoBehaviour:
   RandomizePitch: 0
   PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
+  UseRandom: 1
+  Clips:
+  - {fileID: 8300000, guid: 51992c301a19e1748882a57239d7cfda, type: 3}
+  - {fileID: 8300000, guid: cf17ec208a031b64f9d180fc8db122ae, type: 3}
+  - {fileID: 8300000, guid: 1e75654d1cf6b0e4d9e9e2e9cbbd4b0d, type: 3}
+  - {fileID: 8300000, guid: 4aabc0039b41bd441b3b185834a77142, type: 3}
+  - {fileID: 8300000, guid: 388a7d98954a75647b693d3c646f0412, type: 3}
+  - {fileID: 8300000, guid: 5eae146c4c239e64895a65866d482365, type: 3}
+  - {fileID: 8300000, guid: e4f216add8a8ee24d853057be2ceb3a4, type: 3}
+  - {fileID: 8300000, guid: 969c290d68e265d499582383ef48a15c, type: 3}
+  AutoPlay: 0
+  AutoPlayTime: 0
 --- !u!114 &114022143411960760
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4273,6 +4286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FootstepInterval: 0.3
   StepTreshold: 0.1
+  emitter: {fileID: 114779295774347420}
 --- !u!114 &114088125720180342
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4292,6 +4306,7 @@ MonoBehaviour:
     UseConstant: 1
     Variable: {fileID: 0}
     constantValue: 10
+  RotationSpeed: 1000
   Mask:
     serializedVersion: 2
     m_Bits: 8192
@@ -4428,6 +4443,7 @@ MonoBehaviour:
   InvincibilityDuration: 10
   PlayerAliveStatusChanged: {fileID: 11400000, guid: 19c5cfa168636f147a93e63cfc145108,
     type: 2}
+  ResurrectEmitter: {fileID: 114906814182804958}
   playerCollider: {fileID: 136061744901817378}
   playersAlive: {fileID: 11400000, guid: 8c3bf4eccc08acb42867bac67e33f9f7, type: 2}
   allPlayers: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
@@ -4575,6 +4591,31 @@ MonoBehaviour:
   RandomizePitch: 1
   PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
+  UseRandom: 0
+  Clips: []
+  AutoPlay: 0
+  AutoPlayTime: 0
+--- !u!114 &114906814182804958
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1272880909434318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f39f76fc07323d49827785d3e41060f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Clip: {fileID: 8300000, guid: ef0d1dda87da2254ea7757dc01b31ca7, type: 3}
+  Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
+  Volume: 1
+  RandomizePitch: 0
+  PitchLimits: {x: 0.8, y: 1.1}
+  soundSource: {fileID: 0}
+  UseRandom: 0
+  Clips: []
+  AutoPlay: 0
+  AutoPlayTime: 0
 --- !u!114 &114940287299068776
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4608,6 +4649,10 @@ MonoBehaviour:
   RandomizePitch: 0
   PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
+  UseRandom: 0
+  Clips: []
+  AutoPlay: 0
+  AutoPlayTime: 0
 --- !u!136 &136061744901817378
 CapsuleCollider:
   m_ObjectHideFlags: 1

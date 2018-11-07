@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class EnemyInitializer : ScriptableObject
 {
-    public static int StartInstancesAmount = 3;
+    public static int StartInstancesAmount = 20;
     [SerializeField]
     public GameObject Body;
     [HideInInspector]

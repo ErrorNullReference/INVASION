@@ -11,7 +11,7 @@ using SOPRO;
 [CreateAssetMenu(menuName = "Network/EnemySpawner")]
 public class EnemySpawner : Factory<byte>
 {
-    public static int PreInstantiedCount = 20;
+    public static int PreInstantiedCount = 50;
 
     public SODictionaryTransformContainer netEntities;
     public GameObject PoolRoot;
@@ -73,12 +73,13 @@ public class EnemySpawner : Factory<byte>
 
         go.NetObj.SetNetworkId(id);
         go.Initializer = EnemyInitializers[(int)type];
-        go.Init((EnemyStats)EnemyStatsPool.Elements[(int)stats]); //[type]
 
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(position, out hit, 1f, Mask))
+        if (NavMesh.SamplePosition(position, out hit, 5f, Mask))
             go.GetComponent<NavMeshAgent>().Warp(hit.position);
 
+        go.Activate();
+        go.Init((EnemyStats)EnemyStatsPool.Elements[(int)stats]); //[type]
         EnemiesCount.Value++;
     }
 
@@ -192,7 +193,6 @@ public class EnemySpawner : Factory<byte>
             {
                 if (!objs[i].IsActive())
                 {
-                    objs[i].Activate();
                     index = i;
                     return objs[i];
                 }
@@ -202,7 +202,6 @@ public class EnemySpawner : Factory<byte>
             {
                 if (!objs[i].IsActive())
                 {
-                    objs[i].Activate();
                     index = i;
                     return objs[index];
                 }
@@ -212,7 +211,6 @@ public class EnemySpawner : Factory<byte>
             index = objs.Count;
             objs.Add(index, o);
             objs[index].StartInit();
-            objs[index].Activate();
 
             return o;
         }

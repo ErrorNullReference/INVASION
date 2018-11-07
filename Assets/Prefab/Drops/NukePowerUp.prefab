@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114603947708466406}
   - component: {fileID: 114509371367584302}
   - component: {fileID: 114256761845731286}
+  - component: {fileID: 114877532807175702}
   m_Layer: 0
   m_Name: NukePowerUp
   m_TagString: Untagged
@@ -117,6 +118,7 @@ MonoBehaviour:
   LifeTime: {fileID: 11400000, guid: ee14ac03383793b44a0a4a949fae9c4d, type: 2}
   SelfLayer: {fileID: 11400000, guid: e3e4d4fd5d823b84d8b30737e19d2938, type: 2}
   coll: {fileID: 135480276230102046}
+  Emitter: {fileID: 114877532807175702}
 --- !u!114 &114603947708466406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -129,6 +131,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   networkObjects: {fileID: 11400000, guid: 209e760079e7a28429153a90e96df903, type: 2}
+--- !u!114 &114877532807175702
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1015304281002578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f39f76fc07323d49827785d3e41060f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Clip: {fileID: 8300000, guid: e94c91a4208dc9c4c93d1d15fb4dc218, type: 3}
+  Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
+  Volume: 1
+  RandomizePitch: 0
+  PitchLimits: {x: 0.8, y: 1.1}
+  soundSource: {fileID: 0}
+  UseRandom: 0
+  Clips: []
 --- !u!135 &135480276230102046
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -140,4 +161,4 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.7
-  m_Center: {x: 0, y: 0.78, z: 0}
+  m_Center: {x: 0, y: 0.95, z: 0}
