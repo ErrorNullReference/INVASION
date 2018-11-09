@@ -25,7 +25,7 @@ public class Player : LivingBeing
 
     public Collider PlayerCollider { get { return playerCollider; } }
 
-    public SoundEmitter ResurrectEmitter;
+    public SoundEmitter ResurrectEmitter, DeathEmitter;
 
     [SerializeField]
     private Collider playerCollider;
@@ -180,6 +180,9 @@ public class Player : LivingBeing
 
         if (playerCollider.attachedRigidbody != null)
             playerCollider.attachedRigidbody.isKinematic = true;
+
+        if (DeathEmitter != null)
+            DeathEmitter.EmitSound();
 
         if (!Client.IsHost)
             return;

@@ -980,6 +980,7 @@ GameObject:
   - component: {fileID: 114983154992732218}
   - component: {fileID: 114863618146969388}
   - component: {fileID: 114859619518916842}
+  - component: {fileID: 114218269588516820}
   m_Layer: 8
   m_Name: Nairie_Controllable
   m_TagString: Untagged
@@ -2573,6 +2574,27 @@ MonoBehaviour:
   muzzle: {fileID: 114259209461270740}
   EnableRaycastControl: 1
   controlMask: {fileID: 11400000, guid: 0743e1efb4824f043a969b5b4cb8b6df, type: 2}
+--- !u!114 &114218269588516820
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1768331521466790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f39f76fc07323d49827785d3e41060f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Clip: {fileID: 8300000, guid: 633d5dcb341047e418c0e8fbf0ee0378, type: 3}
+  Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
+  Volume: 1
+  RandomizePitch: 0
+  PitchLimits: {x: 0.8, y: 1.1}
+  soundSource: {fileID: 0}
+  UseRandom: 0
+  Clips: []
+  AutoPlay: 0
+  AutoPlayTime: 0
 --- !u!114 &114223606043348992
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2804,6 +2826,7 @@ MonoBehaviour:
   PlayerAliveStatusChanged: {fileID: 11400000, guid: 19c5cfa168636f147a93e63cfc145108,
     type: 2}
   ResurrectEmitter: {fileID: 114859619518916842}
+  DeathEmitter: {fileID: 114218269588516820}
   playerCollider: {fileID: 136059065465621276}
   playersAlive: {fileID: 11400000, guid: 8c3bf4eccc08acb42867bac67e33f9f7, type: 2}
   allPlayers: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
@@ -2864,6 +2887,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d87edf9df610245ad10cd37b312e04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Cemento:
+  - {fileID: 8300000, guid: 7522d7b41d655104a887f74436a4f7a0, type: 3}
+  - {fileID: 8300000, guid: e6ee30ee9b53d084ab16cd4e7b85784b, type: 3}
+  - {fileID: 8300000, guid: fc66e21c7ca50be499507234dcdce011, type: 3}
+  - {fileID: 8300000, guid: d31d8b94f3f7f1a47bf688a3d34f4adb, type: 3}
+  - {fileID: 8300000, guid: 5526f79ef32bca04fb9575845b2ad934, type: 3}
+  Piastrelle:
+  - {fileID: 8300000, guid: cb41d3fd8f481aa48a4f5f8b83cdbe82, type: 3}
+  - {fileID: 8300000, guid: 7c170ed3481cf114eb543bb39da15fb7, type: 3}
+  - {fileID: 8300000, guid: 82f442a7a8c1bc24e9ab764f8407f9b1, type: 3}
+  - {fileID: 8300000, guid: b17b550a083a7bd4bb2790e9014482ab, type: 3}
+  - {fileID: 8300000, guid: 02be98dc651dfae46ba1b5a148fa137a, type: 3}
+  Metallo:
+  - {fileID: 8300000, guid: 708d15ec33c77a04d85c104b429d71c4, type: 3}
+  - {fileID: 8300000, guid: e12efef939eb3a244b154d079c2fd7e3, type: 3}
+  - {fileID: 8300000, guid: 06e4d1adf95d5714d8a723ef6319afe9, type: 3}
+  - {fileID: 8300000, guid: 1dbdc948b78681b4cbd7cc5f2154dd09, type: 3}
+  - {fileID: 8300000, guid: f3aafe194d9974f4dae9e0e97160191f, type: 3}
   FootstepInterval: 0.3
   StepTreshold: 0.1
   emitter: {fileID: 114983154992732218}
@@ -2926,10 +2967,10 @@ MonoBehaviour:
   Clip: {fileID: 8300000, guid: 76b57d581062acc4589ceb4290ba1302, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
   Volume: 1
-  RandomizePitch: 1
+  RandomizePitch: 0
   PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
-  UseRandom: 0
+  UseRandom: 1
   Clips: []
   AutoPlay: 0
   AutoPlayTime: 0

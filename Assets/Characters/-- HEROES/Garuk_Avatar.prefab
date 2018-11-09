@@ -1350,6 +1350,7 @@ GameObject:
   - component: {fileID: 114922146916824546}
   - component: {fileID: 114380331326008732}
   - component: {fileID: 114340499340313870}
+  - component: {fileID: 114143582405349178}
   m_Layer: 8
   m_Name: Garuk_Avatar
   m_TagString: Untagged
@@ -4370,6 +4371,7 @@ MonoBehaviour:
   PlayerAliveStatusChanged: {fileID: 11400000, guid: 19c5cfa168636f147a93e63cfc145108,
     type: 2}
   ResurrectEmitter: {fileID: 114340499340313870}
+  DeathEmitter: {fileID: 114143582405349178}
   playerCollider: {fileID: 136090499689449816}
   playersAlive: {fileID: 11400000, guid: 8c3bf4eccc08acb42867bac67e33f9f7, type: 2}
   allPlayers: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
@@ -4404,6 +4406,27 @@ MonoBehaviour:
   death: {fileID: 11400000, guid: 9e4985d483722cd4fb7356f661d4cb25, type: 2}
   RunTreshold: 0
   movementTreshold: 1
+--- !u!114 &114143582405349178
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1777228355161646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f39f76fc07323d49827785d3e41060f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Clip: {fileID: 8300000, guid: 659785799fe99d84faa0b288f4cd1bce, type: 3}
+  Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
+  Volume: 1
+  RandomizePitch: 0
+  PitchLimits: {x: 0.8, y: 1.1}
+  soundSource: {fileID: 0}
+  UseRandom: 0
+  Clips: []
+  AutoPlay: 0
+  AutoPlayTime: 0
 --- !u!114 &114171132094751302
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4457,6 +4480,8 @@ MonoBehaviour:
   soundSource: {fileID: 0}
   UseRandom: 0
   Clips: []
+  AutoPlay: 0
+  AutoPlayTime: 0
 --- !u!114 &114380331326008732
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4468,6 +4493,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d87edf9df610245ad10cd37b312e04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Cemento:
+  - {fileID: 8300000, guid: 45d30838d632cf54980d0cd030451c28, type: 3}
+  - {fileID: 8300000, guid: 75c04446025fdcf4291cd4c4f2f4fe9b, type: 3}
+  - {fileID: 8300000, guid: 52501878b23ebc747abf8a9d5b76fe0b, type: 3}
+  - {fileID: 8300000, guid: 4624ff2882dffc549b529946069ee428, type: 3}
+  - {fileID: 8300000, guid: 6168977b60e49a846b9efa769237c877, type: 3}
+  Piastrelle:
+  - {fileID: 8300000, guid: 6082d77bf12703041b72fb84ca43d99a, type: 3}
+  - {fileID: 8300000, guid: 8bb851d05dbb68c45b86e31b60ab3fe2, type: 3}
+  - {fileID: 8300000, guid: 97a151fe1c3475e47a7d949705e69707, type: 3}
+  - {fileID: 8300000, guid: 5bbbfd43cec2fa34581414b1bf2ad498, type: 3}
+  - {fileID: 8300000, guid: b6c0282697f4c354685b2685e7fc76b4, type: 3}
+  Metallo:
+  - {fileID: 8300000, guid: 708d15ec33c77a04d85c104b429d71c4, type: 3}
+  - {fileID: 8300000, guid: e12efef939eb3a244b154d079c2fd7e3, type: 3}
+  - {fileID: 8300000, guid: 06e4d1adf95d5714d8a723ef6319afe9, type: 3}
+  - {fileID: 8300000, guid: 1dbdc948b78681b4cbd7cc5f2154dd09, type: 3}
+  - {fileID: 8300000, guid: f3aafe194d9974f4dae9e0e97160191f, type: 3}
   FootstepInterval: 0.3
   StepTreshold: 0.1
   emitter: {fileID: 114922146916824546}
@@ -4596,6 +4639,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5eae146c4c239e64895a65866d482365, type: 3}
   - {fileID: 8300000, guid: e4f216add8a8ee24d853057be2ceb3a4, type: 3}
   - {fileID: 8300000, guid: 969c290d68e265d499582383ef48a15c, type: 3}
+  AutoPlay: 0
+  AutoPlayTime: 0
 --- !u!114 &114775122660094704
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4623,11 +4668,13 @@ MonoBehaviour:
   Clip: {fileID: 8300000, guid: 76b57d581062acc4589ceb4290ba1302, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
   Volume: 1
-  RandomizePitch: 1
+  RandomizePitch: 0
   PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
-  UseRandom: 0
+  UseRandom: 1
   Clips: []
+  AutoPlay: 0
+  AutoPlayTime: 0
 --- !u!114 &114946804732313808
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4665,6 +4712,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: fc58a58c18e161b489f6178e8731f439, type: 3}
   - {fileID: 8300000, guid: 0d42af87da22d8245ab131baa901d477, type: 3}
   - {fileID: 8300000, guid: 7497d49494618614a8446e1c2a3f6c44, type: 3}
+  AutoPlay: 0
+  AutoPlayTime: 0
 --- !u!136 &136090499689449816
 CapsuleCollider:
   m_ObjectHideFlags: 1

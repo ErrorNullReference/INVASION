@@ -27,7 +27,7 @@ public class EnemyInitializer : ScriptableObject
 
         if (BodyInstance.Count != 0)
             return;
-
+        
         for (int i = 0; i < StartInstancesAmount; i++)
         {
             BodyInstanced b2 = new BodyInstanced();

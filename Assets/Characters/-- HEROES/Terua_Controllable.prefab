@@ -471,6 +471,7 @@ GameObject:
   - component: {fileID: 114779295774347420}
   - component: {fileID: 114041003263949998}
   - component: {fileID: 114906814182804958}
+  - component: {fileID: 114395864844632670}
   m_Layer: 8
   m_Name: Terua_Controllable
   m_TagString: Untagged
@@ -4284,6 +4285,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d87edf9df610245ad10cd37b312e04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Cemento:
+  - {fileID: 8300000, guid: 1408c5a85cf119c47835fea5f9f580aa, type: 3}
+  - {fileID: 8300000, guid: 8a95e51c5c825db488bc303953ac9e90, type: 3}
+  - {fileID: 8300000, guid: 04607cec50078b7448a64d4f7fac41d2, type: 3}
+  - {fileID: 8300000, guid: 4acf6469075b89048af521b1c5af7e40, type: 3}
+  - {fileID: 8300000, guid: 6d647d43272f0764b9a344767690a06e, type: 3}
+  Piastrelle:
+  - {fileID: 8300000, guid: 6d05fe7f0f7397941a6607fd96d867b4, type: 3}
+  - {fileID: 8300000, guid: 7bf8ef479a3eced4b9cac42a6d93f407, type: 3}
+  - {fileID: 8300000, guid: 593177e64bf7dce42808e0389529ea98, type: 3}
+  - {fileID: 8300000, guid: 8c25841d861e91145809628b7a480334, type: 3}
+  - {fileID: 8300000, guid: ecad13025ef19e44f8ec48ab6da5db0f, type: 3}
+  Metallo:
+  - {fileID: 8300000, guid: 708d15ec33c77a04d85c104b429d71c4, type: 3}
+  - {fileID: 8300000, guid: e12efef939eb3a244b154d079c2fd7e3, type: 3}
+  - {fileID: 8300000, guid: 06e4d1adf95d5714d8a723ef6319afe9, type: 3}
+  - {fileID: 8300000, guid: 1dbdc948b78681b4cbd7cc5f2154dd09, type: 3}
+  - {fileID: 8300000, guid: f3aafe194d9974f4dae9e0e97160191f, type: 3}
   FootstepInterval: 0.3
   StepTreshold: 0.1
   emitter: {fileID: 114779295774347420}
@@ -4421,6 +4440,27 @@ MonoBehaviour:
   death: {fileID: 11400000, guid: 9e4985d483722cd4fb7356f661d4cb25, type: 2}
   RunTreshold: 0
   movementTreshold: 0
+--- !u!114 &114395864844632670
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1272880909434318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f39f76fc07323d49827785d3e41060f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Clip: {fileID: 8300000, guid: 1c8ebb768e0d18349a0706d827e3322a, type: 3}
+  Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
+  Volume: 1
+  RandomizePitch: 0
+  PitchLimits: {x: 0.8, y: 1.1}
+  soundSource: {fileID: 0}
+  UseRandom: 0
+  Clips: []
+  AutoPlay: 0
+  AutoPlayTime: 0
 --- !u!114 &114410258315336794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4444,6 +4484,7 @@ MonoBehaviour:
   PlayerAliveStatusChanged: {fileID: 11400000, guid: 19c5cfa168636f147a93e63cfc145108,
     type: 2}
   ResurrectEmitter: {fileID: 114906814182804958}
+  DeathEmitter: {fileID: 114395864844632670}
   playerCollider: {fileID: 136061744901817378}
   playersAlive: {fileID: 11400000, guid: 8c3bf4eccc08acb42867bac67e33f9f7, type: 2}
   allPlayers: {fileID: 11400000, guid: dd53019bb8dd391458a3ab6fd03c2475, type: 2}
@@ -4588,10 +4629,10 @@ MonoBehaviour:
   Clip: {fileID: 8300000, guid: 76b57d581062acc4589ceb4290ba1302, type: 3}
   Mixer: {fileID: 243304673232361656, guid: a2ea00c1823a063458f34e7dfa594c44, type: 2}
   Volume: 1
-  RandomizePitch: 1
+  RandomizePitch: 0
   PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
-  UseRandom: 0
+  UseRandom: 1
   Clips: []
   AutoPlay: 0
   AutoPlayTime: 0
@@ -4649,8 +4690,11 @@ MonoBehaviour:
   RandomizePitch: 0
   PitchLimits: {x: 0.8, y: 1.1}
   soundSource: {fileID: 0}
-  UseRandom: 0
-  Clips: []
+  UseRandom: 1
+  Clips:
+  - {fileID: 8300000, guid: 34d6fdb67824c8b4ab78648610c6cedf, type: 3}
+  - {fileID: 8300000, guid: 61ed09428e4298844b8af9e3b2b8bb4f, type: 3}
+  - {fileID: 8300000, guid: 27dc45572d5bcef46ba8fdbce40adba1, type: 3}
   AutoPlay: 0
   AutoPlayTime: 0
 --- !u!136 &136061744901817378
