@@ -10,6 +10,7 @@ public class Settings : MonoBehaviour
 {
     const string fileName = "settings";
 
+    public bool SaveFile, LoadFile;
     public GameObject RootPanel;
     public bool OnEscIpnut;
     string path;
@@ -56,7 +57,7 @@ public class Settings : MonoBehaviour
 
     void Save(string path)
     {
-        if (!modified)
+        if (!modified || !SaveFile)
             return;
 
         byte[] audio = SaveAudio();
@@ -78,7 +79,7 @@ public class Settings : MonoBehaviour
 
     void Load(string path)
     {
-        if (!File.Exists(path))
+        if (!LoadFile || !File.Exists(path))
             return;
 
         byte[] data = File.ReadAllBytes(path);

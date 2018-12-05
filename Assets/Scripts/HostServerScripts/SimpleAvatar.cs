@@ -26,7 +26,8 @@ public class SimpleAvatar : MonoBehaviour
     {
         ShootSystem = GetComponent<ShootSystem>();     
         AnimatorController = GetComponentInChildren<PlayerAnimatorController>();
-        Controller = GetComponent<PlayerController>();
+        if (Controller == null)
+            Controller = GetComponent<PlayerController>();
         Player = GetComponent<Player>();
 
         startPos = endPos = transform.position;
@@ -70,5 +71,13 @@ public class SimpleAvatar : MonoBehaviour
     {
         ShootSystem.Shoot(shootType);
         AnimatorController.Shoot();
+    }
+
+    public void Activate()
+    {
+        if (Controller == null)
+            Controller = GetComponent<PlayerController>();
+        if (Controller != null)
+            Controller.Activate();
     }
 }

@@ -252,7 +252,7 @@ public class Player : LivingBeing
 
     public void EnableController()
     {
-        avatar.Controller.Activate();
+        avatar.Activate();
         controller.Activate();
         shootSystem.Enable();
     }
